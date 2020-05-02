@@ -33,7 +33,7 @@ resource "heroku_app" "default" {
 
 resource "heroku_config" "default" {
   sensitive_vars = {
-    BACKEND_URL = "${var.backend_url}"
+    REACT_APP_BACKEND_URL = "${var.backend_url}"
   }
 }
 
