@@ -1,10 +1,10 @@
 import React from 'react';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 
-import { PrivateRoute } from '../_components';
-import { HomePage } from '../HomePage';
-import { LoginPage } from '../LoginPage';
-import { Header } from '../Header';
+import { PrivateRoute } from '../routers';
+import { HomePage } from '../components/HomePage';
+import { LoginPage } from '../components/LoginPage';
+import { Header } from '../components/Header';
 import './App.css';
 import { createBrowserHistory } from "history";
 
