@@ -1,42 +1,56 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from "react-router-dom";
 import { useFormik } from 'formik';
+import { postTokenPending, postTokenSuccess, postTokenError } from '../../actions'
+import { AuthContext } from '../../contexts/AuthContext'
 import * as Yup from 'yup';
+import jwt from 'jwt-decode';
+import { postToken } from '../../helpers/api';
 
-function LoginPage() {
+
+export const LoginPage = () => {
+    const { auth, dispatch } = useContext(AuthContext)
     let history = useHistory();
 
     const formik = useFormik({
         initialValues: {
-            name: '',
+            userName: '',
             password: ''
         },
         validationSchema: Yup.object({
-            name: Yup.string()
+            userName: Yup.string()
                 .required('Required'),
             password: Yup.string()
                 .required('Required'),
         }),
         onSubmit: values => {
-            localStorage.setItem('user', values);
-            history.push("/");
+            dispatch(postTokenPending());
+            postToken(values)
+                .then(res => {
+                    const tokenInfo = jwt(res.token);
+                    dispatch(postTokenSuccess(res, tokenInfo));
+                    history.push('/');
+                })
+                .catch(error => {
+                    dispatch(postTokenError(error));
+                })
         },
     });
 
     return (
         <div>
-            <h4>LOGIN PAGE</h4>
+            <h4>LOG IN PAGE</h4>
             <form onSubmit={formik.handleSubmit}>
-                <label htmlFor="name">Name</label>
+                <label htmlFor="userName">Name</label>
                 <input
-                    id="name"
-                    name="name"
+                    id="userName"
+                    name="userName"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    value={formik.values.name}
+                    value={formik.values.userName}
                 />
-                {formik.touched.name && formik.errors.name ? (
-                    <div>{formik.errors.name}</div>
+                {formik.touched.userName && formik.errors.userName ? (
+                    <div>{formik.errors.userName}</div>
                 ) : null}
                 <label htmlFor="password">Password</label>
                 <input
@@ -50,10 +64,14 @@ function LoginPage() {
                 {formik.touched.password && formik.errors.password ? (
                     <div>{formik.errors.password}</div>
                 ) : null}
-                <button type="submit">Submit</button>
+                {formik.errors.general ? (
+                    <div>{formik.errors.general}</div>
+                ) : null}
+                {auth.error ? (
+                    <div>{auth.error}</div>
+                ) :  null               }
+                <button type="submit">Log In</button>
             </form>
         </div>
     );
 }
-
-export { LoginPage };

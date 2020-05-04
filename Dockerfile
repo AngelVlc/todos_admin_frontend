@@ -14,6 +14,8 @@ RUN npm run-script build
 
 FROM node:14.1.0-alpine3.11 as release
 
+ARG BACKEND_URL
+ENV REACT_APP_BACKEND_URL=${BACKEND_URL}
 ENV APP /app
 WORKDIR $APP
 
