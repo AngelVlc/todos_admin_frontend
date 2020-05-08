@@ -16,10 +16,6 @@ variable "app_name" {
   description = "Name of the Heroku app provisioned"
 }
 
-variable "backend_url" {
-  description = "Backend url"
-}
-
 provider "heroku" {
   email   = "${var.heroku_username}"
   api_key = "${var.heroku_api_key}"
@@ -33,7 +29,6 @@ resource "heroku_app" "default" {
 
 resource "heroku_config" "default" {
   sensitive_vars = {
-    REACT_APP_BACKEND_URL = "${var.backend_url}"
   }
 }
 

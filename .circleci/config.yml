@@ -33,7 +33,7 @@ jobs:
       # - run: make test
       - install_terraform
       - init_terraform
-      - run: cd terraform && terraform plan -var heroku_username=$HEROKU_USERNAME -var heroku_api_key=$HEROKU_API_KEY -var app_name=$APP_NAME -var backend_url=$BACKEND_URL
+      - run: cd terraform && terraform plan -var heroku_username=$HEROKU_USERNAME -var heroku_api_key=$HEROKU_API_KEY -var app_name=$APP_NAME
   deploy:
     machine:
       image: ubuntu-1604:201903-01
@@ -42,8 +42,8 @@ jobs:
       - install_terraform
       - run: heroku container:login
       - init_terraform
-      - run: cd terraform && terraform apply -input=false -auto-approve -var heroku_username=$HEROKU_USERNAME -var heroku_api_key=$HEROKU_API_KEY -var app_name=$APP_NAME -var backend_url=$BACKEND_URL
-      - run: docker build -t todos-release --target release --build-arg BACKEND_URL=${BACKEND_URL} .
+      - run: cd terraform && terraform apply -input=false -auto-approve -var heroku_username=$HEROKU_USERNAME -var heroku_api_key=$HEROKU_API_KEY -var app_name=$APP_NAME
+      - run: docker build -t todos-release --target release --build-arg BACKEND_URL=$BACKEND_URL .
       - run: docker tag todos-release registry.heroku.com/$APP_NAME/web
       - run: docker push registry.heroku.com/$APP_NAME/web
       - run: heroku container:release --app $APP_NAME web
