@@ -5,22 +5,23 @@ import { HomePage } from '../HomePage';
 import { LoginPage } from '../LoginPage';
 import { Header } from '../Header';
 import { createBrowserHistory } from "history";
-import { authReducer } from '../../reducers/authReducer';
-import { AuthContext } from '../../contexts/AuthContext';
+import { authReducer, requestsReducer } from '../../reducers';
+import { AppContext } from '../../contexts/AppContext';
 import Loader from 'react-loader-spinner';
 import './App.css';
 
 const history = createBrowserHistory();
 
 const App = () => {
-  const [auth, dispatch] = useReducer(authReducer, [])
+  const [auth, authDispatch] = useReducer(authReducer, [])
+  const [request, requestsDispatch] = useReducer(requestsReducer, [])
 
   return (
-    <AuthContext.Provider value={{ auth, dispatch }}>
+    <AppContext.Provider value={{ auth, request, authDispatch, requestsDispatch }}>
       <Router history={history}>
         <Header />
-        {auth.pending &&
-          <div className="loader"        >
+        {request.pending &&
+          <div className="loader">
             <Loader type="Circles" color="#282c34" height="100" width="100" />
           </div>
         }
@@ -30,7 +31,7 @@ const App = () => {
           <Redirect from="*" to="/" />
         </Switch>
       </Router>
-    </AuthContext.Provider>
+    </AppContext.Provider>
   );
 }
 

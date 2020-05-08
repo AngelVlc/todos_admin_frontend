@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
-import { AuthContext } from '../../contexts/AuthContext';
+import { AppContext } from '../../contexts/AppContext';
 import { doLogout } from '../../actions/auth';
 import './Header.css';
 
 export const Header = () => {
-    const { auth, dispatch } = useContext(AuthContext)
+    const { auth, authDispatch } = useContext(AppContext)
 
-    const logoutClick = (dispatch) => {
-        dispatch(doLogout());
+    const logoutClick = (authDispatch) => {
+        authDispatch(doLogout());
     }
 
     return (
@@ -16,7 +16,7 @@ export const Header = () => {
             {auth.info &&
                 <>
                     <h4>User: {auth.info.userName}</h4>
-                    <button onClick={() => logoutClick(dispatch)}>Log out</button>
+                    <button onClick={() => logoutClick(authDispatch)}>Log out</button>
                 </>
             }
         </header>

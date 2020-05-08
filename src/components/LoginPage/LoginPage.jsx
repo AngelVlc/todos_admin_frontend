@@ -1,15 +1,15 @@
 import React, { useContext } from 'react';
 import { useHistory } from "react-router-dom";
 import { useFormik } from 'formik';
-import { postTokenPending, postTokenSuccess, postTokenError } from '../../actions'
-import { AuthContext } from '../../contexts/AuthContext'
+import { postTokenSuccess, postTokenError, requestPending, requestDone } from '../../actions'
+import { AppContext } from '../../contexts/AppContext'
 import * as Yup from 'yup';
 import jwt from 'jwt-decode';
 import { getToken } from '../../helpers/api';
 
 
 export const LoginPage = () => {
-    const { auth, dispatch } = useContext(AuthContext)
+    const { auth, authDispatch, requestsDispatch } = useContext(AppContext)
     let history = useHistory();
 
     const formik = useFormik({
@@ -24,15 +24,17 @@ export const LoginPage = () => {
                 .required('Required'),
         }),
         onSubmit: values => {
-            dispatch(postTokenPending());
+            requestsDispatch(requestPending());
             getToken(values)
                 .then(res => {
                     const tokenInfo = jwt(res.token);
-                    dispatch(postTokenSuccess(res, tokenInfo));
+                    authDispatch(postTokenSuccess(res, tokenInfo));
+                    requestsDispatch(requestDone());
                     history.push('/');
                 })
                 .catch(error => {
-                    dispatch(postTokenError(error));
+                    authDispatch(postTokenError(error));
+                    requestsDispatch(requestDone());
                 })
         },
     });
