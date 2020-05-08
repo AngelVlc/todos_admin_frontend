@@ -7,6 +7,8 @@ import { Header } from '../Header';
 import { createBrowserHistory } from "history";
 import { authReducer } from '../../reducers/authReducer';
 import { AuthContext } from '../../contexts/AuthContext';
+import Loader from 'react-loader-spinner';
+import './App.css';
 
 const history = createBrowserHistory();
 
@@ -17,6 +19,11 @@ const App = () => {
     <AuthContext.Provider value={{ auth, dispatch }}>
       <Router history={history}>
         <Header />
+        {auth.pending &&
+          <div className="loader"        >
+            <Loader type="Circles" color="#282c34" height="100" width="100" />
+          </div>
+        }
         <Switch>
           <PrivateRoute exact path="/" component={HomePage} />
           <Route path="/login" component={LoginPage} />

@@ -5,7 +5,7 @@ import { postTokenPending, postTokenSuccess, postTokenError } from '../../action
 import { AuthContext } from '../../contexts/AuthContext'
 import * as Yup from 'yup';
 import jwt from 'jwt-decode';
-import { postToken } from '../../helpers/api';
+import { getToken } from '../../helpers/api';
 
 
 export const LoginPage = () => {
@@ -25,7 +25,7 @@ export const LoginPage = () => {
         }),
         onSubmit: values => {
             dispatch(postTokenPending());
-            postToken(values)
+            getToken(values)
                 .then(res => {
                     const tokenInfo = jwt(res.token);
                     dispatch(postTokenSuccess(res, tokenInfo));

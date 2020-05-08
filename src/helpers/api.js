@@ -1,6 +1,6 @@
 const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5001'
 
-export const postToken = (loginDto) => {
+export const getToken = (loginDto) => {
     return new Promise((resolve, reject) => {
         const requestOptions = {
             method: 'POST',
