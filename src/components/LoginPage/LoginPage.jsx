@@ -1,15 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory } from "react-router-dom";
 import { useFormik } from 'formik';
-import { userLoggedIn, requestPending, requestDone, requestFailed } from '../../actions'
+import { userLoggedIn } from '../../actions'
 import { AppContext } from '../../contexts/AppContext'
 import * as Yup from 'yup';
 import jwt from 'jwt-decode';
-import { getToken } from '../../helpers/api';
+import { doGetToken } from '../../helpers/api';
 
 
 export const LoginPage = () => {
-    const { authDispatch, request, requestsDispatch } = useContext(AppContext)
+    const { authDispatch, requestsDispatch } = useContext(AppContext)
+    const [authError, setAuthError] = useState(null);
     let history = useHistory();
 
     const formik = useFormik({
@@ -24,16 +25,14 @@ export const LoginPage = () => {
                 .required('Required'),
         }),
         onSubmit: values => {
-            requestsDispatch(requestPending());
-            getToken(values)
+            doGetToken(values, requestsDispatch)
                 .then(res => {
                     const tokenInfo = jwt(res.token);
                     authDispatch(userLoggedIn(res, tokenInfo));
-                    requestsDispatch(requestDone());
                     history.push('/');
                 })
                 .catch(error => {
-                    requestsDispatch(requestFailed(error));
+                    setAuthError(error);
                 })
         },
     });
@@ -68,8 +67,8 @@ export const LoginPage = () => {
                 {formik.errors.general ? (
                     <div>{formik.errors.general}</div>
                 ) : null}
-                {request.error ? (
-                    <div>{request.error}</div>
+                {authError ? (
+                    <div>{authError}</div>
                 ) :  null               }
                 <button type="submit">Log In</button>
             </form>

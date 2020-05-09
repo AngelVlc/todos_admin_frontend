@@ -1,20 +1,29 @@
-import React from 'react';
-import { useAlert } from 'react-alert'
+import React, { useEffect, useContext, useState } from 'react';
+import { AppContext } from '../../contexts/AppContext';
+import { doGet } from '../../helpers/api';
 
 export const HomePage = () => {
-    const alert = useAlert()
+  const { auth, requestsDispatch } = useContext(AppContext)
+  const [users, setUsers] = useState([]);
 
-    return (
-        <div>
-            <h4>HOME PAGE</h4>
+  useEffect(() => {
+    if (auth.info) {
+      doGet('users', auth.info.token, requestsDispatch)
+        .then(res => {
+          setUsers(res);
+        })
+    }
+  }, [auth.info, requestsDispatch]);
 
-            <button
-            onClick={() => {
-              alert.show('Oh look, an alert!')
-            }}
-          >
-            Show Alert
-          </button>
-        </div>
-    );
+  return (
+    <div>
+      <h4>HOME PAGE</h4>
+      <ul>
+        {users.length > 0 && users.map((user) => (
+          <li key={user.id}>{user.name}</li>
+        ))
+        }
+      </ul>
+    </div>
+  );
 }

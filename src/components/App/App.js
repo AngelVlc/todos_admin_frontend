@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import { PrivateRoute } from '../../routers';
 import { HomePage } from '../HomePage';
@@ -7,7 +7,9 @@ import { Header } from '../Header';
 import { createBrowserHistory } from "history";
 import { authReducer, requestsReducer } from '../../reducers';
 import { AppContext } from '../../contexts/AppContext';
+import { requestErrorShowed } from '../../actions';
 import Loader from 'react-loader-spinner';
+import { useAlert } from 'react-alert'
 import './App.css';
 
 const history = createBrowserHistory();
@@ -15,6 +17,14 @@ const history = createBrowserHistory();
 const App = () => {
   const [auth, authDispatch] = useReducer(authReducer, [])
   const [request, requestsDispatch] = useReducer(requestsReducer, [])
+  const alert = useAlert()
+
+  useEffect(() => {
+    if (request.error) {
+      alert.show(request.error);
+      requestsDispatch(requestErrorShowed())
+    }
+  }, [request.error, alert, requestsDispatch]);
 
   return (
     <AppContext.Provider value={{ auth, request, authDispatch, requestsDispatch }}>
