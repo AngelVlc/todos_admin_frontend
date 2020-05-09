@@ -1,4 +1,4 @@
-import { REQUEST_PENDING, REQUEST_DONE } from '../actions'
+import { REQUEST_STARTED, REQUEST_DONE, REQUEST_FAILED } from '../actions'
 
 const initialState = {
   pending: false
@@ -6,15 +6,23 @@ const initialState = {
 
 export const requestsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case REQUEST_PENDING:
+    case REQUEST_STARTED:
       return {
         ...state,
-        pending: true
+        pending: true,
+        error: null
       }
     case REQUEST_DONE:
       return {
         ...state,
-        pending: false
+        pending: false,
+        error: null
+      }
+    case REQUEST_FAILED:
+      return {
+        ...state,
+        pending: false,
+        error: action.error
       }
     default:
       return state;

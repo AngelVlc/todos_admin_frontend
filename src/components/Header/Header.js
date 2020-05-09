@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
 import { AppContext } from '../../contexts/AppContext';
-import { doLogout } from '../../actions/auth';
+import { userLoggedOut } from '../../actions/auth';
 import './Header.css';
 
 export const Header = () => {
     const { auth, authDispatch } = useContext(AppContext)
 
     const logoutClick = (authDispatch) => {
-        authDispatch(doLogout());
+        authDispatch(userLoggedOut());
     }
 
     return (

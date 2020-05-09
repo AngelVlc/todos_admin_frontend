@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useHistory } from "react-router-dom";
 import { useFormik } from 'formik';
-import { postTokenSuccess, postTokenError, requestPending, requestDone } from '../../actions'
+import { userLoggedIn, requestPending, requestDone, requestFailed } from '../../actions'
 import { AppContext } from '../../contexts/AppContext'
 import * as Yup from 'yup';
 import jwt from 'jwt-decode';
@@ -9,7 +9,7 @@ import { getToken } from '../../helpers/api';
 
 
 export const LoginPage = () => {
-    const { auth, authDispatch, requestsDispatch } = useContext(AppContext)
+    const { authDispatch, request, requestsDispatch } = useContext(AppContext)
     let history = useHistory();
 
     const formik = useFormik({
@@ -28,13 +28,12 @@ export const LoginPage = () => {
             getToken(values)
                 .then(res => {
                     const tokenInfo = jwt(res.token);
-                    authDispatch(postTokenSuccess(res, tokenInfo));
+                    authDispatch(userLoggedIn(res, tokenInfo));
                     requestsDispatch(requestDone());
                     history.push('/');
                 })
                 .catch(error => {
-                    authDispatch(postTokenError(error));
-                    requestsDispatch(requestDone());
+                    requestsDispatch(requestFailed(error));
                 })
         },
     });
@@ -69,8 +68,8 @@ export const LoginPage = () => {
                 {formik.errors.general ? (
                     <div>{formik.errors.general}</div>
                 ) : null}
-                {auth.error ? (
-                    <div>{auth.error}</div>
+                {request.error ? (
+                    <div>{request.error}</div>
                 ) :  null               }
                 <button type="submit">Log In</button>
             </form>

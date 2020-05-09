@@ -1,4 +1,4 @@
-import { POST_TOKEN_SUCCESS, POST_TOKEN_ERROR, DO_LOGOUT } from '../actions'
+import { USER_LOGGED_IN, USER_LOGGED_OUT } from '../actions'
 
 const initialState = {
     info: null,
@@ -7,21 +7,13 @@ const initialState = {
 
 export const authReducer = (state = initialState, action) => {
     switch (action.type) {
-        case POST_TOKEN_SUCCESS:
+        case USER_LOGGED_IN:
             return {
                 ...state,
-                error:  null,
                 info: action.authInfo
             };
 
-        case POST_TOKEN_ERROR:
-            return {
-                ...state,
-                error: action.error,
-                info: null
-            }
-
-        case DO_LOGOUT:
+        case USER_LOGGED_OUT:
             return {
                 ...state,
                 info: null
