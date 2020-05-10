@@ -12,7 +12,7 @@ export const UserDeletePage = (props) => {
 
   const deleteUser = () => {
     doDelete(`users/${userId}`, auth.info.token, requestsDispatch)
-      .then(res => {
+      .then(() => {
         history.push(state.returnUrl);
       })
   }

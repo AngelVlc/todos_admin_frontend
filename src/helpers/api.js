@@ -12,17 +12,17 @@ export const doGetToken = (loginDto, requestsDispatch) => {
         };
         fetch(`${backendUrl}/auth/token`, requestOptions)
             .then(res => {
-                if (res.ok) {
-                    res.json().then(obj => {
-                        resolve(obj);
-                    })
-                } else {
-                    res.text().then(txt => reject(txt));
-                }
                 requestsDispatch(requestDone());
+                if (!res.ok) {
+                    res.text().then(txt => reject(txt));
+                    return
+                }
+                res.json().then(obj => {
+                    resolve(obj);
+                })
             })
             .catch(error => {
-                requestsDispatch(requestFailed(error));
+                requestsDispatch(requestDone());
                 reject(error.message);
             })
     });
@@ -41,6 +41,7 @@ export const doGet = (endpoint, token, requestsDispatch) => {
         const requestOptions = getHeaders('GET', token);
         fetch(`${backendUrl}/${endpoint}`, requestOptions)
             .then(res => {
+                requestsDispatch(requestDone());
                 if (res.ok) {
                     res.json().then(obj => {
                         resolve(obj);
@@ -51,10 +52,9 @@ export const doGet = (endpoint, token, requestsDispatch) => {
                         reject(txt)
                     });
                 }
-                requestsDispatch(requestDone());
             })
             .catch(error => {
-                requestsDispatch(requestFailed(error));
+                requestsDispatch(requestFailed(error.message));
                 reject(error.message);
             })
     });
@@ -66,18 +66,42 @@ export const doDelete = (endpoint, token, requestsDispatch) => {
         const requestOptions = getHeaders('DELETE', token);
         fetch(`${backendUrl}/${endpoint}`, requestOptions)
             .then(res => {
+                requestsDispatch(requestDone());
                 if (res.ok) {
                     resolve();
-                } else {
-                    res.text().then(txt => {
-                        requestsDispatch(requestFailed(txt));
-                        reject(txt)
-                    });
+                    return
                 }
-                requestsDispatch(requestDone());
+                res.text().then(txt => {
+                    requestsDispatch(requestFailed(txt));
+                    reject(txt)
+                });
             })
             .catch(error => {
-                requestsDispatch(requestFailed(error));
+                requestsDispatch(requestFailed(error.message));
+                reject(error.message);
+            })
+    });
+}
+
+export const doPost = (endpoint, body, token, requestsDispatch) => {
+    return new Promise((resolve, reject) => {
+        requestsDispatch(requestPending());
+        const requestOptions = getHeaders('POST', token);
+        requestOptions.body = JSON.stringify(body);
+        fetch(`${backendUrl}/${endpoint}`, requestOptions)
+            .then(res => {
+                requestsDispatch(requestDone());
+                res.text().then(txt => {
+                    if (res.ok) {
+                        resolve(txt);
+                        return
+                    }
+                    requestsDispatch(requestFailed(txt));
+                    reject(txt)
+                });
+            })
+            .catch(error => {
+                requestsDispatch(requestFailed(error.message));
                 reject(error.message);
             })
     });

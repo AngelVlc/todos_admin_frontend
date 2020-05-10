@@ -4,6 +4,7 @@ import { PrivateRoute } from '../../routers';
 import { HomePage } from '../HomePage';
 import { LoginPage } from '../LoginPage';
 import { UserDeletePage } from '../UserDeletePage';
+import { UserPage } from '../UserPage';
 import { Header } from '../Header';
 import { createBrowserHistory } from "history";
 import { authReducer, requestsReducer } from '../../reducers';
@@ -38,7 +39,9 @@ const App = () => {
         }
         <Switch>
           <PrivateRoute exact path="/" component={HomePage} />
-          <PrivateRoute path="/user/:userId/delete" component={UserDeletePage} pr={999} />
+          <PrivateRoute path="/user/:userId/delete" component={UserDeletePage} />
+          <PrivateRoute path="/user/:userId/edit" component={UserPage} />
+          <PrivateRoute path="/user/new" component={UserPage} />
           <Route path="/login">
             <LoginPage />
           </Route>

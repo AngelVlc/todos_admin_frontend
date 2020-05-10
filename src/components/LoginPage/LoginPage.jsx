@@ -64,12 +64,9 @@ export const LoginPage = () => {
                 {formik.touched.password && formik.errors.password ? (
                     <div>{formik.errors.password}</div>
                 ) : null}
-                {formik.errors.general ? (
-                    <div>{formik.errors.general}</div>
-                ) : null}
                 {authError ? (
                     <div>{authError}</div>
-                ) :  null               }
+                ) : null}
                 <button type="submit">Log In</button>
             </form>
         </div>
