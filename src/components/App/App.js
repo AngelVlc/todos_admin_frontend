@@ -3,6 +3,7 @@ import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import { PrivateRoute } from '../../routers';
 import { HomePage } from '../HomePage';
 import { LoginPage } from '../LoginPage';
+import { UserDeletePage } from '../UserDeletePage';
 import { Header } from '../Header';
 import { createBrowserHistory } from "history";
 import { authReducer, requestsReducer } from '../../reducers';
@@ -37,7 +38,10 @@ const App = () => {
         }
         <Switch>
           <PrivateRoute exact path="/" component={HomePage} />
-          <Route path="/login" component={LoginPage} />
+          <PrivateRoute path="/user/:userId/delete" component={UserDeletePage} pr={999} />
+          <Route path="/login">
+            <LoginPage />
+          </Route>
           <Redirect from="*" to="/" />
         </Switch>
       </Router>
