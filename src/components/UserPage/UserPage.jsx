@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { AppContext } from '../../contexts/AppContext';
-import { doPost } from '../../helpers/api';
+import { doPost, doPut } from '../../helpers/api';
 import * as Yup from 'yup';
 
 export const UserPage = (props) => {
@@ -37,10 +37,17 @@ export const UserPage = (props) => {
                 .required('Required')
         }),
         onSubmit: values => {
-            doPost(postUrl, values, auth.info.token, requestsDispatch)
-                .then(() => {
-                    history.push(returnUrl);
-                })
+            if (!state) {
+                doPost(postUrl, values, auth.info.token, requestsDispatch)
+                    .then(() => {
+                        history.push(returnUrl);
+                    })
+            } else {
+                doPut(postUrl, values, auth.info.token, requestsDispatch)
+                    .then(() => {
+                        history.push(returnUrl);
+                    })
+            }
         }
     });
 

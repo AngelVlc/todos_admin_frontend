@@ -106,3 +106,29 @@ export const doPost = (endpoint, body, token, requestsDispatch) => {
             })
     });
 }
+
+export const doPut = (endpoint, body, token, requestsDispatch) => {
+    return new Promise((resolve, reject) => {
+        requestsDispatch(requestPending());
+        const requestOptions = getHeaders('PUT', token);
+        requestOptions.body = JSON.stringify(body);
+        fetch(`${backendUrl}/${endpoint}`, requestOptions)
+            .then(res => {
+                requestsDispatch(requestDone());
+                if (res.ok) {
+                    res.json().then(obj => {
+                        resolve(obj);
+                    })
+                } else {
+                    res.text().then(txt => {
+                        requestsDispatch(requestFailed(txt));
+                        reject(txt)
+                    });
+                }
+            })
+            .catch(error => {
+                requestsDispatch(requestFailed(error.message));
+                reject(error.message);
+            })
+    });
+}
