@@ -9,11 +9,12 @@ export const HomePage = () => {
   let history = useHistory();
 
   useEffect(() => {
+    const getUsers = async() => {
+      const res = await doGet('users', auth.info.token, requestsDispatch)
+      setUsers(res);
+    }
     if (auth.info) {
-      doGet('users', auth.info.token, requestsDispatch)
-        .then(res => {
-          setUsers(res);
-        })
+      getUsers();
     }
   }, [auth.info, requestsDispatch]);
 
@@ -27,8 +28,8 @@ export const HomePage = () => {
             {user.isAdmin &&
               <span>[Admin]</span>
             }
-            <Link to={{ pathname: `/user/${user.id}/edit`, state: { userName: user.name, isAdmin: user.isAdmin, returnUrl: "/" } }}>Edit</Link>
-            <Link to={{ pathname: `/user/${user.id}/delete`, state: { userName: user.name, isAdmin: user.isAdmin, returnUrl: "/" } }}>Delete</Link>
+            <Link to={`/user/${user.id}/edit`}>Edit</Link>
+            <Link to={`/user/${user.id}/delete`}>Delete</Link>
           </li>
         ))
         }

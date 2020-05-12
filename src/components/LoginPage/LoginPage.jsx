@@ -24,16 +24,15 @@ export const LoginPage = () => {
             password: Yup.string()
                 .required('Required'),
         }),
-        onSubmit: values => {
-            doGetToken(values, requestsDispatch)
-                .then(res => {
-                    const tokenInfo = jwt(res.token);
-                    authDispatch(userLoggedIn(res, tokenInfo));
-                    history.push('/');
-                })
-                .catch(error => {
-                    setAuthError(error);
-                })
+        onSubmit: async (values) => {
+            try {
+                const res = await doGetToken(values, requestsDispatch);
+                const tokenInfo = jwt(res.token);
+                authDispatch(userLoggedIn(res, tokenInfo));
+                history.push('/');
+            } catch (error) {
+                setAuthError(error);
+            }
         },
     });
 
