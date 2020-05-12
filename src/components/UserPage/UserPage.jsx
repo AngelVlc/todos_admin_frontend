@@ -36,18 +36,13 @@ export const UserPage = (props) => {
             name: Yup.string()
                 .required('Required')
         }),
-        onSubmit: values => {
+        onSubmit: async (values) => {
             if (!state) {
-                doPost(postUrl, values, auth.info.token, requestsDispatch)
-                    .then(() => {
-                        history.push(returnUrl);
-                    })
+                await doPost(postUrl, values, auth.info.token, requestsDispatch)
             } else {
-                doPut(postUrl, values, auth.info.token, requestsDispatch)
-                    .then(() => {
-                        history.push(returnUrl);
-                    })
+                await doPut(postUrl, values, auth.info.token, requestsDispatch)
             }
+            history.push(returnUrl);
         }
     });
 

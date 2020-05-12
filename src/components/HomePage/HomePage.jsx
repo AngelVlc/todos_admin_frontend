@@ -9,11 +9,12 @@ export const HomePage = () => {
   let history = useHistory();
 
   useEffect(() => {
+    const getUsers = async() => {
+      const res = await doGet('users', auth.info.token, requestsDispatch)
+      setUsers(res);
+    }
     if (auth.info) {
-      doGet('users', auth.info.token, requestsDispatch)
-        .then(res => {
-          setUsers(res);
-        })
+      getUsers();
     }
   }, [auth.info, requestsDispatch]);
 

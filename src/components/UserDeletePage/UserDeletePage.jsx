@@ -10,11 +10,9 @@ export const UserDeletePage = (props) => {
 
   const state = props.location.state;
 
-  const deleteUser = () => {
-    doDelete(`users/${userId}`, auth.info.token, requestsDispatch)
-      .then(() => {
-        history.push(state.returnUrl);
-      })
+  const deleteUser = async () => {
+    await doDelete(`users/${userId}`, auth.info.token, requestsDispatch)
+    history.push(state.returnUrl);
   }
 
   return (
