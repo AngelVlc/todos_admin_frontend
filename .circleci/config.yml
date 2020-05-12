@@ -30,7 +30,7 @@ jobs:
     steps:
       - checkout
       - run: make build
-      # - run: make test
+      - run: make test-ci
       - install_terraform
       - init_terraform
       - run: cd terraform && terraform plan -var heroku_username=$HEROKU_USERNAME -var heroku_api_key=$HEROKU_API_KEY -var app_name=$APP_NAME
