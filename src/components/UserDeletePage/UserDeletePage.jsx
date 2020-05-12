@@ -1,25 +1,38 @@
-import React, { useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { AppContext } from '../../contexts/AppContext';
-import { doDelete } from '../../helpers/api';
+import { doGet, doDelete } from '../../helpers/api';
 
-export const UserDeletePage = (props) => {
+export const UserDeletePage = () => {
   const { auth, requestsDispatch } = useContext(AppContext)
+  const [user, setUser] = useState(null);
   let { userId } = useParams();
   let history = useHistory();
 
-  const state = props.location.state;
+  useEffect(() => {
+    const getUser = async () => {
+      const res = await doGet(`users/${userId}`, auth.info.token, requestsDispatch)
+      setUser(res);
+    }
+    if (auth.info) {
+      getUser();
+    }
+  }, [userId, auth.info, requestsDispatch]);
 
   const deleteUser = async () => {
     await doDelete(`users/${userId}`, auth.info.token, requestsDispatch)
-    history.push(state.returnUrl);
+    history.goBack();
   }
 
   return (
     <>
-      <h4>{`Delete user '${state.userName}' (is admin: ${state.isAdmin})?`}</h4>
-      <button onClick={() => deleteUser()}>YES</button>
-      <button onClick={() => history.push(state.returnUrl)}>NO</button>
+      {user &&
+        <>
+          <h4>{`Delete user '${user.name}' (is admin: ${user.isAdmin})?`}</h4>
+          <button onClick={() => deleteUser()}>YES</button>
+          <button onClick={() => history.goBack()}>NO</button>
+        </>
+      }
     </>
   );
 }

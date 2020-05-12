@@ -1,27 +1,35 @@
-import React, { useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { AppContext } from '../../contexts/AppContext';
-import { doPost, doPut } from '../../helpers/api';
+import { doPost, doPut, doGet } from '../../helpers/api';
 import * as Yup from 'yup';
 
 export const UserPage = (props) => {
     const { auth, requestsDispatch } = useContext(AppContext)
     let { userId } = useParams();
     let history = useHistory();
+    const [user, setUser] = useState(null);
 
-    const state = props.location.state;
-    var returnUrl = '/'
+    useEffect(() => {
+        const getUser = async () => {
+            const res = await doGet(`users/${userId}`, auth.info.token, requestsDispatch)
+            setUser(res);
+        }
+        if (auth.info && userId) {
+            getUser();
+        }
+    }, [userId, auth.info, requestsDispatch]);
+
     var title = 'New user'
     var submintBtnText = 'CREATE'
-    var userName = ''
-    var isAdmin = false
     var postUrl = 'users'
-    if (state) {
-        returnUrl = state.returnUrl;
-        title = `Edit user '${state.userName}' (is admin: ${state.isAdmin})`
+    var userName, isAdmin = ''
+    if (user) {
+        userName = user.name
+        isAdmin = user.isAdmin;
+        title = `Edit user '${userName}' (is admin: ${isAdmin})`
         submintBtnText = 'SAVE';
-        ({ userName, isAdmin } = state);
         postUrl = `users/${userId}`;
     }
 
@@ -37,17 +45,18 @@ export const UserPage = (props) => {
                 .required('Required')
         }),
         onSubmit: async (values) => {
-            if (!state) {
+            if (!user) {
                 await doPost(postUrl, values, auth.info.token, requestsDispatch)
             } else {
                 await doPut(postUrl, values, auth.info.token, requestsDispatch)
             }
-            history.push(returnUrl);
+            history.goBack();
         }
     });
 
     return (
         <>
+            <p>{userName}</p>
             <h4>{title}</h4>
             <form onSubmit={formik.handleSubmit}>
                 <label htmlFor="name">Name</label>
@@ -57,6 +66,7 @@ export const UserPage = (props) => {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.name}
+                    autoComplete="off"
                 />
                 {formik.touched.name && formik.errors.name ? (
                     <div>{formik.errors.name}</div>
@@ -69,6 +79,7 @@ export const UserPage = (props) => {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.newPassword}
+                    autoComplete="off"
                 />
                 {formik.touched.newPassword && formik.errors.newPassword ? (
                     <div>{formik.errors.newPassword}</div>
@@ -81,6 +92,7 @@ export const UserPage = (props) => {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.confirmNewPassword}
+                    autoComplete="off"
                 />
                 <label htmlFor="isAdmin">Is Admin</label>
                 <input
@@ -92,7 +104,8 @@ export const UserPage = (props) => {
                     checked={formik.values.isAdmin}
                 />
                 <button type="submit">{submintBtnText}</button>
-                <button onClick={() => history.push(returnUrl)}>CANCEL</button>
+                <button type="button" onClick={() => history.push(`/user/${userId}/delete`)}>DELETE</button>
+                <button type="button" onClick={() => history.goBack()}>CANCEL</button>
             </form>
         </>
     )
