@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should match the snapshot when the user is logged in 1`] = `
+<DocumentFragment>
+  <header
+    class="Header"
+  >
+    <h1>
+      To Dos Admin
+    </h1>
+    <h4>
+      User: user
+    </h4>
+    <button
+      data-testid="logOut"
+    >
+      Log out
+    </button>
+  </header>
+</DocumentFragment>
+`;
+
+exports[`should match the snapshot when the user is not logged in 1`] = `
+<DocumentFragment>
+  <header
+    class="Header"
+  >
+    <h1>
+      To Dos Admin
+    </h1>
+  </header>
+</DocumentFragment>
+`;

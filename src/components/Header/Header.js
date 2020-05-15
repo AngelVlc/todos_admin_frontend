@@ -16,7 +16,7 @@ export const Header = () => {
             {auth.info &&
                 <>
                     <h4>User: {auth.info.userName}</h4>
-                    <button onClick={() => logoutClick(authDispatch)}>Log out</button>
+                    <button data-testid="logOut" onClick={() => logoutClick(authDispatch)}>Log out</button>
                 </>
             }
         </header>
