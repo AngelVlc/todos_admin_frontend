@@ -47,9 +47,10 @@ export const LoginPage = () => {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.userName}
+                    data-testid="userName"
                 />
                 {formik.touched.userName && formik.errors.userName ? (
-                    <div>{formik.errors.userName}</div>
+                    <div data-testid="userNameErrors">{formik.errors.userName}</div>
                 ) : null}
                 <label htmlFor="password">Password</label>
                 <input
@@ -59,14 +60,15 @@ export const LoginPage = () => {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.password}
+                    data-testid="password"
                 />
                 {formik.touched.password && formik.errors.password ? (
-                    <div>{formik.errors.password}</div>
+                    <div data-testid="passwordErrors">{formik.errors.password}</div>
                 ) : null}
                 {authError ? (
-                    <div>{authError}</div>
+                    <div data-testid="authError">{authError}</div>
                 ) : null}
-                <button type="submit">Log In</button>
+                <button type="submit" data-testid="submit">Log In</button>
             </form>
         </div>
     );
