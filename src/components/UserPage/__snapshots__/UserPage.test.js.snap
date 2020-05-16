@@ -1,0 +1,167 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should match the snapshot for a new user 1`] = `
+<DocumentFragment>
+  <h4>
+    New user
+  </h4>
+  <form
+    action="#"
+  >
+    <label
+      for="name"
+    >
+      Name
+    </label>
+    <input
+      data-testid="name"
+      name="name"
+      type="text"
+      value=""
+    />
+    <span
+      data-testid="userNameErrors"
+    />
+    <label
+      for="newPassword"
+    >
+      Password
+    </label>
+    <input
+      data-testid="newPassword"
+      name="newPassword"
+      type="password"
+      value=""
+    />
+    <label
+      for="confirmNewPassword"
+    >
+      Confirm Password
+    </label>
+    <input
+      data-testid="confirmNewPassword"
+      name="confirmNewPassword"
+      type="password"
+      value=""
+    />
+    <label
+      for="isAdmin"
+    >
+      Is Admin
+    </label>
+    <select
+      data-testid="isAdmin"
+      name="isAdmin"
+    >
+      <option
+        value="yes"
+      >
+        Yes
+      </option>
+      <option
+        value="no"
+      >
+        No
+      </option>
+    </select>
+    <button
+      data-testid="submit"
+      type="submit"
+    >
+      CREATE
+    </button>
+    <button
+      data-testid="cancel"
+      type="button"
+    >
+      CANCEL
+    </button>
+  </form>
+</DocumentFragment>
+`;
+
+exports[`should match the snapshot for an existing user 1`] = `
+<DocumentFragment>
+  <h4>
+    Edit user 'user' (is admin: false)
+  </h4>
+  <form
+    action="#"
+  >
+    <label
+      for="name"
+    >
+      Name
+    </label>
+    <input
+      data-testid="name"
+      name="name"
+      type="text"
+      value="user"
+    />
+    <span
+      data-testid="userNameErrors"
+    />
+    <label
+      for="newPassword"
+    >
+      Password
+    </label>
+    <input
+      data-testid="newPassword"
+      name="newPassword"
+      type="password"
+      value=""
+    />
+    <label
+      for="confirmNewPassword"
+    >
+      Confirm Password
+    </label>
+    <input
+      data-testid="confirmNewPassword"
+      name="confirmNewPassword"
+      type="password"
+      value=""
+    />
+    <label
+      for="isAdmin"
+    >
+      Is Admin
+    </label>
+    <select
+      data-testid="isAdmin"
+      name="isAdmin"
+    >
+      <option
+        value="yes"
+      >
+        Yes
+      </option>
+      <option
+        value="no"
+      >
+        No
+      </option>
+    </select>
+    <button
+      data-testid="submit"
+      type="submit"
+    >
+      SAVE
+    </button>
+    <button
+      data-testid="delete"
+      type="button"
+    >
+      DELETE
+    </button>
+    <button
+      data-testid="cancel"
+      type="button"
+    >
+      CANCEL
+    </button>
+  </form>
+</DocumentFragment>
+`;
