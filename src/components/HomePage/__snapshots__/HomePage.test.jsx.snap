@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should match the snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <h4>
+      HOME PAGE
+    </h4>
+    <ul>
+      <li>
+        <span>
+          user1
+        </span>
+        <span>
+          [Admin]
+        </span>
+        <a
+          data-testid="editUser1"
+          href="/user/1/edit"
+        >
+          Edit
+        </a>
+        <a
+          data-testid="deleteUser1"
+          href="/user/1/delete"
+        >
+          Delete
+        </a>
+      </li>
+      <li>
+        <span>
+          user2
+        </span>
+        <a
+          data-testid="editUser2"
+          href="/user/2/edit"
+        >
+          Edit
+        </a>
+        <a
+          data-testid="deleteUser2"
+          href="/user/2/delete"
+        >
+          Delete
+        </a>
+      </li>
+    </ul>
+    <button
+      data-testid="addNew"
+    >
+      ADD USER
+    </button>
+  </div>
+</DocumentFragment>
+`;

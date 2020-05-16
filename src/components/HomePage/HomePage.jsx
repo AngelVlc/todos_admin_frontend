@@ -28,13 +28,13 @@ export const HomePage = () => {
             {user.isAdmin &&
               <span>[Admin]</span>
             }
-            <Link to={`/user/${user.id}/edit`}>Edit</Link>
-            <Link to={`/user/${user.id}/delete`}>Delete</Link>
+            <Link data-testid={`editUser${user.id}`} to={`/user/${user.id}/edit`}>Edit</Link>
+            <Link data-testid={`deleteUser${user.id}`} to={`/user/${user.id}/delete`}>Delete</Link>
           </li>
         ))
         }
       </ul>
-      <button onClick={() => history.push('user/new')}>ADD USER</button>
+      <button data-testid="addNew" onClick={() => history.push('user/new')}>ADD USER</button>
     </div>
   );
 }
