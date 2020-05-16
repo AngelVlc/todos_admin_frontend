@@ -29,8 +29,8 @@ export const UserDeletePage = () => {
       {user &&
         <>
           <h4>{`Delete user '${user.name}' (is admin: ${user.isAdmin})?`}</h4>
-          <button onClick={() => deleteUser()}>YES</button>
-          <button onClick={() => history.goBack()}>NO</button>
+          <button data-testid="yes" onClick={() => deleteUser()}>YES</button>
+          <button data-testid="no" onClick={() => history.goBack()}>NO</button>
         </>
       }
     </>

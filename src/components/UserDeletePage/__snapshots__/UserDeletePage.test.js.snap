@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should match the snapshot 1`] = `
+<DocumentFragment>
+  <h4>
+    Delete user 'user' (is admin: false)?
+  </h4>
+  <button
+    data-testid="yes"
+  >
+    YES
+  </button>
+  <button
+    data-testid="no"
+  >
+    NO
+  </button>
+</DocumentFragment>
+`;
