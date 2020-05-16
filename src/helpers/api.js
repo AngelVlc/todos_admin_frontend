@@ -1,10 +1,10 @@
-import { requestPending, requestDone, requestFailed } from '../actions'
+import { requestStarted, requestDone, requestFailed } from '../actions'
 
 const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5001'
 
 export const doGetToken = (loginDto, requestsDispatch) => {
     return new Promise(async (resolve, reject) => {
-        requestsDispatch(requestPending());
+        requestsDispatch(requestStarted());
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -36,7 +36,7 @@ const getHeaders = (method, token) => {
 
 export const doGet = (endpoint, token, requestsDispatch) => {
     return new Promise(async (resolve, reject) => {
-        requestsDispatch(requestPending());
+        requestsDispatch(requestStarted());
         const requestOptions = getHeaders('GET', token);
         try {
             const res = await fetch(`${backendUrl}/${endpoint}`, requestOptions)
@@ -44,11 +44,11 @@ export const doGet = (endpoint, token, requestsDispatch) => {
             if (res.ok) {
                 const obj = await res.json()
                 resolve(obj);
-            } else {
-                const txt = await res.text()
-                requestsDispatch(requestFailed(txt));
-                reject(txt)
+                return
             }
+            const txt = await res.text()
+            requestsDispatch(requestFailed(txt));
+            reject(txt);
         } catch (error) {
             requestsDispatch(requestFailed(error.message));
             reject(error.message);
@@ -58,7 +58,7 @@ export const doGet = (endpoint, token, requestsDispatch) => {
 
 export const doDelete = (endpoint, token, requestsDispatch) => {
     return new Promise(async (resolve, reject) => {
-        requestsDispatch(requestPending());
+        requestsDispatch(requestStarted());
         const requestOptions = getHeaders('DELETE', token);
         try {
             const res = await fetch(`${backendUrl}/${endpoint}`, requestOptions)
@@ -79,7 +79,7 @@ export const doDelete = (endpoint, token, requestsDispatch) => {
 
 export const doPost = (endpoint, body, token, requestsDispatch) => {
     return new Promise(async (resolve, reject) => {
-        requestsDispatch(requestPending());
+        requestsDispatch(requestStarted());
         const requestOptions = getHeaders('POST', token);
         requestOptions.body = JSON.stringify(body);
         try {
@@ -101,7 +101,7 @@ export const doPost = (endpoint, body, token, requestsDispatch) => {
 
 export const doPut = (endpoint, body, token, requestsDispatch) => {
     return new Promise(async (resolve, reject) => {
-        requestsDispatch(requestPending());
+        requestsDispatch(requestStarted());
         const requestOptions = getHeaders('PUT', token);
         requestOptions.body = JSON.stringify(body);
         try {
@@ -110,11 +110,11 @@ export const doPut = (endpoint, body, token, requestsDispatch) => {
             if (res.ok) {
                 const obj = await res.json()
                 resolve(obj);
-            } else {
-                const txt = await res.text()
-                requestsDispatch(requestFailed(txt));
-                reject(txt)
+                return
             }
+            const txt = await res.text()
+            requestsDispatch(requestFailed(txt));
+            reject(txt)
         } catch (error) {
             requestsDispatch(requestFailed(error.message));
             reject(error.message);

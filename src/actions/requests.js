@@ -3,7 +3,7 @@ export const REQUEST_DONE = 'REQUEST_DONE';
 export const REQUEST_FAILED = 'REQUEST_FAILED'
 export const REQUEST_ERROR_SHOWED = 'REQUEST_ERROR_SHOWED';
 
-export const requestPending = () => ({
+export const requestStarted = () => ({
   type: REQUEST_STARTED
 })
 

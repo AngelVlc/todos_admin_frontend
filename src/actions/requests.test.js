@@ -1,7 +1,7 @@
-import { requestPending, requestDone, requestFailed, requestErrorShowed } from './';
+import { requestStarted, requestDone, requestFailed, requestErrorShowed } from './';
 
 test('should generate request pending action', () => {
-    const action = requestPending();
+    const action = requestStarted();
 
     expect(action).toEqual({
         type: 'REQUEST_STARTED'
