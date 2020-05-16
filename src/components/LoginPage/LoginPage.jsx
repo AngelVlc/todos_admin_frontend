@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useHistory } from "react-router-dom";
-import { useFormik } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { userLoggedIn } from '../../actions'
 import { AppContext } from '../../contexts/AppContext'
 import * as Yup from 'yup';
@@ -13,63 +13,50 @@ export const LoginPage = () => {
     const [authError, setAuthError] = useState(null);
     let history = useHistory();
 
-    const formik = useFormik({
-        initialValues: {
-            userName: '',
-            password: ''
-        },
-        validationSchema: Yup.object({
-            userName: Yup.string()
-                .required('Required'),
-            password: Yup.string()
-                .required('Required'),
-        }),
-        onSubmit: async (values) => {
-            try {
-                const res = await doGetToken(values, requestsDispatch);
-                const tokenInfo = jwt(res.token);
-                authDispatch(userLoggedIn(res, tokenInfo));
-                history.push('/');
-            } catch (error) {
-                setAuthError(error);
-            }
-        },
-    });
-
     return (
-        <div>
+        <>
             <h4>LOG IN PAGE</h4>
-            <form onSubmit={formik.handleSubmit}>
-                <label htmlFor="userName">Name</label>
-                <input
-                    id="userName"
-                    name="userName"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.userName}
-                    data-testid="userName"
-                />
-                {formik.touched.userName && formik.errors.userName ? (
-                    <div data-testid="userNameErrors">{formik.errors.userName}</div>
-                ) : null}
-                <label htmlFor="password">Password</label>
-                <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.password}
-                    data-testid="password"
-                />
-                {formik.touched.password && formik.errors.password ? (
-                    <div data-testid="passwordErrors">{formik.errors.password}</div>
-                ) : null}
-                {authError ? (
-                    <div data-testid="authError">{authError}</div>
-                ) : null}
-                <button type="submit" data-testid="submit">Log In</button>
-            </form>
-        </div>
+            <Formik
+                initialValues={{
+                    userName: '',
+                    password: ''
+                }}
+                validationSchema={Yup.object({
+                    userName: Yup.string()
+                        .required('Required'),
+                    password: Yup.string()
+                        .required('Required'),
+                })
+                }
+                onSubmit={async (values) => {
+                    try {
+                        const res = await doGetToken(values, requestsDispatch);
+                        const tokenInfo = jwt(res.token);
+                        authDispatch(userLoggedIn(res, tokenInfo));
+                        history.push('/');
+                    } catch (error) {
+                        setAuthError(error);
+                    }
+                }}>
+                <Form>
+                    <label htmlFor="userName">Name</label>
+                    <Field name="userName" type="text" data-testid="userName" />
+                    <span data-testid="userNameErrors">
+                        <ErrorMessage name="userName" />
+                    </span>
+
+                    <label htmlFor="password">Password</label>
+                    <Field name="password" type="password" data-testid="password" />
+                    <span data-testid="passwordErrors">
+                        <ErrorMessage name="password" />
+                    </span>
+
+                    {authError ? (
+                        <div data-testid="authError">{authError}</div>
+                    ) : null}
+                    <button type="submit" data-testid="submit">Log In</button>
+                </Form>
+            </Formik>
+        </>
     );
 }

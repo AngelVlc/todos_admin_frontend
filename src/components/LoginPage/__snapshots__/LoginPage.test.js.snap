@@ -2,41 +2,46 @@
 
 exports[`should match the snapshot 1`] = `
 <DocumentFragment>
-  <div>
-    <h4>
-      LOG IN PAGE
-    </h4>
-    <form>
-      <label
-        for="userName"
-      >
-        Name
-      </label>
-      <input
-        data-testid="userName"
-        id="userName"
-        name="userName"
-        value=""
-      />
-      <label
-        for="password"
-      >
-        Password
-      </label>
-      <input
-        data-testid="password"
-        id="password"
-        name="password"
-        type="password"
-        value=""
-      />
-      <button
-        data-testid="submit"
-        type="submit"
-      >
-        Log In
-      </button>
-    </form>
-  </div>
+  <h4>
+    LOG IN PAGE
+  </h4>
+  <form
+    action="#"
+  >
+    <label
+      for="userName"
+    >
+      Name
+    </label>
+    <input
+      data-testid="userName"
+      name="userName"
+      type="text"
+      value=""
+    />
+    <span
+      data-testid="userNameErrors"
+    />
+    <label
+      for="password"
+    >
+      Password
+    </label>
+    <input
+      data-testid="password"
+      name="password"
+      type="password"
+      value=""
+    />
+    <span
+      data-testid="passwordErrors"
+    />
+    <button
+      data-testid="submit"
+      type="submit"
+    >
+      Log In
+    </button>
+  </form>
 </DocumentFragment>
 `;
