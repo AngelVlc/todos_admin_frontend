@@ -118,7 +118,7 @@ export const UserPage = (props) => {
                         </p>
                         {!pageState.isNew &&
                             <p className="control">
-                                <button className="button is-danger" data-testid="delete" type="button" onClick={() => history.push(`/user/${userId}/delete`)}>DELETE</button>
+                                <button className="button is-danger" data-testid="delete" type="button" onClick={() => history.push(`/users/${userId}/delete`)}>DELETE</button>
                             </p>
                         }
                     </div>

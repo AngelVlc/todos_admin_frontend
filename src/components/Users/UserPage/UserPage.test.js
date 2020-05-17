@@ -28,8 +28,8 @@ const renderWithContextAndRouterForExistingUser = (component) => {
     return {
         ...render(
             <AppContext.Provider value={context}>
-                <MemoryRouter initialEntries={[`/user/2/edit`]}>
-                    <Route path="/user/:userId/edit">
+                <MemoryRouter initialEntries={[`/users/2/edit`]}>
+                    <Route path="/users/:userId/edit">
                         {component}
                     </Route>
                 </MemoryRouter>
@@ -42,8 +42,8 @@ const renderWithContextAndRouterForNewUser = (component) => {
     return {
         ...render(
             <AppContext.Provider value={context}>
-                <MemoryRouter initialEntries={[`/user/new`]}>
-                    <Route path="/user/new">
+                <MemoryRouter initialEntries={[`/users/new`]}>
+                    <Route path="/users/new">
                         {component}
                     </Route>
                 </MemoryRouter>
@@ -78,7 +78,7 @@ it('should allow delete an existing user', async () => {
     })
 
     expect(mockHistoryPush.mock.calls.length).toBe(1);
-    expect(mockHistoryPush.mock.calls[0][0]).toBe('/user/2/delete');
+    expect(mockHistoryPush.mock.calls[0][0]).toBe('/users/2/delete');
     mockHistoryPush.mockClear();
 });
 

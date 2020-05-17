@@ -26,8 +26,8 @@ const renderWithContextAndRouter = (component) => {
     return {
         ...render(
             <AppContext.Provider value={context}>
-                <MemoryRouter initialEntries={[`/user/2/delete`]}>
-                    <Route path="/user/:userId/delete">
+                <MemoryRouter initialEntries={[`/users/2/delete`]}>
+                    <Route path="/users/:userId/delete">
                         {component}
                     </Route>
                 </MemoryRouter>

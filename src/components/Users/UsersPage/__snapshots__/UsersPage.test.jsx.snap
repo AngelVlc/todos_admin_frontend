@@ -43,7 +43,7 @@ exports[`should match the snapshot 1`] = `
             <a
               class="has-text-black"
               data-testid="editUser1"
-              href="/user/1/edit"
+              href="/users/1/edit"
             >
               user1
             </a>
@@ -64,7 +64,7 @@ exports[`should match the snapshot 1`] = `
               <a
                 class="has-text-black"
                 data-testid="deleteUser1"
-                href="/user/1/delete"
+                href="/users/1/delete"
               >
                 <span
                   class="icon is-small"
@@ -82,7 +82,7 @@ exports[`should match the snapshot 1`] = `
             <a
               class="has-text-black"
               data-testid="editUser2"
-              href="/user/2/edit"
+              href="/users/2/edit"
             >
               user2
             </a>
@@ -93,7 +93,7 @@ exports[`should match the snapshot 1`] = `
               <a
                 class="has-text-black"
                 data-testid="deleteUser2"
-                href="/user/2/delete"
+                href="/users/2/delete"
               >
                 <span
                   class="icon is-small"

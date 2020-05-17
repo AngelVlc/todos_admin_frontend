@@ -1,13 +1,15 @@
 import React from 'react'
 import { render, cleanup, fireEvent, wait } from '@testing-library/react'
-import { HomePage } from './HomePage'
-import { AppContext } from '../../contexts/AppContext'
+import { UsersPage } from './UsersPage'
+import { AppContext } from '../../../contexts/AppContext'
 import { createMemoryHistory } from 'history'
-import * as api from '../../helpers/api';
+import * as api from '../../../helpers/api';
 import { Router } from 'react-router-dom'
 import { act } from 'react-dom/test-utils';
 
-jest.mock('../../helpers/api');
+afterEach(cleanup)
+
+jest.mock('../../../helpers/api');
 const mockHistoryPush = jest.fn();
 
 jest.mock('react-router-dom', () => ({
@@ -40,16 +42,16 @@ const renderWithContextAndRouter = (component) => {
 it('should match the snapshot', async () => {
     let fragment;
     await act(async () => {
-        const { asFragment } = renderWithContextAndRouter(<HomePage />);
+        const { asFragment } = renderWithContextAndRouter(<UsersPage />);
         fragment = asFragment;
     });
-    expect(fragment(<HomePage />)).toMatchSnapshot();
+    expect(fragment(<UsersPage />)).toMatchSnapshot();
 });
 
 it('should add a new user', async () => {
     let container;
     await act(async () => {
-        container = renderWithContextAndRouter(<HomePage />);
+        container = renderWithContextAndRouter(<UsersPage />);
     });
 
     await wait(() => {
@@ -57,32 +59,32 @@ it('should add a new user', async () => {
     })
 
     expect(mockHistoryPush.mock.calls.length).toBe(1);
-    expect(mockHistoryPush.mock.calls[0][0]).toBe('user/new');
+    expect(mockHistoryPush.mock.calls[0][0]).toBe('users/new');
     mockHistoryPush.mockClear();
 });
 
 it('should edit the user', async () => {
     let container;
     await act(async () => {
-        container = renderWithContextAndRouter(<HomePage />);
+        container = renderWithContextAndRouter(<UsersPage />);
     });
 
     await wait(() => {
         fireEvent.click(container.getByTestId('editUser2'));
     })
 
-    expect(history.location.pathname).toBe('/user/2/edit');
+    expect(history.location.pathname).toBe('/users/2/edit');
 });
 
 it('should delete the user', async () => {
     let container;
     await act(async () => {
-        container = renderWithContextAndRouter(<HomePage />);
+        container = renderWithContextAndRouter(<UsersPage />);
     });
 
     await wait(() => {
         fireEvent.click(container.getByTestId('deleteUser2'));
     })
 
-    expect(history.location.pathname).toBe('/user/2/delete');
+    expect(history.location.pathname).toBe('/users/2/delete');
 });
