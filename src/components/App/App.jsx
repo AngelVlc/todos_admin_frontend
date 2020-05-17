@@ -34,7 +34,7 @@ const App = () => {
       <Router history={history}>
         <Header />
         {request.pending &&
-          <div className="loader">
+          <div className="reactLoader">
             <Loader type="Circles" color="#282c34" height="100" width="100" />
           </div>
         }
