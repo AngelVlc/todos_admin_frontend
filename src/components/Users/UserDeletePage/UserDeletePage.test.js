@@ -1,12 +1,12 @@
 import React from 'react'
 import { render, cleanup, fireEvent, wait } from '@testing-library/react'
 import { UserDeletePage } from './UserDeletePage'
-import { AppContext } from '../../contexts/AppContext'
-import * as api from '../../helpers/api';
+import { AppContext } from '../../../contexts/AppContext'
+import * as api from '../../../helpers/api';
 import { MemoryRouter, Route } from 'react-router-dom'
 import { act } from 'react-dom/test-utils';
 
-jest.mock('../../helpers/api');
+jest.mock('../../../helpers/api');
 const mockHistoryGoBack = jest.fn();
 
 jest.mock('react-router-dom', () => ({
