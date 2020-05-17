@@ -21,7 +21,9 @@ commands:
     - run: export PATH="~/bin:$PATH"
   init_terraform:
     steps:
-    - run: cd terraform && terraform init -input=false -backend-config="conn_str=$TERRAFORM_BACKEND"
+      - run: cd terraform && TF_WORKSPACE=default terraform init -input=false -backend-config="conn_str=$TERRAFORM_BACKEND" || true
+      - run: cd terraform && terraform workspace new default || true
+      - run: cd terraform && echo '1' | terraform init -input=false -backend-config="conn_str=$TERRAFORM_BACKEND"
 
 jobs:
   test:
