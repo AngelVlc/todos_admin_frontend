@@ -2,46 +2,77 @@
 
 exports[`should match the snapshot 1`] = `
 <DocumentFragment>
-  <h4>
-    LOG IN PAGE
-  </h4>
-  <form
-    action="#"
+  <div
+    class="container"
   >
-    <label
-      for="userName"
+    <h3
+      class="title"
     >
-      Name
-    </label>
-    <input
-      data-testid="userName"
-      name="userName"
-      type="text"
-      value=""
-    />
-    <span
-      data-testid="userNameErrors"
-    />
-    <label
-      for="password"
+      LOG IN
+    </h3>
+    <form
+      action="#"
     >
-      Password
-    </label>
-    <input
-      data-testid="password"
-      name="password"
-      type="password"
-      value=""
-    />
-    <span
-      data-testid="passwordErrors"
-    />
-    <button
-      data-testid="submit"
-      type="submit"
-    >
-      Log In
-    </button>
-  </form>
+      <div
+        class="field"
+      >
+        <label
+          class="label"
+          for="userName"
+        >
+          Name
+        </label>
+        <div
+          class="control"
+        >
+          <input
+            data-testid="userName"
+            name="userName"
+            type="text"
+            value=""
+          />
+        </div>
+        <p
+          class="help is-danger"
+          data-testid="userNameErrors"
+        />
+      </div>
+      <div
+        class="field"
+      >
+        <label
+          class="label"
+          for="password"
+        >
+          Password
+        </label>
+        <div
+          class="control"
+        >
+          <input
+            data-testid="password"
+            name="password"
+            type="password"
+            value=""
+          />
+        </div>
+        <p
+          class="help is-danger"
+          data-testid="passwordErrors"
+        />
+      </div>
+      <div
+        class="control"
+      >
+        <button
+          class="button"
+          data-testid="submit"
+          type="submit"
+        >
+          Log In
+        </button>
+      </div>
+    </form>
+  </div>
 </DocumentFragment>
 `;

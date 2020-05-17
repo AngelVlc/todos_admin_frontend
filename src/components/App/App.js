@@ -37,16 +37,18 @@ const App = () => {
             <Loader type="Circles" color="#282c34" height="100" width="100" />
           </div>
         }
-        <Switch>
-          <PrivateRoute exact path="/" component={HomePage} />
-          <PrivateRoute path="/user/:userId/delete" component={UserDeletePage} />
-          <PrivateRoute path="/user/:userId/edit" component={UserPage} />
-          <PrivateRoute path="/user/new" component={UserPage} />
-          <Route path="/login">
-            <LoginPage />
-          </Route>
-          <Redirect from="*" to="/" />
-        </Switch>
+        <section className="section">
+          <Switch>
+            <PrivateRoute exact path="/" component={HomePage} />
+            <PrivateRoute path="/user/:userId/delete" component={UserDeletePage} />
+            <PrivateRoute path="/user/:userId/edit" component={UserPage} />
+            <PrivateRoute path="/user/new" component={UserPage} />
+            <Route path="/login">
+              <LoginPage />
+            </Route>
+            <Redirect from="*" to="/" />
+          </Switch>
+        </section>
       </Router>
     </AppContext.Provider>
   );

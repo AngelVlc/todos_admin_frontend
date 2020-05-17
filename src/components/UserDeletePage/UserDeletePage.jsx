@@ -12,7 +12,15 @@ export const UserDeletePage = () => {
   useEffect(() => {
     const getUser = async () => {
       const res = await doGet(`users/${userId}`, auth.info.token, requestsDispatch)
-      setUser(res);
+      let title = `Delete user ${res.name}`
+      if (res.isAdmin) {
+        title = `Delete admin user '${res.name}'?`
+      }
+      const info = {
+        ...res,
+        title: title
+      }
+      setUser(info);
     }
     if (auth.info) {
       getUser();
@@ -27,11 +35,13 @@ export const UserDeletePage = () => {
   return (
     <>
       {user &&
-        <>
-          <h4>{`Delete user '${user.name}' (is admin: ${user.isAdmin})?`}</h4>
-          <button data-testid="yes" onClick={() => deleteUser()}>YES</button>
-          <button data-testid="no" onClick={() => history.goBack()}>NO</button>
-        </>
+        <div className="container">
+          <h3 className="title">{user.title}</h3>
+          <div className="buttons">
+            <button className="button is-danger" data-testid="yes" onClick={() => deleteUser()}>YES</button>
+            <button className="button" data-testid="no" onClick={() => history.goBack()}>NO</button>
+          </div>
+        </div>
       }
     </>
   );

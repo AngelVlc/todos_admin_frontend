@@ -2,54 +2,112 @@
 
 exports[`should match the snapshot 1`] = `
 <DocumentFragment>
-  <div>
-    <h4>
-      HOME PAGE
-    </h4>
-    <ul>
-      <li>
-        <span>
-          user1
-        </span>
-        <span>
-          [Admin]
-        </span>
-        <a
-          data-testid="editUser1"
-          href="/user/1/edit"
-        >
-          Edit
-        </a>
-        <a
-          data-testid="deleteUser1"
-          href="/user/1/delete"
-        >
-          Delete
-        </a>
-      </li>
-      <li>
-        <span>
-          user2
-        </span>
-        <a
-          data-testid="editUser2"
-          href="/user/2/edit"
-        >
-          Edit
-        </a>
-        <a
-          data-testid="deleteUser2"
-          href="/user/2/delete"
-        >
-          Delete
-        </a>
-      </li>
-    </ul>
-    <button
-      data-testid="addNew"
+  <div
+    class="container"
+  >
+    <h3
+      class="title"
     >
-      ADD USER
-    </button>
+      USERS
+    </h3>
+    <table
+      class="table"
+    >
+      <thead>
+        <tr>
+          <td>
+            User
+          </td>
+          <td>
+            Admin?
+          </td>
+          <td>
+            <button
+              class="button is-small"
+              data-testid="addNew"
+            >
+              <span
+                class="icon is-small"
+              >
+                <i
+                  class="fas fa-plus"
+                />
+              </span>
+            </button>
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <a
+              class="has-text-black"
+              data-testid="editUser1"
+              href="/user/1/edit"
+            >
+              user1
+            </a>
+          </td>
+          <td>
+            <center>
+              <span
+                class="icon is-small"
+              >
+                <i
+                  class="fas fa-check fa-xs"
+                />
+              </span>
+            </center>
+          </td>
+          <td>
+            <center>
+              <a
+                class="has-text-black"
+                data-testid="deleteUser1"
+                href="/user/1/delete"
+              >
+                <span
+                  class="icon is-small"
+                >
+                  <i
+                    class="fas fa-trash-alt fa-xs"
+                  />
+                </span>
+              </a>
+            </center>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <a
+              class="has-text-black"
+              data-testid="editUser2"
+              href="/user/2/edit"
+            >
+              user2
+            </a>
+          </td>
+          <td />
+          <td>
+            <center>
+              <a
+                class="has-text-black"
+                data-testid="deleteUser2"
+                href="/user/2/delete"
+              >
+                <span
+                  class="icon is-small"
+                >
+                  <i
+                    class="fas fa-trash-alt fa-xs"
+                  />
+                </span>
+              </a>
+            </center>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </DocumentFragment>
 `;

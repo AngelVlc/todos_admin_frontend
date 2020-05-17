@@ -2,32 +2,63 @@
 
 exports[`should match the snapshot when the user is logged in 1`] = `
 <DocumentFragment>
-  <header
-    class="Header"
+  <nav
+    class="navbar is-dark"
   >
-    <h1>
-      To Dos Admin
-    </h1>
-    <h4>
-      User: user
-    </h4>
-    <button
-      data-testid="logOut"
+    <div
+      class="navbar-brand"
     >
-      Log out
-    </button>
-  </header>
+      <span
+        class="navbar-item is-size-3"
+      >
+        To Dos Admin
+      </span>
+    </div>
+    <div
+      class="navbar-end"
+    >
+      <div
+        class="navbar-item"
+      >
+        <div
+          class="buttons"
+        >
+          <button
+            class="button is-light is-small"
+            data-testid="logOut"
+          >
+            <span>
+              user
+            </span>
+            <span
+              class="icon is-small"
+            >
+              <i
+                class="fas fa-sign-out-alt"
+              />
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
 </DocumentFragment>
 `;
 
 exports[`should match the snapshot when the user is not logged in 1`] = `
 <DocumentFragment>
-  <header
-    class="Header"
+  <nav
+    class="navbar is-dark"
   >
-    <h1>
-      To Dos Admin
-    </h1>
-  </header>
+    <div
+      class="navbar-brand"
+    >
+      <span
+        class="navbar-item is-size-3"
+      >
+        To Dos Admin
+      </span>
+    </div>
+  </nav>
 </DocumentFragment>
 `;

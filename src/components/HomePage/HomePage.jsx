@@ -9,7 +9,7 @@ export const HomePage = () => {
   let history = useHistory();
 
   useEffect(() => {
-    const getUsers = async() => {
+    const getUsers = async () => {
       const res = await doGet('users', auth.info.token, requestsDispatch)
       setUsers(res);
     }
@@ -19,22 +19,51 @@ export const HomePage = () => {
   }, [auth.info, requestsDispatch]);
 
   return (
-    <div>
-      <h4>HOME PAGE</h4>
-      <ul>
-        {users.length > 0 && users.map((user) => (
-          <li key={user.id}>
-            <span>{user.name}</span>
-            {user.isAdmin &&
-              <span>[Admin]</span>
-            }
-            <Link data-testid={`editUser${user.id}`} to={`/user/${user.id}/edit`}>Edit</Link>
-            <Link data-testid={`deleteUser${user.id}`} to={`/user/${user.id}/delete`}>Delete</Link>
-          </li>
-        ))
-        }
-      </ul>
-      <button data-testid="addNew" onClick={() => history.push('user/new')}>ADD USER</button>
+    <div className="container">
+      <h3 className="title">USERS</h3>
+      <table className="table">
+        <thead>
+          <tr>
+            <td>User</td>
+            <td>Admin?</td>
+            <td>
+              <button className="button is-small" data-testid="addNew" onClick={() => history.push('user/new')}>
+                <span className="icon is-small">
+                  <i className="fas fa-plus"></i>
+                </span>
+              </button>
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          {users.length > 0 && users.map((user) => (
+            <tr key={user.id}>
+              <td>
+                <Link className="has-text-black" data-testid={`editUser${user.id}`} to={`/user/${user.id}/edit`}>{user.name}</Link>
+              </td>
+              <td>
+                {user.isAdmin &&
+                  <center>
+                    <span className="icon is-small">
+                      <i className="fas fa-check fa-xs"></i>
+                    </span>
+                  </center>
+                }
+              </td>
+              <td>
+                <center>
+                  <Link className="has-text-black" data-testid={`deleteUser${user.id}`} to={`/user/${user.id}/delete`}>
+                    <span className="icon is-small">
+                      <i className="fas fa-trash-alt fa-xs"></i>
+                    </span>
+                  </Link>
+                </center>
+              </td>
+            </tr>
+          ))
+          }
+        </tbody>
+      </table>
     </div>
   );
 }

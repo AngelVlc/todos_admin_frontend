@@ -24,8 +24,13 @@ export const UserPage = (props) => {
         const getExistingUser = async () => {
             const user = await doGet(`users/${userId}`, auth.info.token, requestsDispatch)
 
+            let title = `Edit user '${user.name}'`
+            if (user.IsAdmin) {
+                title = `Edit admin user '${user.name}'`
+            }
+
             setPageState({
-                title: `Edit user '${user.name}' (is admin: ${user.isAdmin})`,
+                title: title,
                 submintBtnText: 'SAVE',
                 submitUrl: `users/${userId}`,
                 isNew: false,
@@ -39,8 +44,8 @@ export const UserPage = (props) => {
     }, [userId, auth.info, requestsDispatch]);
 
     return (
-        <>
-            <h4>{pageState.title}</h4>
+        <div className="container">
+            <h3 className="title">{pageState.title}</h3>
             <Formik
                 enableReinitialize={true}
                 initialValues={{
@@ -55,7 +60,7 @@ export const UserPage = (props) => {
                             .required('Required')
                     })
                 }
-                onSubmit={async ({name, isAdmin, newPassword, confirmNewPassword}) => {
+                onSubmit={async ({ name, isAdmin, newPassword, confirmNewPassword }) => {
                     const body = {
                         name,
                         newPassword,
@@ -70,31 +75,55 @@ export const UserPage = (props) => {
                     history.goBack();
                 }}>
                 <Form>
-                    <label htmlFor="name">Name</label>
-                    <Field name="name" type="text" data-testid="name" />
-                    <span data-testid="userNameErrors">
-                        <ErrorMessage name="name" />
-                    </span>
+                    <div className="field">
+                        <label className="label" htmlFor="name">Name</label>
+                        <div className="control">
+                            <Field name="name" type="text" data-testid="name" />
+                        </div>
+                        <p className="help is-danger" data-testid="userNameErrors">
+                            <ErrorMessage name="name" />
+                        </p>
+                    </div>
 
-                    <label htmlFor="newPassword">Password</label>
-                    <Field name="newPassword" type="password" data-testid="newPassword" />
+                    <div className="field">
+                        <label className="label" htmlFor="newPassword">Password</label>
+                        <div className="control">
+                            <Field name="newPassword" type="password" data-testid="newPassword" />
+                        </div>
+                    </div>
 
-                    <label htmlFor="confirmNewPassword">Confirm Password</label>
-                    <Field name="confirmNewPassword" type="password" data-testid="confirmNewPassword" />
+                    <div className="field">
+                        <label className="label" htmlFor="confirmNewPassword">Confirm Password</label>
+                        <div className="control">
+                            <Field name="confirmNewPassword" type="password" data-testid="confirmNewPassword" />
+                        </div>
+                    </div>
 
-                    <label htmlFor="isAdmin">Is Admin</label>
-                    <Field name="isAdmin" as="select" data-testid="isAdmin">
-                        <option value="yes">Yes</option>
-                        <option value="no">No</option>
-                    </Field>
+                    <div className="field">
+                        <label className="label" htmlFor="isAdmin">Is Admin</label>
+                        <div className="select">
+                            <Field name="isAdmin" as="select" data-testid="isAdmin">
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </Field>
+                        </div>
+                    </div>
 
-                    <button data-testid="submit" type="submit">{pageState.submintBtnText}</button>
-                    {!pageState.isNew &&
-                        <button data-testid="delete" type="button" onClick={() => history.push(`/user/${userId}/delete`)}>DELETE</button>
-                    }
-                    <button data-testid="cancel" type="button" onClick={() => history.goBack()}>CANCEL</button>
+                    <div className="field is-grouped">
+                        <p className="control">
+                            <button className="button" data-testid="submit" type="submit">{pageState.submintBtnText}</button>
+                        </p>
+                        <p className="control">
+                            <button className="button" data-testid="cancel" type="button" onClick={() => history.goBack()}>CANCEL</button>
+                        </p>
+                        {!pageState.isNew &&
+                            <p className="control">
+                                <button className="button is-danger" data-testid="delete" type="button" onClick={() => history.push(`/user/${userId}/delete`)}>DELETE</button>
+                            </p>
+                        }
+                    </div>
                 </Form>
             </Formik>
-        </>
+        </div>
     )
 }
