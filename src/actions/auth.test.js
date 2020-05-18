@@ -9,7 +9,8 @@ test('should generate user logged out action', () => {
     const tokenInfo = {
         userName: 'name',
         userId: 11,
-        exp: 1234567890
+        exp: 1234567890,
+        isAdmin: true
     }
 
     const action = userLoggedIn(tokens, tokenInfo);
@@ -21,7 +22,8 @@ test('should generate user logged out action', () => {
             refreshToken: 'theRefreshToken',
             userName: 'name',
             userId: 11,
-            exp: 1234567890
+            exp: 1234567890,
+            isAdmin: true
         }
     })
 })

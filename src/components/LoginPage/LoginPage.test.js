@@ -82,7 +82,8 @@ it('should show the home page after logging in', async () => {
     jwt.mockReturnValue({
         exp: 'exp',
         userId: 10,
-        userName: 'user'
+        userName: 'user',
+        isAdmin: true
     });
 
     await wait(() => {
@@ -96,7 +97,8 @@ it('should show the home page after logging in', async () => {
             token: 'theToken',
             refreshToken: 'theRefreshToken',
             userName: 'user',
-            userId: 10
+            userId: 10,
+            isAdmin: true
         }
     }
     expect(api.doGetToken.mock.calls.length).toBe(1);

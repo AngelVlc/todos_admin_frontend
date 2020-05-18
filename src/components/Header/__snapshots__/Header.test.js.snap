@@ -1,5 +1,73 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`should match the snapshot when an admin user is logged in 1`] = `
+<DocumentFragment>
+  <nav
+    class="navbar is-dark"
+  >
+    <div
+      class="navbar-brand"
+    >
+      <span
+        class="navbar-item is-size-3"
+      >
+        To Dos
+      </span>
+    </div>
+    <div
+      class="navbar-menu"
+    >
+      <div
+        class="navbar-start"
+      >
+        <span
+          class="navbar-item"
+        >
+          Home
+        </span>
+        <span
+          class="navbar-item"
+        >
+          Lists
+        </span>
+        <span
+          class="navbar-item"
+        >
+          Users
+        </span>
+      </div>
+    </div>
+    <div
+      class="navbar-end"
+    >
+      <div
+        class="navbar-item"
+      >
+        <div
+          class="buttons"
+        >
+          <button
+            class="button is-light is-small"
+            data-testid="logOut"
+          >
+            <span>
+              admin
+            </span>
+            <span
+              class="icon is-small"
+            >
+              <i
+                class="fas fa-sign-out-alt"
+              />
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+</DocumentFragment>
+`;
+
 exports[`should match the snapshot when the user is logged in 1`] = `
 <DocumentFragment>
   <nav
@@ -11,8 +79,26 @@ exports[`should match the snapshot when the user is logged in 1`] = `
       <span
         class="navbar-item is-size-3"
       >
-        To Dos Admin
+        To Dos
       </span>
+    </div>
+    <div
+      class="navbar-menu"
+    >
+      <div
+        class="navbar-start"
+      >
+        <span
+          class="navbar-item"
+        >
+          Home
+        </span>
+        <span
+          class="navbar-item"
+        >
+          Lists
+        </span>
+      </div>
     </div>
     <div
       class="navbar-end"
@@ -56,8 +142,15 @@ exports[`should match the snapshot when the user is not logged in 1`] = `
       <span
         class="navbar-item is-size-3"
       >
-        To Dos Admin
+        To Dos
       </span>
+    </div>
+    <div
+      class="navbar-menu"
+    >
+      <div
+        class="navbar-start"
+      />
     </div>
   </nav>
 </DocumentFragment>

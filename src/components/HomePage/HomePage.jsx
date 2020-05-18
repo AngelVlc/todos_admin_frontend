@@ -8,6 +8,7 @@ export const HomePage = () => {
         <div className="container">
             <h3 className="title">HOME</h3>
             <button className="button" onClick={() => history.push('/users')}>Users</button>
+            <button className="button" onClick={() => history.push('/lists')}>Lists</button>
         </div>
     )
 }

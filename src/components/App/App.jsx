@@ -1,8 +1,9 @@
 import React, { useReducer, useEffect } from 'react';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
-import { PrivateRoute } from '../../routers';
+import { AdminRoute, PrivateRoute } from '../../routers';
 import { LoginPage } from '../LoginPage';
 import { HomePage } from '../HomePage';
+import { ListsPage } from '../Lists/ListsPage';
 import { UsersPage } from '../Users/UsersPage';
 import { UserDeletePage } from '../Users/UserDeletePage';
 import { UserPage } from '../Users/UserPage';
@@ -41,10 +42,11 @@ const App = () => {
         <section className="section">
           <Switch>
             <PrivateRoute exact path="/" component={HomePage} />
-            <PrivateRoute exact path="/users" component={UsersPage} />
-            <PrivateRoute path="/users/:userId/delete" component={UserDeletePage} />
-            <PrivateRoute path="/users/:userId/edit" component={UserPage} />
-            <PrivateRoute path="/users/new" component={UserPage} />
+            <PrivateRoute exact path="/lists" component={ListsPage} />
+            <AdminRoute exact path="/users" component={UsersPage} />
+            <AdminRoute path="/users/:userId/delete" component={UserDeletePage} />
+            <AdminRoute path="/users/:userId/edit" component={UserPage} />
+            <AdminRoute path="/users/new" component={UserPage} />
             <Route path="/login">
               <LoginPage />
             </Route>

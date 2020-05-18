@@ -1,16 +1,28 @@
 import React from 'react'
 import { render, cleanup, fireEvent, wait } from '@testing-library/react'
+import { Router } from 'react-router-dom'
 import { Header } from './Header'
 import { AppContext } from '../../contexts/AppContext'
+import { createMemoryHistory } from 'history'
 
 const mockAuthDispatch = jest.fn()
+const mockHistoryPush = jest.fn();
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useHistory: () => ({
+        push: mockHistoryPush
+    })
+}));
 
 const renderWithContext = (component, auth) => {
+    const history = createMemoryHistory();
     const context = { authDispatch: mockAuthDispatch, auth }
     return {
         ...render(
             <AppContext.Provider value={context}>
-                {component}
+                <Router history={history}>
+                    {component}
+                </Router>
             </AppContext.Provider>)
     }
 }
@@ -25,6 +37,12 @@ it('should match the snapshot when the user is not logged in', () => {
 
 it('should match the snapshot when the user is logged in', () => {
     const { asFragment } = renderWithContext(<Header />, { info: { userName: 'user' } });
+
+    expect(asFragment(<Header />)).toMatchSnapshot();
+})
+
+it('should match the snapshot when an admin user is logged in', () => {
+    const { asFragment } = renderWithContext(<Header />, { info: { userName: 'admin', isAdmin: true } });
 
     expect(asFragment(<Header />)).toMatchSnapshot();
 })
