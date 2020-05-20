@@ -45,7 +45,7 @@ const App = () => {
             <PrivateRoute exact path="/lists" component={ListsPage} />
             <AdminRoute path="/lists/:listId/delete" component={ListDeletePage} />
             <AdminRoute path="/lists/:listId/edit" component={ListPage} />
-            <AdminRoute path="/lists/new" component={UserPage} />
+            <AdminRoute path="/lists/new" component={ListPage} />
             <AdminRoute exact path="/users" component={UsersPage} />
             <AdminRoute path="/users/:userId/delete" component={UserDeletePage} />
             <AdminRoute path="/users/:userId/edit" component={UserPage} />

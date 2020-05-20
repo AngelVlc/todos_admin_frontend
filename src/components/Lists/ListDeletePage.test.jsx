@@ -8,11 +8,13 @@ import { act } from 'react-dom/test-utils';
 
 jest.mock('../../helpers/api');
 const mockHistoryGoBack = jest.fn();
+const mockHistoryPush = jest.fn();
 
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
     useHistory: () => ({
-        goBack: mockHistoryGoBack
+        goBack: mockHistoryGoBack,
+        push: mockHistoryPush
     })
 }));
 
@@ -73,6 +75,7 @@ it('should delete the List', async () => {
 
     expect(api.doDelete.mock.calls.length).toBe(1);
     expect(api.doDelete.mock.calls[0][0]).toBe('lists/2');
-    expect(mockHistoryGoBack.mock.calls.length).toBe(1);
-    mockHistoryGoBack.mockClear();
+    expect(mockHistoryPush.mock.calls.length).toBe(1);
+    expect(mockHistoryPush.mock.calls[0][0]).toBe('/lists');
+    mockHistoryPush.mockClear();
 });

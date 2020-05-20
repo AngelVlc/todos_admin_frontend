@@ -25,7 +25,7 @@ export const ListDeletePage = () => {
 
     const deleteList = async () => {
         await doDelete(`lists/${listId}`, auth.info.token, requestsDispatch)
-        history.goBack();
+        history.push('/lists');
     }
 
     return (

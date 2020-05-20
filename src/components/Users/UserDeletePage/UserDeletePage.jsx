@@ -28,8 +28,8 @@ export const UserDeletePage = () => {
   }, [userId, auth.info, requestsDispatch]);
 
   const deleteUser = async () => {
-    await doDelete(`users/${userId}`, auth.info.token, requestsDispatch)
-    history.goBack();
+    await doDelete(`users/${userId}`, auth.info.token, requestsDispatch);
+    history.push('/users');
   }
 
   return (
