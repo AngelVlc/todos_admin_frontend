@@ -3,7 +3,7 @@ import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import { AdminRoute, PrivateRoute } from '../../routers';
 import { LoginPage } from '../LoginPage';
 import { HomePage } from '../HomePage';
-import { ListsPage, ListPage, ListDeletePage } from '../Lists';
+import { ListsPage, ListPage, ListDeletePage, ListItemPage, ListItemDeletePage } from '../Lists';
 import { UsersPage } from '../Users/UsersPage';
 import { UserDeletePage } from '../Users/UserDeletePage';
 import { UserPage } from '../Users/UserPage';
@@ -43,9 +43,12 @@ const App = () => {
           <Switch>
             <PrivateRoute exact path="/" component={HomePage} />
             <PrivateRoute exact path="/lists" component={ListsPage} />
+            <AdminRoute path="/lists/new" component={ListPage} />
             <AdminRoute path="/lists/:listId/delete" component={ListDeletePage} />
             <AdminRoute path="/lists/:listId/edit" component={ListPage} />
-            <AdminRoute path="/lists/new" component={ListPage} />
+            <AdminRoute path="/lists/:listId/items/new" component={ListItemPage} />
+            <AdminRoute path="/lists/:listId/items/:itemId/delete" component={ListItemDeletePage} />
+            <AdminRoute path="/lists/:listId/items/:itemId/edit" component={ListItemPage} />
             <AdminRoute exact path="/users" component={UsersPage} />
             <AdminRoute path="/users/:userId/delete" component={UserDeletePage} />
             <AdminRoute path="/users/:userId/edit" component={UserPage} />
