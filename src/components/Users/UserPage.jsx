@@ -1,8 +1,8 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { AppContext } from '../../../contexts/AppContext';
-import { doPost, doPut, doGet } from '../../../helpers/api';
+import { AppContext } from '../../contexts/AppContext';
+import { doPost, doPut, doGet } from '../../helpers/api';
 import * as Yup from 'yup';
 
 export const UserPage = (props) => {

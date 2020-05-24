@@ -1,15 +1,15 @@
 import React from 'react'
 import { render, cleanup, fireEvent, wait } from '@testing-library/react'
 import { UsersPage } from './UsersPage'
-import { AppContext } from '../../../contexts/AppContext'
+import { AppContext } from '../../contexts/AppContext'
 import { createMemoryHistory } from 'history'
-import * as api from '../../../helpers/api';
+import * as api from '../../helpers/api';
 import { Router } from 'react-router-dom'
 import { act } from 'react-dom/test-utils';
 
 afterEach(cleanup)
 
-jest.mock('../../../helpers/api');
+jest.mock('../../helpers/api');
 const mockHistoryPush = jest.fn();
 
 jest.mock('react-router-dom', () => ({

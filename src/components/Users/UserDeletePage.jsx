@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { AppContext } from '../../../contexts/AppContext';
-import { doGet, doDelete } from '../../../helpers/api';
+import { AppContext } from '../../contexts/AppContext';
+import { doGet, doDelete } from '../../helpers/api';
 
 export const UserDeletePage = () => {
   const { auth, requestsDispatch } = useContext(AppContext)

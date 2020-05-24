@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { AppContext } from '../../../contexts/AppContext';
-import { doGet } from '../../../helpers/api';
+import { AppContext } from '../../contexts/AppContext';
+import { doGet } from '../../helpers/api';
 
 export const UsersPage = () => {
   const { auth, requestsDispatch } = useContext(AppContext)
