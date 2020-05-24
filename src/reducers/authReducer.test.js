@@ -5,7 +5,6 @@ test('should set the auth info', () => {
         type: 'USER_LOGGED_IN',
         authInfo: {
             token: 'theToken',
-            refreshToken: 'theRefreshToken',
             userName: 'name',
             userId: 11,
             exp: 1234567890
@@ -17,7 +16,6 @@ test('should set the auth info', () => {
     expect(state).toEqual({
         info: {
             token: 'theToken',
-            refreshToken: 'theRefreshToken',
             userName: 'name',
             userId: 11,
             exp: 1234567890

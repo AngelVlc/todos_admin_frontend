@@ -75,7 +75,6 @@ it('should show the home page after logging in', async () => {
     await changeInput(getByTestId, 'password', 'pass');
 
     api.doGetToken.mockResolvedValue({
-        'refreshToken': 'theRefreshToken',
         'token': 'theToken'
     });
 
@@ -95,7 +94,6 @@ it('should show the home page after logging in', async () => {
         authInfo: {
             exp: 'exp',
             token: 'theToken',
-            refreshToken: 'theRefreshToken',
             userName: 'user',
             userId: 10,
             isAdmin: true
