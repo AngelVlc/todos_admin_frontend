@@ -28,6 +28,28 @@ export const doGetToken = (loginDto, requestsDispatch) => {
     });
 }
 
+export const doRefreshToken = () => {
+    return new Promise(async (resolve, reject) => {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include'
+        };
+        try {
+            const res = await fetch(`${backendUrl}/auth/refreshtoken`, requestOptions)
+            if (!res.ok) {
+                const txt = await res.text()
+                reject(txt);
+                return
+            }
+            const obj = await res.json()
+            resolve(obj);
+        } catch (error) {
+            reject(error.message);
+        }
+    });
+}
+
 const getRequestOptions = (method, token) => {
     return {
         method: method,

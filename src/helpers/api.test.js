@@ -1,4 +1,4 @@
-import { doGetToken, doGet, doDelete, doPut, doPost } from './api';
+import { doGetToken, doRefreshToken, doGet, doDelete, doPut, doPost } from './api';
 
 const mockRequestDispatch = jest.fn();
 
@@ -56,6 +56,49 @@ describe('doGetToken()', () => {
         expect(res).toStrictEqual({ token: 'theToken' });
         expect(mockRequestDispatch.mock.calls.length).toBe(2);
         expect(mockRequestDispatch.mock.calls[1][0]).toStrictEqual({ type: 'REQUEST_DONE' });
+    })
+})
+
+describe('doRefreshToken()', () => {
+    it('should return an error if refresh token fails', async () => {
+        global.fetch = jest.fn().mockImplementationOnce(async () => {
+            return new Promise((_, rej) => rej({ message: 'some error' }));
+        });
+
+        try {
+            await doRefreshToken();
+        } catch (e) {
+            expect(e).toBe("some error");
+        }
+        expect(global.fetch.mock.calls.length).toBe(1);
+        expect(global.fetch.mock.calls[0][0]).toBe('http://localhost:5001/auth/refreshtoken');
+        const options = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include'
+        };
+        expect(global.fetch.mock.calls[0][1]).toStrictEqual(options);
+    })
+
+    it('should return an error if refresh token succed with an error', async () => {
+        global.fetch = jest.fn().mockImplementationOnce(async () => {
+            return new Promise((res) => res({ ok: false, text: () => 'some api error' }));
+        });
+
+        try {
+            await doRefreshToken({}, mockRequestDispatch);
+        } catch (e) {
+            expect(e).toBe("some api error");
+        }
+    })
+
+    it('should return the result if refresh token succed', async () => {
+        global.fetch = jest.fn().mockImplementationOnce(async () => {
+            return new Promise((res) => res({ ok: true, json: () => ({ token: 'theToken' }) }));
+        });
+
+        const res = await doRefreshToken({}, mockRequestDispatch);
+        expect(res).toStrictEqual({ token: 'theToken' });
     })
 })
 
