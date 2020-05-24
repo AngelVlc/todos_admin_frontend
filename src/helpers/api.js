@@ -8,7 +8,8 @@ export const doGetToken = (loginDto, requestsDispatch) => {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(loginDto)
+            body: JSON.stringify(loginDto),
+            credentials: 'include'
         };
         try {
             const res = await fetch(`${backendUrl}/auth/token`, requestOptions)
@@ -27,17 +28,18 @@ export const doGetToken = (loginDto, requestsDispatch) => {
     });
 }
 
-const getHeaders = (method, token) => {
+const getRequestOptions = (method, token) => {
     return {
         method: method,
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        credentials: 'include'
     };
 }
 
 export const doGet = (endpoint, token, requestsDispatch) => {
     return new Promise(async (resolve, reject) => {
         requestsDispatch(requestStarted());
-        const requestOptions = getHeaders('GET', token);
+        const requestOptions = getRequestOptions('GET', token);
         try {
             const res = await fetch(`${backendUrl}/${endpoint}`, requestOptions)
             requestsDispatch(requestDone());
@@ -59,7 +61,7 @@ export const doGet = (endpoint, token, requestsDispatch) => {
 export const doDelete = (endpoint, token, requestsDispatch) => {
     return new Promise(async (resolve, reject) => {
         requestsDispatch(requestStarted());
-        const requestOptions = getHeaders('DELETE', token);
+        const requestOptions = getRequestOptions('DELETE', token);
         try {
             const res = await fetch(`${backendUrl}/${endpoint}`, requestOptions)
             requestsDispatch(requestDone());
@@ -80,7 +82,7 @@ export const doDelete = (endpoint, token, requestsDispatch) => {
 export const doPost = (endpoint, body, token, requestsDispatch) => {
     return new Promise(async (resolve, reject) => {
         requestsDispatch(requestStarted());
-        const requestOptions = getHeaders('POST', token);
+        const requestOptions = getRequestOptions('POST', token);
         requestOptions.body = JSON.stringify(body);
         try {
             const res = await fetch(`${backendUrl}/${endpoint}`, requestOptions)
@@ -102,7 +104,7 @@ export const doPost = (endpoint, body, token, requestsDispatch) => {
 export const doPut = (endpoint, body, token, requestsDispatch) => {
     return new Promise(async (resolve, reject) => {
         requestsDispatch(requestStarted());
-        const requestOptions = getHeaders('PUT', token);
+        const requestOptions = getRequestOptions('PUT', token);
         requestOptions.body = JSON.stringify(body);
         try {
             const res = await fetch(`${backendUrl}/${endpoint}`, requestOptions)

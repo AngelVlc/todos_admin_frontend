@@ -21,12 +21,13 @@ describe('doGetToken()', () => {
         }
         expect(global.fetch.mock.calls.length).toBe(1);
         expect(global.fetch.mock.calls[0][0]).toBe('http://localhost:5001/auth/token');
-        const body = {
+        const options = {
             body: "{\"user\":\"user\",\"password\":\"pass\"}",
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include'
         };
-        expect(global.fetch.mock.calls[0][1]).toStrictEqual(body);
+        expect(global.fetch.mock.calls[0][1]).toStrictEqual(options);
         expect(mockRequestDispatch.mock.calls.length).toBe(2);
         expect(mockRequestDispatch.mock.calls[0][0]).toStrictEqual({ type: 'REQUEST_STARTED' });
         expect(mockRequestDispatch.mock.calls[1][0]).toStrictEqual({ type: 'REQUEST_DONE' });
@@ -71,11 +72,12 @@ describe('doGet()', () => {
         }
         expect(global.fetch.mock.calls.length).toBe(1);
         expect(global.fetch.mock.calls[0][0]).toBe('http://localhost:5001/endpoint');
-        const body = {
+        const options = {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer theToken' }
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer theToken' },
+            credentials: 'include'
         };
-        expect(global.fetch.mock.calls[0][1]).toStrictEqual(body);
+        expect(global.fetch.mock.calls[0][1]).toStrictEqual(options);
         expect(mockRequestDispatch.mock.calls.length).toBe(2);
         expect(mockRequestDispatch.mock.calls[0][0]).toStrictEqual({ type: 'REQUEST_STARTED' });
         expect(mockRequestDispatch.mock.calls[1][0]).toStrictEqual({ type: 'REQUEST_FAILED', error: 'some error' });
@@ -121,11 +123,12 @@ describe('doDelete()', () => {
         }
         expect(global.fetch.mock.calls.length).toBe(1);
         expect(global.fetch.mock.calls[0][0]).toBe('http://localhost:5001/endpoint');
-        const body = {
+        const options = {
             method: 'DELETE',
-            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer theToken' }
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer theToken' },
+            credentials: 'include'
         };
-        expect(global.fetch.mock.calls[0][1]).toStrictEqual(body);
+        expect(global.fetch.mock.calls[0][1]).toStrictEqual(options);
         expect(mockRequestDispatch.mock.calls.length).toBe(2);
         expect(mockRequestDispatch.mock.calls[0][0]).toStrictEqual({ type: 'REQUEST_STARTED' });
         expect(mockRequestDispatch.mock.calls[1][0]).toStrictEqual({ type: 'REQUEST_FAILED', error: 'some error' });
@@ -171,12 +174,13 @@ describe('doPost()', () => {
         }
         expect(global.fetch.mock.calls.length).toBe(1);
         expect(global.fetch.mock.calls[0][0]).toBe('http://localhost:5001/endpoint');
-        const body = {
+        const options = {
             body: "{\"value\":1}",
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer theToken' }
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer theToken' },
+            credentials: 'include'
         };
-        expect(global.fetch.mock.calls[0][1]).toStrictEqual(body);
+        expect(global.fetch.mock.calls[0][1]).toStrictEqual(options);
         expect(mockRequestDispatch.mock.calls.length).toBe(2);
         expect(mockRequestDispatch.mock.calls[0][0]).toStrictEqual({ type: 'REQUEST_STARTED' });
         expect(mockRequestDispatch.mock.calls[1][0]).toStrictEqual({ type: 'REQUEST_FAILED', error: 'some error' });
@@ -222,12 +226,13 @@ describe('doPut()', () => {
         }
         expect(global.fetch.mock.calls.length).toBe(1);
         expect(global.fetch.mock.calls[0][0]).toBe('http://localhost:5001/endpoint');
-        const body = {
+        const options = {
             body: "{\"value\":1}",
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer theToken' }
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer theToken' },
+            credentials: 'include'
         };
-        expect(global.fetch.mock.calls[0][1]).toStrictEqual(body);
+        expect(global.fetch.mock.calls[0][1]).toStrictEqual(options);
         expect(mockRequestDispatch.mock.calls.length).toBe(2);
         expect(mockRequestDispatch.mock.calls[0][0]).toStrictEqual({ type: 'REQUEST_STARTED' });
         expect(mockRequestDispatch.mock.calls[1][0]).toStrictEqual({ type: 'REQUEST_FAILED', error: 'some error' });
