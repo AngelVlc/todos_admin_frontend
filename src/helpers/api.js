@@ -12,7 +12,7 @@ export const doGetToken = (loginDto, requestsDispatch) => {
             credentials: 'include'
         };
         try {
-            const res = await fetch(`${backendUrl}/auth/token`, requestOptions)
+            const res = await fetch(`${backendUrl}/auth/login`, requestOptions)
             requestsDispatch(requestDone());
             if (!res.ok) {
                 const txt = await res.text()

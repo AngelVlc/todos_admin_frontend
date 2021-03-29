@@ -20,7 +20,7 @@ describe('doGetToken()', () => {
             expect(e).toBe("some error");
         }
         expect(global.fetch.mock.calls.length).toBe(1);
-        expect(global.fetch.mock.calls[0][0]).toBe('http://localhost:5001/auth/token');
+        expect(global.fetch.mock.calls[0][0]).toBe('http://localhost:5001/auth/login');
         const options = {
             body: "{\"user\":\"user\",\"password\":\"pass\"}",
             method: 'POST',

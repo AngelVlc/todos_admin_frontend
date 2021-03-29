@@ -1,4 +1,3 @@
-import React from 'react'
 import { render, cleanup, fireEvent, wait } from '@testing-library/react'
 import { ListsPage } from './ListsPage'
 import { AppContext } from '../../contexts/AppContext'

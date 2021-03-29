@@ -1,4 +1,3 @@
-import React from 'react'
 import { render, cleanup, fireEvent, wait } from '@testing-library/react'
 import { ListItemDeletePage } from './ListItemDeletePage'
 import { AppContext } from '../../contexts/AppContext'

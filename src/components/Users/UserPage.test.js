@@ -1,4 +1,3 @@
-import React from 'react'
 import { render, cleanup, fireEvent, wait } from '@testing-library/react'
 import { UserPage } from './UserPage'
 import { AppContext } from '../../contexts/AppContext'
@@ -110,9 +109,9 @@ it('should update an existing user', async () => {
     });
 
     await changeInputValue(container.getByTestId, 'name', 'updated user');
-    await changeInputValue(container.getByTestId, 'isAdmin', true);
-    await changeInputValue(container.getByTestId, 'newPassword', 'pass');
-    await changeInputValue(container.getByTestId, 'confirmNewPassword', 'pass');
+    await changeInputValue(container.getByTestId, 'isAdmin', 'yes');
+    await changeInputValue(container.getByTestId, 'password', 'pass');
+    await changeInputValue(container.getByTestId, 'confirmPassword', 'pass');
 
     api.doPut.mockResolvedValue({});
 
@@ -122,7 +121,7 @@ it('should update an existing user', async () => {
 
     expect(api.doPut.mock.calls.length).toBe(1);
     expect(api.doPut.mock.calls[0][0]).toBe('users/2');
-    expect(api.doPut.mock.calls[0][1]).toStrictEqual({ name: 'updated user', isAdmin: true, newPassword: 'pass', confirmNewPassword: 'pass' });
+    expect(api.doPut.mock.calls[0][1]).toStrictEqual({ name: 'updated user', isAdmin: true, password: 'pass', confirmPassword: 'pass' });
 
     expect(mockHistoryGoBack.mock.calls.length).toBe(1);
     mockHistoryGoBack.mockClear();
@@ -132,8 +131,8 @@ it('should create a new user', async () => {
     const { getByTestId } = renderWithContextAndRouterForNewUser(<UserPage />);
 
     await changeInputValue(getByTestId, 'name', 'new user');
-    await changeInputValue(getByTestId, 'newPassword', 'pass');
-    await changeInputValue(getByTestId, 'confirmNewPassword', 'pass');
+    await changeInputValue(getByTestId, 'password', 'pass');
+    await changeInputValue(getByTestId, 'confirmPassword', 'pass');
 
     api.doPost.mockResolvedValue({});
 
@@ -143,7 +142,7 @@ it('should create a new user', async () => {
 
     expect(api.doPost.mock.calls.length).toBe(1);
     expect(api.doPost.mock.calls[0][0]).toBe('users');
-    expect(api.doPost.mock.calls[0][1]).toStrictEqual({ name: 'new user', isAdmin: false, newPassword: 'pass', confirmNewPassword: 'pass' });
+    expect(api.doPost.mock.calls[0][1]).toStrictEqual({ name: 'new user', isAdmin: false, password: 'pass', confirmPassword: 'pass' });
 
     expect(mockHistoryGoBack.mock.calls.length).toBe(1);
     mockHistoryGoBack.mockClear();

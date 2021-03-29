@@ -42,7 +42,7 @@ exports[`should match the snapshot for a new user 1`] = `
       >
         <label
           class="label"
-          for="newPassword"
+          for="password"
         >
           Password
         </label>
@@ -50,8 +50,8 @@ exports[`should match the snapshot for a new user 1`] = `
           class="control"
         >
           <input
-            data-testid="newPassword"
-            name="newPassword"
+            data-testid="password"
+            name="password"
             type="password"
             value=""
           />
@@ -62,7 +62,7 @@ exports[`should match the snapshot for a new user 1`] = `
       >
         <label
           class="label"
-          for="confirmNewPassword"
+          for="confirmPassword"
         >
           Confirm Password
         </label>
@@ -70,8 +70,8 @@ exports[`should match the snapshot for a new user 1`] = `
           class="control"
         >
           <input
-            data-testid="confirmNewPassword"
-            name="confirmNewPassword"
+            data-testid="confirmPassword"
+            name="confirmPassword"
             type="password"
             value=""
           />
@@ -179,7 +179,7 @@ exports[`should match the snapshot for an existing user 1`] = `
       >
         <label
           class="label"
-          for="newPassword"
+          for="password"
         >
           Password
         </label>
@@ -187,8 +187,8 @@ exports[`should match the snapshot for an existing user 1`] = `
           class="control"
         >
           <input
-            data-testid="newPassword"
-            name="newPassword"
+            data-testid="password"
+            name="password"
             type="password"
             value=""
           />
@@ -199,7 +199,7 @@ exports[`should match the snapshot for an existing user 1`] = `
       >
         <label
           class="label"
-          for="confirmNewPassword"
+          for="confirmPassword"
         >
           Confirm Password
         </label>
@@ -207,8 +207,8 @@ exports[`should match the snapshot for an existing user 1`] = `
           class="control"
         >
           <input
-            data-testid="confirmNewPassword"
-            name="confirmNewPassword"
+            data-testid="confirmPassword"
+            name="confirmPassword"
             type="password"
             value=""
           />

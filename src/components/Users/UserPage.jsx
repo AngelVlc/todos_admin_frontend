@@ -51,8 +51,8 @@ export const UserPage = (props) => {
                 initialValues={{
                     name: pageState.name,
                     isAdmin: pageState.isAdmin,
-                    newPassword: '',
-                    confirmNewPassword: ''
+                    password: '',
+                    confirmPassword: ''
                 }}
                 validationSchema={
                     Yup.object({
@@ -60,11 +60,11 @@ export const UserPage = (props) => {
                             .required('Required')
                     })
                 }
-                onSubmit={async ({ name, isAdmin, newPassword, confirmNewPassword }) => {
+                onSubmit={async ({ name, isAdmin, password, confirmPassword }) => {
                     const body = {
                         name,
-                        newPassword,
-                        confirmNewPassword,
+                        password,
+                        confirmPassword,
                         isAdmin: isAdmin === 'yes' ? true : false
                     }
                     if (pageState.isNew) {
@@ -86,16 +86,16 @@ export const UserPage = (props) => {
                     </div>
 
                     <div className="field">
-                        <label className="label" htmlFor="newPassword">Password</label>
+                        <label className="label" htmlFor="password">Password</label>
                         <div className="control">
-                            <Field name="newPassword" type="password" data-testid="newPassword" />
+                            <Field name="password" type="password" data-testid="password" />
                         </div>
                     </div>
 
                     <div className="field">
-                        <label className="label" htmlFor="confirmNewPassword">Confirm Password</label>
+                        <label className="label" htmlFor="confirmPassword">Confirm Password</label>
                         <div className="control">
-                            <Field name="confirmNewPassword" type="password" data-testid="confirmNewPassword" />
+                            <Field name="confirmPassword" type="password" data-testid="confirmPassword" />
                         </div>
                     </div>
 
