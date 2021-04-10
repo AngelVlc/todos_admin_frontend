@@ -2,32 +2,6 @@ import { requestStarted, requestDone, requestFailed } from '../actions'
 
 const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5001'
 
-export const doGetToken = (loginDto, requestsDispatch) => {
-    return new Promise(async (resolve, reject) => {
-        requestsDispatch(requestStarted());
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(loginDto),
-            credentials: 'include'
-        };
-        try {
-            const res = await fetch(`${backendUrl}/auth/login`, requestOptions)
-            requestsDispatch(requestDone());
-            if (!res.ok) {
-                const txt = await res.text()
-                reject(txt);
-                return
-            }
-            const obj = await res.json()
-            resolve(obj);
-        } catch (error) {
-            requestsDispatch(requestDone());
-            reject(error.message);
-        }
-    });
-}
-
 export const doRefreshToken = () => {
     return new Promise(async (resolve, reject) => {
         const requestOptions = {

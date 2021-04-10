@@ -1,62 +1,9 @@
-import { doGetToken, doRefreshToken, doGet, doDelete, doPut, doPost } from './api';
+import { doRefreshToken, doGet, doDelete, doPut, doPost } from './api';
 
 const mockRequestDispatch = jest.fn();
 
 afterEach(() => {
     mockRequestDispatch.mockClear();
-})
-
-describe('doGetToken()', () => {
-    it('should return an error if get token fails', async () => {
-        const dto = { user: 'user', password: 'pass' }
-
-        global.fetch = jest.fn().mockImplementationOnce(async () => {
-            return new Promise((_, rej) => rej({ message: 'some error' }));
-        });
-
-        try {
-            await doGetToken(dto, mockRequestDispatch);
-        } catch (e) {
-            expect(e).toBe("some error");
-        }
-        expect(global.fetch.mock.calls.length).toBe(1);
-        expect(global.fetch.mock.calls[0][0]).toBe('http://localhost:5001/auth/login');
-        const options = {
-            body: "{\"user\":\"user\",\"password\":\"pass\"}",
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include'
-        };
-        expect(global.fetch.mock.calls[0][1]).toStrictEqual(options);
-        expect(mockRequestDispatch.mock.calls.length).toBe(2);
-        expect(mockRequestDispatch.mock.calls[0][0]).toStrictEqual({ type: 'REQUEST_STARTED' });
-        expect(mockRequestDispatch.mock.calls[1][0]).toStrictEqual({ type: 'REQUEST_DONE' });
-    })
-
-    it('should return an error if get token succed with an error', async () => {
-        global.fetch = jest.fn().mockImplementationOnce(async () => {
-            return new Promise((res) => res({ ok: false, text: () => 'some api error' }));
-        });
-
-        try {
-            await doGetToken({}, mockRequestDispatch);
-        } catch (e) {
-            expect(e).toBe("some api error");
-        }
-        expect(mockRequestDispatch.mock.calls.length).toBe(2);
-        expect(mockRequestDispatch.mock.calls[1][0]).toStrictEqual({ type: 'REQUEST_DONE' });
-    })
-
-    it('should return the result if get token succed', async () => {
-        global.fetch = jest.fn().mockImplementationOnce(async () => {
-            return new Promise((res) => res({ ok: true, json: () => ({ token: 'theToken' }) }));
-        });
-
-        const res = await doGetToken({}, mockRequestDispatch);
-        expect(res).toStrictEqual({ token: 'theToken' });
-        expect(mockRequestDispatch.mock.calls.length).toBe(2);
-        expect(mockRequestDispatch.mock.calls[1][0]).toStrictEqual({ type: 'REQUEST_DONE' });
-    })
 })
 
 describe('doRefreshToken()', () => {
