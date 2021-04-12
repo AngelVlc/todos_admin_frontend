@@ -1,22 +1,18 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { AppContext } from '../../contexts/AppContext';
-import { doGet } from '../../helpers/api';
+import axios from 'axios';
 
 export const UsersPage = () => {
-  const { auth, requestsDispatch } = useContext(AppContext)
   const [users, setUsers] = useState([]);
   let history = useHistory();
 
   useEffect(() => {
     const getUsers = async () => {
-      const res = await doGet('users', auth.info.token, requestsDispatch)
-      setUsers(res);
+      const res = await axios.get('users')
+      setUsers(res.data);
     }
-    if (auth.info) {
-      getUsers();
-    }
-  }, [auth.info, requestsDispatch]);
+    getUsers()
+  }, []);
 
   return (
     <div className="container">

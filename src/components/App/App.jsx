@@ -29,52 +29,48 @@ const App = () => {
     }
   }, [request.error, alert, requestsDispatch]);
 
-  // useEffect(() => {
-  //   const prueba = async () => {
-  //     try {
-  //       // requestsDispatch(requestStarted());
-  //       const data  = await axios.get(
-  //         'http://localhost:5001/lists'
-  //       );
-  //       console.log("####", data, "####")
-  //     } catch (error) {
-  //       console.error("@@@", error, "@@@")
-  //     }
-  //   }
-  //   prueba()
-  // }, [requestsDispatch]);
+  axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5001'
 
   useEffect(() => {
+    while (axios.interceptors.request.handlers.length > 0) {
+      axios.interceptors.request.eject(0)
+      axios.interceptors.request.handlers.splice(0,1)
+    }
+    while (axios.interceptors.response.handlers.length > 0) {
+      axios.interceptors.response.eject(0)
+      axios.interceptors.response.handlers.splice(0,1)
+    }
+
     axios.interceptors.request.use(
       config => {
-        config.baseURL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5001'
-        
-        console.log("request started", config)
-        requestsDispatch(requestStarted());
-        // console.log("##", config, "##")
-        const token = "theToken"
-        if (token) {
-          config.headers['Authorization'] = 'Bearer ' + token;
+        if (!config.url.startsWith('/auth') && auth.info && auth.info.token) {
+          config.headers['Authorization'] = `Bearer ${auth.info.token}`;
         }
-        // config.headers['Content-Type'] = 'application/json';
+        requestsDispatch(requestStarted());
+
         return config;
       },
       error => {
         Promise.reject(error)
-      }
+      },
     );
 
     axios.interceptors.response.use(
       (response) => {
         requestsDispatch(requestDone());
-        console.log("RR", response, "RR")
+
         return response
       },
       (error) => {
-        if (error.response.config.url == '/auth/login') {
+        if (!error.response) {
           requestsDispatch(requestDone());
-        } else {
+          return Promise.reject(error.message);
+        }
+
+        if (error.response && error.response.config.url !== '/auth/login') {
           requestsDispatch(requestFailed(error.response.data));
+        } else {
+          requestsDispatch(requestDone());
         }
         return Promise.reject(error.response.data);
         // const originalRequest = error.config;
@@ -99,7 +95,7 @@ const App = () => {
         //       })
       }
     )
-  }, []);
+  }, [auth]);
 
 
   return (

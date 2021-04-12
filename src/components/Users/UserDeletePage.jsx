@@ -1,34 +1,30 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { AppContext } from '../../contexts/AppContext';
-import { doGet, doDelete } from '../../helpers/api';
+import axios from 'axios';
 
 export const UserDeletePage = () => {
-  const { auth, requestsDispatch } = useContext(AppContext)
   const [user, setUser] = useState(null);
   let { userId } = useParams();
   let history = useHistory();
 
   useEffect(() => {
     const getUser = async () => {
-      const res = await doGet(`users/${userId}`, auth.info.token, requestsDispatch)
-      let title = `Delete user ${res.name}`
+      const res = await axios.get(`users/${userId}`)
+      let title = `Delete user ${res.data.name}`
       if (res.isAdmin) {
-        title = `Delete admin user '${res.name}'?`
+        title = `Delete admin user '${res.data.name}'?`
       }
       const info = {
-        ...res,
+        ...res.data,
         title: title
       }
       setUser(info);
     }
-    if (auth.info) {
-      getUser();
-    }
-  }, [userId, auth.info, requestsDispatch]);
+    getUser();
+  }, [userId]);
 
   const deleteUser = async () => {
-    await doDelete(`users/${userId}`, auth.info.token, requestsDispatch);
+    await axios.delete(`users/${userId}`);
     history.push('/users');
   }
 

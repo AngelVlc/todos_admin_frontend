@@ -1,11 +1,11 @@
 import { render, cleanup, fireEvent, wait } from '@testing-library/react'
 import { ListPage } from './ListPage'
 import { AppContext } from '../../contexts/AppContext'
-import * as api from '../../helpers/api';
+import axios from 'axios';
 import { MemoryRouter, Route } from 'react-router-dom'
 import { act } from 'react-dom/test-utils';
 
-jest.mock('../../helpers/api');
+jest.mock('axios');
 const mockHistoryGoBack = jest.fn();
 const mockHistoryPush = jest.fn();
 
@@ -18,17 +18,25 @@ jest.mock('react-router-dom', () => ({
 }));
 
 const renderWithContextAndRouterForExistingList = (component) => {
-    api.doGet.mockResolvedValue({
-        id: 2,
-        name: 'list name',
-        items: [
-            {
-                id: 5,
-                title: 'item title',
-                description: 'item description'
+    axios.get.mockReturnValueOnce(
+        {
+            data: {
+                id: 2,
+                name: 'list name'
             }
-        ]
-    });
+        }
+    ).mockReturnValueOnce(
+        {
+            data: [
+                {
+                    id: 5,
+                    title: 'item title',
+                    description: 'item description'
+                }
+            ]
+        }
+    );
+
     const context = { auth: { info: {} } };
     return {
         ...render(
@@ -116,15 +124,15 @@ it('should update an existing list', async () => {
 
     await changeInputValue(container.getByTestId, 'name', 'updated name');
 
-    api.doPut.mockResolvedValue({});
+    axios.put.mockResolvedValue({ data: {} });
 
     await wait(() => {
         fireEvent.click(container.getByTestId('submit'));
     })
 
-    expect(api.doPut.mock.calls.length).toBe(1);
-    expect(api.doPut.mock.calls[0][0]).toBe('lists/2');
-    expect(api.doPut.mock.calls[0][1]).toStrictEqual({ name: 'updated name' });
+    expect(axios.put.mock.calls.length).toBe(1);
+    expect(axios.put.mock.calls[0][0]).toBe('lists/2');
+    expect(axios.put.mock.calls[0][1]).toStrictEqual({ name: 'updated name' });
 
     expect(mockHistoryGoBack.mock.calls.length).toBe(1);
     mockHistoryGoBack.mockClear();
@@ -135,15 +143,15 @@ it('should create a new list', async () => {
 
     await changeInputValue(getByTestId, 'name', 'new list');
 
-    api.doPost.mockResolvedValue({});
+    axios.post.mockResolvedValue({ data: {} });
 
     await wait(() => {
         fireEvent.click(getByTestId('submit'));
     })
 
-    expect(api.doPost.mock.calls.length).toBe(1);
-    expect(api.doPost.mock.calls[0][0]).toBe('lists');
-    expect(api.doPost.mock.calls[0][1]).toStrictEqual({ name: 'new list' });
+    expect(axios.post.mock.calls.length).toBe(1);
+    expect(axios.post.mock.calls[0][0]).toBe('lists');
+    expect(axios.post.mock.calls[0][1]).toStrictEqual({ name: 'new list' });
 
     expect(mockHistoryGoBack.mock.calls.length).toBe(1);
     mockHistoryGoBack.mockClear();
