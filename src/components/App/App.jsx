@@ -41,6 +41,8 @@ const App = () => {
       axios.interceptors.response.handlers.splice(0,1)
     }
 
+    console.log(auth)
+
     axios.interceptors.request.use(
       config => {
         if (!config.url.startsWith('/auth') && auth.info && auth.info.token) {

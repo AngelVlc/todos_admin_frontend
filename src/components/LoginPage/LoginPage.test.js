@@ -77,7 +77,8 @@ it('should show the home page after logging in', async () => {
 
     axios.post.mockResolvedValue({
         data: {
-            token: 'theToken'
+            token: 'theToken',
+            refreshToken: 'theRefreshToken'
         }
     });
 
@@ -97,6 +98,7 @@ it('should show the home page after logging in', async () => {
         authInfo: {
             exp: 'exp',
             token: 'theToken',
+            refreshToken: 'theRefreshToken',
             userName: 'user',
             userId: 10,
             isAdmin: true

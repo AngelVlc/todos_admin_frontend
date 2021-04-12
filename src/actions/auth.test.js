@@ -2,7 +2,8 @@ import { userLoggedIn, userLoggedOut } from './';
 
 test('should generate user logged out action', () => {
     const tokens = {
-        token: 'theToken'
+        token: 'theToken',
+        refreshToken: 'theRefreshToken'
     }
 
     const tokenInfo = {
@@ -18,6 +19,7 @@ test('should generate user logged out action', () => {
         type: 'USER_LOGGED_IN',
         authInfo: {
             token: 'theToken',
+            refreshToken: 'theRefreshToken',
             userName: 'name',
             userId: 11,
             exp: 1234567890,
