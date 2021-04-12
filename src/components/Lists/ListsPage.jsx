@@ -1,22 +1,18 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from "react-router-dom";
-import { AppContext } from '../../contexts/AppContext';
-import { doGet } from '../../helpers/api';
+import axios from 'axios';
 
 export const ListsPage = () => {
-    const { auth, requestsDispatch } = useContext(AppContext)
     const [lists, setLists] = useState([]);
     let history = useHistory();
 
     useEffect(() => {
         const getLists = async () => {
-            const res = await doGet('lists', auth.info.token, requestsDispatch)
-            setLists(res);
+            const res = await axios.get('lists')
+            setLists(res.data);
         }
-        if (auth.info) {
-            getLists();
-        }
-    }, [auth.info, requestsDispatch]);
+        getLists();
+    }, []);
 
     return (
         <div className="container">

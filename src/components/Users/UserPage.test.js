@@ -1,11 +1,11 @@
 import { render, cleanup, fireEvent, wait } from '@testing-library/react'
 import { UserPage } from './UserPage'
 import { AppContext } from '../../contexts/AppContext'
-import * as api from '../../helpers/api';
+import axios from 'axios';
 import { MemoryRouter, Route } from 'react-router-dom'
 import { act } from 'react-dom/test-utils';
 
-jest.mock('../../helpers/api');
+jest.mock('axios');
 const mockHistoryGoBack = jest.fn();
 const mockHistoryPush = jest.fn();
 
@@ -18,11 +18,15 @@ jest.mock('react-router-dom', () => ({
 }));
 
 const renderWithContextAndRouterForExistingUser = (component) => {
-    api.doGet.mockResolvedValue({
-        id: 2,
-        name: 'user',
-        isAdmin: false
-    });
+    axios.get.mockResolvedValue(
+        {
+            data: {
+                id: 2,
+                name: 'user',
+                isAdmin: false
+            }
+        }
+    );
     const context = { auth: { info: {} } };
     return {
         ...render(
@@ -113,15 +117,15 @@ it('should update an existing user', async () => {
     await changeInputValue(container.getByTestId, 'password', 'pass');
     await changeInputValue(container.getByTestId, 'confirmPassword', 'pass');
 
-    api.doPut.mockResolvedValue({});
+    axios.put.mockResolvedValue({data:{}});
 
     await wait(() => {
         fireEvent.click(container.getByTestId('submit'));
     })
 
-    expect(api.doPut.mock.calls.length).toBe(1);
-    expect(api.doPut.mock.calls[0][0]).toBe('users/2');
-    expect(api.doPut.mock.calls[0][1]).toStrictEqual({ name: 'updated user', isAdmin: true, password: 'pass', confirmPassword: 'pass' });
+    expect(axios.put.mock.calls.length).toBe(1);
+    expect(axios.put.mock.calls[0][0]).toBe('users/2');
+    expect(axios.put.mock.calls[0][1]).toStrictEqual({ name: 'updated user', isAdmin: true, password: 'pass', confirmPassword: 'pass' });
 
     expect(mockHistoryGoBack.mock.calls.length).toBe(1);
     mockHistoryGoBack.mockClear();
@@ -134,15 +138,15 @@ it('should create a new user', async () => {
     await changeInputValue(getByTestId, 'password', 'pass');
     await changeInputValue(getByTestId, 'confirmPassword', 'pass');
 
-    api.doPost.mockResolvedValue({});
+    axios.post.mockResolvedValue({data:{}});
 
     await wait(() => {
         fireEvent.click(getByTestId('submit'));
     })
 
-    expect(api.doPost.mock.calls.length).toBe(1);
-    expect(api.doPost.mock.calls[0][0]).toBe('users');
-    expect(api.doPost.mock.calls[0][1]).toStrictEqual({ name: 'new user', isAdmin: false, password: 'pass', confirmPassword: 'pass' });
+    expect(axios.post.mock.calls.length).toBe(1);
+    expect(axios.post.mock.calls[0][0]).toBe('users');
+    expect(axios.post.mock.calls[0][1]).toStrictEqual({ name: 'new user', isAdmin: false, password: 'pass', confirmPassword: 'pass' });
 
     expect(mockHistoryGoBack.mock.calls.length).toBe(1);
     mockHistoryGoBack.mockClear();

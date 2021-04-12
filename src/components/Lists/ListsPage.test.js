@@ -2,13 +2,13 @@ import { render, cleanup, fireEvent, wait } from '@testing-library/react'
 import { ListsPage } from './ListsPage'
 import { AppContext } from '../../contexts/AppContext'
 import { createMemoryHistory } from 'history'
-import * as api from '../../helpers/api';
+import axios from 'axios';
 import { Router } from 'react-router-dom'
 import { act } from 'react-dom/test-utils';
 
 afterEach(cleanup)
 
-jest.mock('../../helpers/api');
+jest.mock('axios');
 const mockHistoryPush = jest.fn();
 
 jest.mock('react-router-dom', () => ({
@@ -21,11 +21,13 @@ jest.mock('react-router-dom', () => ({
 const history = createMemoryHistory();
 
 const renderWithContextAndRouter = (component) => {
-    api.doGet.mockResolvedValue(
-        [
-            { id: 1, name: 'user1' },
-            { id: 2, name: 'user2' }
-        ]
+    axios.get.mockResolvedValue(
+        {
+            data: [
+                { id: 1, name: 'user1' },
+                { id: 2, name: 'user2' }
+            ]
+        }
     );
     const context = { auth: { info: {} } };
     return {

@@ -1,30 +1,26 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { AppContext } from '../../contexts/AppContext';
-import { doGet, doDelete } from '../../helpers/api';
+import axios from 'axios';
 
 export const ListItemDeletePage = () => {
-    const { auth, requestsDispatch } = useContext(AppContext)
     const [item, setItem] = useState(null);
     let { listId, itemId } = useParams();
     let history = useHistory();
 
     useEffect(() => {
         const getListItem = async () => {
-            const res = await doGet(`lists/${listId}/items/${itemId}`, auth.info.token, requestsDispatch)
+            const res = await axios.get(`lists/${listId}/items/${itemId}`)
             const info = {
-                ...res,
-                pageTitle: `Delete list item ${res.title}`
+                ...res.data,
+                pageTitle: `Delete list item ${res.data.title}`
             }
             setItem(info);
         }
-        if (auth.info) {
             getListItem();
-        }
-    }, [listId, itemId, auth.info, requestsDispatch]);
+    }, [listId, itemId]);
 
     const deleteListItem = async () => {
-        await doDelete(`lists/${listId}/items/${itemId}`, auth.info.token, requestsDispatch)
+        await axios.delete(`lists/${listId}/items/${itemId}`)
         history.push(`/lists/${listId}/edit`);
     }
 

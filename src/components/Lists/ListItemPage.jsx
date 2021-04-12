@@ -1,12 +1,10 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { AppContext } from '../../contexts/AppContext';
-import { doPost, doPut, doGet } from '../../helpers/api';
+import axios from 'axios';
 import * as Yup from 'yup';
 
 export const ListItemPage = () => {
-    const { auth, requestsDispatch } = useContext(AppContext)
     let { listId, itemId } = useParams();
     let history = useHistory();
 
@@ -22,7 +20,8 @@ export const ListItemPage = () => {
 
     useEffect(() => {
         const getExistingItem = async () => {
-            const item = await doGet(`lists/${listId}/items/${itemId}`, auth.info.token, requestsDispatch)
+            const res = await axios.get(`lists/${listId}/items/${itemId}`)
+            const item = res.data
 
             setPageState({
                 pageTitle: `Edit item '${item.title}'`,
@@ -33,10 +32,10 @@ export const ListItemPage = () => {
                 description: item.description
             });
         }
-        if (auth.info && listId && itemId) {
+        if (listId && itemId) {
             getExistingItem();
         }
-    }, [listId, itemId, auth.info, requestsDispatch]);
+    }, [listId, itemId]);
 
     return (
         <div className="container">
@@ -59,9 +58,9 @@ export const ListItemPage = () => {
                         description
                     }
                     if (pageState.isNew) {
-                        await doPost(pageState.submitUrl, body, auth.info.token, requestsDispatch)
+                        await axios.post(pageState.submitUrl, body)
                     } else {
-                        await doPut(pageState.submitUrl, body, auth.info.token, requestsDispatch)
+                        await axios.put(pageState.submitUrl, body)
                     }
                     history.goBack();
                 }}>

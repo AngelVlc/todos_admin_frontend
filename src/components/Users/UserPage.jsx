@@ -1,12 +1,10 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { AppContext } from '../../contexts/AppContext';
-import { doPost, doPut, doGet } from '../../helpers/api';
+import axios from 'axios';
 import * as Yup from 'yup';
 
 export const UserPage = (props) => {
-    const { auth, requestsDispatch } = useContext(AppContext)
     let { userId } = useParams();
     let history = useHistory();
 
@@ -22,7 +20,8 @@ export const UserPage = (props) => {
 
     useEffect(() => {
         const getExistingUser = async () => {
-            const user = await doGet(`users/${userId}`, auth.info.token, requestsDispatch)
+            const res = await axios.get(`users/${userId}`)
+            const user = res.data
 
             let title = `Edit user '${user.name}'`
             if (user.IsAdmin) {
@@ -38,10 +37,10 @@ export const UserPage = (props) => {
                 isAdmin: user.isAdmin ? 'yes' : 'no'
             });
         }
-        if (auth.info && userId) {
+        if (userId) {
             getExistingUser();
         }
-    }, [userId, auth.info, requestsDispatch]);
+    }, [userId]);
 
     return (
         <div className="container">
@@ -68,9 +67,9 @@ export const UserPage = (props) => {
                         isAdmin: isAdmin === 'yes' ? true : false
                     }
                     if (pageState.isNew) {
-                        await doPost(pageState.submitUrl, body, auth.info.token, requestsDispatch)
+                        await axios.post(pageState.submitUrl, body)
                     } else {
-                        await doPut(pageState.submitUrl, body, auth.info.token, requestsDispatch)
+                        await axios.put(pageState.submitUrl, body)
                     }
                     history.goBack();
                 }}>

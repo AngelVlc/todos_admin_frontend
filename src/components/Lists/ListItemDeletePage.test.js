@@ -1,11 +1,11 @@
 import { render, cleanup, fireEvent, wait } from '@testing-library/react'
 import { ListItemDeletePage } from './ListItemDeletePage'
 import { AppContext } from '../../contexts/AppContext'
-import * as api from '../../helpers/api';
+import axios from 'axios';
 import { MemoryRouter, Route } from 'react-router-dom'
 import { act } from 'react-dom/test-utils';
 
-jest.mock('../../helpers/api');
+jest.mock('axios');
 const mockHistoryGoBack = jest.fn();
 const mockHistoryPush = jest.fn();
 
@@ -18,11 +18,15 @@ jest.mock('react-router-dom', () => ({
 }));
 
 const renderWithContextAndRouter = (component) => {
-    api.doGet.mockResolvedValue({
-        id: 5,
-        title: 'item title',
-        description: 'item desc'
-    });
+    axios.get.mockResolvedValue(
+        {
+            data: {
+                id: 5,
+                title: 'item title',
+                description: 'item desc'
+            }
+        }
+    );
     const context = { auth: { info: {} } };
     return {
         ...render(
@@ -67,14 +71,14 @@ it('should delete the List', async () => {
         container = renderWithContextAndRouter(<ListItemDeletePage />);
     });
 
-    api.doDelete.mockResolvedValue({});
+    axios.delete.mockResolvedValue({data:{}});
 
     await wait(() => {
         fireEvent.click(container.getByTestId('yes'));
     })
 
-    expect(api.doDelete.mock.calls.length).toBe(1);
-    expect(api.doDelete.mock.calls[0][0]).toBe('lists/2/items/5');
+    expect(axios.delete.mock.calls.length).toBe(1);
+    expect(axios.delete.mock.calls[0][0]).toBe('lists/2/items/5');
     expect(mockHistoryPush.mock.calls.length).toBe(1);
     expect(mockHistoryPush.mock.calls[0][0]).toBe('/lists/2/edit');
     mockHistoryPush.mockClear();

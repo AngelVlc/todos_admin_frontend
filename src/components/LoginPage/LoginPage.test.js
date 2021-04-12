@@ -3,11 +3,11 @@ import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
 import { LoginPage } from './LoginPage'
 import { AppContext } from '../../contexts/AppContext'
-import * as api from '../../helpers/api';
+import axios from 'axios';
 import jwt from 'jwt-decode';
 
 jest.mock('jwt-decode');
-jest.mock('../../helpers/api');
+jest.mock('axios');
 const mockAuthDispatch = jest.fn()
 const mockHistoryPush = jest.fn();
 jest.mock('react-router-dom', () => ({
@@ -56,15 +56,17 @@ it('should show the error when log in fails', async () => {
     await changeInput(getByTestId, 'userName', 'user');
     await changeInput(getByTestId, 'password', 'pass');
 
-    api.doGetToken.mockRejectedValue('some error');
+    axios.post.mockRejectedValue('some error');
 
     await wait(() => {
         fireEvent.click(getByTestId('submit'));
     })
 
-    expect(api.doGetToken.mock.calls.length).toBe(1);
+    expect(axios.post.mock.calls.length).toBe(1);
+    expect(axios.post.mock.calls[0][0]).toBe('/auth/login');
+    expect(axios.post.mock.calls[0][1]).toStrictEqual({userName: 'user', password: 'pass'});
     expect(getByTestId('authError')).toHaveTextContent('some error');
-    api.doGetToken.mockClear();
+    axios.post.mockClear();
 })
 
 it('should show the home page after logging in', async () => {
@@ -73,8 +75,10 @@ it('should show the home page after logging in', async () => {
     await changeInput(getByTestId, 'userName', 'user');
     await changeInput(getByTestId, 'password', 'pass');
 
-    api.doGetToken.mockResolvedValue({
-        'token': 'theToken'
+    axios.post.mockResolvedValue({
+        data: {
+            token: 'theToken'
+        }
     });
 
     jwt.mockReturnValue({
@@ -98,13 +102,14 @@ it('should show the home page after logging in', async () => {
             isAdmin: true
         }
     }
-    expect(api.doGetToken.mock.calls.length).toBe(1);
-    expect(api.doGetToken.mock.calls[0][0]).toStrictEqual({ "password": "pass", "userName": "user" });
+    expect(axios.post.mock.calls.length).toBe(1);
+    expect(axios.post.mock.calls[0][0]).toBe('/auth/login');
+    expect(axios.post.mock.calls[0][1]).toStrictEqual({ "password": "pass", "userName": "user" });
     expect(mockAuthDispatch.mock.calls.length).toBe(1);
     expect(mockAuthDispatch.mock.calls[0][0]).toStrictEqual(userLoggedIn);
     expect(mockHistoryPush.mock.calls.length).toBe(1);
     expect(mockHistoryPush.mock.calls[0][0]).toBe('/');
-    api.doGetToken.mockClear();
+    axios.post.mockClear();
 })
 
 const changeInput = async (getByTestId, name, value) => {

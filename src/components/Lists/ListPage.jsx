@@ -1,13 +1,11 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useParams, useHistory } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { AppContext } from '../../contexts/AppContext';
-import { doPost, doPut, doGet } from '../../helpers/api';
+import axios from 'axios';
 import * as Yup from 'yup';
 
 
 export const ListPage = () => {
-    const { auth, requestsDispatch } = useContext(AppContext)
     let { listId } = useParams();
     let history = useHistory();
 
@@ -23,7 +21,11 @@ export const ListPage = () => {
 
     useEffect(() => {
         const getExistingList = async () => {
-            const list = await doGet(`lists/${listId}`, auth.info.token, requestsDispatch)
+            let res = await axios.get(`lists/${listId}`)
+            const list = res.data
+
+            res = await axios.get(`lists/${listId}/items`)
+            const listItems = res.data
 
             setPageState({
                 title: `Edit list '${list.name}'`,
@@ -31,13 +33,13 @@ export const ListPage = () => {
                 submitUrl: `lists/${listId}`,
                 isNew: false,
                 name: list.name,
-                items: list.items
+                items: listItems
             });
         }
-        if (auth.info && listId) {
+        if (listId) {
             getExistingList();
         }
-    }, [listId, auth.info, requestsDispatch]);
+    }, [listId]);
 
     return (
         <div className="container">
@@ -58,9 +60,9 @@ export const ListPage = () => {
                         name
                     }
                     if (pageState.isNew) {
-                        await doPost(pageState.submitUrl, body, auth.info.token, requestsDispatch)
+                        await axios.post(pageState.submitUrl, body)
                     } else {
-                        await doPut(pageState.submitUrl, body, auth.info.token, requestsDispatch)
+                        await axios.put(pageState.submitUrl, body)
                     }
                     history.goBack();
                 }}>

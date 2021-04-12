@@ -5,12 +5,23 @@ import { userLoggedIn } from '../../actions'
 import { AppContext } from '../../contexts/AppContext'
 import * as Yup from 'yup';
 import jwt from 'jwt-decode';
-import { doGetToken } from '../../helpers/api';
+import axios from 'axios';
 
 export const LoginPage = () => {
-    const { authDispatch, requestsDispatch } = useContext(AppContext)
+    const { authDispatch } = useContext(AppContext)
     const [authError, setAuthError] = useState(null);
     let history = useHistory();
+
+    const onSubmit = async(values) => {
+        try {
+            const res = await axios.post('/auth/login', values);
+            const tokenInfo = jwt(res.data.token);
+            authDispatch(userLoggedIn(res.data, tokenInfo));
+            history.push('/');
+        } catch (error) {
+            setAuthError(error);
+        }
+    }
 
     return (
         <div className="container">
@@ -21,22 +32,10 @@ export const LoginPage = () => {
                     password: ''
                 }}
                 validationSchema={Yup.object({
-                    userName: Yup.string()
-                        .required('Required'),
-                    password: Yup.string()
-                        .required('Required'),
-                })
-                }
-                onSubmit={async (values) => {
-                    try {
-                        const res = await doGetToken(values, requestsDispatch);
-                        const tokenInfo = jwt(res.token);
-                        authDispatch(userLoggedIn(res, tokenInfo));
-                        history.push('/');
-                    } catch (error) {
-                        setAuthError(error);
-                    }
-                }}>
+                    userName: Yup.string().required('Required'),
+                    password: Yup.string().required('Required'),
+                })}
+                onSubmit={onSubmit}>
                 <Form>
                     <div className="field">
                         <label className="label" htmlFor="userName">Name</label>

@@ -1,30 +1,26 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { AppContext } from '../../contexts/AppContext';
-import { doGet, doDelete } from '../../helpers/api';
+import axios from 'axios';
 
 export const ListDeletePage = () => {
-    const { auth, requestsDispatch } = useContext(AppContext)
     const [list, setList] = useState(null);
     let { listId } = useParams();
     let history = useHistory();
 
     useEffect(() => {
         const getList = async () => {
-            const res = await doGet(`lists/${listId}`, auth.info.token, requestsDispatch)
+            const res = await axios.get(`lists/${listId}`)
             const info = {
-                ...res,
-                title: `Delete list ${res.name}`
+                ...res.data,
+                title: `Delete list ${res.data.name}`
             }
             setList(info);
         }
-        if (auth.info) {
             getList();
-        }
-    }, [listId, auth.info, requestsDispatch]);
+    }, [listId]);
 
     const deleteList = async () => {
-        await doDelete(`lists/${listId}`, auth.info.token, requestsDispatch)
+        await axios.delete(`lists/${listId}`)
         history.push('/lists');
     }
 

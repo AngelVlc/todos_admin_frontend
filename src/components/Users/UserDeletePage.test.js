@@ -1,11 +1,11 @@
 import { render, cleanup, fireEvent, wait } from '@testing-library/react'
 import { UserDeletePage } from './UserDeletePage'
 import { AppContext } from '../../contexts/AppContext'
-import * as api from '../../helpers/api';
+import axios from 'axios';
 import { MemoryRouter, Route } from 'react-router-dom'
 import { act } from 'react-dom/test-utils';
 
-jest.mock('../../helpers/api');
+jest.mock('axios');
 const mockHistoryGoBack = jest.fn();
 const mockHistoryPush = jest.fn();
 
@@ -18,11 +18,16 @@ jest.mock('react-router-dom', () => ({
 }));
 
 const renderWithContextAndRouter = (component) => {
-    api.doGet.mockResolvedValue({
-        id: 2,
-        name: 'user',
-        isAdmin: false
-    });
+    axios.get.mockResolvedValue(
+        {
+            data:
+            {
+                id: 2,
+                name: 'user',
+                isAdmin: false
+            }
+        }
+    );
     const context = { auth: { info: {} } };
     return {
         ...render(
@@ -67,14 +72,14 @@ it('should delete the user', async () => {
         container = renderWithContextAndRouter(<UserDeletePage />);
     });
 
-    api.doDelete.mockResolvedValue({});
+    axios.delete.mockResolvedValue({data:{}});
 
     await wait(() => {
         fireEvent.click(container.getByTestId('yes'));
     })
 
-    expect(api.doDelete.mock.calls.length).toBe(1);
-    expect(api.doDelete.mock.calls[0][0]).toBe('users/2');
+    expect(axios.delete.mock.calls.length).toBe(1);
+    expect(axios.delete.mock.calls[0][0]).toBe('users/2');
     expect(mockHistoryPush.mock.calls.length).toBe(1);
     expect(mockHistoryPush.mock.calls[0][0]).toBe('/users');
     mockHistoryPush.mockClear();
