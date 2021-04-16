@@ -5,7 +5,8 @@ export const Header = () => {
     const navBarMenuRef = useRef();
     const navBarBurguerRef = useRef();
     let history = useHistory();
-    const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    const userInfoStr = localStorage.getItem('userInfo');
+    let userInfo = userInfoStr ? JSON.parse(userInfoStr) : null;
 
     const onLogoutClick = () => {
         localStorage.setItem('userInfo', null);
@@ -29,7 +30,7 @@ export const Header = () => {
                     </div>
                 }
             </div>
-            <div className="navbar-menu" id="navbar-menu" ref={navBarMenuRef}>
+            <div className="navbar-menu" ref={navBarMenuRef}>
                 <div className="navbar-start">
                     {userInfo &&
                         <>

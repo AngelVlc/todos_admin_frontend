@@ -1,10 +1,8 @@
 import { render, cleanup, fireEvent, wait } from '@testing-library/react'
 import { Router } from 'react-router-dom'
 import { Header } from './Header'
-import { AppContext } from '../../contexts/AppContext'
 import { createMemoryHistory } from 'history'
 
-const mockAuthDispatch = jest.fn()
 const mockHistoryPush = jest.fn();
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
@@ -13,49 +11,60 @@ jest.mock('react-router-dom', () => ({
     })
 }));
 
-const renderWithContext = (component, auth) => {
+const renderWithRouter = (component) => {
     const history = createMemoryHistory();
-    const context = { authDispatch: mockAuthDispatch, auth }
     return {
         ...render(
-            <AppContext.Provider value={context}>
-                <Router history={history}>
-                    {component}
-                </Router>
-            </AppContext.Provider>)
+            <Router history={history}>
+                {component}
+            </Router>)
     }
-}
+};
 
-afterEach(cleanup)
+beforeEach(() => {
+    Object.defineProperty(window, "localStorage", {
+        value: {
+          getItem: jest.fn(() => null),
+          setItem: jest.fn(() => null)
+        },
+        writable: true
+    });
+});
+
+afterEach(cleanup);
 
 it('should match the snapshot when the user is not logged in', () => {
-    const { asFragment } = renderWithContext(<Header />, { info: null });
+    localStorage.getItem.mockReturnValue(null);
+    const { asFragment } = renderWithRouter(<Header />);
 
     expect(asFragment(<Header />)).toMatchSnapshot();
 })
 
 it('should match the snapshot when the user is logged in', () => {
-    const { asFragment } = renderWithContext(<Header />, { info: { userName: 'user' } });
+    localStorage.getItem.mockReturnValue(JSON.stringify({ userName: 'user' }));
+    const { asFragment } = renderWithRouter(<Header />);
 
     expect(asFragment(<Header />)).toMatchSnapshot();
 })
 
 it('should match the snapshot when an admin user is logged in', () => {
-    const { asFragment } = renderWithContext(<Header />, { info: { userName: 'admin', isAdmin: true } });
+    localStorage.getItem.mockReturnValue(JSON.stringify({ userName: 'admin', isAdmin: true }));
+    const { asFragment } = renderWithRouter(<Header />);
 
     expect(asFragment(<Header />)).toMatchSnapshot();
 })
 
 it('should do logout', async () => {
-    const { getByTestId } = renderWithContext(<Header />, { info: { userName: 'user' } });
+    localStorage.getItem.mockReturnValue(JSON.stringify({ userName: 'user' }));
+    const { getByTestId } = renderWithRouter(<Header />);
 
     await wait(() => {
         fireEvent.click(getByTestId('logOut'));
     })
 
-    expect(mockAuthDispatch.mock.calls.length).toBe(1);
-    const userLoggedIn = {
-        type: 'USER_LOGGED_OUT'
-    }
-    expect(mockAuthDispatch.mock.calls[0][0]).toStrictEqual(userLoggedIn);
+    expect(window.localStorage.setItem.mock.calls.length).toBe(1);
+    expect(window.localStorage.setItem.mock.calls[0][0]).toBe('userInfo');
+    expect(window.localStorage.setItem.mock.calls[0][1]).toBe(null);
+    expect(mockHistoryPush.mock.calls.length).toBe(1);
+    expect(mockHistoryPush.mock.calls[0][0]).toBe('/login');
 })
