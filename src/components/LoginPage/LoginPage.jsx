@@ -1,22 +1,17 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { userLoggedIn } from '../../actions'
-import { AppContext } from '../../contexts/AppContext'
 import * as Yup from 'yup';
-import jwt from 'jwt-decode';
 import axios from 'axios';
 
 export const LoginPage = () => {
-    const { authDispatch } = useContext(AppContext)
     const [authError, setAuthError] = useState(null);
     let history = useHistory();
 
     const onSubmit = async(values) => {
         try {
             const res = await axios.post('/auth/login', values);
-            const tokenInfo = jwt(res.data.token);
-            authDispatch(userLoggedIn(res.data, tokenInfo));
+            localStorage.setItem('userInfo', JSON.stringify(res.data));
             history.push('/');
         } catch (error) {
             setAuthError(error);

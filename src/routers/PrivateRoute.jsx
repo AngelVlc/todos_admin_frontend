@@ -1,13 +1,12 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { AppContext } from '../contexts/AppContext';
 
 export const PrivateRoute = ({ component: Component, ...rest }) => {
-    const { auth } = useContext(AppContext)
+    const userInfo = JSON.parse(localStorage.getItem('userInfo'));
 
     return (
         <Route {...rest} render={props => (
-            auth.info
+            userInfo
                 ? <Component {...props} />
                 : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
         )} />

@@ -13,6 +13,19 @@ exports[`should match the snapshot when an admin user is logged in 1`] = `
       >
         To Dos
       </span>
+      <div
+        class="navbar-burger"
+      >
+        <span
+          aria-hidden="true"
+        />
+        <span
+          aria-hidden="true"
+        />
+        <span
+          aria-hidden="true"
+        />
+      </div>
     </div>
     <div
       class="navbar-menu"
@@ -81,6 +94,19 @@ exports[`should match the snapshot when the user is logged in 1`] = `
       >
         To Dos
       </span>
+      <div
+        class="navbar-burger"
+      >
+        <span
+          aria-hidden="true"
+        />
+        <span
+          aria-hidden="true"
+        />
+        <span
+          aria-hidden="true"
+        />
+      </div>
     </div>
     <div
       class="navbar-menu"
