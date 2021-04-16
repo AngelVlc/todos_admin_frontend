@@ -4,7 +4,6 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { userLoggedIn } from '../../actions'
 import { AppContext } from '../../contexts/AppContext'
 import * as Yup from 'yup';
-import jwt from 'jwt-decode';
 import axios from 'axios';
 
 export const LoginPage = () => {
@@ -15,8 +14,7 @@ export const LoginPage = () => {
     const onSubmit = async(values) => {
         try {
             const res = await axios.post('/auth/login', values);
-            const tokenInfo = jwt(res.data.token);
-            authDispatch(userLoggedIn(res.data, tokenInfo));
+            authDispatch(userLoggedIn(res.data));
             history.push('/');
         } catch (error) {
             setAuthError(error);

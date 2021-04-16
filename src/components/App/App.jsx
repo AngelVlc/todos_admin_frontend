@@ -9,7 +9,7 @@ import { Header } from '../Header';
 import { createBrowserHistory } from "history";
 import { authReducer, requestsReducer } from '../../reducers';
 import { AppContext } from '../../contexts/AppContext';
-import { requestStarted, requestDone, requestFailed, requestErrorShowed } from '../../actions';
+import { requestStarted, requestDone, requestFailed, requestErrorShowed, userLoggedOut} from '../../actions';
 import Loader from 'react-loader-spinner';
 import { useAlert } from 'react-alert';
 import axios from 'axios';
@@ -30,24 +30,11 @@ const App = () => {
   }, [request.error, alert, requestsDispatch]);
 
   axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5001'
+  axios.defaults.withCredentials = true
 
   useEffect(() => {
-    while (axios.interceptors.request.handlers.length > 0) {
-      axios.interceptors.request.eject(0)
-      axios.interceptors.request.handlers.splice(0,1)
-    }
-    while (axios.interceptors.response.handlers.length > 0) {
-      axios.interceptors.response.eject(0)
-      axios.interceptors.response.handlers.splice(0,1)
-    }
-
-    console.log(auth)
-
     axios.interceptors.request.use(
       config => {
-        if (!config.url.startsWith('/auth') && auth.info && auth.info.token) {
-          config.headers['Authorization'] = `Bearer ${auth.info.token}`;
-        }
         requestsDispatch(requestStarted());
 
         return config;
@@ -69,35 +56,31 @@ const App = () => {
           return Promise.reject(error.message);
         }
 
+        const originalRequest = error.config;
+        if (error.response.status === 401 && error.response.data === 'Invalid authorization token\n' && !originalRequest._retry) {
+          originalRequest._retry = true;
+          return axios.post('/auth/refreshtoken')
+            .then(res => {
+              if (res.status === 200) {
+                return axios(originalRequest);
+              }
+            })
+        }
+
+        if (error.response.status === 401 && error.response.data === 'Invalid refresh token\n') {
+          authDispatch(userLoggedOut());
+        }
+
         if (error.response && error.response.config.url !== '/auth/login') {
           requestsDispatch(requestFailed(error.response.data));
         } else {
           requestsDispatch(requestDone());
         }
+
         return Promise.reject(error.response.data);
-        // const originalRequest = error.config;
-        // if (error.response.status === 401 && !originalRequest._retry) {
-  
-        //   originalRequest._retry = true;
-        //   return axios.post('/auth/token',
-        //       {
-        //         "refresh_token": localStorageService.getRefreshToken()
-        //       })
-        //       .then(res => {
-        //           if (res.status === 201) {
-        //               // 1) put token to LocalStorage
-        //               localStorageService.setToken(res.data);
-  
-        //               // 2) Change Authorization header
-        //               axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorageService.getAccessToken();
-  
-        //               // 3) return originalRequest object with axios.
-        //               return axios(originalRequest);
-        //           }
-        //       })
       }
     )
-  }, [auth]);
+  }, [authDispatch]);
 
 
   return (

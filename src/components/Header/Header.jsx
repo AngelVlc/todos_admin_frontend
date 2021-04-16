@@ -11,12 +11,27 @@ export const Header = () => {
         authDispatch(userLoggedOut());
     }
 
+    const toggleNavBar = (e) => {
+        const target = e.target.dataset.target;
+        const $target = document.getElementById(target);
+
+        e.target.classList.toggle('is-active');
+        $target.classList.toggle('is-active');
+    }
+
     return (
         <nav className="navbar is-dark">
             <div className="navbar-brand">
                 <span className="navbar-item is-size-3">To Dos</span>
+                {auth.info &&
+                    <div className="navbar-burger" data-target="navbar-menu" onClick={(e) => toggleNavBar(e)}>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>˜
+                    </div>
+                }
             </div>
-            <div className="navbar-menu">
+            <div className="navbar-menu" id="navbar-menu">
                 <div className="navbar-start">
                     {auth.info &&
                         <>
