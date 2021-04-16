@@ -6,19 +6,18 @@ import { HomePage } from '../HomePage';
 import { ListsPage, ListPage, ListDeletePage, ListItemPage, ListItemDeletePage } from '../Lists';
 import { UserDeletePage, UsersPage, UserPage } from '../Users';
 import { Header } from '../Header';
-import { createBrowserHistory } from "history";
-import { authReducer, requestsReducer } from '../../reducers';
+import { createBrowserHistory } from 'history';
+import { requestsReducer } from '../../reducers';
 import { AppContext } from '../../contexts/AppContext';
-import { requestStarted, requestDone, requestFailed, requestErrorShowed, userLoggedOut} from '../../actions';
+import { requestStarted, requestDone, requestFailed, requestErrorShowed} from '../../actions';
 import Loader from 'react-loader-spinner';
 import { useAlert } from 'react-alert';
 import axios from 'axios';
 import './App.css';
 
-const history = createBrowserHistory();
+const browserHistory = createBrowserHistory();
 
 const App = () => {
-  const [auth, authDispatch] = useReducer(authReducer, [])
   const [request, requestsDispatch] = useReducer(requestsReducer, [])
   const alert = useAlert()
 
@@ -68,7 +67,8 @@ const App = () => {
         }
 
         if (error.response.status === 401 && error.response.data === 'Invalid refresh token\n') {
-          authDispatch(userLoggedOut());
+          localStorage.setItem('userInfo', null);
+          window.open('/login');
         }
 
         if (error.response && error.response.config.url !== '/auth/login') {
@@ -80,12 +80,12 @@ const App = () => {
         return Promise.reject(error.response.data);
       }
     )
-  }, [authDispatch]);
+  }, []);
 
 
   return (
-    <AppContext.Provider value={{ auth, request, authDispatch, requestsDispatch }}>
-      <Router history={history}>
+    <AppContext.Provider value={{ request, requestsDispatch }}>
+      <Router history={browserHistory}>
         <Header />
         {request.pending &&
           <div className="reactLoader">
