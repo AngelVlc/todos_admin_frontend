@@ -9,10 +9,10 @@ import { Header } from '../Header';
 import { createBrowserHistory } from 'history';
 import { requestsReducer } from '../../reducers';
 import { AppContext } from '../../contexts/AppContext';
-import { requestStarted, requestDone, requestFailed, requestErrorShowed} from '../../actions';
+import { requestErrorShowed} from '../../actions';
 import Loader from 'react-loader-spinner';
 import { useAlert } from 'react-alert';
-import axios from 'axios';
+import * as axiosService from '../../services/configureAxios';
 import './App.css';
 
 const browserHistory = createBrowserHistory();
@@ -28,58 +28,8 @@ const App = () => {
     }
   }, [request.error, alert, requestsDispatch]);
 
-  axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5001'
-  axios.defaults.withCredentials = true
-
   useEffect(() => {
-    axios.interceptors.request.use(
-      config => {
-        requestsDispatch(requestStarted());
-
-        return config;
-      },
-      error => {
-        Promise.reject(error)
-      },
-    );
-
-    axios.interceptors.response.use(
-      (response) => {
-        requestsDispatch(requestDone());
-
-        return response
-      },
-      (error) => {
-        if (!error.response) {
-          requestsDispatch(requestDone());
-          return Promise.reject(error.message);
-        }
-
-        const originalRequest = error.config;
-        if (error.response.status === 401 && error.response.data === 'Invalid authorization token\n' && !originalRequest._retry) {
-          originalRequest._retry = true;
-          return axios.post('/auth/refreshtoken')
-            .then(res => {
-              if (res.status === 200) {
-                return axios(originalRequest);
-              }
-            })
-        }
-
-        if (error.response.status === 401 && error.response.data === 'Invalid refresh token\n') {
-          localStorage.setItem('userInfo', null);
-          window.open('/login');
-        }
-
-        if (error.response && error.response.config.url !== '/auth/login') {
-          requestsDispatch(requestFailed(error.response.data));
-        } else {
-          requestsDispatch(requestDone());
-        }
-
-        return Promise.reject(error.response.data);
-      }
-    )
+    axiosService.configure(requestsDispatch);
   }, []);
 
 
