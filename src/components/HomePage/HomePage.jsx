@@ -6,8 +6,8 @@ export const HomePage = () => {
     return (
         <div className="container">
             <h3 className="title">HOME</h3>
-            <button className="button" onClick={() => history.push('/users')}>Users</button>
-            <button className="button" onClick={() => history.push('/lists')}>Lists</button>
+            <button className="button" onClick={() => history.push('/users')} data-testid="users">Users</button>
+            <button className="button" onClick={() => history.push('/lists')} data-testid="lists">Lists</button>
         </div>
     )
 }
