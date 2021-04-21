@@ -10,9 +10,9 @@ export const ListPage = () => {
     let history = useHistory();
 
     const initialState = {
-        title: 'New list',
-        submintBtnText: 'CREATE',
-        submitUrl: 'lists',
+        title: '',
+        submintBtnText: '',
+        submitUrl: '',
         isNew: true,
         name: '',
         items: []
@@ -38,6 +38,15 @@ export const ListPage = () => {
         }
         if (listId) {
             getExistingList();
+        } else {
+            setPageState({
+                title: 'New list',
+                submintBtnText: 'CREATE',
+                submitUrl: 'lists',
+                isNew: true,
+                name: '',
+                items: []
+            });
         }
     }, [listId]);
 

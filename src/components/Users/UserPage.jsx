@@ -9,13 +9,14 @@ export const UserPage = (props) => {
     let history = useHistory();
 
     const initialState = {
-        title: 'New user',
-        submintBtnText: 'CREATE',
+        title: '',
+        submintBtnText: '',
         submitUrl: 'users',
         isNew: true,
         name: '',
-        isAdmin: 'no'
+        isAdmin: ''
     }
+
     const [pageState, setPageState] = useState(initialState);
 
     useEffect(() => {
@@ -39,6 +40,15 @@ export const UserPage = (props) => {
         }
         if (userId) {
             getExistingUser();
+        } else {
+            setPageState({
+                title: 'New user',
+                submintBtnText: 'CREATE',
+                submitUrl: 'users',
+                isNew: true,
+                name: '',
+                isAdmin: 'no'
+            });
         }
     }, [userId]);
 
