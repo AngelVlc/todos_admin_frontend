@@ -9,15 +9,15 @@ export const UserDeletePage = () => {
 
   useEffect(() => {
     const getUser = async () => {
-      const res = await axios.get(`users/${userId}`)
-      let title = `Delete user ${res.data.name}`
-      if (res.isAdmin) {
-        title = `Delete admin user '${res.data.name}'?`
+      const res = await axios.get(`users/${userId}`);
+      let title = `Delete user ${res.data.name}`;
+      if (res.data.isAdmin) {
+        title = `Delete admin user '${res.data.name}'?`;
       }
       const info = {
         ...res.data,
         title: title
-      }
+      };
       setUser(info);
     }
     getUser();

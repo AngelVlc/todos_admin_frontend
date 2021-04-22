@@ -17,14 +17,14 @@ jest.mock('react-router-dom', () => ({
     })
 }));
 
-const renderWithContextAndRouter = (component) => {
+const renderWithContextAndRouter = (component, isAdmin) => {
     axios.get.mockResolvedValue(
         {
             data:
             {
                 id: 2,
                 name: 'user',
-                isAdmin: false
+                isAdmin: isAdmin
             }
         }
     );
@@ -43,10 +43,19 @@ const renderWithContextAndRouter = (component) => {
 
 afterEach(cleanup)
 
-it('should match the snapshot', async () => {
+it('should match the snapshot when the user is not an admin', async () => {
     let fragment;
     await act(async () => {
-        const { asFragment } = renderWithContextAndRouter(<UserDeletePage />);
+        const { asFragment } = renderWithContextAndRouter(<UserDeletePage />, false);
+        fragment = asFragment;
+    });
+    expect(fragment(<UserDeletePage />)).toMatchSnapshot();
+});
+
+it('should match the snapshot when the user is an admin', async () => {
+    let fragment;
+    await act(async () => {
+        const { asFragment } = renderWithContextAndRouter(<UserDeletePage />, true);
         fragment = asFragment;
     });
     expect(fragment(<UserDeletePage />)).toMatchSnapshot();
@@ -55,7 +64,7 @@ it('should match the snapshot', async () => {
 it('should cancel the deletion', async () => {
     let container
     await act(async () => {
-        container = renderWithContextAndRouter(<UserDeletePage />);
+        container = renderWithContextAndRouter(<UserDeletePage />, false);
     });
 
     await wait(() => {
@@ -66,10 +75,10 @@ it('should cancel the deletion', async () => {
     mockHistoryGoBack.mockClear();
 });
 
-it('should delete the user', async () => {
+it('should delete a user', async () => {
     let container
     await act(async () => {
-        container = renderWithContextAndRouter(<UserDeletePage />);
+        container = renderWithContextAndRouter(<UserDeletePage />, false);
     });
 
     axios.delete.mockResolvedValue({data:{}});

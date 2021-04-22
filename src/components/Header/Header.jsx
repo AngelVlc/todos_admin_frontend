@@ -33,12 +33,12 @@ export const Header = () => {
                 <div className="navbar-start">
                     {auth.info &&
                         <>
-                            <span className="navbar-item" onClick={() => history.push('/')}>Home</span>
-                            <span className="navbar-item" onClick={() => history.push('/lists')}>Lists</span>
+                            <span className="navbar-item" data-testid="goToRoot" onClick={() => history.push('/')}>Home</span>
+                            <span className="navbar-item" data-testid="goToLists" onClick={() => history.push('/lists')}>Lists</span>
                         </>
                     }
                     {auth.info?.isAdmin &&
-                        <span className="navbar-item" onClick={() => history.push('/users')}>Users</span>
+                        <span className="navbar-item" data-testid="goToUsers" onClick={() => history.push('/users')}>Users</span>
                     }
                 </div>
             </div>

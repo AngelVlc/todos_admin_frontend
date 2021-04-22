@@ -56,3 +56,36 @@ it('should do logout', async () => {
     expect(mockHistoryPush.mock.calls.length).toBe(1);
     expect(mockHistoryPush.mock.calls[0][0]).toBe('/login');
 })
+
+it('should go to root', async () => {
+    const { getByTestId } = renderWithRouterAndContext(<Header />, { info: { userName: 'user' } });
+
+    await wait(() => {
+        fireEvent.click(getByTestId('goToRoot'));
+    })
+
+    expect(mockHistoryPush.mock.calls.length).toBe(1);
+    expect(mockHistoryPush.mock.calls[0][0]).toBe('/');
+})
+
+it('should go to lists', async () => {
+    const { getByTestId } = renderWithRouterAndContext(<Header />, { info: { userName: 'user' } });
+
+    await wait(() => {
+        fireEvent.click(getByTestId('goToLists'));
+    })
+
+    expect(mockHistoryPush.mock.calls.length).toBe(1);
+    expect(mockHistoryPush.mock.calls[0][0]).toBe('/lists');
+})
+
+it('should go to users', async () => {
+    const { getByTestId } = renderWithRouterAndContext(<Header />, { info: { userName: 'user', isAdmin: true } });
+
+    await wait(() => {
+        fireEvent.click(getByTestId('goToUsers'));
+    })
+
+    expect(mockHistoryPush.mock.calls.length).toBe(1);
+    expect(mockHistoryPush.mock.calls[0][0]).toBe('/users');
+})

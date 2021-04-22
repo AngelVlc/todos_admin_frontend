@@ -33,7 +33,6 @@ const App = () => {
     axiosService.configure(requestsDispatch, browserHistory);
   }, []);
 
-
   return (
     <AppContext.Provider value={{ auth, request, authDispatch, requestsDispatch }}>
       <Router history={browserHistory}>
