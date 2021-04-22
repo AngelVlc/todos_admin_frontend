@@ -7,7 +7,7 @@ import { ListsPage, ListPage, ListDeletePage, ListItemPage, ListItemDeletePage }
 import { UserDeletePage, UsersPage, UserPage } from '../Users';
 import { Header } from '../Header';
 import { createBrowserHistory } from 'history';
-import { requestsReducer } from '../../reducers';
+import { authReducer, requestsReducer } from '../../reducers';
 import { AppContext } from '../../contexts/AppContext';
 import { requestErrorShowed} from '../../actions';
 import Loader from 'react-loader-spinner';
@@ -18,8 +18,9 @@ import './App.css';
 const browserHistory = createBrowserHistory();
 
 const App = () => {
-  const [request, requestsDispatch] = useReducer(requestsReducer, [])
-  const alert = useAlert()
+  const [auth, authDispatch] = useReducer(authReducer, []);
+  const [request, requestsDispatch] = useReducer(requestsReducer, []);
+  const alert = useAlert();
 
   useEffect(() => {
     if (request.error) {
@@ -29,12 +30,12 @@ const App = () => {
   }, [request.error, alert, requestsDispatch]);
 
   useEffect(() => {
-    axiosService.configure(requestsDispatch);
+    axiosService.configure(requestsDispatch, browserHistory);
   }, []);
 
 
   return (
-    <AppContext.Provider value={{ request, requestsDispatch }}>
+    <AppContext.Provider value={{ auth, request, authDispatch, requestsDispatch }}>
       <Router history={browserHistory}>
         <Header />
         {request.pending &&

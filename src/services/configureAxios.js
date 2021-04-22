@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { requestStarted, requestDone, requestFailed} from '../actions';
 
-export const configure = (requestsDispatch) => {
+export const configure = (requestsDispatch, history) => {
   axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5001'
   axios.defaults.withCredentials = true
 
@@ -20,7 +20,7 @@ export const configure = (requestsDispatch) => {
     (response) => {
       requestsDispatch(requestDone());
 
-      return response
+      return response;
     },
     async error => {
       if (!error.response) {
@@ -38,8 +38,7 @@ export const configure = (requestsDispatch) => {
       }
 
       if (error.response.status === 401 && error.response.data === 'Invalid refresh token\n') {
-        localStorage.setItem('userInfo', null);
-        window.open('/login');
+        history.push('/login');
       }
 
       if (error.response && error.response.config.url !== '/auth/login') {
