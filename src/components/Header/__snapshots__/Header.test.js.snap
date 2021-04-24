@@ -35,16 +35,19 @@ exports[`should match the snapshot when an admin user is logged in 1`] = `
       >
         <span
           class="navbar-item"
+          data-testid="goToRoot"
         >
           Home
         </span>
         <span
           class="navbar-item"
+          data-testid="goToLists"
         >
           Lists
         </span>
         <span
           class="navbar-item"
+          data-testid="goToUsers"
         >
           Users
         </span>
@@ -116,11 +119,13 @@ exports[`should match the snapshot when the user is logged in 1`] = `
       >
         <span
           class="navbar-item"
+          data-testid="goToRoot"
         >
           Home
         </span>
         <span
           class="navbar-item"
+          data-testid="goToLists"
         >
           Lists
         </span>

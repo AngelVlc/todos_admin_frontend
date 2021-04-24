@@ -1,15 +1,14 @@
-import React, { useRef } from 'react';
+import React, { useRef, useContext } from 'react';
+import { AppContext } from '../../contexts/AppContext';
 import { useHistory } from 'react-router-dom';
 
 export const Header = () => {
+    const { auth } = useContext(AppContext)
     const navBarMenuRef = useRef();
     const navBarBurguerRef = useRef();
     let history = useHistory();
-    const userInfoStr = localStorage.getItem('userInfo');
-    let userInfo = userInfoStr ? JSON.parse(userInfoStr) : null;
 
     const onLogoutClick = () => {
-        localStorage.setItem('userInfo', null);
         history.push('/login');
     }
 
@@ -22,7 +21,7 @@ export const Header = () => {
         <nav className="navbar is-dark">
             <div className="navbar-brand">
                 <span className="navbar-item is-size-3">To Dos</span>
-                {userInfo &&
+                {auth.info &&
                     <div className="navbar-burger" ref={navBarBurguerRef} onClick={(e) => onToggleNavBar(e)}>
                         <span aria-hidden="true"></span>
                         <span aria-hidden="true"></span>
@@ -32,23 +31,23 @@ export const Header = () => {
             </div>
             <div className="navbar-menu" ref={navBarMenuRef}>
                 <div className="navbar-start">
-                    {userInfo &&
+                    {auth.info &&
                         <>
-                            <span className="navbar-item" onClick={() => history.push('/')}>Home</span>
-                            <span className="navbar-item" onClick={() => history.push('/lists')}>Lists</span>
+                            <span className="navbar-item" data-testid="goToRoot" onClick={() => history.push('/')}>Home</span>
+                            <span className="navbar-item" data-testid="goToLists" onClick={() => history.push('/lists')}>Lists</span>
                         </>
                     }
-                    {userInfo?.isAdmin &&
-                        <span className="navbar-item" onClick={() => history.push('/users')}>Users</span>
+                    {auth.info?.isAdmin &&
+                        <span className="navbar-item" data-testid="goToUsers" onClick={() => history.push('/users')}>Users</span>
                     }
                 </div>
             </div>
-            {userInfo &&
+            {auth.info &&
                 <div className="navbar-end">
                     <div className="navbar-item">
                         <div className="buttons">
                             <button className="button is-light is-small" data-testid="logOut" onClick={() => onLogoutClick()}>
-                                <span>{userInfo.userName}</span>
+                                <span>{auth.info.userName}</span>
                                 <span className="icon is-small">
                                     <i className="fas fa-sign-out-alt"></i>
                                 </span>

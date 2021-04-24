@@ -2,10 +2,12 @@ import { render, cleanup, fireEvent, wait } from '@testing-library/react'
 import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
 import { LoginPage } from './LoginPage'
+import { AppContext } from '../../contexts/AppContext';
 import axios from 'axios';
 
 jest.mock('axios');
 
+const mockAuthDispatch = jest.fn();
 const mockHistoryPush = jest.fn();
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
@@ -14,14 +16,17 @@ jest.mock('react-router-dom', () => ({
     })
 }));
 
-const renderWithRouter = (component) => {
+const renderWithContextAndRouter = (component) => {
     const history = createMemoryHistory();
+    const context = { authDispatch: mockAuthDispatch };
 
     return {
         ...render(
-            <Router history={history}>
-                {component}
-            </Router>)
+            <AppContext.Provider value={context}>
+                <Router history={history}>
+                    {component}
+                </Router>
+            </AppContext.Provider>)
     }
 }
 
@@ -38,13 +43,13 @@ beforeEach(() => {
 afterEach(cleanup);
 
 it('should match the snapshot', () => {
-    const { asFragment } = renderWithRouter(<LoginPage />);
+    const { asFragment } = renderWithContextAndRouter(<LoginPage />);
 
     expect(asFragment(<LoginPage />)).toMatchSnapshot();
 });
 
 it('should require user name and password for logging in', async () => {
-    const { getByTestId } = renderWithRouter(<LoginPage />);
+    const { getByTestId } = renderWithContextAndRouter(<LoginPage />);
 
     await wait(() => {
         fireEvent.click(getByTestId('submit'));
@@ -55,7 +60,7 @@ it('should require user name and password for logging in', async () => {
 })
 
 it('should show the error when log in fails', async () => {
-    const { getByTestId } = renderWithRouter(<LoginPage />);
+    const { getByTestId } = renderWithContextAndRouter(<LoginPage />);
 
     await changeInput(getByTestId, 'userName', 'user');
     await changeInput(getByTestId, 'password', 'pass');
@@ -74,7 +79,7 @@ it('should show the error when log in fails', async () => {
 })
 
 it('should show the home page after logging in', async () => {
-    const { getByTestId } = renderWithRouter(<LoginPage />);
+    const { getByTestId } = renderWithContextAndRouter(<LoginPage />);
 
     await changeInput(getByTestId, 'userName', 'user');
     await changeInput(getByTestId, 'password', 'pass');
@@ -94,9 +99,11 @@ it('should show the home page after logging in', async () => {
     expect(axios.post.mock.calls.length).toBe(1);
     expect(axios.post.mock.calls[0][0]).toBe('/auth/login');
     expect(axios.post.mock.calls[0][1]).toStrictEqual({ password: "pass", userName: "user" });
-    expect(window.localStorage.setItem.mock.calls.length).toBe(1);
+    expect(window.localStorage.setItem.mock.calls.length).toBe(2);
     expect(window.localStorage.setItem.mock.calls[0][0]).toBe('userInfo');
-    expect(window.localStorage.setItem.mock.calls[0][1]).toBe(JSON.stringify({ userId: 1, userName: 'userName', isAdmin: true}));
+    expect(window.localStorage.setItem.mock.calls[0][1]).toBe(null);
+    expect(window.localStorage.setItem.mock.calls[1][0]).toBe('userInfo');
+    expect(window.localStorage.setItem.mock.calls[1][1]).toBe(JSON.stringify({ userId: 1, userName: 'userName', isAdmin: true}));
     expect(mockHistoryPush.mock.calls.length).toBe(1);
     expect(mockHistoryPush.mock.calls[0][0]).toBe('/');
     axios.post.mockClear();

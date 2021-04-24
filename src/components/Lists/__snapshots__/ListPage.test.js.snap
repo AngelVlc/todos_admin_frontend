@@ -117,6 +117,7 @@ exports[`should match the snapshot for an existing list 1`] = `
               <button
                 class="button is-small"
                 data-testid="addNew"
+                type="button"
               >
                 <span
                   class="icon is-small"

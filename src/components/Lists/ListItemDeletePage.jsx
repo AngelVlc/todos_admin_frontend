@@ -16,7 +16,7 @@ export const ListItemDeletePage = () => {
             }
             setItem(info);
         }
-            getListItem();
+        getListItem();
     }, [listId, itemId]);
 
     const deleteListItem = async () => {

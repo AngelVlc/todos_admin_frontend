@@ -9,13 +9,14 @@ export const UserPage = (props) => {
     let history = useHistory();
 
     const initialState = {
-        title: 'New user',
-        submintBtnText: 'CREATE',
+        title: '',
+        submintBtnText: '',
         submitUrl: 'users',
         isNew: true,
         name: '',
-        isAdmin: 'no'
+        isAdmin: ''
     }
+
     const [pageState, setPageState] = useState(initialState);
 
     useEffect(() => {
@@ -24,7 +25,7 @@ export const UserPage = (props) => {
             const user = res.data
 
             let title = `Edit user '${user.name}'`
-            if (user.IsAdmin) {
+            if (user.isAdmin) {
                 title = `Edit admin user '${user.name}'`
             }
 
@@ -39,8 +40,33 @@ export const UserPage = (props) => {
         }
         if (userId) {
             getExistingUser();
+        } else {
+            setPageState({
+                title: 'New user',
+                submintBtnText: 'CREATE',
+                submitUrl: 'users',
+                isNew: true,
+                name: '',
+                isAdmin: 'no'
+            });
         }
     }, [userId]);
+
+    const onSubmit = async ({ name, isAdmin, password, confirmPassword }) => {
+        const body = {
+            name,
+            password,
+            confirmPassword,
+            isAdmin: isAdmin === 'yes' ? true : false
+        };
+        let res;
+        if (pageState.isNew) {
+            res = await axios.post(pageState.submitUrl, body);
+        } else {
+            res = await axios.put(pageState.submitUrl, body);
+        }
+        history.push(`/users/${res.data.id}/edit`);
+    }
 
     return (
         <div className="container">
@@ -59,20 +85,7 @@ export const UserPage = (props) => {
                             .required('Required')
                     })
                 }
-                onSubmit={async ({ name, isAdmin, password, confirmPassword }) => {
-                    const body = {
-                        name,
-                        password,
-                        confirmPassword,
-                        isAdmin: isAdmin === 'yes' ? true : false
-                    }
-                    if (pageState.isNew) {
-                        await axios.post(pageState.submitUrl, body)
-                    } else {
-                        await axios.put(pageState.submitUrl, body)
-                    }
-                    history.goBack();
-                }}>
+                onSubmit={onSubmit}>
                 <Form>
                     <div className="field">
                         <label className="label" htmlFor="name">Name</label>
@@ -113,7 +126,7 @@ export const UserPage = (props) => {
                             <button className="button" data-testid="submit" type="submit">{pageState.submintBtnText}</button>
                         </p>
                         <p className="control">
-                            <button className="button" data-testid="cancel" type="button" onClick={() => history.goBack()}>CANCEL</button>
+                            <button className="button" data-testid="cancel" type="button" onClick={() => history.push('/users')}>CANCEL</button>
                         </p>
                         {!pageState.isNew &&
                             <p className="control">

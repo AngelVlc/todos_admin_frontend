@@ -7,19 +7,21 @@ import { ListsPage, ListPage, ListDeletePage, ListItemPage, ListItemDeletePage }
 import { UserDeletePage, UsersPage, UserPage } from '../Users';
 import { Header } from '../Header';
 import { createBrowserHistory } from 'history';
-import { requestsReducer } from '../../reducers';
+import { authReducer, requestsReducer } from '../../reducers';
 import { AppContext } from '../../contexts/AppContext';
-import { requestStarted, requestDone, requestFailed, requestErrorShowed} from '../../actions';
+import { requestErrorShowed, userLoggedIn} from '../../actions';
 import Loader from 'react-loader-spinner';
 import { useAlert } from 'react-alert';
-import axios from 'axios';
+import * as axiosService from '../../services/configureAxios';
 import './App.css';
 
 const browserHistory = createBrowserHistory();
 
 const App = () => {
-  const [request, requestsDispatch] = useReducer(requestsReducer, [])
-  const alert = useAlert()
+  const [auth, authDispatch] = useReducer(authReducer, []);
+  const [request, requestsDispatch] = useReducer(requestsReducer, []);
+  const alert = useAlert();
+
 
   useEffect(() => {
     if (request.error) {
@@ -28,63 +30,16 @@ const App = () => {
     }
   }, [request.error, alert, requestsDispatch]);
 
-  axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5001'
-  axios.defaults.withCredentials = true
-
   useEffect(() => {
-    axios.interceptors.request.use(
-      config => {
-        requestsDispatch(requestStarted());
-
-        return config;
-      },
-      error => {
-        Promise.reject(error)
-      },
-    );
-
-    axios.interceptors.response.use(
-      (response) => {
-        requestsDispatch(requestDone());
-
-        return response
-      },
-      (error) => {
-        if (!error.response) {
-          requestsDispatch(requestDone());
-          return Promise.reject(error.message);
-        }
-
-        const originalRequest = error.config;
-        if (error.response.status === 401 && error.response.data === 'Invalid authorization token\n' && !originalRequest._retry) {
-          originalRequest._retry = true;
-          return axios.post('/auth/refreshtoken')
-            .then(res => {
-              if (res.status === 200) {
-                return axios(originalRequest);
-              }
-            })
-        }
-
-        if (error.response.status === 401 && error.response.data === 'Invalid refresh token\n') {
-          localStorage.setItem('userInfo', null);
-          window.open('/login');
-        }
-
-        if (error.response && error.response.config.url !== '/auth/login') {
-          requestsDispatch(requestFailed(error.response.data));
-        } else {
-          requestsDispatch(requestDone());
-        }
-
-        return Promise.reject(error.response.data);
-      }
-    )
-  }, []);
-
+    const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    if (userInfo) {
+      authDispatch(userLoggedIn(userInfo));
+    }
+    axiosService.configure(requestsDispatch, browserHistory);
+  }, [authDispatch]);
 
   return (
-    <AppContext.Provider value={{ request, requestsDispatch }}>
+    <AppContext.Provider value={{ auth, request, authDispatch, requestsDispatch }}>
       <Router history={browserHistory}>
         <Header />
         {request.pending &&
@@ -96,12 +51,12 @@ const App = () => {
           <Switch>
             <PrivateRoute exact path="/" component={HomePage} />
             <PrivateRoute exact path="/lists" component={ListsPage} />
-            <AdminRoute path="/lists/new" component={ListPage} />
-            <AdminRoute path="/lists/:listId/delete" component={ListDeletePage} />
-            <AdminRoute path="/lists/:listId/edit" component={ListPage} />
-            <AdminRoute path="/lists/:listId/items/new" component={ListItemPage} />
-            <AdminRoute path="/lists/:listId/items/:itemId/delete" component={ListItemDeletePage} />
-            <AdminRoute path="/lists/:listId/items/:itemId/edit" component={ListItemPage} />
+            <PrivateRoute path="/lists/new" component={ListPage} />
+            <PrivateRoute path="/lists/:listId/delete" component={ListDeletePage} />
+            <PrivateRoute path="/lists/:listId/edit" component={ListPage} />
+            <PrivateRoute path="/lists/:listId/items/new" component={ListItemPage} />
+            <PrivateRoute path="/lists/:listId/items/:itemId/delete" component={ListItemDeletePage} />
+            <PrivateRoute path="/lists/:listId/items/:itemId/edit" component={ListItemPage} />
             <AdminRoute exact path="/users" component={UsersPage} />
             <AdminRoute path="/users/:userId/delete" component={UserDeletePage} />
             <AdminRoute path="/users/:userId/edit" component={UserPage} />

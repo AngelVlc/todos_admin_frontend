@@ -1,17 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { AppContext } from '../../contexts/AppContext';
 import { useHistory } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { userLoggedIn, userLoggedOut } from '../../actions';
 import * as Yup from 'yup';
 import axios from 'axios';
 
 export const LoginPage = () => {
+    const { authDispatch } = useContext(AppContext);
     const [authError, setAuthError] = useState(null);
     let history = useHistory();
+
+    useEffect(() => {
+        authDispatch(userLoggedOut());
+        localStorage.setItem('userInfo', null);
+    }, [authDispatch]);
 
     const onSubmit = async(values) => {
         try {
             const res = await axios.post('/auth/login', values);
             localStorage.setItem('userInfo', JSON.stringify(res.data));
+            authDispatch(userLoggedIn(res.data));
             history.push('/');
         } catch (error) {
             setAuthError(error);

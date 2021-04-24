@@ -6,24 +6,22 @@ import { MemoryRouter, Route } from 'react-router-dom'
 import { act } from 'react-dom/test-utils';
 
 jest.mock('axios');
-const mockHistoryGoBack = jest.fn();
 const mockHistoryPush = jest.fn();
 
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
     useHistory: () => ({
-        goBack: mockHistoryGoBack,
         push: mockHistoryPush
     })
 }));
 
-const renderWithContextAndRouterForExistingUser = (component) => {
+const renderWithContextAndRouterForExistingUser = (component, isAdmin) => {
     axios.get.mockResolvedValue(
         {
             data: {
                 id: 2,
                 name: 'user',
-                isAdmin: false
+                isAdmin: isAdmin
             }
         }
     );
@@ -56,10 +54,19 @@ const renderWithContextAndRouterForNewUser = (component) => {
 
 afterEach(cleanup)
 
-it('should match the snapshot for an existing user', async () => {
+it('should match the snapshot for an existing non admin user', async () => {
     let fragment;
     await act(async () => {
-        const { asFragment } = renderWithContextAndRouterForExistingUser(<UserPage />);
+        const { asFragment } = renderWithContextAndRouterForExistingUser(<UserPage />, false);
+        fragment = asFragment;
+    });
+    expect(fragment(<UserPage />)).toMatchSnapshot();
+});
+
+it('should match the snapshot for an existing admin user', async () => {
+    let fragment;
+    await act(async () => {
+        const { asFragment } = renderWithContextAndRouterForExistingUser(<UserPage />, true);
         fragment = asFragment;
     });
     expect(fragment(<UserPage />)).toMatchSnapshot();
@@ -91,9 +98,10 @@ it('should allow cancel', async () => {
     await wait(() => {
         fireEvent.click(getByTestId('cancel'));
     })
-
-    expect(mockHistoryGoBack.mock.calls.length).toBe(1);
-    mockHistoryGoBack.mockClear();
+ 
+    expect(mockHistoryPush.mock.calls.length).toBe(1);
+    expect(mockHistoryPush.mock.calls[0][0]).toBe('/users');
+    mockHistoryPush.mockClear();
 });
 
 it('should require user name', async () => {
@@ -117,7 +125,7 @@ it('should update an existing user', async () => {
     await changeInputValue(container.getByTestId, 'password', 'pass');
     await changeInputValue(container.getByTestId, 'confirmPassword', 'pass');
 
-    axios.put.mockResolvedValue({data:{}});
+    axios.put.mockResolvedValue({data:{id: 2}});
 
     await wait(() => {
         fireEvent.click(container.getByTestId('submit'));
@@ -127,8 +135,9 @@ it('should update an existing user', async () => {
     expect(axios.put.mock.calls[0][0]).toBe('users/2');
     expect(axios.put.mock.calls[0][1]).toStrictEqual({ name: 'updated user', isAdmin: true, password: 'pass', confirmPassword: 'pass' });
 
-    expect(mockHistoryGoBack.mock.calls.length).toBe(1);
-    mockHistoryGoBack.mockClear();
+    expect(mockHistoryPush.mock.calls.length).toBe(1);
+    expect(mockHistoryPush.mock.calls[0][0]).toBe('/users/2/edit');
+    mockHistoryPush.mockClear();
 });
 
 it('should create a new user', async () => {
@@ -138,7 +147,7 @@ it('should create a new user', async () => {
     await changeInputValue(getByTestId, 'password', 'pass');
     await changeInputValue(getByTestId, 'confirmPassword', 'pass');
 
-    axios.post.mockResolvedValue({data:{}});
+    axios.post.mockResolvedValue({data:{id: 55}});
 
     await wait(() => {
         fireEvent.click(getByTestId('submit'));
@@ -148,8 +157,9 @@ it('should create a new user', async () => {
     expect(axios.post.mock.calls[0][0]).toBe('users');
     expect(axios.post.mock.calls[0][1]).toStrictEqual({ name: 'new user', isAdmin: false, password: 'pass', confirmPassword: 'pass' });
 
-    expect(mockHistoryGoBack.mock.calls.length).toBe(1);
-    mockHistoryGoBack.mockClear();
+    expect(mockHistoryPush.mock.calls.length).toBe(1);
+    expect(mockHistoryPush.mock.calls[0][0]).toBe('/users/55/edit');
+    mockHistoryPush.mockClear();
 });
 
 const changeInputValue = async (getByTestId, name, value) => {
