@@ -14,6 +14,10 @@ export const ListsPage = () => {
         getLists();
     }, []);
 
+    const onNewClick = () => {
+        history.push('/lists/new');
+    }
+
     return (
         <div className="container">
             <h3 className="title">LISTS</h3>
@@ -22,7 +26,7 @@ export const ListsPage = () => {
                     <tr>
                         <td>Name</td>
                         <td>
-                            <button className="button is-small" data-testid="addNew" onClick={() => history.push('lists/new')}>
+                            <button className="button is-small" data-testid="addNew" onClick={() => onNewClick()}>
                                 <span className="icon is-small">
                                     <i className="fas fa-plus"></i>
                                 </span>

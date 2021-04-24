@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should match the snapshot when the user is not logged in 1`] = `
+exports[`should match the snapshot 1`] = `
 <DocumentFragment>
   <div
     class="container"
@@ -10,12 +10,6 @@ exports[`should match the snapshot when the user is not logged in 1`] = `
     >
       HOME
     </h3>
-    <button
-      class="button"
-      data-testid="users"
-    >
-      Users
-    </button>
     <button
       class="button"
       data-testid="lists"

@@ -60,7 +60,7 @@ it('should add a new list', async () => {
     })
 
     expect(mockHistoryPush.mock.calls.length).toBe(1);
-    expect(mockHistoryPush.mock.calls[0][0]).toBe('lists/new');
+    expect(mockHistoryPush.mock.calls[0][0]).toBe('/lists/new');
     mockHistoryPush.mockClear();
 });
 

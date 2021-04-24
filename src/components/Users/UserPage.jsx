@@ -52,6 +52,22 @@ export const UserPage = (props) => {
         }
     }, [userId]);
 
+    const onSubmit = async ({ name, isAdmin, password, confirmPassword }) => {
+        const body = {
+            name,
+            password,
+            confirmPassword,
+            isAdmin: isAdmin === 'yes' ? true : false
+        };
+        let res;
+        if (pageState.isNew) {
+            res = await axios.post(pageState.submitUrl, body);
+        } else {
+            res = await axios.put(pageState.submitUrl, body);
+        }
+        history.push(`/users/${res.data.id}/edit`);
+    }
+
     return (
         <div className="container">
             <h3 className="title">{pageState.title}</h3>
@@ -69,20 +85,7 @@ export const UserPage = (props) => {
                             .required('Required')
                     })
                 }
-                onSubmit={async ({ name, isAdmin, password, confirmPassword }) => {
-                    const body = {
-                        name,
-                        password,
-                        confirmPassword,
-                        isAdmin: isAdmin === 'yes' ? true : false
-                    }
-                    if (pageState.isNew) {
-                        await axios.post(pageState.submitUrl, body)
-                    } else {
-                        await axios.put(pageState.submitUrl, body)
-                    }
-                    history.goBack();
-                }}>
+                onSubmit={onSubmit}>
                 <Form>
                     <div className="field">
                         <label className="label" htmlFor="name">Name</label>
@@ -123,7 +126,7 @@ export const UserPage = (props) => {
                             <button className="button" data-testid="submit" type="submit">{pageState.submintBtnText}</button>
                         </p>
                         <p className="control">
-                            <button className="button" data-testid="cancel" type="button" onClick={() => history.goBack()}>CANCEL</button>
+                            <button className="button" data-testid="cancel" type="button" onClick={() => history.push('/users')}>CANCEL</button>
                         </p>
                         {!pageState.isNew &&
                             <p className="control">

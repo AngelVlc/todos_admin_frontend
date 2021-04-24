@@ -6,13 +6,11 @@ import { MemoryRouter, Route } from 'react-router-dom'
 import { act } from 'react-dom/test-utils';
 
 jest.mock('axios');
-const mockHistoryGoBack = jest.fn();
 const mockHistoryPush = jest.fn();
 
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
     useHistory: () => ({
-        goBack: mockHistoryGoBack,
         push: mockHistoryPush
     })
 }));
@@ -93,8 +91,9 @@ it('should allow cancel', async () => {
         fireEvent.click(getByTestId('cancel'));
     })
 
-    expect(mockHistoryGoBack.mock.calls.length).toBe(1);
-    mockHistoryGoBack.mockClear();
+    expect(mockHistoryPush.mock.calls.length).toBe(1);
+    expect(mockHistoryPush.mock.calls[0][0]).toBe('/lists/2');
+    mockHistoryPush.mockClear();
 });
 
 it('should require item title', async () => {
@@ -126,8 +125,9 @@ it('should update an existing item', async () => {
     expect(axios.put.mock.calls[0][0]).toBe('lists/2/items/5');
     expect(axios.put.mock.calls[0][1]).toStrictEqual({ title: 'updated title', description: 'updated description' });
 
-    expect(mockHistoryGoBack.mock.calls.length).toBe(1);
-    mockHistoryGoBack.mockClear();
+    expect(mockHistoryPush.mock.calls.length).toBe(1);
+    expect(mockHistoryPush.mock.calls[0][0]).toBe('lists/2');
+    mockHistoryPush.mockClear();
 });
 
 it('should create a new item', async () => {
@@ -146,8 +146,9 @@ it('should create a new item', async () => {
     expect(axios.post.mock.calls[0][0]).toBe('lists/2/items');
     expect(axios.post.mock.calls[0][1]).toStrictEqual({ title: 'title', description: 'description' });
 
-    expect(mockHistoryGoBack.mock.calls.length).toBe(1);
-    mockHistoryGoBack.mockClear();
+    expect(mockHistoryPush.mock.calls.length).toBe(1);
+    expect(mockHistoryPush.mock.calls[0][0]).toBe('lists/2');
+    mockHistoryPush.mockClear();
 });
 
 const changeInputValue = async (getByTestId, name, value) => {

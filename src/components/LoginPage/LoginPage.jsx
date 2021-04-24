@@ -20,7 +20,7 @@ export const LoginPage = () => {
         try {
             const res = await axios.post('/auth/login', values);
             localStorage.setItem('userInfo', JSON.stringify(res.data));
-            authDispatch(userLoggedIn(res.data.userName, res.data.userId, res.data.isAdmin));
+            authDispatch(userLoggedIn(res.data));
             history.push('/');
         } catch (error) {
             setAuthError(error);

@@ -62,7 +62,7 @@ export const ListItemPage = () => {
                     } else {
                         await axios.put(pageState.submitUrl, body)
                     }
-                    history.goBack();
+                    history.push(`lists/${listId}`);
                 }}>
                 <Form>
                     <div className="field">
@@ -90,7 +90,7 @@ export const ListItemPage = () => {
                             <button className="button" data-testid="submit" type="submit">{pageState.submintBtnText}</button>
                         </p>
                         <p className="control">
-                            <button className="button" data-testid="cancel" type="button" onClick={() => history.goBack()}>CANCEL</button>
+                            <button className="button" data-testid="cancel" type="button" onClick={() => history.push(`/lists/${listId}`)}>CANCEL</button>
                         </p>
                         {!pageState.isNew &&
                             <p className="control">

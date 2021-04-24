@@ -6,13 +6,11 @@ import { MemoryRouter, Route } from 'react-router-dom'
 import { act } from 'react-dom/test-utils';
 
 jest.mock('axios');
-const mockHistoryGoBack = jest.fn();
 const mockHistoryPush = jest.fn();
 
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
     useHistory: () => ({
-        goBack: mockHistoryGoBack,
         push: mockHistoryPush
     })
 }));
@@ -102,8 +100,9 @@ it('should allow cancel', async () => {
         fireEvent.click(getByTestId('cancel'));
     })
 
-    expect(mockHistoryGoBack.mock.calls.length).toBe(1);
-    mockHistoryGoBack.mockClear();
+    expect(mockHistoryPush.mock.calls.length).toBe(1);
+    expect(mockHistoryPush.mock.calls[0][0]).toBe('/lists');
+    mockHistoryPush.mockClear();
 });
 
 it('should require list name', async () => {
@@ -124,7 +123,7 @@ it('should update an existing list', async () => {
 
     await changeInputValue(container.getByTestId, 'name', 'updated name');
 
-    axios.put.mockResolvedValue({ data: {} });
+    axios.put.mockResolvedValue({ data: {id: 2} });
 
     await wait(() => {
         fireEvent.click(container.getByTestId('submit'));
@@ -134,8 +133,9 @@ it('should update an existing list', async () => {
     expect(axios.put.mock.calls[0][0]).toBe('lists/2');
     expect(axios.put.mock.calls[0][1]).toStrictEqual({ name: 'updated name' });
 
-    expect(mockHistoryGoBack.mock.calls.length).toBe(1);
-    mockHistoryGoBack.mockClear();
+    expect(mockHistoryPush.mock.calls.length).toBe(1);
+    expect(mockHistoryPush.mock.calls[0][0]).toBe(`/lists/2/edit`);
+    mockHistoryPush.mockClear();
 });
 
 it('should create a new list', async () => {
@@ -143,7 +143,7 @@ it('should create a new list', async () => {
 
     await changeInputValue(getByTestId, 'name', 'new list');
 
-    axios.post.mockResolvedValue({ data: {} });
+    axios.post.mockResolvedValue({ data: {id: 55} });
 
     await wait(() => {
         fireEvent.click(getByTestId('submit'));
@@ -153,8 +153,9 @@ it('should create a new list', async () => {
     expect(axios.post.mock.calls[0][0]).toBe('lists');
     expect(axios.post.mock.calls[0][1]).toStrictEqual({ name: 'new list' });
 
-    expect(mockHistoryGoBack.mock.calls.length).toBe(1);
-    mockHistoryGoBack.mockClear();
+    expect(mockHistoryPush.mock.calls.length).toBe(1);
+    expect(mockHistoryPush.mock.calls[0][0]).toBe('/lists/55/edit');
+    mockHistoryPush.mockClear();
 });
 
 it('should add a new item', async () => {

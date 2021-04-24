@@ -50,6 +50,19 @@ export const ListPage = () => {
         }
     }, [listId]);
 
+    const onSubmit = async ({ name }) => {
+        const body = {
+            name
+        }
+        let res;
+        if (pageState.isNew) {
+            res = await axios.post(pageState.submitUrl, body)
+        } else {
+            res = await axios.put(pageState.submitUrl, body)
+        }
+        history.push(`/lists/${res.data.id}/edit`);
+    };
+
     return (
         <div className="container">
             <h3 className="title">{pageState.title}</h3>
@@ -64,17 +77,7 @@ export const ListPage = () => {
                             .required('Required')
                     })
                 }
-                onSubmit={async ({ name }) => {
-                    const body = {
-                        name
-                    }
-                    if (pageState.isNew) {
-                        await axios.post(pageState.submitUrl, body)
-                    } else {
-                        await axios.put(pageState.submitUrl, body)
-                    }
-                    history.goBack();
-                }}>
+                onSubmit={onSubmit}>
                 <Form>
                     <div className="field">
                         <label className="label" htmlFor="name">Name</label>
@@ -92,7 +95,7 @@ export const ListPage = () => {
                                     <td>Title</td>
                                     <td>
 
-                                        <button className="button is-small" data-testid="addNew" onClick={() => history.push(`/lists/${listId}/items/new`)}>
+                                        <button className="button is-small" type="button" data-testid="addNew" onClick={() => history.push(`/lists/${listId}/items/new`)}>
                                             <span className="icon is-small">
                                                 <i className="fas fa-plus"></i>
                                             </span>
@@ -127,7 +130,7 @@ export const ListPage = () => {
                             <button className="button" data-testid="submit" type="submit">{pageState.submintBtnText}</button>
                         </p>
                         <p className="control">
-                            <button className="button" data-testid="cancel" type="button" onClick={() => history.goBack()}>CANCEL</button>
+                            <button className="button" data-testid="cancel" type="button" onClick={() => history.push('/lists')}>CANCEL</button>
                         </p>
                         {!pageState.isNew &&
                             <p className="control">

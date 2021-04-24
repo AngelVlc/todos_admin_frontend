@@ -9,7 +9,7 @@ import { Header } from '../Header';
 import { createBrowserHistory } from 'history';
 import { authReducer, requestsReducer } from '../../reducers';
 import { AppContext } from '../../contexts/AppContext';
-import { requestErrorShowed} from '../../actions';
+import { requestErrorShowed, userLoggedIn} from '../../actions';
 import Loader from 'react-loader-spinner';
 import { useAlert } from 'react-alert';
 import * as axiosService from '../../services/configureAxios';
@@ -22,6 +22,7 @@ const App = () => {
   const [request, requestsDispatch] = useReducer(requestsReducer, []);
   const alert = useAlert();
 
+
   useEffect(() => {
     if (request.error) {
       alert.show(request.error);
@@ -30,8 +31,12 @@ const App = () => {
   }, [request.error, alert, requestsDispatch]);
 
   useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    if (userInfo) {
+      authDispatch(userLoggedIn(userInfo));
+    }
     axiosService.configure(requestsDispatch, browserHistory);
-  }, []);
+  }, [authDispatch]);
 
   return (
     <AppContext.Provider value={{ auth, request, authDispatch, requestsDispatch }}>
@@ -46,12 +51,12 @@ const App = () => {
           <Switch>
             <PrivateRoute exact path="/" component={HomePage} />
             <PrivateRoute exact path="/lists" component={ListsPage} />
-            <AdminRoute path="/lists/new" component={ListPage} />
-            <AdminRoute path="/lists/:listId/delete" component={ListDeletePage} />
-            <AdminRoute path="/lists/:listId/edit" component={ListPage} />
-            <AdminRoute path="/lists/:listId/items/new" component={ListItemPage} />
-            <AdminRoute path="/lists/:listId/items/:itemId/delete" component={ListItemDeletePage} />
-            <AdminRoute path="/lists/:listId/items/:itemId/edit" component={ListItemPage} />
+            <PrivateRoute path="/lists/new" component={ListPage} />
+            <PrivateRoute path="/lists/:listId/delete" component={ListDeletePage} />
+            <PrivateRoute path="/lists/:listId/edit" component={ListPage} />
+            <PrivateRoute path="/lists/:listId/items/new" component={ListItemPage} />
+            <PrivateRoute path="/lists/:listId/items/:itemId/delete" component={ListItemDeletePage} />
+            <PrivateRoute path="/lists/:listId/items/:itemId/edit" component={ListItemPage} />
             <AdminRoute exact path="/users" component={UsersPage} />
             <AdminRoute path="/users/:userId/delete" component={UserDeletePage} />
             <AdminRoute path="/users/:userId/edit" component={UserPage} />
