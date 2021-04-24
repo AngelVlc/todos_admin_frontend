@@ -25,7 +25,7 @@ export const UserPage = (props) => {
             const user = res.data
 
             let title = `Edit user '${user.name}'`
-            if (user.IsAdmin) {
+            if (user.isAdmin) {
                 title = `Edit admin user '${user.name}'`
             }
 

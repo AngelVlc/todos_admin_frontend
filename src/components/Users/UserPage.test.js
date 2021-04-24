@@ -15,13 +15,13 @@ jest.mock('react-router-dom', () => ({
     })
 }));
 
-const renderWithContextAndRouterForExistingUser = (component) => {
+const renderWithContextAndRouterForExistingUser = (component, isAdmin) => {
     axios.get.mockResolvedValue(
         {
             data: {
                 id: 2,
                 name: 'user',
-                isAdmin: false
+                isAdmin: isAdmin
             }
         }
     );
@@ -54,10 +54,19 @@ const renderWithContextAndRouterForNewUser = (component) => {
 
 afterEach(cleanup)
 
-it('should match the snapshot for an existing user', async () => {
+it('should match the snapshot for an existing non admin user', async () => {
     let fragment;
     await act(async () => {
-        const { asFragment } = renderWithContextAndRouterForExistingUser(<UserPage />);
+        const { asFragment } = renderWithContextAndRouterForExistingUser(<UserPage />, false);
+        fragment = asFragment;
+    });
+    expect(fragment(<UserPage />)).toMatchSnapshot();
+});
+
+it('should match the snapshot for an existing admin user', async () => {
+    let fragment;
+    await act(async () => {
+        const { asFragment } = renderWithContextAndRouterForExistingUser(<UserPage />, true);
         fragment = asFragment;
     });
     expect(fragment(<UserPage />)).toMatchSnapshot();
