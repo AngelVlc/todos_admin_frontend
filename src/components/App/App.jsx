@@ -5,6 +5,7 @@ import { LoginPage } from '../LoginPage';
 import { HomePage } from '../HomePage';
 import { ListsPage, ListPage, ListDeletePage, ListItemPage, ListItemDeletePage } from '../Lists';
 import { UserDeletePage, UsersPage, UserPage } from '../Users';
+import { RefreshTokensPage } from '../RefreshTokens';
 import { Header } from '../Header';
 import { createBrowserHistory } from 'history';
 import { authReducer, requestsReducer } from '../../reducers';
@@ -61,6 +62,7 @@ const App = () => {
             <AdminRoute path="/users/:userId/delete" component={UserDeletePage} />
             <AdminRoute path="/users/:userId/edit" component={UserPage} />
             <AdminRoute path="/users/new" component={UserPage} />
+            <AdminRoute exact path="/refreshtokens" component={RefreshTokensPage} />
             <Route path="/login">
               <LoginPage />
             </Route>

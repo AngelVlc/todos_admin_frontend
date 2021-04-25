@@ -27,7 +27,7 @@ const renderWithRouterAndContext = (component, auth) => {
 
 afterEach(cleanup);
 
-it('should match the snapshot', () => {
+it('should match the snapshot when the user is not an admin', () => {
     const { asFragment } = renderWithRouterAndContext(<HomePage />, { info: { isAdmin: false } });
 
     expect(asFragment(<HomePage />)).toMatchSnapshot();
@@ -42,6 +42,17 @@ it('should go to users when the user is an admin', async () => {
 
     expect(mockHistoryPush.mock.calls.length).toBe(1);
     expect(mockHistoryPush.mock.calls[0][0]).toBe('/users');
+})
+
+it('should go to refresh tokens when the user is an admin', async () => {
+    const { getByTestId } = renderWithRouterAndContext(<HomePage />, { info: { isAdmin: true } });
+
+    await wait(() => {
+        fireEvent.click(getByTestId('refreshTokens'));
+    })
+
+    expect(mockHistoryPush.mock.calls.length).toBe(1);
+    expect(mockHistoryPush.mock.calls[0][0]).toBe('/refreshtokens');
 })
 
 it('should go to lists', async () => {
