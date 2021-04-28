@@ -10,7 +10,10 @@ export const HomePage = () => {
         <div className="container">
             <h3 className="title">HOME</h3>
             {auth.info?.isAdmin &&
-                <button className="button" onClick={() => history.push('/users')} data-testid="users">Users</button>
+                <div>
+                    <button className="button" onClick={() => history.push('/users')} data-testid="users">Users</button>
+                    <button className="button" onClick={() => history.push('/refreshtokens')} data-testid="refreshTokens">Refresh Tokens</button>
+                </div>
             }
             <button className="button" onClick={() => history.push('/lists')} data-testid="lists">Lists</button>
         </div>

@@ -1,6 +1,40 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should match the snapshot 1`] = `
+exports[`should match the snapshot when the user is an admin 1`] = `
+<DocumentFragment>
+  <div
+    class="container"
+  >
+    <h3
+      class="title"
+    >
+      HOME
+    </h3>
+    <div>
+      <button
+        class="button"
+        data-testid="users"
+      >
+        Users
+      </button>
+      <button
+        class="button"
+        data-testid="refreshTokens"
+      >
+        Refresh Tokens
+      </button>
+    </div>
+    <button
+      class="button"
+      data-testid="lists"
+    >
+      Lists
+    </button>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`should match the snapshot when the user is not an admin 1`] = `
 <DocumentFragment>
   <div
     class="container"

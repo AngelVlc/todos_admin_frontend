@@ -62,7 +62,7 @@ export const ListItemPage = () => {
                     } else {
                         await axios.put(pageState.submitUrl, body)
                     }
-                    history.push(`lists/${listId}`);
+                    history.push(`/lists/${listId}/edit`);
                 }}>
                 <Form>
                     <div className="field">
