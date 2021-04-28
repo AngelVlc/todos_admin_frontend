@@ -27,6 +27,12 @@ const renderWithRouterAndContext = (component, auth) => {
 
 afterEach(cleanup);
 
+it('should match the snapshot when the user is an admin', () => {
+    const { asFragment } = renderWithRouterAndContext(<HomePage />, { info: { isAdmin: true } });
+
+    expect(asFragment(<HomePage />)).toMatchSnapshot();
+})
+
 it('should match the snapshot when the user is not an admin', () => {
     const { asFragment } = renderWithRouterAndContext(<HomePage />, { info: { isAdmin: false } });
 

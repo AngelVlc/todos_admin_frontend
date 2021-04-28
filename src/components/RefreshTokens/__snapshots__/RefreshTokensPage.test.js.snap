@@ -1,0 +1,109 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should match the snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="container"
+  >
+    <h3
+      class="title"
+    >
+      Refresh Tokens
+    </h3>
+    <div
+      class="buttons"
+    >
+      <button
+        class="button is-danger"
+        data-testid="deleteSelected"
+      >
+        Delete Selected
+      </button>
+    </div>
+    <table
+      class="table"
+    >
+      <thead>
+        <tr>
+          <td>
+            ID
+          </td>
+          <td>
+            UserID
+          </td>
+          <td>
+            Expiration Date
+          </td>
+          <td>
+            <center>
+              <input
+                data-testid="toggleSelectAll"
+                type="checkbox"
+              />
+            </center>
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            1
+          </td>
+          <td>
+            1
+          </td>
+          <td>
+            2021-01-29T16:46:58Z
+          </td>
+          <td>
+            <center>
+              <input
+                data-testid="checkBoxItem1"
+                type="checkbox"
+              />
+            </center>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            2
+          </td>
+          <td>
+            2
+          </td>
+          <td>
+            2021-03-29T16:46:58Z
+          </td>
+          <td>
+            <center>
+              <input
+                data-testid="checkBoxItem2"
+                type="checkbox"
+              />
+            </center>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            3
+          </td>
+          <td>
+            1
+          </td>
+          <td>
+            2021-04-29T16:46:58Z
+          </td>
+          <td>
+            <center>
+              <input
+                data-testid="checkBoxItem3"
+                type="checkbox"
+              />
+            </center>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</DocumentFragment>
+`;
