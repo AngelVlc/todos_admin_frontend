@@ -126,7 +126,7 @@ it('should update an existing item', async () => {
     expect(axios.put.mock.calls[0][1]).toStrictEqual({ title: 'updated title', description: 'updated description' });
 
     expect(mockHistoryPush.mock.calls.length).toBe(1);
-    expect(mockHistoryPush.mock.calls[0][0]).toBe('lists/2');
+    expect(mockHistoryPush.mock.calls[0][0]).toBe('/lists/2/edit');
     mockHistoryPush.mockClear();
 });
 
@@ -147,7 +147,7 @@ it('should create a new item', async () => {
     expect(axios.post.mock.calls[0][1]).toStrictEqual({ title: 'title', description: 'description' });
 
     expect(mockHistoryPush.mock.calls.length).toBe(1);
-    expect(mockHistoryPush.mock.calls[0][0]).toBe('lists/2');
+    expect(mockHistoryPush.mock.calls[0][0]).toBe('/lists/2/edit');
     mockHistoryPush.mockClear();
 });
 
