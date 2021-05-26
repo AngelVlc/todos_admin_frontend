@@ -24,8 +24,8 @@ const renderWithContextAndRouter = (component) => {
     axios.get.mockResolvedValue(
         {
             data: [
-                { id: 1, name: 'user1' },
-                { id: 2, name: 'user2' }
+                { id: 1, name: 'user1', itemsCount: 4 },
+                { id: 2, name: 'user2', itemsCount: 6 }
             ]
         }
     );
