@@ -25,6 +25,7 @@ export const ListsPage = () => {
                 <thead>
                     <tr>
                         <td>Name</td>
+                        <td># Items</td>
                         <td>
                             <button className="button is-small" data-testid="addNew" onClick={() => onNewClick()}>
                                 <span className="icon is-small">
@@ -39,6 +40,9 @@ export const ListsPage = () => {
                         <tr key={list.id}>
                             <td>
                                 <Link className="has-text-black" data-testid={`editList${list.id}`} to={`/lists/${list.id}/edit`}>{list.name}</Link>
+                            </td>
+                            <td>
+                                <span><center>{list.itemsCount}</center></span>
                             </td>
                             <td>
                                 <center>

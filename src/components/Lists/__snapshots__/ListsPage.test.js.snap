@@ -19,6 +19,9 @@ exports[`should match the snapshot 1`] = `
             Name
           </td>
           <td>
+            # Items
+          </td>
+          <td>
             <button
               class="button is-small"
               data-testid="addNew"
@@ -44,6 +47,13 @@ exports[`should match the snapshot 1`] = `
             >
               user1
             </a>
+          </td>
+          <td>
+            <span>
+              <center>
+                4
+              </center>
+            </span>
           </td>
           <td>
             <center>
@@ -72,6 +82,13 @@ exports[`should match the snapshot 1`] = `
             >
               user2
             </a>
+          </td>
+          <td>
+            <span>
+              <center>
+                6
+              </center>
+            </span>
           </td>
           <td>
             <center>
