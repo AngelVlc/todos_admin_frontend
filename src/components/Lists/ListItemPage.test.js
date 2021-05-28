@@ -92,7 +92,7 @@ it('should allow cancel', async () => {
     })
 
     expect(mockHistoryPush.mock.calls.length).toBe(1);
-    expect(mockHistoryPush.mock.calls[0][0]).toBe('/lists/2');
+    expect(mockHistoryPush.mock.calls[0][0]).toBe('/lists/2/edit');
     mockHistoryPush.mockClear();
 });
 

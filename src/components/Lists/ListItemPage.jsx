@@ -90,7 +90,7 @@ export const ListItemPage = () => {
                             <button className="button" data-testid="submit" type="submit">{pageState.submintBtnText}</button>
                         </p>
                         <p className="control">
-                            <button className="button" data-testid="cancel" type="button" onClick={() => history.push(`/lists/${listId}`)}>CANCEL</button>
+                            <button className="button" data-testid="cancel" type="button" onClick={() => history.push(`/lists/${listId}/edit`)}>CANCEL</button>
                         </p>
                         {!pageState.isNew &&
                             <p className="control">
