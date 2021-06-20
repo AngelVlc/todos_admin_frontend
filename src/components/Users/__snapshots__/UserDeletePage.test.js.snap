@@ -10,6 +10,52 @@ exports[`should match the snapshot when the user is an admin 1`] = `
     >
       Delete admin user 'user'?
     </h3>
+    <nav
+      aria-label="breadcrumbs"
+      class="breadcrumb"
+    >
+      <ul>
+        <li>
+          <a
+            href="/"
+          >
+            Home
+          </a>
+        </li>
+        <li>
+          <a
+            href="/users"
+          >
+            Users
+          </a>
+        </li>
+        <li>
+          <a
+            href="/users"
+          >
+            Users
+          </a>
+        </li>
+        <li>
+          <a
+            aria-current="page"
+            href="/users/2/edit"
+          >
+            user
+          </a>
+        </li>
+        <li
+          class="is-active"
+        >
+          <a
+            aria-current="page"
+            href="/users/2/delete"
+          >
+            Delete user
+          </a>
+        </li>
+      </ul>
+    </nav>
     <div
       class="buttons"
     >
@@ -40,6 +86,52 @@ exports[`should match the snapshot when the user is not an admin 1`] = `
     >
       Delete user user
     </h3>
+    <nav
+      aria-label="breadcrumbs"
+      class="breadcrumb"
+    >
+      <ul>
+        <li>
+          <a
+            href="/"
+          >
+            Home
+          </a>
+        </li>
+        <li>
+          <a
+            href="/users"
+          >
+            Users
+          </a>
+        </li>
+        <li>
+          <a
+            href="/users"
+          >
+            Users
+          </a>
+        </li>
+        <li>
+          <a
+            aria-current="page"
+            href="/users/2/edit"
+          >
+            user
+          </a>
+        </li>
+        <li
+          class="is-active"
+        >
+          <a
+            aria-current="page"
+            href="/users/2/delete"
+          >
+            Delete user
+          </a>
+        </li>
+      </ul>
+    </nav>
     <div
       class="buttons"
     >

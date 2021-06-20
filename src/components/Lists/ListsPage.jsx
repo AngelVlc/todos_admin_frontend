@@ -21,6 +21,12 @@ export const ListsPage = () => {
     return (
         <div className="container">
             <h3 className="title">LISTS</h3>
+            <nav className="breadcrumb" aria-label="breadcrumbs">
+                <ul>
+                    <li><Link to={`/`}>Home</Link></li>
+                    <li className="is-active"><Link aria-current="page" to={`/lists`}>Lists</Link></li>
+                </ul>
+            </nav>
             <table className="table">
                 <thead>
                     <tr>

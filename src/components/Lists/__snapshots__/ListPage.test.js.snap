@@ -10,6 +10,37 @@ exports[`should match the snapshot for a new list 1`] = `
     >
       New list
     </h3>
+    <nav
+      aria-label="breadcrumbs"
+      class="breadcrumb"
+    >
+      <ul>
+        <li>
+          <a
+            href="/"
+          >
+            Home
+          </a>
+        </li>
+        <li>
+          <a
+            href="/lists"
+          >
+            Lists
+          </a>
+        </li>
+        <li
+          class="is-active"
+        >
+          <a
+            aria-current="page"
+            href="/lists/undefined"
+          >
+            new
+          </a>
+        </li>
+      </ul>
+    </nav>
     <form
       action="#"
     >
@@ -78,6 +109,37 @@ exports[`should match the snapshot for an existing list 1`] = `
     >
       Edit list 'list name'
     </h3>
+    <nav
+      aria-label="breadcrumbs"
+      class="breadcrumb"
+    >
+      <ul>
+        <li>
+          <a
+            href="/"
+          >
+            Home
+          </a>
+        </li>
+        <li>
+          <a
+            href="/lists"
+          >
+            Lists
+          </a>
+        </li>
+        <li
+          class="is-active"
+        >
+          <a
+            aria-current="page"
+            href="/lists/2"
+          >
+            list name
+          </a>
+        </li>
+      </ul>
+    </nav>
     <form
       action="#"
     >

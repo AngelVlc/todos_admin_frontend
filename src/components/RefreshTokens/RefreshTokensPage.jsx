@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from "react-router-dom";
 import axios from 'axios';
 
 export const RefreshTokensPage = () => {
@@ -52,6 +53,12 @@ export const RefreshTokensPage = () => {
   return (
     <div className="container">
       <h3 className="title">Refresh Tokens</h3>
+      <nav className="breadcrumb" aria-label="breadcrumbs">
+          <ul>
+              <li><a href="/">Home</a></li>
+              <li className="is-active"><Link aria-current="page" to={`/refreshtokens`}>Refresh Tokens</Link></li>
+          </ul>
+      </nav>
       <div className="buttons">
         <button className="button is-danger" data-testid="deleteSelected" onClick={() => onDeleteSelectedTokens()}>Delete Selected</button>
       </div>
