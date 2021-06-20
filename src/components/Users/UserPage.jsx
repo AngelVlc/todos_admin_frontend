@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import axios from 'axios';
 import * as Yup from 'yup';
@@ -71,6 +71,13 @@ export const UserPage = (props) => {
     return (
         <div className="container">
             <h3 className="title">{pageState.title}</h3>
+            <nav className="breadcrumb" aria-label="breadcrumbs">
+                <ul>
+                    <li><Link to={`/`}>Home</Link></li>
+                    <li><Link to={`/users`}>Users</Link></li>
+                    <li className="is-active"><Link aria-current="page" to={`/users/${userId}`}>{pageState.isNew ? 'new' : pageState.name}</Link></li>
+                </ul>
+            </nav>
             <Formik
                 enableReinitialize={true}
                 initialValues={{

@@ -10,6 +10,51 @@ exports[`should match the snapshot 1`] = `
     >
       Delete list item item title
     </h3>
+    <nav
+      aria-label="breadcrumbs"
+      class="breadcrumb"
+    >
+      <ul>
+        <li>
+          <a
+            href="/"
+          >
+            Home
+          </a>
+        </li>
+        <li>
+          <a
+            href="/lists"
+          >
+            Lists
+          </a>
+        </li>
+        <li>
+          <a
+            href="/lists/2/edit"
+          >
+            List
+          </a>
+        </li>
+        <li>
+          <a
+            href="/lists/2/items/5/edit"
+          >
+            item title
+          </a>
+        </li>
+        <li
+          class="is-active"
+        >
+          <a
+            aria-current="page"
+            href="/lists/2/items/5/delete"
+          >
+            Delete item title
+          </a>
+        </li>
+      </ul>
+    </nav>
     <div
       class="buttons"
     >

@@ -66,6 +66,13 @@ export const ListPage = () => {
     return (
         <div className="container">
             <h3 className="title">{pageState.title}</h3>
+            <nav className="breadcrumb" aria-label="breadcrumbs">
+                <ul>
+                    <li><Link to={`/`}>Home</Link></li>
+                    <li><Link to={`/lists`}>Lists</Link></li>
+                    <li className="is-active"><Link aria-current="page" to={`/lists/${listId}`}>{pageState.isNew ? 'new' : pageState.name}</Link></li>
+                </ul>
+            </nav>
             <Formik
                 enableReinitialize={true}
                 initialValues={{

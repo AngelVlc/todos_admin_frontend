@@ -17,6 +17,12 @@ export const UsersPage = () => {
   return (
     <div className="container">
       <h3 className="title">USERS</h3>
+      <nav className="breadcrumb" aria-label="breadcrumbs">
+          <ul>
+              <li><a href="/">Home</a></li>
+              <li className="is-active"><Link aria-current="page" to={`/users`}>Users</Link></li>
+          </ul>
+      </nav>
       <table className="table">
         <thead>
           <tr>

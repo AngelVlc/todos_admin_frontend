@@ -10,26 +10,50 @@ exports[`should match the snapshot when the user is an admin 1`] = `
     >
       HOME
     </h3>
-    <div>
-      <button
-        class="button"
-        data-testid="users"
-      >
-        Users
-      </button>
-      <button
-        class="button"
-        data-testid="refreshTokens"
-      >
-        Refresh Tokens
-      </button>
-    </div>
-    <button
-      class="button"
-      data-testid="lists"
+    <div
+      class="box"
     >
-      Lists
-    </button>
+      <h6
+        class="subtitle is-6"
+      >
+        Admin
+      </h6>
+      <div
+        class="buttons"
+      >
+        <button
+          class="button is-small"
+          data-testid="users"
+        >
+          Users
+        </button>
+        <button
+          class="button is-small"
+          data-testid="refreshTokens"
+        >
+          Refresh Tokens
+        </button>
+      </div>
+    </div>
+    <div
+      class="box"
+    >
+      <h6
+        class="subtitle is-6"
+      >
+        Lists
+      </h6>
+      <div
+        class="buttons"
+      >
+        <button
+          class="button is-small"
+          data-testid="lists"
+        >
+          Lists
+        </button>
+      </div>
+    </div>
   </div>
 </DocumentFragment>
 `;
@@ -44,12 +68,25 @@ exports[`should match the snapshot when the user is not an admin 1`] = `
     >
       HOME
     </h3>
-    <button
-      class="button"
-      data-testid="lists"
+    <div
+      class="box"
     >
-      Lists
-    </button>
+      <h6
+        class="subtitle is-6"
+      >
+        Lists
+      </h6>
+      <div
+        class="buttons"
+      >
+        <button
+          class="button is-small"
+          data-testid="lists"
+        >
+          Lists
+        </button>
+      </div>
+    </div>
   </div>
 </DocumentFragment>
 `;

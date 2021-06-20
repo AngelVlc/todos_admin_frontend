@@ -10,6 +10,37 @@ exports[`should match the snapshot for a new user 1`] = `
     >
       New user
     </h3>
+    <nav
+      aria-label="breadcrumbs"
+      class="breadcrumb"
+    >
+      <ul>
+        <li>
+          <a
+            href="/"
+          >
+            Home
+          </a>
+        </li>
+        <li>
+          <a
+            href="/users"
+          >
+            Users
+          </a>
+        </li>
+        <li
+          class="is-active"
+        >
+          <a
+            aria-current="page"
+            href="/users/undefined"
+          >
+            new
+          </a>
+        </li>
+      </ul>
+    </nav>
     <form
       action="#"
     >
@@ -147,6 +178,37 @@ exports[`should match the snapshot for an existing admin user 1`] = `
     >
       Edit admin user 'user'
     </h3>
+    <nav
+      aria-label="breadcrumbs"
+      class="breadcrumb"
+    >
+      <ul>
+        <li>
+          <a
+            href="/"
+          >
+            Home
+          </a>
+        </li>
+        <li>
+          <a
+            href="/users"
+          >
+            Users
+          </a>
+        </li>
+        <li
+          class="is-active"
+        >
+          <a
+            aria-current="page"
+            href="/users/2"
+          >
+            user
+          </a>
+        </li>
+      </ul>
+    </nav>
     <form
       action="#"
     >
@@ -295,6 +357,37 @@ exports[`should match the snapshot for an existing non admin user 1`] = `
     >
       Edit user 'user'
     </h3>
+    <nav
+      aria-label="breadcrumbs"
+      class="breadcrumb"
+    >
+      <ul>
+        <li>
+          <a
+            href="/"
+          >
+            Home
+          </a>
+        </li>
+        <li>
+          <a
+            href="/users"
+          >
+            Users
+          </a>
+        </li>
+        <li
+          class="is-active"
+        >
+          <a
+            aria-current="page"
+            href="/users/2"
+          >
+            user
+          </a>
+        </li>
+      </ul>
+    </nav>
     <form
       action="#"
     >

@@ -10,6 +10,30 @@ exports[`should match the snapshot 1`] = `
     >
       LISTS
     </h3>
+    <nav
+      aria-label="breadcrumbs"
+      class="breadcrumb"
+    >
+      <ul>
+        <li>
+          <a
+            href="/"
+          >
+            Home
+          </a>
+        </li>
+        <li
+          class="is-active"
+        >
+          <a
+            aria-current="page"
+            href="/lists"
+          >
+            Lists
+          </a>
+        </li>
+      </ul>
+    </nav>
     <table
       class="table"
     >

@@ -10,6 +10,44 @@ exports[`should match the snapshot for a new item 1`] = `
     >
       New item
     </h3>
+    <nav
+      aria-label="breadcrumbs"
+      class="breadcrumb"
+    >
+      <ul>
+        <li>
+          <a
+            href="/"
+          >
+            Home
+          </a>
+        </li>
+        <li>
+          <a
+            href="/lists"
+          >
+            Lists
+          </a>
+        </li>
+        <li>
+          <a
+            href="/lists/2/edit"
+          >
+            List
+          </a>
+        </li>
+        <li
+          class="is-active"
+        >
+          <a
+            aria-current="page"
+            href="/lists/2/items/undefined/edit"
+          >
+            new
+          </a>
+        </li>
+      </ul>
+    </nav>
     <form
       action="#"
     >
@@ -102,6 +140,44 @@ exports[`should match the snapshot for an existing item 1`] = `
     >
       Edit item 'item title'
     </h3>
+    <nav
+      aria-label="breadcrumbs"
+      class="breadcrumb"
+    >
+      <ul>
+        <li>
+          <a
+            href="/"
+          >
+            Home
+          </a>
+        </li>
+        <li>
+          <a
+            href="/lists"
+          >
+            Lists
+          </a>
+        </li>
+        <li>
+          <a
+            href="/lists/2/edit"
+          >
+            List
+          </a>
+        </li>
+        <li
+          class="is-active"
+        >
+          <a
+            aria-current="page"
+            href="/lists/2/items/5/edit"
+          >
+            item title
+          </a>
+        </li>
+      </ul>
+    </nav>
     <form
       action="#"
     >

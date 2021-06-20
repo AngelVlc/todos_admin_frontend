@@ -1,14 +1,18 @@
 import { render, cleanup, fireEvent, wait } from '@testing-library/react'
 import { RefreshTokensPage } from './RefreshTokensPage';
 import { AppContext } from '../../contexts/AppContext'
+import { createMemoryHistory } from 'history'
 import axios from 'axios';
+import { Router } from 'react-router-dom'
 import { act } from 'react-dom/test-utils';
 
 afterEach(cleanup)
 
 jest.mock('axios');
 
-const renderWithContext = (component) => {
+const history = createMemoryHistory();
+
+const renderWithContextAndRouter = (component) => {
   axios.get.mockResolvedValue(
       {
           data: [
@@ -22,7 +26,9 @@ const renderWithContext = (component) => {
   return {
       ...render(
           <AppContext.Provider value={context}>
-              {component}
+              <Router history={history}>
+                {component}
+              </Router>
           </AppContext.Provider>)
   }
 }
@@ -30,7 +36,7 @@ const renderWithContext = (component) => {
 it('should match the snapshot', async () => {
   let fragment;
   await act(async () => {
-      const { asFragment } = renderWithContext(<RefreshTokensPage />);
+      const { asFragment } = renderWithContextAndRouter(<RefreshTokensPage />);
       fragment = asFragment;
   });
   expect(fragment(<RefreshTokensPage />)).toMatchSnapshot();
@@ -39,7 +45,7 @@ it('should match the snapshot', async () => {
 it('should select all the refresh tokens', async() => {
   let container;
   await act(async () => {
-      container = renderWithContext(<RefreshTokensPage />);
+      container = renderWithContextAndRouter(<RefreshTokensPage />);
   });
 
   await wait(() => {
@@ -54,7 +60,7 @@ it('should select all the refresh tokens', async() => {
 it('should unselect all the refresh tokens', async() => {
   let container;
   await act(async () => {
-      container = renderWithContext(<RefreshTokensPage />);
+      container = renderWithContextAndRouter(<RefreshTokensPage />);
   });
 
   await wait(() => {
@@ -72,7 +78,7 @@ it('should unselect all the refresh tokens', async() => {
 it('should unselect all the refresh tokens', async() => {
   let container;
   await act(async () => {
-      container = renderWithContext(<RefreshTokensPage />);
+      container = renderWithContextAndRouter(<RefreshTokensPage />);
   });
 
   await wait(() => {
