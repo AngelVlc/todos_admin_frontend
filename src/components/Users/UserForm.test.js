@@ -1,5 +1,5 @@
 import { render, cleanup, fireEvent, wait } from '@testing-library/react'
-import { UserPage } from './UserPage'
+import { UserForm } from './UserForm'
 import { AppContext } from '../../contexts/AppContext'
 import axios from 'axios';
 import { MemoryRouter, Route } from 'react-router-dom'
@@ -15,37 +15,28 @@ jest.mock('react-router-dom', () => ({
     })
 }));
 
-const renderWithContextAndRouterForExistingUser = (component, isAdmin) => {
-    axios.get.mockResolvedValue(
-        {
-            data: {
-                id: 2,
-                name: 'user',
-                isAdmin: isAdmin
-            }
-        }
-    );
+const renderWithContextAndRouterForExistingUser = (isAdmin) => {
     const context = { auth: { info: {} } };
     return {
         ...render(
             <AppContext.Provider value={context}>
                 <MemoryRouter initialEntries={[`/users/2/edit`]}>
                     <Route path="/users/:userId/edit">
-                        {component}
+                    <UserForm userId={2} name={'user'} isAdmin={isAdmin} isNew={false} submintBtnText='SAVE' submitUrl={'users/2'}/>
                     </Route>
                 </MemoryRouter>
             </AppContext.Provider>)
     }
 }
 
-const renderWithContextAndRouterForNewUser = (component) => {
+const renderWithContextAndRouterForNewUser = () => {
     const context = { auth: { info: {} } };
     return {
         ...render(
             <AppContext.Provider value={context}>
                 <MemoryRouter initialEntries={[`/users/new`]}>
                     <Route path="/users/new">
-                        {component}
+                        <UserForm isAdmin='no' name={''} isAdmin={'no'} isNew={true} submintBtnText='CREATE' submitUrl='users'/>
                     </Route>
                 </MemoryRouter>
             </AppContext.Provider>)
@@ -57,30 +48,30 @@ afterEach(cleanup)
 it('should match the snapshot for an existing non admin user', async () => {
     let fragment;
     await act(async () => {
-        const { asFragment } = renderWithContextAndRouterForExistingUser(<UserPage />, false);
+        const { asFragment } = renderWithContextAndRouterForExistingUser('no');
         fragment = asFragment;
     });
-    expect(fragment(<UserPage />)).toMatchSnapshot();
+    expect(fragment()).toMatchSnapshot();
 });
 
 it('should match the snapshot for an existing admin user', async () => {
     let fragment;
     await act(async () => {
-        const { asFragment } = renderWithContextAndRouterForExistingUser(<UserPage />, true);
+        const { asFragment } = renderWithContextAndRouterForExistingUser('yes');
         fragment = asFragment;
     });
-    expect(fragment(<UserPage />)).toMatchSnapshot();
+    expect(fragment()).toMatchSnapshot();
 });
 
 it('should match the snapshot for a new user', async () => {
-    const { asFragment } = renderWithContextAndRouterForNewUser(<UserPage />);
-    expect(asFragment(<UserPage />)).toMatchSnapshot();
+    const { asFragment } = renderWithContextAndRouterForNewUser();
+    expect(asFragment()).toMatchSnapshot();
 });
 
 it('should allow delete an existing user', async () => {
     let container
     await act(async () => {
-        container = renderWithContextAndRouterForExistingUser(<UserPage />);
+        container = renderWithContextAndRouterForExistingUser('no');
     });
 
     await wait(() => {
@@ -93,7 +84,7 @@ it('should allow delete an existing user', async () => {
 });
 
 it('should allow cancel', async () => {
-    const { getByTestId } = renderWithContextAndRouterForNewUser(<UserPage />);
+    const { getByTestId } = renderWithContextAndRouterForNewUser();
 
     await wait(() => {
         fireEvent.click(getByTestId('cancel'));
@@ -105,7 +96,7 @@ it('should allow cancel', async () => {
 });
 
 it('should require user name', async () => {
-    const { getByTestId } = renderWithContextAndRouterForNewUser(<UserPage />);
+    const { getByTestId } = renderWithContextAndRouterForNewUser();
 
     await wait(() => {
         fireEvent.click(getByTestId('submit'));
@@ -117,7 +108,7 @@ it('should require user name', async () => {
 it('should update an existing user', async () => {
     let container
     await act(async () => {
-        container = renderWithContextAndRouterForExistingUser(<UserPage />);
+        container = renderWithContextAndRouterForExistingUser('no');
     });
 
     await changeInputValue(container.getByTestId, 'name', 'updated user');
@@ -136,12 +127,12 @@ it('should update an existing user', async () => {
     expect(axios.put.mock.calls[0][1]).toStrictEqual({ name: 'updated user', isAdmin: true, password: 'pass', confirmPassword: 'pass' });
 
     expect(mockHistoryPush.mock.calls.length).toBe(1);
-    expect(mockHistoryPush.mock.calls[0][0]).toBe('/users/2/edit');
+    expect(mockHistoryPush.mock.calls[0][0]).toBe('/users');
     mockHistoryPush.mockClear();
 });
 
 it('should create a new user', async () => {
-    const { getByTestId } = renderWithContextAndRouterForNewUser(<UserPage />);
+    const { getByTestId } = renderWithContextAndRouterForNewUser();
 
     await changeInputValue(getByTestId, 'name', 'new user');
     await changeInputValue(getByTestId, 'password', 'pass');
@@ -158,7 +149,7 @@ it('should create a new user', async () => {
     expect(axios.post.mock.calls[0][1]).toStrictEqual({ name: 'new user', isAdmin: false, password: 'pass', confirmPassword: 'pass' });
 
     expect(mockHistoryPush.mock.calls.length).toBe(1);
-    expect(mockHistoryPush.mock.calls[0][0]).toBe('/users/55/edit');
+    expect(mockHistoryPush.mock.calls[0][0]).toBe('/users');
     mockHistoryPush.mockClear();
 });
 

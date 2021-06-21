@@ -1,3 +1,4 @@
 export * from './UserDeletePage';
 export * from './UsersPage';
-export * from './UserPage';
+export * from './NewUserPage';
+export * from './EditUserPage';

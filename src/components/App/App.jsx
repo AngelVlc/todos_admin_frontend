@@ -4,7 +4,7 @@ import { AdminRoute, PrivateRoute } from '../../routers';
 import { LoginPage } from '../LoginPage';
 import { HomePage } from '../HomePage';
 import { ListsPage, ListPage, ListDeletePage, ListItemPage, ListItemDeletePage } from '../Lists';
-import { UserDeletePage, UsersPage, UserPage } from '../Users';
+import { UserDeletePage, UsersPage, NewUserPage, EditUserPage } from '../Users';
 import { RefreshTokensPage } from '../RefreshTokens';
 import { Header } from '../Header';
 import { createBrowserHistory } from 'history';
@@ -60,8 +60,8 @@ const App = () => {
             <PrivateRoute path="/lists/:listId/items/:itemId/edit" component={ListItemPage} />
             <AdminRoute exact path="/users" component={UsersPage} />
             <AdminRoute path="/users/:userId/delete" component={UserDeletePage} />
-            <AdminRoute path="/users/:userId/edit" component={UserPage} />
-            <AdminRoute path="/users/new" component={UserPage} />
+            <AdminRoute path="/users/:userId/edit" component={EditUserPage} />
+            <AdminRoute path="/users/new" component={NewUserPage} />
             <AdminRoute exact path="/refreshtokens" component={RefreshTokensPage} />
             <Route path="/login">
               <LoginPage />
