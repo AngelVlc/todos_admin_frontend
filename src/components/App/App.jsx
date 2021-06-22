@@ -3,7 +3,7 @@ import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import { AdminRoute, PrivateRoute } from '../../routers';
 import { LoginPage } from '../LoginPage';
 import { HomePage } from '../HomePage';
-import { ListsPage, ListPage, ListDeletePage, ListItemPage, ListItemDeletePage } from '../Lists';
+import { ListsPage, NewListPage, EditListPage, ListDeletePage, ListItemPage, ListItemDeletePage } from '../Lists';
 import { UserDeletePage, UsersPage, NewUserPage, EditUserPage } from '../Users';
 import { RefreshTokensPage } from '../RefreshTokens';
 import { Header } from '../Header';
@@ -52,9 +52,9 @@ const App = () => {
           <Switch>
             <PrivateRoute exact path="/" component={HomePage} />
             <PrivateRoute exact path="/lists" component={ListsPage} />
-            <PrivateRoute path="/lists/new" component={ListPage} />
+            <PrivateRoute path="/lists/new" component={NewListPage} />
             <PrivateRoute path="/lists/:listId/delete" component={ListDeletePage} />
-            <PrivateRoute path="/lists/:listId/edit" component={ListPage} />
+            <PrivateRoute path="/lists/:listId/edit" component={EditListPage} />
             <PrivateRoute path="/lists/:listId/items/new" component={ListItemPage} />
             <PrivateRoute path="/lists/:listId/items/:itemId/delete" component={ListItemDeletePage} />
             <PrivateRoute path="/lists/:listId/items/:itemId/edit" component={ListItemPage} />

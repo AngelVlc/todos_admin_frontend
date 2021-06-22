@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should match the snapshot for a new list 1`] = `
+<DocumentFragment>
+  <form
+    action="#"
+  >
+    <div
+      class="field"
+    >
+      <label
+        class="label"
+        for="name"
+      >
+        Name
+      </label>
+      <div
+        class="control"
+      >
+        <input
+          data-testid="name"
+          name="name"
+          type="text"
+          value=""
+        />
+      </div>
+      <p
+        class="help is-danger"
+        data-testid="nameErrors"
+      />
+    </div>
+    <div
+      class="field is-grouped"
+    >
+      <p
+        class="control"
+      >
+        <button
+          class="button"
+          data-testid="submit"
+          type="submit"
+        >
+          CREATE
+        </button>
+      </p>
+      <p
+        class="control"
+      >
+        <button
+          class="button"
+          data-testid="cancel"
+          type="button"
+        >
+          CANCEL
+        </button>
+      </p>
+    </div>
+  </form>
+</DocumentFragment>
+`;

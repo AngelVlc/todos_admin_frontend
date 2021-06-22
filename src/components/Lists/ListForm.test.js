@@ -1,5 +1,5 @@
 import { render, cleanup, fireEvent, wait } from '@testing-library/react'
-import { ListPage } from './ListPage'
+import { ListForm } from './ListForm'
 import { AppContext } from '../../contexts/AppContext'
 import axios from 'axios';
 import { MemoryRouter, Route } from 'react-router-dom'
@@ -15,25 +15,14 @@ jest.mock('react-router-dom', () => ({
     })
 }));
 
-const renderWithContextAndRouterForExistingList = (component) => {
-    axios.get.mockReturnValueOnce(
-        {
-            data: {
-                id: 2,
-                name: 'list name'
-            }
-        }
-    ).mockReturnValueOnce(
-        {
-            data: [
+const renderWithContextAndRouterForExistingList = () => {
+    const items = [
                 {
                     id: 5,
                     title: 'item title',
                     description: 'item description'
                 }
             ]
-        }
-    );
 
     const context = { auth: { info: {} } };
     return {
@@ -41,21 +30,21 @@ const renderWithContextAndRouterForExistingList = (component) => {
             <AppContext.Provider value={context}>
                 <MemoryRouter initialEntries={[`/lists/2/items/5/edit`]}>
                     <Route path="/lists/:listId/items/:itemId/edit">
-                        {component}
+                      <ListForm listId={2} name='list name' items={items} isNew={false} submintBtnText='SAVE' submitUrl={'lists/2'}/>
                     </Route>
                 </MemoryRouter>
             </AppContext.Provider>)
     }
 }
 
-const renderWithContextAndRouterForNewList = (component) => {
+const renderWithContextAndRouterForNewList = () => {
     const context = { auth: { info: {} } };
     return {
         ...render(
             <AppContext.Provider value={context}>
                 <MemoryRouter initialEntries={[`/users/new`]}>
                     <Route path="/users/new">
-                        {component}
+                      <ListForm name='' items={[]} isNew={true} submintBtnText='CREATE' submitUrl={'lists'}/>
                     </Route>
                 </MemoryRouter>
             </AppContext.Provider>)
@@ -67,21 +56,21 @@ afterEach(cleanup)
 it('should match the snapshot for an existing list', async () => {
     let fragment;
     await act(async () => {
-        const { asFragment } = renderWithContextAndRouterForExistingList(<ListPage />);
+        const { asFragment } = renderWithContextAndRouterForExistingList();
         fragment = asFragment;
     });
-    expect(fragment(<ListPage />)).toMatchSnapshot();
+    expect(fragment()).toMatchSnapshot();
 });
 
 it('should match the snapshot for a new list', async () => {
-    const { asFragment } = renderWithContextAndRouterForNewList(<ListPage />);
-    expect(asFragment(<ListPage />)).toMatchSnapshot();
+    const { asFragment } = renderWithContextAndRouterForNewList();
+    expect(asFragment()).toMatchSnapshot();
 });
 
 it('should allow delete an existing list', async () => {
     let container
     await act(async () => {
-        container = renderWithContextAndRouterForExistingList(<ListPage />);
+        container = renderWithContextAndRouterForExistingList();
     });
 
     await wait(() => {
@@ -94,7 +83,7 @@ it('should allow delete an existing list', async () => {
 });
 
 it('should allow cancel', async () => {
-    const { getByTestId } = renderWithContextAndRouterForNewList(<ListPage />);
+    const { getByTestId } = renderWithContextAndRouterForNewList();
 
     await wait(() => {
         fireEvent.click(getByTestId('cancel'));
@@ -106,7 +95,7 @@ it('should allow cancel', async () => {
 });
 
 it('should require list name', async () => {
-    const { getByTestId } = renderWithContextAndRouterForNewList(<ListPage />);
+    const { getByTestId } = renderWithContextAndRouterForNewList();
 
     await wait(() => {
         fireEvent.click(getByTestId('submit'));
@@ -118,7 +107,7 @@ it('should require list name', async () => {
 it('should update an existing list', async () => {
     let container
     await act(async () => {
-        container = renderWithContextAndRouterForExistingList(<ListPage />);
+        container = renderWithContextAndRouterForExistingList();
     });
 
     await changeInputValue(container.getByTestId, 'name', 'updated name');
@@ -139,7 +128,7 @@ it('should update an existing list', async () => {
 });
 
 it('should create a new list', async () => {
-    const { getByTestId } = renderWithContextAndRouterForNewList(<ListPage />);
+    const { getByTestId } = renderWithContextAndRouterForNewList();
 
     await changeInputValue(getByTestId, 'name', 'new list');
 
@@ -161,7 +150,7 @@ it('should create a new list', async () => {
 it('should add a new item', async () => {
     let container
     await act(async () => {
-        container = renderWithContextAndRouterForExistingList(<ListPage />);
+        container = renderWithContextAndRouterForExistingList();
     });
 
     await wait(() => {
@@ -176,7 +165,7 @@ it('should add a new item', async () => {
 it('should update an existing item', async () => {
     let container
     await act(async () => {
-        container = renderWithContextAndRouterForExistingList(<ListPage />);
+        container = renderWithContextAndRouterForExistingList();
     });
 
     expect(container.getByTestId('editListItem5').href).toBe('http://localhost/lists/2/items/5/edit');
@@ -185,7 +174,7 @@ it('should update an existing item', async () => {
 it('should allow delete an existing item item', async () => {
     let container
     await act(async () => {
-        container = renderWithContextAndRouterForExistingList(<ListPage />);
+        container = renderWithContextAndRouterForExistingList();
     });
 
     expect(container.getByTestId('deleteListItem5').href).toBe('http://localhost/lists/2/items/5/delete');
