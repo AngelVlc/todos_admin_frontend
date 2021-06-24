@@ -1,8 +1,8 @@
-import { render, cleanup, fireEvent, wait } from '@testing-library/react'
-import { ListItemPage } from './ListItemPage'
-import { AppContext } from '../../contexts/AppContext'
+import { render, cleanup, fireEvent, wait } from '@testing-library/react';
+import { ListItemForm } from './ListItemForm';
+import { AppContext } from '../../contexts/AppContext';
 import axios from 'axios';
-import { MemoryRouter, Route } from 'react-router-dom'
+import { MemoryRouter, Route } from 'react-router-dom';
 import { act } from 'react-dom/test-utils';
 
 jest.mock('axios');
@@ -15,38 +15,28 @@ jest.mock('react-router-dom', () => ({
     })
 }));
 
-const renderWithContextAndRouterForExistingItem = (component) => {
-    axios.get.mockResolvedValue(
-        {
-            data:
-            {
-                id: 2,
-                title: 'item title',
-                description: 'item description'
-            }
-        }
-    );
+const renderWithContextAndRouterForExistingItem = () => {
     const context = { auth: { info: {} } };
     return {
         ...render(
             <AppContext.Provider value={context}>
                 <MemoryRouter initialEntries={[`/lists/2/items/5/edit`]}>
                     <Route path="/lists/:listId/items/:itemId/edit">
-                        {component}
+                        <ListItemForm listId={2} itemId={5} title='item title' description='item description' isNew={false} submintBtnText='SAVE' submitUrl='lists/2/items/5'/>
                     </Route>
                 </MemoryRouter>
             </AppContext.Provider>)
     }
 }
 
-const renderWithContextAndRouterForNewItem = (component) => {
+const renderWithContextAndRouterForNewItem = () => {
     const context = { auth: { info: {} } };
     return {
         ...render(
             <AppContext.Provider value={context}>
                 <MemoryRouter initialEntries={[`/lists/2/items/new`]}>
                     <Route path="/lists/:listId/items/new">
-                        {component}
+                    <ListItemForm listId={2} isNew={true} submintBtnText='CREATE' submitUrl='lists/2/items'/>
                     </Route>
                 </MemoryRouter>
             </AppContext.Provider>)
@@ -58,21 +48,21 @@ afterEach(cleanup)
 it('should match the snapshot for an existing item', async () => {
     let fragment;
     await act(async () => {
-        const { asFragment } = renderWithContextAndRouterForExistingItem(<ListItemPage />);
+        const { asFragment } = renderWithContextAndRouterForExistingItem();
         fragment = asFragment;
     });
-    expect(fragment(<ListItemPage />)).toMatchSnapshot();
+    expect(fragment()).toMatchSnapshot();
 });
 
 it('should match the snapshot for a new item', async () => {
-    const { asFragment } = renderWithContextAndRouterForNewItem(<ListItemPage />);
-    expect(asFragment(<ListItemPage />)).toMatchSnapshot();
+    const { asFragment } = renderWithContextAndRouterForNewItem();
+    expect(asFragment()).toMatchSnapshot();
 });
 
 it('should allow delete an existing item', async () => {
     let container
     await act(async () => {
-        container = renderWithContextAndRouterForExistingItem(<ListItemPage />);
+        container = renderWithContextAndRouterForExistingItem();
     });
 
     await wait(() => {
@@ -85,7 +75,7 @@ it('should allow delete an existing item', async () => {
 });
 
 it('should allow cancel', async () => {
-    const { getByTestId } = renderWithContextAndRouterForNewItem(<ListItemPage />);
+    const { getByTestId } = renderWithContextAndRouterForNewItem();
 
     await wait(() => {
         fireEvent.click(getByTestId('cancel'));
@@ -97,7 +87,7 @@ it('should allow cancel', async () => {
 });
 
 it('should require item title', async () => {
-    const { getByTestId } = renderWithContextAndRouterForNewItem(<ListItemPage />);
+    const { getByTestId } = renderWithContextAndRouterForNewItem();
 
     await wait(() => {
         fireEvent.click(getByTestId('submit'));
@@ -109,7 +99,7 @@ it('should require item title', async () => {
 it('should update an existing item', async () => {
     let container
     await act(async () => {
-        container = renderWithContextAndRouterForExistingItem(<ListItemPage />);
+        container = renderWithContextAndRouterForExistingItem();
     });
 
     await changeInputValue(container.getByTestId, 'title', 'updated title');
@@ -131,7 +121,7 @@ it('should update an existing item', async () => {
 });
 
 it('should create a new item', async () => {
-    const { getByTestId } = renderWithContextAndRouterForNewItem(<ListItemPage />);
+    const { getByTestId } = renderWithContextAndRouterForNewItem();
 
     await changeInputValue(getByTestId, 'title', 'title');
     await changeInputValue(getByTestId, 'description', 'description');
@@ -160,4 +150,3 @@ const changeInputValue = async (getByTestId, name, value) => {
         })
     })
 }
-

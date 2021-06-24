@@ -8,7 +8,7 @@ exports[`should match the snapshot for an existing admin user 1`] = `
     <h3
       class="title"
     >
-      Edit user
+      Edit user 'user'
     </h3>
     <nav
       aria-label="breadcrumbs"
@@ -187,7 +187,7 @@ exports[`should match the snapshot for an existing non admin user 1`] = `
     <h3
       class="title"
     >
-      Edit user
+      Edit user 'user'
     </h3>
     <nav
       aria-label="breadcrumbs"

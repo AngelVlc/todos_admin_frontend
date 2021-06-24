@@ -6,7 +6,7 @@ import axios from 'axios';
 export const EditListPage = () => {
     let { listId } = useParams();
 
-    const [pageState, setPageState] = useState({items: []});
+    const [pageState, setPageState] = useState({name: '', items: []});
 
     useEffect(() => {
         const getExistingList = async () => {

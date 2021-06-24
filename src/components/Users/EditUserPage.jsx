@@ -6,7 +6,7 @@ import axios from 'axios';
 export const EditUserPage = () => {
     let { userId } = useParams();
 
-    const [pageState, setPageState] = useState({});
+    const [pageState, setPageState] = useState({name: ''});
 
     useEffect(() => {
         const getExistingUser = async () => {
@@ -23,7 +23,7 @@ export const EditUserPage = () => {
 
     return (
         <div className="container">
-            <h3 className="title">Edit user</h3>
+            <h3 className="title">{`Edit user '${pageState.name}'`}</h3>
             <nav className="breadcrumb" aria-label="breadcrumbs">
                 <ul>
                     <li><Link to={`/`}>Home</Link></li>
