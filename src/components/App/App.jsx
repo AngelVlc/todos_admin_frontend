@@ -3,8 +3,8 @@ import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import { AdminRoute, PrivateRoute } from '../../routers';
 import { LoginPage } from '../LoginPage';
 import { HomePage } from '../HomePage';
-import { ListsPage, ListPage, ListDeletePage, ListItemPage, ListItemDeletePage } from '../Lists';
-import { UserDeletePage, UsersPage, UserPage } from '../Users';
+import { ListsPage, NewListPage, EditListPage, ListDeletePage, NewListItemPage, EditListItemPage, ListItemDeletePage } from '../Lists';
+import { UserDeletePage, UsersPage, NewUserPage, EditUserPage } from '../Users';
 import { RefreshTokensPage } from '../RefreshTokens';
 import { Header } from '../Header';
 import { createBrowserHistory } from 'history';
@@ -52,16 +52,16 @@ const App = () => {
           <Switch>
             <PrivateRoute exact path="/" component={HomePage} />
             <PrivateRoute exact path="/lists" component={ListsPage} />
-            <PrivateRoute path="/lists/new" component={ListPage} />
+            <PrivateRoute path="/lists/new" component={NewListPage} />
             <PrivateRoute path="/lists/:listId/delete" component={ListDeletePage} />
-            <PrivateRoute path="/lists/:listId/edit" component={ListPage} />
-            <PrivateRoute path="/lists/:listId/items/new" component={ListItemPage} />
+            <PrivateRoute path="/lists/:listId/edit" component={EditListPage} />
+            <PrivateRoute path="/lists/:listId/items/new" component={NewListItemPage} />
             <PrivateRoute path="/lists/:listId/items/:itemId/delete" component={ListItemDeletePage} />
-            <PrivateRoute path="/lists/:listId/items/:itemId/edit" component={ListItemPage} />
+            <PrivateRoute path="/lists/:listId/items/:itemId/edit" component={EditListItemPage} />
             <AdminRoute exact path="/users" component={UsersPage} />
             <AdminRoute path="/users/:userId/delete" component={UserDeletePage} />
-            <AdminRoute path="/users/:userId/edit" component={UserPage} />
-            <AdminRoute path="/users/new" component={UserPage} />
+            <AdminRoute path="/users/:userId/edit" component={EditUserPage} />
+            <AdminRoute path="/users/new" component={NewUserPage} />
             <AdminRoute exact path="/refreshtokens" component={RefreshTokensPage} />
             <Route path="/login">
               <LoginPage />
