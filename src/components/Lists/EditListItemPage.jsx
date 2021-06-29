@@ -29,7 +29,7 @@ export const EditListItemPage = () => {
                     <li><Link to={`/`}>Home</Link></li>
                     <li><Link to={`/lists`}>Lists</Link></li>
                     <li><Link to={`/lists/${listId}/edit`}>List</Link></li>
-                    <li className="is-active"><Link aria-current="page" to={`/lists/${listId}/items/${itemId}/edit`}>{pageState.isNew ? 'new' : pageState.title}</Link></li>
+                    <li className="is-active"><Link aria-current="page" to={`/lists/${listId}/items/${itemId}/edit`}>{pageState.title}</Link></li>
                 </ul>
             </nav>
             <ListItemForm listId={listId} itemId={itemId} title={pageState.title} description={pageState.description} isNew={false} submintBtnText='SAVE' submitUrl={`lists/${listId}/items/${itemId}`}/>
