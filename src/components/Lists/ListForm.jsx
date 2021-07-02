@@ -3,6 +3,7 @@ import { useHistory, Link } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import axios from 'axios';
 import * as Yup from 'yup';
+import './ListForm.css';
 
 export const ListForm = (props) => {
   let history = useHistory();
@@ -56,40 +57,42 @@ export const ListForm = (props) => {
                 </p>
             </div>
             {!props.isNew &&
-                <table className="table">
-                    <thead>
-                        <tr>
-                            <td>Title</td>
-                            <td>
-
-                                <button className="button is-small" type="button" data-testid="addNew" onClick={() => history.push(`/lists/${props.listId}/items/new`)}>
-                                    <span className="icon is-small">
-                                        <i className="fas fa-plus"></i>
-                                    </span>
-                                </button>
-                            </td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {props.items.length > 0 && props.items.map((item) => (
-                            <tr key={item.id}>
-                                <td>
-                                    <Link className="has-text-black" data-testid={`editListItem${item.id}`} to={`/lists/${props.listId}/items/${item.id}/edit`}>{item.title}</Link>
-                                </td>
-                                <td>
-                                    <center>
-                                        <Link className="has-text-black" data-testid={`deleteListItem${item.id}`} to={`/lists/${props.listId}/items/${item.id}/delete`}>
-                                            <span className="icon is-small">
-                                                <i className="fas fa-trash-alt fa-xs"></i>
-                                            </span>
-                                        </Link>
-                                    </center>
-                                </td>
-                            </tr>
-                        ))
-                        }
-                    </tbody>
-                </table>
+                <div>
+                    <div className="is-flex">
+                        <div className="is-flex-grow-4">
+                            <span className="label">List Items</span>
+                        </div>
+                    </div> 
+                    <div className="dnd-container">
+                        <div className="list-button">
+                            <button className="button is-small" type="button" data-testid="addNew" onClick={() => history.push(`/lists/${props.listId}/items/new`)}>
+                                <span className="icon is-small">
+                                    <i className="fas fa-plus"></i>
+                                </span>
+                                <span>Add</span>
+                            </button>
+                        </div>
+                        <div className="dnd-list">
+                          {props.items.length > 0 && props.items.map((item) => (
+                                <div key={item.id} className="is-flex dnd-item">
+                                    <div className="is-flex-grow-4">
+                                        <Link className="has-text-black" data-testid={`editListItem${item.id}`} to={`/lists/${props.listId}/items/${item.id}/edit`}>{item.title}</Link>
+                                    </div>
+                                    <div className="is-justify-content-flex-end">
+                                        <center>
+                                            <Link className="has-text-black" data-testid={`deleteListItem${item.id}`} to={`/lists/${props.listId}/items/${item.id}/delete`}>
+                                                <span className="icon is-small">
+                                                    <i className="fas fa-trash-alt fa-xs"></i>
+                                                </span>
+                                            </Link>
+                                        </center>
+                                    </div>
+                                </div>
+                            ))
+                            }
+                        </div>
+                    </div>
+                </div>
             }
 
             <div className="field is-grouped">
