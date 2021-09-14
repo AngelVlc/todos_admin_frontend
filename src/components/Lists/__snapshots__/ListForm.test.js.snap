@@ -88,62 +88,93 @@ exports[`should match the snapshot for an existing list 1`] = `
         data-testid="nameErrors"
       />
     </div>
-    <table
-      class="table"
-    >
-      <thead>
-        <tr>
-          <td>
-            Title
-          </td>
-          <td>
-            <button
-              class="button is-small"
-              data-testid="addNew"
-              type="button"
+    <div>
+      <div
+        class="is-flex"
+      >
+        <div
+          class="is-flex-grow-4"
+        >
+          <span
+            class="label"
+          >
+            List Items
+          </span>
+        </div>
+      </div>
+      <div
+        class="dnd-container"
+      >
+        <div
+          class="list-button"
+        >
+          <button
+            class="button is-small"
+            data-testid="addNew"
+            type="button"
+          >
+            <span
+              class="icon is-small"
             >
-              <span
-                class="icon is-small"
-              >
-                <i
-                  class="fas fa-plus"
-                />
-              </span>
-            </button>
-          </td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <a
-              class="has-text-black"
-              data-testid="editListItem5"
-              href="/lists/2/items/5/edit"
+              <i
+                class="fas fa-plus"
+              />
+            </span>
+            <span>
+              Add
+            </span>
+          </button>
+        </div>
+        <div
+          class="dnd-list"
+          data-rbd-droppable-context-id="0"
+          data-rbd-droppable-id="2"
+        >
+          <div
+            aria-describedby="rbd-hidden-text-0-hidden-text-0"
+            class="is-flex dnd-item"
+            data-rbd-drag-handle-context-id="0"
+            data-rbd-drag-handle-draggable-id="5"
+            data-rbd-draggable-context-id="0"
+            data-rbd-draggable-id="5"
+            draggable="false"
+            role="button"
+            tabindex="0"
+          >
+            <div
+              class="is-flex-grow-4"
             >
-              item title
-            </a>
-          </td>
-          <td>
-            <center>
               <a
                 class="has-text-black"
-                data-testid="deleteListItem5"
-                href="/lists/2/items/5/delete"
+                data-testid="editListItem5"
+                href="/lists/2/items/5/edit"
               >
-                <span
-                  class="icon is-small"
-                >
-                  <i
-                    class="fas fa-trash-alt fa-xs"
-                  />
-                </span>
+                item title
               </a>
-            </center>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+            </div>
+            <div
+              class="is-justify-content-flex-end"
+            >
+              <center>
+                <a
+                  class="has-text-black"
+                  data-testid="deleteListItem5"
+                  href="/lists/2/items/5/delete"
+                >
+                  <span
+                    class="icon is-small"
+                  >
+                    <i
+                      class="fas fa-trash-alt fa-xs"
+                    />
+                  </span>
+                </a>
+              </center>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div
       class="field is-grouped"
     >

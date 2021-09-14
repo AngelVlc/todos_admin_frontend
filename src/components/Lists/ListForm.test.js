@@ -120,11 +120,7 @@ it('should update an existing list', async () => {
 
     expect(axios.put.mock.calls.length).toBe(1);
     expect(axios.put.mock.calls[0][0]).toBe('lists/2');
-    expect(axios.put.mock.calls[0][1]).toStrictEqual({ name: 'updated name' });
-
-    expect(mockHistoryPush.mock.calls.length).toBe(1);
-    expect(mockHistoryPush.mock.calls[0][0]).toBe(`/lists/2/edit`);
-    mockHistoryPush.mockClear();
+    expect(axios.put.mock.calls[0][1]).toStrictEqual({ name: 'updated name', idsByPosition: [5] });
 });
 
 it('should create a new list', async () => {
