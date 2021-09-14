@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import axios from 'axios';
 import * as Yup from 'yup';
 import './ListForm.css';
 
 export const ListForm = (props) => {
   let history = useHistory();
+  const loaded = useRef(false);
 
   const [pageState, setPageState] = useState({
     name: '',
@@ -14,26 +16,54 @@ export const ListForm = (props) => {
   });
 
   useEffect(() => {
-    if (props.name) {
+    if (props.name && !loaded.current) {
         setPageState({
             name: props.name,
             items: props.items
         })
-    }
-  }, [props]);
 
-  const onSubmit = async ({ name }) => {
+        loaded.current = true;
+    }
+  }, [props, loaded]);
+
+  const onSubmit = async ({ name, items }) => {
     const body = {
         name
     }
+
     let res;
     if (props.isNew) {
         res = await axios.post(props.submitUrl, body)
+        history.push(`/lists/${res.data.id}/edit`);
     } else {
-        res = await axios.put(props.submitUrl, body)
+        const ids = items.map(item => {return item.id});
+        body.idsByPosition = ids;
+        await axios.put(props.submitUrl, body)
     }
-    history.push(`/lists/${res.data.id}/edit`);
   };
+
+  const onDragEnd = (dropResult) => {
+      const { destination, source } = dropResult;
+
+      if (!destination) {
+        return;
+      }
+  
+      if (destination.droppableId === source.droppableId && destination.index === source.index) {
+        return;
+      }
+
+      const newItems = Array.from(pageState.items);
+      newItems.splice(source.index, 1);
+      newItems.splice(destination.index, 0, pageState.items[source.index]);
+
+      const newState = {
+          ...pageState,
+          items: newItems
+      };
+
+      setPageState(newState);
+  }
 
   return (
     <Formik
@@ -63,35 +93,45 @@ export const ListForm = (props) => {
                             <span className="label">List Items</span>
                         </div>
                     </div> 
-                    <div className="dnd-container">
-                        <div className="list-button">
-                            <button className="button is-small" type="button" data-testid="addNew" onClick={() => history.push(`/lists/${props.listId}/items/new`)}>
-                                <span className="icon is-small">
-                                    <i className="fas fa-plus"></i>
-                                </span>
-                                <span>Add</span>
-                            </button>
-                        </div>
-                        <div className="dnd-list">
-                          {props.items.length > 0 && props.items.map((item) => (
-                                <div key={item.id} className="is-flex dnd-item">
-                                    <div className="is-flex-grow-4">
-                                        <Link className="has-text-black" data-testid={`editListItem${item.id}`} to={`/lists/${props.listId}/items/${item.id}/edit`}>{item.title}</Link>
+                    <DragDropContext onDragEnd={onDragEnd}>
+                        <div className="dnd-container">
+                            <div className="list-button">
+                                <button className="button is-small" type="button" data-testid="addNew" onClick={() => history.push(`/lists/${props.listId}/items/new`)}>
+                                    <span className="icon is-small">
+                                        <i className="fas fa-plus"></i>
+                                    </span>
+                                    <span>Add</span>
+                                </button>
+                            </div>
+                            <Droppable droppableId={props.listId.toString()}>
+                                {(provided) => (
+                                    <div className="dnd-list" ref={provided.innerRef} {...provided.droppableProps}>
+                                        {pageState.items.length > 0 && pageState.items.map((item, index) => (
+                                            <Draggable key={item.id} draggableId={item.id.toString()} index={index}>
+                                                {draggableProvided => (
+                                                    <div key={item.id} className="is-flex dnd-item" {...draggableProvided.draggableProps} {...draggableProvided.dragHandleProps} ref={draggableProvided.innerRef}>
+                                                        <div className="is-flex-grow-4">
+                                                            <Link className="has-text-black" data-testid={`editListItem${item.id}`} to={`/lists/${props.listId}/items/${item.id}/edit`}>{item.title}</Link>
+                                                        </div>
+                                                        <div className="is-justify-content-flex-end">
+                                                            <center>
+                                                                <Link className="has-text-black" data-testid={`deleteListItem${item.id}`} to={`/lists/${props.listId}/items/${item.id}/delete`}>
+                                                                    <span className="icon is-small">
+                                                                        <i className="fas fa-trash-alt fa-xs"></i>
+                                                                    </span>
+                                                                </Link>
+                                                            </center>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </Draggable>
+                                        ))}
+                                        {provided.placeholder}
                                     </div>
-                                    <div className="is-justify-content-flex-end">
-                                        <center>
-                                            <Link className="has-text-black" data-testid={`deleteListItem${item.id}`} to={`/lists/${props.listId}/items/${item.id}/delete`}>
-                                                <span className="icon is-small">
-                                                    <i className="fas fa-trash-alt fa-xs"></i>
-                                                </span>
-                                            </Link>
-                                        </center>
-                                    </div>
-                                </div>
-                            ))
-                            }
+                                )}
+                            </Droppable>
                         </div>
-                    </div>
+                    </DragDropContext>
                 </div>
             }
 
