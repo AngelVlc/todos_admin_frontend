@@ -29,7 +29,9 @@ export const configure = (requestsDispatch, history) => {
       }
 
       const originalRequest = error.config;
-      if (error.response.status === 401 && error.response.data === 'Invalid authorization token\n' && !originalRequest._retry) {
+      if (error.response.status === 401
+        && error.response.data === 'Invalid authorization token\n'
+        && !originalRequest._retry) {
         originalRequest._retry = true;
         const res = await axios.post('/auth/refreshtoken');
         if (res.status === 200) {
@@ -37,7 +39,8 @@ export const configure = (requestsDispatch, history) => {
         }
       }
 
-      if (error.response.status === 401 && error.response.data === 'Invalid refresh token\n') {
+      if (error.response.status === 401
+        && (error.response.data === 'Invalid refresh token\n' || error.response.data === 'No authorization cookie\n')) {
         history.push('/login');
       }
 
