@@ -3,9 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.15.0",
-    "@testing-library/react": "^10.4.9",
-    "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.4",
     "formik": "^2.2.8",
     "jwt-decode": "^2.2.0",
@@ -20,7 +17,11 @@
     "yup": "^0.28.5"
   },
   "devDependencies": {
-    "react-scripts": "4.0.3"
+    "react-beautiful-dnd-test-utils": "^4.1.0",
+    "react-scripts": "4.0.3",
+    "@testing-library/jest-dom": "^5.15.0",
+    "@testing-library/react": "^10.4.9",
+    "@testing-library/user-event": "^13.5.0"
   },
   "scripts": {
     "start": "react-scripts start",
