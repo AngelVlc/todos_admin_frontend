@@ -32,6 +32,7 @@ jobs:
     steps:
       - checkout
       - run: make build
+      - run: make audit
       - run: make test-ci
       - install_terraform
       - init_terraform

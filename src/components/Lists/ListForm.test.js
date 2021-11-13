@@ -4,6 +4,12 @@ import { AppContext } from '../../contexts/AppContext'
 import axios from 'axios';
 import { MemoryRouter, Route } from 'react-router-dom'
 import { act } from 'react-dom/test-utils';
+import {
+    mockGetComputedStyle,
+    mockDndSpacing,
+    makeDnd,
+    DND_DIRECTION_DOWN,
+  } from 'react-beautiful-dnd-test-utils';
 
 jest.mock('axios');
 const mockHistoryPush = jest.fn();
@@ -19,8 +25,13 @@ const renderWithContextAndRouterForExistingList = () => {
     const items = [
                 {
                     id: 5,
-                    title: 'item title',
-                    description: 'item description'
+                    title: 'item 5 title',
+                    description: 'item 5 description'
+                },
+                {
+                    id: 6,
+                    title: 'item 6 title',
+                    description: 'item 6 description'
                 }
             ]
 
@@ -50,6 +61,10 @@ const renderWithContextAndRouterForNewList = () => {
             </AppContext.Provider>)
     }
 }
+
+beforeEach(() => {
+    mockGetComputedStyle();
+});
 
 afterEach(cleanup)
 
@@ -108,6 +123,13 @@ it('should update an existing list', async () => {
     let container
     await act(async () => {
         container = renderWithContextAndRouterForExistingList();
+        mockDndSpacing(container.container);
+    });
+
+    await makeDnd({
+        getDragElement: () => container.getByTestId('draggable5'),
+        direction: DND_DIRECTION_DOWN,
+        positions: 1
     });
 
     await changeInputValue(container.getByTestId, 'name', 'updated name');
@@ -120,7 +142,7 @@ it('should update an existing list', async () => {
 
     expect(axios.put.mock.calls.length).toBe(1);
     expect(axios.put.mock.calls[0][0]).toBe('lists/2');
-    expect(axios.put.mock.calls[0][1]).toStrictEqual({ name: 'updated name', idsByPosition: [5] });
+    expect(axios.put.mock.calls[0][1]).toStrictEqual({ name: 'updated name', idsByPosition: [6, 5] });
 });
 
 it('should create a new list', async () => {

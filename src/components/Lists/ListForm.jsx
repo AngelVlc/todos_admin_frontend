@@ -109,7 +109,7 @@ export const ListForm = (props) => {
                                         {pageState.items.length > 0 && pageState.items.map((item, index) => (
                                             <Draggable key={item.id} draggableId={item.id.toString()} index={index}>
                                                 {draggableProvided => (
-                                                    <div key={item.id} className="is-flex dnd-item" {...draggableProvided.draggableProps} {...draggableProvided.dragHandleProps} ref={draggableProvided.innerRef}>
+                                                    <div key={item.id} className="is-flex dnd-item" {...draggableProvided.draggableProps} {...draggableProvided.dragHandleProps} ref={draggableProvided.innerRef} data-testid={`draggable${item.id}`}>
                                                         <div className="is-flex-grow-4">
                                                             <Link className="has-text-black" data-testid={`editListItem${item.id}`} to={`/lists/${props.listId}/items/${item.id}/edit`}>{item.title}</Link>
                                                         </div>

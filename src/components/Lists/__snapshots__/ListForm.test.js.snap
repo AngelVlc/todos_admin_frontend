@@ -137,6 +137,7 @@ exports[`should match the snapshot for an existing list 1`] = `
             data-rbd-drag-handle-draggable-id="5"
             data-rbd-draggable-context-id="0"
             data-rbd-draggable-id="5"
+            data-testid="draggable5"
             draggable="false"
             role="button"
             tabindex="0"
@@ -149,7 +150,7 @@ exports[`should match the snapshot for an existing list 1`] = `
                 data-testid="editListItem5"
                 href="/lists/2/items/5/edit"
               >
-                item title
+                item 5 title
               </a>
             </div>
             <div
@@ -160,6 +161,49 @@ exports[`should match the snapshot for an existing list 1`] = `
                   class="has-text-black"
                   data-testid="deleteListItem5"
                   href="/lists/2/items/5/delete"
+                >
+                  <span
+                    class="icon is-small"
+                  >
+                    <i
+                      class="fas fa-trash-alt fa-xs"
+                    />
+                  </span>
+                </a>
+              </center>
+            </div>
+          </div>
+          <div
+            aria-describedby="rbd-hidden-text-0-hidden-text-0"
+            class="is-flex dnd-item"
+            data-rbd-drag-handle-context-id="0"
+            data-rbd-drag-handle-draggable-id="6"
+            data-rbd-draggable-context-id="0"
+            data-rbd-draggable-id="6"
+            data-testid="draggable6"
+            draggable="false"
+            role="button"
+            tabindex="0"
+          >
+            <div
+              class="is-flex-grow-4"
+            >
+              <a
+                class="has-text-black"
+                data-testid="editListItem6"
+                href="/lists/2/items/6/edit"
+              >
+                item 6 title
+              </a>
+            </div>
+            <div
+              class="is-justify-content-flex-end"
+            >
+              <center>
+                <a
+                  class="has-text-black"
+                  data-testid="deleteListItem6"
+                  href="/lists/2/items/6/delete"
                 >
                   <span
                     class="icon is-small"
