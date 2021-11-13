@@ -1,4 +1,4 @@
-import { render, cleanup, fireEvent, wait } from '@testing-library/react'
+import { render, cleanup, fireEvent, waitFor } from '@testing-library/react'
 import { UsersPage } from './UsersPage'
 import { AppContext } from '../../contexts/AppContext'
 import { createMemoryHistory } from 'history'
@@ -55,7 +55,7 @@ it('should add a new user', async () => {
         container = renderWithContextAndRouter(<UsersPage />);
     });
 
-    await wait(() => {
+    await waitFor(() => {
         fireEvent.click(container.getByTestId('addNew'));
     })
 
@@ -70,7 +70,7 @@ it('should edit the user', async () => {
         container = renderWithContextAndRouter(<UsersPage />);
     });
 
-    await wait(() => {
+    await waitFor(() => {
         fireEvent.click(container.getByTestId('editUser2'));
     })
 
@@ -83,7 +83,7 @@ it('should delete the user', async () => {
         container = renderWithContextAndRouter(<UsersPage />);
     });
 
-    await wait(() => {
+    await waitFor(() => {
         fireEvent.click(container.getByTestId('deleteUser2'));
     })
 

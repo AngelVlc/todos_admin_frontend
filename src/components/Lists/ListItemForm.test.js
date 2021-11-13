@@ -1,4 +1,4 @@
-import { render, cleanup, fireEvent, wait } from '@testing-library/react';
+import { render, cleanup, fireEvent, waitFor } from '@testing-library/react';
 import { ListItemForm } from './ListItemForm';
 import { AppContext } from '../../contexts/AppContext';
 import axios from 'axios';
@@ -65,7 +65,7 @@ it('should allow delete an existing item', async () => {
         container = renderWithContextAndRouterForExistingItem();
     });
 
-    await wait(() => {
+    await waitFor(() => {
         fireEvent.click(container.getByTestId('delete'));
     })
 
@@ -77,7 +77,7 @@ it('should allow delete an existing item', async () => {
 it('should allow cancel', async () => {
     const { getByTestId } = renderWithContextAndRouterForNewItem();
 
-    await wait(() => {
+    await waitFor(() => {
         fireEvent.click(getByTestId('cancel'));
     })
 
@@ -89,7 +89,7 @@ it('should allow cancel', async () => {
 it('should require item title', async () => {
     const { getByTestId } = renderWithContextAndRouterForNewItem();
 
-    await wait(() => {
+    await waitFor(() => {
         fireEvent.click(getByTestId('submit'));
     })
 
@@ -107,7 +107,7 @@ it('should update an existing item', async () => {
 
     axios.put.mockResolvedValue({data:{}});
 
-    await wait(() => {
+    await waitFor(() => {
         fireEvent.click(container.getByTestId('submit'));
     })
 
@@ -128,7 +128,7 @@ it('should create a new item', async () => {
 
     axios.post.mockResolvedValue({data:{}});
 
-    await wait(() => {
+    await waitFor(() => {
         fireEvent.click(getByTestId('submit'));
     })
 
@@ -142,7 +142,7 @@ it('should create a new item', async () => {
 });
 
 const changeInputValue = async (getByTestId, name, value) => {
-    await wait(() => {
+    await waitFor(() => {
         fireEvent.change(getByTestId(name), {
             target: {
                 value: value

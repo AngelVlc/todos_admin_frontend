@@ -1,4 +1,4 @@
-import { render, cleanup, fireEvent, wait } from '@testing-library/react'
+import { render, cleanup, fireEvent, waitFor } from '@testing-library/react'
 import { UserDeletePage } from './UserDeletePage'
 import { AppContext } from '../../contexts/AppContext'
 import axios from 'axios';
@@ -67,7 +67,7 @@ it('should cancel the deletion', async () => {
         container = renderWithContextAndRouter(<UserDeletePage />, false);
     });
 
-    await wait(() => {
+    await waitFor(() => {
         fireEvent.click(container.getByTestId('no'));
     })
 
@@ -83,7 +83,7 @@ it('should delete a user', async () => {
 
     axios.delete.mockResolvedValue({data:{}});
 
-    await wait(() => {
+    await waitFor(() => {
         fireEvent.click(container.getByTestId('yes'));
     })
 

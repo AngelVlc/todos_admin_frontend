@@ -1,4 +1,4 @@
-import { render, cleanup, fireEvent, wait } from '@testing-library/react'
+import { render, cleanup } from '@testing-library/react'
 import { NewUserPage } from './NewUserPage'
 import { AppContext } from '../../contexts/AppContext'
 import axios from 'axios';

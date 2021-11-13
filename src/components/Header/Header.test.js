@@ -1,4 +1,4 @@
-import { render, cleanup, fireEvent, wait } from '@testing-library/react';
+import { render, cleanup, fireEvent, waitFor } from '@testing-library/react';
 import { Router } from 'react-router-dom';
 import { Header } from './Header';
 import { AppContext } from '../../contexts/AppContext';
@@ -49,7 +49,7 @@ it('should match the snapshot when an admin user is logged in', () => {
 it('should do logout', async () => {
     const { getByTestId } = renderWithRouterAndContext(<Header />, { info: { userName: 'user' } });
 
-    await wait(() => {
+    await waitFor(() => {
         fireEvent.click(getByTestId('logOut'));
     })
 
@@ -60,7 +60,7 @@ it('should do logout', async () => {
 it('should go to root', async () => {
     const { getByTestId } = renderWithRouterAndContext(<Header />, { info: { userName: 'user' } });
 
-    await wait(() => {
+    await waitFor(() => {
         fireEvent.click(getByTestId('goToRoot'));
     })
 
@@ -71,7 +71,7 @@ it('should go to root', async () => {
 it('should go to lists', async () => {
     const { getByTestId } = renderWithRouterAndContext(<Header />, { info: { userName: 'user' } });
 
-    await wait(() => {
+    await waitFor(() => {
         fireEvent.click(getByTestId('goToLists'));
     })
 
@@ -82,7 +82,7 @@ it('should go to lists', async () => {
 it('should go to users', async () => {
     const { getByTestId } = renderWithRouterAndContext(<Header />, { info: { userName: 'user', isAdmin: true } });
 
-    await wait(() => {
+    await waitFor(() => {
         fireEvent.click(getByTestId('goToUsers'));
     })
 
