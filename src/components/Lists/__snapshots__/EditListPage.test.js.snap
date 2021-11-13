@@ -117,6 +117,7 @@ exports[`should match the snapshot for an existing list 1`] = `
               data-rbd-drag-handle-draggable-id="5"
               data-rbd-draggable-context-id="0"
               data-rbd-draggable-id="5"
+              data-testid="draggable{item.id}"
               draggable="false"
               role="button"
               tabindex="0"
