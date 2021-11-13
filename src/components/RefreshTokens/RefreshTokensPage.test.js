@@ -1,4 +1,4 @@
-import { render, cleanup, fireEvent, wait } from '@testing-library/react'
+import { render, cleanup, fireEvent, waitFor } from '@testing-library/react'
 import { RefreshTokensPage } from './RefreshTokensPage';
 import { AppContext } from '../../contexts/AppContext'
 import { createMemoryHistory } from 'history'
@@ -48,13 +48,13 @@ it('should select all the refresh tokens', async() => {
       container = renderWithContextAndRouter(<RefreshTokensPage />);
   });
 
-  await wait(() => {
+  await waitFor(() => {
       fireEvent.click(container.getByTestId('toggleSelectAll'));
-  })
 
-  expect(container.getByTestId('checkBoxItem1')).toBeChecked();
-  expect(container.getByTestId('checkBoxItem2')).toBeChecked();
-  expect(container.getByTestId('checkBoxItem3')).toBeChecked();
+      expect(container.getByTestId('checkBoxItem1')).toBeChecked();
+      expect(container.getByTestId('checkBoxItem2')).toBeChecked();
+      expect(container.getByTestId('checkBoxItem3')).toBeChecked();
+  })
 });
 
 it('should unselect all the refresh tokens', async() => {
@@ -63,16 +63,16 @@ it('should unselect all the refresh tokens', async() => {
       container = renderWithContextAndRouter(<RefreshTokensPage />);
   });
 
-  await wait(() => {
+  await waitFor(() => {
       fireEvent.click(container.getByTestId('toggleSelectAll'));
       fireEvent.click(container.getByTestId('checkBoxItem1'));
       fireEvent.click(container.getByTestId('checkBoxItem2'));
       fireEvent.click(container.getByTestId('checkBoxItem3'));
-  })
 
-  expect(container.getByTestId('checkBoxItem1')).not.toBeChecked();
-  expect(container.getByTestId('checkBoxItem2')).not.toBeChecked();
-  expect(container.getByTestId('checkBoxItem3')).not.toBeChecked();
+      expect(container.getByTestId('checkBoxItem1')).not.toBeChecked();
+      expect(container.getByTestId('checkBoxItem2')).not.toBeChecked();
+      expect(container.getByTestId('checkBoxItem3')).not.toBeChecked();
+  })
 });
 
 it('should unselect all the refresh tokens', async() => {
@@ -81,7 +81,7 @@ it('should unselect all the refresh tokens', async() => {
       container = renderWithContextAndRouter(<RefreshTokensPage />);
   });
 
-  await wait(() => {
+  await waitFor(() => {
       fireEvent.click(container.getByTestId('checkBoxItem1'));
       fireEvent.click(container.getByTestId('checkBoxItem3'));
   })
@@ -99,7 +99,7 @@ it('should unselect all the refresh tokens', async() => {
   const cbItem1 = container.getByTestId('checkBoxItem1');
   const cbItem3 = container.getByTestId('checkBoxItem3');
 
-  await wait(() => {
+  await waitFor(() => {
     fireEvent.click(container.getByTestId('deleteSelected'));
   })
 

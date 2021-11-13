@@ -1,4 +1,4 @@
-import { render, cleanup, fireEvent, wait } from '@testing-library/react'
+import { render, cleanup, fireEvent, waitFor } from '@testing-library/react'
 import { ListsPage } from './ListsPage'
 import { AppContext } from '../../contexts/AppContext'
 import { createMemoryHistory } from 'history'
@@ -55,7 +55,7 @@ it('should add a new list', async () => {
         container = renderWithContextAndRouter(<ListsPage />);
     });
 
-    await wait(() => {
+    await waitFor(() => {
         fireEvent.click(container.getByTestId('addNew'));
     })
 
@@ -70,7 +70,7 @@ it('should edit the list', async () => {
         container = renderWithContextAndRouter(<ListsPage />);
     });
 
-    await wait(() => {
+    await waitFor(() => {
         fireEvent.click(container.getByTestId('editList2'));
     })
 
@@ -83,7 +83,7 @@ it('should delete the list', async () => {
         container = renderWithContextAndRouter(<ListsPage />);
     });
 
-    await wait(() => {
+    await waitFor(() => {
         fireEvent.click(container.getByTestId('deleteList2'));
     })
 

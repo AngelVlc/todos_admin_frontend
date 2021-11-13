@@ -1,4 +1,4 @@
-import { render, cleanup, fireEvent, wait } from '@testing-library/react'
+import { render, cleanup, fireEvent, waitFor } from '@testing-library/react'
 import { Router } from 'react-router-dom'
 import { HomePage } from './HomePage'
 import { AppContext } from '../../contexts/AppContext';
@@ -42,7 +42,7 @@ it('should match the snapshot when the user is not an admin', () => {
 it('should go to users when the user is an admin', async () => {
     const { getByTestId } = renderWithRouterAndContext(<HomePage />, { info: { isAdmin: true } });
 
-    await wait(() => {
+    await waitFor(() => {
         fireEvent.click(getByTestId('users'));
     })
 
@@ -53,7 +53,7 @@ it('should go to users when the user is an admin', async () => {
 it('should go to refresh tokens when the user is an admin', async () => {
     const { getByTestId } = renderWithRouterAndContext(<HomePage />, { info: { isAdmin: true } });
 
-    await wait(() => {
+    await waitFor(() => {
         fireEvent.click(getByTestId('refreshTokens'));
     })
 
@@ -64,7 +64,7 @@ it('should go to refresh tokens when the user is an admin', async () => {
 it('should go to lists', async () => {
     const { getByTestId } = renderWithRouterAndContext(<HomePage />, { info: { isAdmin: false } });
 
-    await wait(() => {
+    await waitFor(() => {
         fireEvent.click(getByTestId('lists'));
     })
 

@@ -1,4 +1,4 @@
-import { render, cleanup, fireEvent, wait } from '@testing-library/react'
+import { render, cleanup, fireEvent, waitFor } from '@testing-library/react'
 import { ListForm } from './ListForm'
 import { AppContext } from '../../contexts/AppContext'
 import axios from 'axios';
@@ -73,7 +73,7 @@ it('should allow delete an existing list', async () => {
         container = renderWithContextAndRouterForExistingList();
     });
 
-    await wait(() => {
+    await waitFor(() => {
         fireEvent.click(container.getByTestId('delete'));
     })
 
@@ -85,7 +85,7 @@ it('should allow delete an existing list', async () => {
 it('should allow cancel', async () => {
     const { getByTestId } = renderWithContextAndRouterForNewList();
 
-    await wait(() => {
+    await waitFor(() => {
         fireEvent.click(getByTestId('cancel'));
     })
 
@@ -97,7 +97,7 @@ it('should allow cancel', async () => {
 it('should require list name', async () => {
     const { getByTestId } = renderWithContextAndRouterForNewList();
 
-    await wait(() => {
+    await waitFor(() => {
         fireEvent.click(getByTestId('submit'));
     })
 
@@ -114,7 +114,7 @@ it('should update an existing list', async () => {
 
     axios.put.mockResolvedValue({ data: {id: 2} });
 
-    await wait(() => {
+    await waitFor(() => {
         fireEvent.click(container.getByTestId('submit'));
     })
 
@@ -130,7 +130,7 @@ it('should create a new list', async () => {
 
     axios.post.mockResolvedValue({ data: {id: 55} });
 
-    await wait(() => {
+    await waitFor(() => {
         fireEvent.click(getByTestId('submit'));
     })
 
@@ -149,7 +149,7 @@ it('should add a new item', async () => {
         container = renderWithContextAndRouterForExistingList();
     });
 
-    await wait(() => {
+    await waitFor(() => {
         fireEvent.click(container.getByTestId('addNew'));
     })
 
@@ -177,7 +177,7 @@ it('should allow delete an existing item item', async () => {
 });
 
 const changeInputValue = async (getByTestId, name, value) => {
-    await wait(() => {
+    await waitFor(() => {
         fireEvent.change(getByTestId(name), {
             target: {
                 value: value

@@ -1,4 +1,4 @@
-import { render, cleanup, fireEvent, wait } from '@testing-library/react'
+import { render, cleanup, fireEvent, waitFor } from '@testing-library/react'
 import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
 import { LoginPage } from './LoginPage'
@@ -51,7 +51,7 @@ it('should match the snapshot', () => {
 it('should require user name and password for logging in', async () => {
     const { getByTestId } = renderWithContextAndRouter(<LoginPage />);
 
-    await wait(() => {
+    await waitFor(() => {
         fireEvent.click(getByTestId('submit'));
     })
 
@@ -67,7 +67,7 @@ it('should show the error when log in fails', async () => {
 
     axios.post.mockRejectedValue('some error');
 
-    await wait(() => {
+    await waitFor(() => {
         fireEvent.click(getByTestId('submit'));
     })
 
@@ -92,7 +92,7 @@ it('should show the home page after logging in', async () => {
         }
     });
 
-    await wait(() => {
+    await waitFor(() => {
         fireEvent.click(getByTestId('submit'));
     });
 
@@ -110,7 +110,7 @@ it('should show the home page after logging in', async () => {
 })
 
 const changeInput = async (getByTestId, name, value) => {
-    await wait(() => {
+    await waitFor(() => {
         fireEvent.change(getByTestId(name), {
             target: {
                 value: value
