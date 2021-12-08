@@ -50,7 +50,7 @@ export const ListItemForm = (props) => {
                 <div className="field">
                     <label className="label" htmlFor="title">Title</label>
                     <div className="control">
-                        <Field name="title" type="text" data-testid="title" />
+                        <Field name="title" as="input" className="input" data-testid="title" />
                     </div>
                     <p className="help is-danger" data-testid="titleErrors">
                         <ErrorMessage name="title" />
@@ -60,7 +60,7 @@ export const ListItemForm = (props) => {
                 <div className="field">
                     <label className="label" htmlFor="description">Description</label>
                     <div className="control">
-                        <Field name="description" type="text" data-testid="description" />
+                        <Field name="description" as="textarea" className="textarea" data-testid="description" />
                     </div>
                     <p className="help is-danger" data-testid="descriptionErrors">
                         <ErrorMessage name="description" />

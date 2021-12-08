@@ -64,9 +64,9 @@ exports[`should match the snapshot for a new item 1`] = `
           class="control"
         >
           <input
+            class="input"
             data-testid="title"
             name="title"
-            type="text"
             value=""
           />
         </div>
@@ -87,11 +87,10 @@ exports[`should match the snapshot for a new item 1`] = `
         <div
           class="control"
         >
-          <input
+          <textarea
+            class="textarea"
             data-testid="description"
             name="description"
-            type="text"
-            value=""
           />
         </div>
         <p

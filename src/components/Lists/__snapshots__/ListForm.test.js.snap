@@ -142,17 +142,19 @@ exports[`should match the snapshot for an existing list 1`] = `
             role="button"
             tabindex="0"
           >
-            <div
+            <a
               class="is-flex-grow-4"
+              data-testid="editListItem5"
+              href="/lists/2/items/5/edit"
             >
-              <a
-                class="has-text-black"
-                data-testid="editListItem5"
-                href="/lists/2/items/5/edit"
-              >
-                item 5 title
-              </a>
-            </div>
+              <div>
+                <span
+                  class="has-text-black"
+                >
+                  item 5 title
+                </span>
+              </div>
+            </a>
             <div
               class="is-justify-content-flex-end"
             >
@@ -185,17 +187,19 @@ exports[`should match the snapshot for an existing list 1`] = `
             role="button"
             tabindex="0"
           >
-            <div
+            <a
               class="is-flex-grow-4"
+              data-testid="editListItem6"
+              href="/lists/2/items/6/edit"
             >
-              <a
-                class="has-text-black"
-                data-testid="editListItem6"
-                href="/lists/2/items/6/edit"
-              >
-                item 6 title
-              </a>
-            </div>
+              <div>
+                <span
+                  class="has-text-black"
+                >
+                  item 6 title
+                </span>
+              </div>
+            </a>
             <div
               class="is-justify-content-flex-end"
             >

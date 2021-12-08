@@ -110,9 +110,11 @@ export const ListForm = (props) => {
                                             <Draggable key={item.id} draggableId={item.id.toString()} index={index}>
                                                 {draggableProvided => (
                                                     <div key={item.id} className="is-flex dnd-item" {...draggableProvided.draggableProps} {...draggableProvided.dragHandleProps} ref={draggableProvided.innerRef} data-testid={`draggable${item.id}`}>
-                                                        <div className="is-flex-grow-4">
-                                                            <Link className="has-text-black" data-testid={`editListItem${item.id}`} to={`/lists/${props.listId}/items/${item.id}/edit`}>{item.title}</Link>
-                                                        </div>
+                                                        <Link className="is-flex-grow-4" data-testid={`editListItem${item.id}`} to={`/lists/${props.listId}/items/${item.id}/edit`}>
+                                                            <div>
+                                                                <span className="has-text-black">{item.title}</span>
+                                                            </div>
+                                                        </Link>
                                                         <div className="is-justify-content-flex-end">
                                                             <center>
                                                                 <Link className="has-text-black" data-testid={`deleteListItem${item.id}`} to={`/lists/${props.listId}/items/${item.id}/delete`}>
