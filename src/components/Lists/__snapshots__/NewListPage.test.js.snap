@@ -18,9 +18,9 @@ exports[`should match the snapshot for a new list 1`] = `
         class="control"
       >
         <input
+          class="input"
           data-testid="name"
           name="name"
-          type="text"
           value=""
         />
       </div>

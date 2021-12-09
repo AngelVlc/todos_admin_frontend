@@ -80,7 +80,7 @@ export const ListForm = (props) => {
             <div className="field">
                 <label className="label" htmlFor="name">Name</label>
                 <div className="control">
-                    <Field name="name" type="text" data-testid="name" />
+                    <Field name="name" as="input" className="input" data-testid="name" />
                 </div>
                 <p className="help is-danger" data-testid="nameErrors">
                     <ErrorMessage name="name" />
