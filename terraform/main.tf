@@ -4,21 +4,17 @@ terraform {
   }
 }
 
-variable "heroku_username" {
-  description = "Heroku user name"
-}
-
-variable "heroku_api_key" {
-  description = "Heroku api key"
-}
-
 variable "app_name" {
   description = "Name of the Heroku app provisioned"
 }
 
-provider "heroku" {
-  email   = "${var.heroku_username}"
-  api_key = "${var.heroku_api_key}"
+terraform {
+  required_providers {
+    heroku = {
+      source  = "heroku/heroku"
+      version = "~> 4.7.0"
+    }
+  }
 }
 
 resource "heroku_app" "default" {
