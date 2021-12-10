@@ -18,7 +18,7 @@ terraform {
 }
 
 resource "heroku_app" "default" {
-  name   = "${var.app_name}"
+  name   = var.app_name
   region = "eu"
   stack  = "container"
 }
@@ -29,7 +29,7 @@ resource "heroku_config" "default" {
 }
 
 resource "heroku_app_config_association" "default" {
-  app_id = "${heroku_app.default.id}"
+  app_id = heroku_app.default.id
 
-  sensitive_vars = "${heroku_config.default.sensitive_vars}"
+  sensitive_vars = heroku_config.default.sensitive_vars
 }
