@@ -1,8 +1,8 @@
-import { render, cleanup } from '@testing-library/react';
-import { EditListItemPage } from './EditListItemPage';
-import { AppContext } from '../../shared/infrastructure/contexts/AppContext';
+import { render, cleanup } from '@testing-library/react'
+import { EditListPage } from './EditListPage'
+import { AppContext } from  '../../../../shared/infrastructure/contexts/AppContext';
 import axios from 'axios';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom'
 import { act } from 'react-dom/test-utils';
 
 jest.mock('axios');
@@ -15,24 +15,33 @@ jest.mock('react-router-dom', () => ({
     })
 }));
 
-const renderWithContextAndRouterForExistingItem = () => {
-    axios.get.mockResolvedValue(
+const renderWithContextAndRouter = () => {
+    axios.get.mockReturnValueOnce(
         {
-            data:
-            {
+            data: {
                 id: 2,
-                title: 'item title',
-                description: 'item description'
+                name: 'list name'
             }
         }
+    ).mockReturnValueOnce(
+        {
+            data: [
+                {
+                    id: 5,
+                    title: 'item title',
+                    description: 'item description'
+                }
+            ]
+        }
     );
+
     const context = { auth: { info: {} } };
     return {
         ...render(
             <AppContext.Provider value={context}>
                 <MemoryRouter initialEntries={[`/lists/2/items/5/edit`]}>
                     <Route path="/lists/:listId/items/:itemId/edit">
-                        <EditListItemPage/>
+                        <EditListPage />
                     </Route>
                 </MemoryRouter>
             </AppContext.Provider>)
@@ -41,10 +50,10 @@ const renderWithContextAndRouterForExistingItem = () => {
 
 afterEach(cleanup)
 
-it('should match the snapshot for an existing item', async () => {
+fit('should match the snapshot for an existing list', async () => {
     let fragment;
     await act(async () => {
-        const { asFragment } = renderWithContextAndRouterForExistingItem();
+        const { asFragment } = renderWithContextAndRouter();
         fragment = asFragment;
     });
     expect(fragment()).toMatchSnapshot();
