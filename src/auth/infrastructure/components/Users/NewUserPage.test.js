@@ -1,9 +1,7 @@
 import { render, cleanup } from '@testing-library/react'
 import { NewUserPage } from './NewUserPage'
-import { AppContext } from '../../shared/infrastructure/contexts/AppContext'
-import axios from 'axios';
+import { AppContext } from  '../../../../shared/infrastructure/contexts/AppContext'
 import { MemoryRouter, Route } from 'react-router-dom'
-import { act } from 'react-dom/test-utils';
 
 jest.mock('axios');
 const mockHistoryPush = jest.fn();
