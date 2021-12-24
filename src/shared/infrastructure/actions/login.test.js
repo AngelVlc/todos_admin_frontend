@@ -1,4 +1,4 @@
-import { userLoggedIn, userLoggedOut } from './';
+import { userLoggedIn, userLoggedOut } from '.';
 
 test('should generate user logged out action', () => {
     const action = userLoggedIn({userName: 'name', userId: 11, isAdmin: true});

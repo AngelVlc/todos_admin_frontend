@@ -1,4 +1,4 @@
-import { REQUEST_STARTED, REQUEST_DONE, REQUEST_FAILED, REQUEST_ERROR_SHOWED } from '../../../actions'
+import { REQUEST_STARTED, REQUEST_DONE, REQUEST_FAILED, REQUEST_ERROR_SHOWED } from '../actions'
 
 const initialState = {
   pending: false

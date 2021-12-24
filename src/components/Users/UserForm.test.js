@@ -1,6 +1,6 @@
 import { render, cleanup, fireEvent, waitFor } from '@testing-library/react'
 import { UserForm } from './UserForm'
-import { AppContext } from '../../contexts/AppContext'
+import { AppContext } from '../../shared/infrastructure/contexts/AppContext'
 import axios from 'axios';
 import { MemoryRouter, Route } from 'react-router-dom'
 import { act } from 'react-dom/test-utils';

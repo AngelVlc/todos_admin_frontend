@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { requestStarted, requestDone, requestFailed} from '../actions';
+import { requestStarted, requestDone, requestFailed} from '../shared/infrastructure/actions';
 
 export const configure = (requestsDispatch, history) => {
   axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5001'

@@ -1,6 +1,6 @@
 import { render, cleanup } from '@testing-library/react'
 import { NewListItemPage } from './NewListItemPage';
-import { AppContext } from '../../contexts/AppContext';
+import { AppContext } from '../../shared/infrastructure/contexts/AppContext';
 import { MemoryRouter, Route } from 'react-router-dom';
 
 jest.mock('axios');

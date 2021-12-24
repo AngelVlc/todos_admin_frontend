@@ -1,5 +1,5 @@
 import React, { useRef, useContext } from 'react';
-import { AppContext } from '../../contexts/AppContext';
+import { AppContext } from '../../shared/infrastructure/contexts/AppContext';
 import { useHistory } from 'react-router-dom';
 
 export const Header = () => {
