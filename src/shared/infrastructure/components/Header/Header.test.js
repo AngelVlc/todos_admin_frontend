@@ -1,7 +1,7 @@
 import { render, cleanup, fireEvent, waitFor } from '@testing-library/react';
 import { Router } from 'react-router-dom';
 import { Header } from './Header';
-import { AppContext } from '../../shared/infrastructure/contexts/AppContext';
+import { AppContext } from '../../contexts/AppContext';
 import { createMemoryHistory } from 'history';
 
 const mockAuthDispatch = jest.fn()

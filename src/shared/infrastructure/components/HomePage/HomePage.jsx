@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useHistory } from "react-router-dom";
-import { AppContext } from '../../shared/infrastructure/contexts/AppContext';
+import { AppContext } from '../../contexts/AppContext';
 
 export const HomePage = () => {
     const { auth } = useContext(AppContext)
