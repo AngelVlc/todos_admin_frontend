@@ -1,2 +1,2 @@
-export * from './authReducer';
+export * from './loginReducer';
 export * from './requestsReducer';

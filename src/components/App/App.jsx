@@ -1,6 +1,6 @@
 import React, { useReducer, useEffect } from 'react';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
-import { AdminRoute, PrivateRoute } from '../../routers';
+import { AdminRoute, PrivateRoute } from '../../shared/infrastructure/routers';
 import { LoginPage } from '../LoginPage';
 import { HomePage } from '../HomePage';
 import { ListsPage, NewListPage, EditListPage, ListDeletePage, NewListItemPage, EditListItemPage, ListItemDeletePage } from '../Lists';
@@ -8,7 +8,7 @@ import { UserDeletePage, UsersPage, NewUserPage, EditUserPage } from '../Users';
 import { RefreshTokensPage } from '../RefreshTokens';
 import { Header } from '../Header';
 import { createBrowserHistory } from 'history';
-import { authReducer, requestsReducer } from '../../reducers';
+import { loginReducer, requestsReducer } from '../../shared/infrastructure/reducers';
 import { AppContext } from '../../contexts/AppContext';
 import { requestErrorShowed, userLoggedIn} from '../../actions';
 import Loader from 'react-loader-spinner';
@@ -19,7 +19,7 @@ import './App.css';
 const browserHistory = createBrowserHistory();
 
 const App = () => {
-  const [auth, authDispatch] = useReducer(authReducer, []);
+  const [auth, authDispatch] = useReducer(loginReducer, []);
   const [request, requestsDispatch] = useReducer(requestsReducer, []);
   const alert = useAlert();
 

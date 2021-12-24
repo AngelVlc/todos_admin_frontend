@@ -1,4 +1,4 @@
-import { authReducer } from './';
+import { loginReducer } from '.';
 
 test('should set the auth info', () => {
     const action = {
@@ -10,7 +10,7 @@ test('should set the auth info', () => {
         }
     };
 
-    const state = authReducer({}, action);
+    const state = loginReducer({}, action);
 
     expect(state).toEqual({
         info: {
@@ -26,7 +26,7 @@ test('should remove the auth info', () => {
         type: 'USER_LOGGED_OUT'
     };
 
-    const state = authReducer({}, action);
+    const state = loginReducer({}, action);
 
     expect(state).toEqual({ info: null });
 })
