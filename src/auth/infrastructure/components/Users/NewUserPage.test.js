@@ -1,6 +1,6 @@
 import { render, cleanup } from '@testing-library/react'
 import { NewUserPage } from './NewUserPage'
-import { AppContext } from  '../../../../shared/infrastructure/contexts/AppContext'
+import { AppContext } from  '../../../../shared/infrastructure/contexts'
 import { MemoryRouter, Route } from 'react-router-dom'
 
 jest.mock('axios');

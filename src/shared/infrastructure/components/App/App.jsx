@@ -1,15 +1,15 @@
 import React, { useReducer, useEffect } from 'react';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import { AdminRoute, PrivateRoute } from '../../routers';
-import { LoginPage } from '../../../../components/LoginPage';
+import { LoginPage } from '../LoginPage';
 import { HomePage } from '../HomePage';
+import { Header } from '../Header';
 import { ListsPage, NewListPage, EditListPage, ListDeletePage, NewListItemPage, EditListItemPage, ListItemDeletePage } from '../../../../lists/infrastructure/components/Lists';
 import { UserDeletePage, UsersPage, NewUserPage, EditUserPage } from '../../../../auth/infrastructure/components/Users';
 import { RefreshTokensPage } from '../../../../auth/infrastructure/components/RefreshTokens';
-import { Header } from '../../../../components/Header';
 import { createBrowserHistory } from 'history';
 import { loginReducer, requestsReducer } from '../../reducers';
-import { AppContext } from '../../contexts/AppContext';
+import { AppContext } from '../../contexts';
 import { requestErrorShowed, userLoggedIn} from '../../actions';
 import Loader from 'react-loader-spinner';
 import { useAlert } from 'react-alert';
@@ -22,7 +22,6 @@ const App = () => {
   const [auth, authDispatch] = useReducer(loginReducer, []);
   const [request, requestsDispatch] = useReducer(requestsReducer, []);
   const alert = useAlert();
-
 
   useEffect(() => {
     if (request.error) {
@@ -40,7 +39,7 @@ const App = () => {
   }, [authDispatch]);
 
   return (
-    <AppContext.Provider value={{ auth, request, authDispatch, requestsDispatch }}>
+    <AppContext.Provider value={{ auth, authDispatch }}>
       <Router history={browserHistory}>
         <Header />
         {request.pending &&

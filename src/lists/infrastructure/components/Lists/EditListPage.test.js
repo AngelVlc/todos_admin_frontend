@@ -1,6 +1,6 @@
 import { render, cleanup } from '@testing-library/react'
 import { EditListPage } from './EditListPage'
-import { AppContext } from  '../../../../shared/infrastructure/contexts/AppContext';
+import { AppContext } from  '../../../../shared/infrastructure/contexts';
 import axios from 'axios';
 import { MemoryRouter, Route } from 'react-router-dom'
 import { act } from 'react-dom/test-utils';

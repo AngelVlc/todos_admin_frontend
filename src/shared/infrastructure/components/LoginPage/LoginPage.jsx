@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { AppContext } from '../../contexts/AppContext';
+import { AppContext } from '../../contexts';
 import { useHistory } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { userLoggedIn, userLoggedOut } from '../../actions';

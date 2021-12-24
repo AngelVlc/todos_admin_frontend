@@ -2,7 +2,7 @@ import { render, cleanup, fireEvent, waitFor } from '@testing-library/react'
 import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
 import { LoginPage } from './LoginPage'
-import { AppContext } from '../../contexts/AppContext';
+import { AppContext } from '../../contexts';
 import axios from 'axios';
 
 jest.mock('axios');

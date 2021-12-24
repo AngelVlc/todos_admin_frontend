@@ -1,6 +1,6 @@
 import { render, cleanup, fireEvent, waitFor } from '@testing-library/react'
 import { ListsPage } from './ListsPage'
-import { AppContext } from  '../../../../shared/infrastructure/contexts/AppContext';
+import { AppContext } from  '../../../../shared/infrastructure/contexts';
 import { createMemoryHistory } from 'history'
 import axios from 'axios';
 import { Router } from 'react-router-dom'
