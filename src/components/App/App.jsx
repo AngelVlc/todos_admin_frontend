@@ -13,7 +13,7 @@ import { AppContext } from '../../shared/infrastructure/contexts/AppContext';
 import { requestErrorShowed, userLoggedIn} from '../../shared/infrastructure/actions';
 import Loader from 'react-loader-spinner';
 import { useAlert } from 'react-alert';
-import * as axiosService from '../../services/configureAxios';
+import * as axiosConfigure from '../../shared/infrastructure/axiosConfigure';
 import './App.css';
 
 const browserHistory = createBrowserHistory();
@@ -36,7 +36,7 @@ const App = () => {
     if (userInfo) {
       authDispatch(userLoggedIn(userInfo));
     }
-    axiosService.configure(requestsDispatch, browserHistory);
+    axiosConfigure.configure(requestsDispatch, browserHistory);
   }, [authDispatch]);
 
   return (
