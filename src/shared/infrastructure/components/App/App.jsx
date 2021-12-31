@@ -11,12 +11,14 @@ import { createBrowserHistory } from 'history';
 import { loginReducer, requestsReducer } from '../../reducers';
 import { AppContext } from '../../contexts';
 import { requestErrorShowed, userLoggedIn} from '../../actions';
-import Loader from 'react-loader-spinner';
 import { useAlert } from 'react-alert';
+import { UseCaseFactory } from '../../UseCaseFactory';
+import Loader from 'react-loader-spinner';
 import * as axiosConfigure from '../../axiosConfigure';
 import './App.css';
 
 const browserHistory = createBrowserHistory();
+const useCaseFactory = new UseCaseFactory()
 
 const App = () => {
   const [auth, authDispatch] = useReducer(loginReducer, []);
@@ -39,7 +41,7 @@ const App = () => {
   }, [authDispatch]);
 
   return (
-    <AppContext.Provider value={{ auth, authDispatch }}>
+    <AppContext.Provider value={{ auth, authDispatch, useCaseFactory }}>
       <Router history={browserHistory}>
         <Header />
         {request.pending &&
