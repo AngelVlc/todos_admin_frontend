@@ -84,7 +84,7 @@ exports[`should match the snapshot when the user is not an admin 1`] = `
     <h3
       class="title"
     >
-      Delete user user
+      Delete user user?
     </h3>
     <nav
       aria-label="breadcrumbs"

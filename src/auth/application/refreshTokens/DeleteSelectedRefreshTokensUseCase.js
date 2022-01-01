@@ -1,4 +1,5 @@
 import { BaseUseCase } from "../../../shared/domain/BaseUseCase";
+import { RefreshTokensRepository } from "../../infrastructure/repositories";
 
 export class DeleteSelectedRefreshTokensUseCase extends BaseUseCase {
   _repository;

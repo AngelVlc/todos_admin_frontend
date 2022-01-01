@@ -16,15 +16,15 @@ describe("RefreshTokensRepository", () => {
       });
 
       const result = await new RefreshTokensRepository().getAll();
-      expect(axios.get.mock.calls[0][0]).toBe('refreshtokens');
+      expect(axios.get.mock.calls[0][0]).toBe("refreshtokens");
       expect(result).toBe(expectedResult);
     });
   });
 
   describe("#deleteByIds", () => {
     describe("does a http delete request", () => {
-      it("and returns true if the response has a 204 status", async() => {
-        const ids = [1,2,3]
+      it("and returns true if the response has a 204 status", async () => {
+        const ids = [1, 2, 3];
 
         axios.delete.mockResolvedValue({ status: 204 });
 
@@ -32,18 +32,18 @@ describe("RefreshTokensRepository", () => {
         expect(result).toBe(true);
       });
 
-      it("and returns false if the response has a 204 status", async() => {
-        const ids = [1,3]
+      it("and returns false if the response does not have a 204 status", async () => {
+        const ids = [1, 3];
 
         axios.delete.mockResolvedValue({ status: 500 });
 
         const result = await new RefreshTokensRepository().deleteByIds(ids);
 
         expect(axios.delete.mock.calls.length).toBe(1);
-        expect(axios.delete.mock.calls[0][0]).toBe('refreshtokens');
-        expect(axios.delete.mock.calls[0][1]).toStrictEqual({ data: [1,3] });
+        expect(axios.delete.mock.calls[0][0]).toBe("refreshtokens");
+        expect(axios.delete.mock.calls[0][1]).toStrictEqual({ data: [1, 3] });
         expect(result).toBe(false);
       });
-    })
+    });
   });
 });
