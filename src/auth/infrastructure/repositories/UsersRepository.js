@@ -10,4 +10,9 @@ export class UsersRepository {
     const res = await axios.delete(`users/${id}`);
     return res.status === 204;
   }
+
+  async getAll() {
+    const res = await axios.get("users");
+    return res.data;
+  }
 }
