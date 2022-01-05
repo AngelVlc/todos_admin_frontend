@@ -14,9 +14,9 @@ export const UserDeletePage = () => {
 
   const getUser = useCallback(async () => {
     const getUserByIdUseCase = useCaseFactory.get(GetUserByIdUseCase);
-    const data = await getUserByIdUseCase.execute(userId);
+    const user = await getUserByIdUseCase.execute(userId);
 
-    setUser(data);
+    setUser(user);
   }, [userId, useCaseFactory]);
 
   useEffect(() => {

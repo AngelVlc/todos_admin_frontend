@@ -13,7 +13,7 @@ export const NewListPage = () => {
                     <li className="is-active"><Link aria-current="page" to={'/lists/new'}>New</Link></li>
                 </ul>
             </nav>
-            <ListForm name={''} items={[]} isNew={true} submintBtnText='CRATE' submitUrl={'lists'}/>
+            <ListForm name={''} items={[]} isNew={true} submintBtnText='CREATE' submitUrl={'lists'}/>
         </div>
     )
 }

@@ -2,7 +2,7 @@ import { User } from "../../domain";
 import { GetUserByIdUseCase } from "./";
 
 describe("GetUserByIdUseCase.#execute", () => {
-  it("gets the refresh tokens", async () => {
+  it("gets a user", async () => {
     const repository = {
       getById: () => {
         return {
