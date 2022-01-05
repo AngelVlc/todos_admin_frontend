@@ -6,7 +6,6 @@ import { act } from "react-dom/test-utils";
 import { User } from "../../../domain";
 import { GetUserByIdUseCase } from "../../../application/users";
 
-jest.mock("axios");
 const mockHistoryGoBack = jest.fn();
 const mockHistoryPush = jest.fn();
 

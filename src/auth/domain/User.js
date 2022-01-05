@@ -1,19 +1,19 @@
 export class User {
   constructor({ id, name, isAdmin }) {
-    this._id = id;
-    this._name = name;
-    this._isAdmin = isAdmin;
+    this.id = id;
+    this.name = name;
+    this.isAdmin = isAdmin;
+    this.password = "";
+    this.confirmPassword = "";
   }
 
-  get id() {
-    return this._id;
-  }
-
-  get name() {
-    return this._name;
-  }
-
-  get isAdmin() {
-    return this._isAdmin;
+  toJSON() {
+    return {
+      id: this.id,
+      name: this.name,
+      isAdmin: this.isAdmin,
+      password: this.password,
+      confirmPassword: this.confirmPassword,
+    };
   }
 }

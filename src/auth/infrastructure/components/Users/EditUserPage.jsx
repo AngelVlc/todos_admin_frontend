@@ -42,9 +42,6 @@ export const EditUserPage = () => {
         userId={userId}
         name={pageState.name}
         isAdmin={pageState.isAdmin}
-        isNew={false}
-        submintBtnText="SAVE"
-        submitUrl={`users/${userId}`}
       ></UserForm>
     </div>
   );

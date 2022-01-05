@@ -118,23 +118,14 @@ exports[`should match the snapshot for an existing admin user 1`] = `
           Is Admin
         </label>
         <div
-          class="select"
+          class="control"
         >
-          <select
+          <input
             data-testid="isAdmin"
             name="isAdmin"
-          >
-            <option
-              value="yes"
-            >
-              Yes
-            </option>
-            <option
-              value="no"
-            >
-              No
-            </option>
-          </select>
+            type="checkbox"
+            value="true"
+          />
         </div>
       </div>
       <div
@@ -148,7 +139,7 @@ exports[`should match the snapshot for an existing admin user 1`] = `
             data-testid="submit"
             type="submit"
           >
-            SAVE
+            UPDATE
           </button>
         </p>
         <p
@@ -297,23 +288,14 @@ exports[`should match the snapshot for an existing non admin user 1`] = `
           Is Admin
         </label>
         <div
-          class="select"
+          class="control"
         >
-          <select
+          <input
             data-testid="isAdmin"
             name="isAdmin"
-          >
-            <option
-              value="yes"
-            >
-              Yes
-            </option>
-            <option
-              value="no"
-            >
-              No
-            </option>
-          </select>
+            type="checkbox"
+            value="false"
+          />
         </div>
       </div>
       <div
@@ -327,7 +309,7 @@ exports[`should match the snapshot for an existing non admin user 1`] = `
             data-testid="submit"
             type="submit"
           >
-            SAVE
+            UPDATE
           </button>
         </p>
         <p
