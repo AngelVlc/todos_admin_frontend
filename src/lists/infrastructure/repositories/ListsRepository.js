@@ -12,4 +12,10 @@ export class ListsRepository {
 
     return res.status === 204;
   }
+
+  async getAll() {
+    const res = await axios.get("lists");
+
+    return res.data;
+  }
 }

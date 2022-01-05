@@ -36,4 +36,21 @@ describe("ListsRepository", () => {
       expect(result).toBe(false);
     });
   });
+
+  describe("#getAll", () => {
+    it("does a http get request and return its result", async () => {
+      const expectedResult = [
+        { id: 1, name: "list1", itemsCount: 3 },
+        { id: 2, name: "list2", itemsCount: 10 },
+      ];
+
+      axios.get.mockResolvedValue({
+        data: expectedResult,
+      });
+
+      const result = await new ListsRepository().getAll();
+      expect(axios.get.mock.calls[0][0]).toBe("lists");
+      expect(result).toBe(expectedResult);
+    });
+  });
 });
