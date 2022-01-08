@@ -16,7 +16,7 @@ export class DeleteListByIdUseCase extends BaseUseCase {
     return new DeleteListByIdUseCase({ repository });
   }
 
-  async execute(id) {
-    return await this._repository.deleteById(id);
+  async execute(listId, itemId) {
+    return await this._repository.deleteById(listId, itemId);
   }
 }

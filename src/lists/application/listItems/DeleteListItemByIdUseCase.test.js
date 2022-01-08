@@ -1,14 +1,14 @@
-import { DeleteListByIdUseCase } from "./";
+import { DeleteListItemByIdUseCase } from "./";
 
-describe("DeleteListByIdUseCase.#execute", () => {
-  it("deletes a list", async () => {
+describe("DeleteListItemByIdUseCase.#execute", () => {
+  it("deletes a list item", async () => {
     const repository = {
       deleteById: jest.fn(),
     };
 
     repository.deleteById.mockResolvedValue(true);
 
-    const useCase = new DeleteListByIdUseCase({ repository });
+    const useCase = new DeleteListItemByIdUseCase({ repository });
     const result = await useCase.execute(55);
 
     expect(result).toBe(true);
