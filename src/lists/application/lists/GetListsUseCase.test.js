@@ -4,34 +4,35 @@ import { GetListsUseCase } from ".";
 describe("GetListsUseCase.#execute", () => {
   it("gets the lists", async () => {
     const repository = {
-      getAll: () => {
-        return [
-          {
-            id: 1,
-            name: "user1",
-            itemsCount: 2,
-          },
-          {
-            id: 2,
-            name: "user2",
-            itemsCount: 5,
-          },
-        ];
-      },
+      getAll: jest.fn(),
     };
+
+    repository.getAll.mockResolvedValue([
+      {
+        id: 1,
+        name: "list1",
+        itemsCount: 2,
+      },
+      {
+        id: 2,
+        name: "list2",
+        itemsCount: 5,
+      },
+    ]);
 
     const useCase = new GetListsUseCase({ repository });
     const result = await useCase.execute();
 
+    expect(repository.getAll.mock.calls.length).toBe(1);
     expect(result).toStrictEqual([
       new List({
         id: 1,
-        name: "user1",
+        name: "list1",
         itemsCount: 2,
       }),
       new List({
         id: 2,
-        name: "user2",
+        name: "list2",
         itemsCount: 5,
       }),
     ]);

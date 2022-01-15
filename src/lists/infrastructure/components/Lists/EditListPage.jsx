@@ -1,40 +1,58 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { ListForm } from './ListForm';
-import axios from 'axios';
+import React, { useEffect, useState, useContext, useCallback } from "react";
+import { Link, useParams } from "react-router-dom";
+import { ListForm } from "./ListForm";
+import { AppContext } from "../../../../shared/infrastructure/contexts";
+import { GetListByIdUseCase } from "../../../application/lists";
+import { GetListItemsUseCase } from "../../../application/listItems";
 
 export const EditListPage = () => {
-    let { listId } = useParams();
+  let { listId } = useParams();
+  const { useCaseFactory } = useContext(AppContext);
+  const [pageState, setPageState] = useState({ name: "", items: [] });
 
-    const [pageState, setPageState] = useState({name: '', items: []});
+  const getExistingList = useCallback(async () => {
+    const getListByIdUseCase = useCaseFactory.get(GetListByIdUseCase);
+    const listData = await getListByIdUseCase.execute(listId);
 
-    useEffect(() => {
-        const getExistingList = async () => {
-            let res = await axios.get(`lists/${listId}`)
-            const list = res.data
+    const getListItemsUseCase = useCaseFactory.get(GetListItemsUseCase);
+    const itemsData = await getListItemsUseCase.execute(listId);
 
-            res = await axios.get(`lists/${listId}/items`)
-            const listItems = res.data
+    setPageState({
+        name: listData.name,
+        items: itemsData
+    });
+  }, [listId, useCaseFactory]);
 
-            setPageState({
-                name: list.name,
-                items: listItems
-            });
-        }
-        getExistingList();
-    }, [listId]);
+  useEffect(() => {
+    getExistingList();
+  }, [listId, getExistingList]);
 
-    return (
-        <div className="container">
-            <h3 className="title">{`Edit list '${pageState.name}'`}</h3>
-            <nav className="breadcrumb" aria-label="breadcrumbs">
-                <ul>
-                    <li><Link to={`/`}>Home</Link></li>
-                    <li><Link to={`/lists`}>Lists</Link></li>
-                    <li className="is-active"><Link aria-current="page" to={`/lists/${listId}`}>{pageState.name}</Link></li>
-                </ul>
-            </nav>
-            <ListForm listId={listId} name={pageState.name} items={pageState.items} isNew={false} submintBtnText='SAVE' submitUrl={`lists/${listId}`}/>
-        </div>
-    )
-}
+  return (
+    <div className="container">
+      <h3 className="title">{`Edit list '${pageState.name}'`}</h3>
+      <nav className="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+          <li>
+            <Link to={`/`}>Home</Link>
+          </li>
+          <li>
+            <Link to={`/lists`}>Lists</Link>
+          </li>
+          <li className="is-active">
+            <Link aria-current="page" to={`/lists/${listId}`}>
+              {pageState.name}
+            </Link>
+          </li>
+        </ul>
+      </nav>
+      <ListForm
+        listId={listId}
+        name={pageState.name}
+        items={pageState.items}
+        isNew={false}
+        submintBtnText="SAVE"
+        submitUrl={`lists/${listId}`}
+      />
+    </div>
+  );
+};
