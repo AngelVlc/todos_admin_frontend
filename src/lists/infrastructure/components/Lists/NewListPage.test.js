@@ -20,7 +20,7 @@ const renderWithContextAndRouterForNewList = () => {
             <AppContext.Provider value={context}>
                 <MemoryRouter initialEntries={[`/users/new`]}>
                     <Route path="/users/new">
-                      <ListForm name='' items={[]} isNew={true} submintBtnText='CREATE' submitUrl={'lists'}/>
+                      <ListForm/>
                     </Route>
                 </MemoryRouter>
             </AppContext.Provider>)

@@ -32,7 +32,7 @@ export const UserForm = (props) => {
     }
     const result = await useCase.execute(user);
     if (result) {
-      history.push(`/users`);
+      history.push('/users');
     }
   };
 

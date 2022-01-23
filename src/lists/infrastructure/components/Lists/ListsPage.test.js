@@ -54,7 +54,7 @@ it("should match the snapshot", async () => {
   expect(fragment(<ListsPage />)).toMatchSnapshot();
 });
 
-xit("should add a new list", async () => {
+it("should add a new list", async () => {
   let container;
   await act(async () => {
     container = renderWithContextAndRouter(<ListsPage />);

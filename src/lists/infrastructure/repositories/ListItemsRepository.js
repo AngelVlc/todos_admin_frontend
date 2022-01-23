@@ -18,4 +18,20 @@ export class ListItemsRepository {
 
     return res.data;
   }
+
+  async create(listItem) {
+    const res = await axios.post(`lists/${listItem.listId}/items`, listItem);
+
+    if (res.status === 201) {
+      return res.data;
+    }
+  }
+
+  async update(listItem) {
+    const res = await axios.put(`lists/${listItem.listId}/items/${listItem.id}`, listItem);
+
+    if (res.status === 200) {
+      return res.data;
+    }
+  }
 }

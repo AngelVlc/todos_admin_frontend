@@ -77,7 +77,7 @@ it("should cancel the deletion", async () => {
   mockHistoryGoBack.mockClear();
 });
 
-xit("should delete the List", async () => {
+it("should delete the List", async () => {
   let container;
   await act(async () => {
     container = renderWithContextAndRouter(<ListItemDeletePage />);
@@ -90,8 +90,8 @@ xit("should delete the List", async () => {
   });
 
   expect(mockedDeleteListItemByIdUseCase.execute.mock.calls.length).toBe(1);
-  expect(mockedDeleteListItemByIdUseCase.execute.mock.calls[0][0]).toBe(2);
-  expect(mockedDeleteListItemByIdUseCase.execute.mock.calls[0][1]).toBe(5);
+  expect(mockedDeleteListItemByIdUseCase.execute.mock.calls[0][0]).toBe("2");
+  expect(mockedDeleteListItemByIdUseCase.execute.mock.calls[0][1]).toBe("5");
   expect(mockHistoryPush.mock.calls.length).toBe(1);
   expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/2/edit");
   mockHistoryPush.mockClear();

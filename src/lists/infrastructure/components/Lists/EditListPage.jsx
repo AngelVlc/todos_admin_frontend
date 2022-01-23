@@ -4,11 +4,12 @@ import { ListForm } from "./ListForm";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { GetListByIdUseCase } from "../../../application/lists";
 import { GetListItemsUseCase } from "../../../application/listItems";
+import { List } from "../../../domain";
 
 export const EditListPage = () => {
   let { listId } = useParams();
   const { useCaseFactory } = useContext(AppContext);
-  const [pageState, setPageState] = useState({ name: "", items: [] });
+  const [pageState, setPageState] = useState(new List({ name: "", items: [] }));
 
   const getExistingList = useCallback(async () => {
     const getListByIdUseCase = useCaseFactory.get(GetListByIdUseCase);
@@ -17,10 +18,7 @@ export const EditListPage = () => {
     const getListItemsUseCase = useCaseFactory.get(GetListItemsUseCase);
     const itemsData = await getListItemsUseCase.execute(listId);
 
-    setPageState({
-        name: listData.name,
-        items: itemsData
-    });
+    setPageState(new List({ ...listData, items: itemsData }));
   }, [listId, useCaseFactory]);
 
   useEffect(() => {
@@ -45,14 +43,7 @@ export const EditListPage = () => {
           </li>
         </ul>
       </nav>
-      <ListForm
-        listId={listId}
-        name={pageState.name}
-        items={pageState.items}
-        isNew={false}
-        submintBtnText="SAVE"
-        submitUrl={`lists/${listId}`}
-      />
+      <ListForm list={pageState} />
     </div>
   );
 };
