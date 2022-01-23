@@ -40,7 +40,7 @@ const renderWithContextAndRouterForExistingUser = (isAdmin) => {
       <AppContext.Provider value={context}>
         <MemoryRouter initialEntries={[`/users/2/edit`]}>
           <Route path="/users/:userId/edit">
-            <UserForm userId={2} name={"user"} isAdmin={isAdmin} />
+            <UserForm user={new User({ id: 2, name: "user", isAdmin })} />
           </Route>
         </MemoryRouter>
       </AppContext.Provider>

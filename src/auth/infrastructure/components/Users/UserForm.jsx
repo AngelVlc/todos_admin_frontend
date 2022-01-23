@@ -12,20 +12,18 @@ export const UserForm = (props) => {
   const { useCaseFactory } = useContext(AppContext);
 
   const [pageState, setPageState] = useState(
-    new User({ id: undefined, name: "", isAdmin: false })
+    new User({ name: "", isAdmin: false })
   );
 
   useEffect(() => {
-    if (props.userId) {
-      setPageState(
-        new User({ id: props.userId, name: props.name, isAdmin: props.isAdmin })
-      );
+    if (props.user?.id) {
+      setPageState(props.user);
     }
   }, [props]);
 
   const onSubmit = async (user) => {
     let useCase;
-    if (props.userId === undefined) {
+    if (props.user?.id === undefined) {
       useCase = useCaseFactory.get(CreateUserUseCase);
     } else {
       useCase = useCaseFactory.get(UpdateUserUseCase);
@@ -92,7 +90,7 @@ export const UserForm = (props) => {
         <div className="field is-grouped">
           <p className="control">
             <button className="button" data-testid="submit" type="submit">
-              {props.userId ? "UPDATE" : "CREATE"}
+              {props.user?.id ? "UPDATE" : "CREATE"}
             </button>
           </p>
           <p className="control">
@@ -105,13 +103,13 @@ export const UserForm = (props) => {
               CANCEL
             </button>
           </p>
-          {props.userId && (
+          {props.user?.id && (
             <p className="control">
               <button
                 className="button is-danger"
                 data-testid="delete"
                 type="button"
-                onClick={() => history.push(`/users/${props.userId}/delete`)}
+                onClick={() => history.push(`/users/${props.user?.id}/delete`)}
               >
                 DELETE
               </button>

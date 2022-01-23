@@ -38,11 +38,7 @@ export const EditUserPage = () => {
           </li>
         </ul>
       </nav>
-      <UserForm
-        userId={userId}
-        name={pageState.name}
-        isAdmin={pageState.isAdmin}
-      ></UserForm>
+      <UserForm user={pageState}/>
     </div>
   );
 };
