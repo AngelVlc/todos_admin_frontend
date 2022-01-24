@@ -5,7 +5,6 @@ import { MemoryRouter, Route } from "react-router-dom";
 import { act } from "react-dom/test-utils";
 import { ListItem } from "../../../domain";
 
-jest.mock("axios");
 const mockHistoryPush = jest.fn();
 
 jest.mock("react-router-dom", () => ({

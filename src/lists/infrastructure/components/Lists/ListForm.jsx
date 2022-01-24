@@ -17,15 +17,11 @@ export const ListForm = (props) => {
   const loaded = useRef(false);
   const { useCaseFactory } = useContext(AppContext);
 
-  const [pageState, setPageState] = useState(
-    new List({ name: "", items: [] })
-  );
+  const [pageState, setPageState] = useState(new List({ name: "", items: [] }));
 
   useEffect(() => {
     if (props.list?.id && !loaded.current) {
-      setPageState(
-        new List(props.list)
-      );
+      setPageState(new List(props.list));
 
       loaded.current = true;
     }

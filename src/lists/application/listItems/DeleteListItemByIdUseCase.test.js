@@ -9,9 +9,10 @@ describe("DeleteListItemByIdUseCase.#execute", () => {
     repository.deleteById.mockResolvedValue(true);
 
     const useCase = new DeleteListItemByIdUseCase({ repository });
-    const result = await useCase.execute(55);
+    const result = await useCase.execute(55, 33);
 
     expect(result).toBe(true);
     expect(repository.deleteById.mock.calls[0][0]).toBe(55);
+    expect(repository.deleteById.mock.calls[0][1]).toBe(33);
   });
 });

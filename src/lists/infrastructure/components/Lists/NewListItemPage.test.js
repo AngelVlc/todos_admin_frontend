@@ -3,7 +3,6 @@ import { NewListItemPage } from './NewListItemPage';
 import { AppContext } from  '../../../../shared/infrastructure/contexts';
 import { MemoryRouter, Route } from 'react-router-dom';
 
-jest.mock('axios');
 const mockHistoryPush = jest.fn();
 
 jest.mock('react-router-dom', () => ({

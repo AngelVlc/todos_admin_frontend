@@ -6,7 +6,6 @@ import { act } from "react-dom/test-utils";
 import { List, ListItem } from "../../../domain";
 import { GetListByIdUseCase } from "../../../application/lists";
 
-jest.mock("axios");
 const mockHistoryPush = jest.fn();
 
 jest.mock("react-router-dom", () => ({

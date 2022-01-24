@@ -44,15 +44,7 @@ export const EditListItemPage = () => {
           </li>
         </ul>
       </nav>
-      <ListItemForm
-        listId={listId}
-        itemId={itemId}
-        title={pageState.title}
-        description={pageState.description}
-        isNew={false}
-        submintBtnText="SAVE"
-        submitUrl={`lists/${listId}/items/${itemId}`}
-      />
+      <ListItemForm listItem={pageState} />
     </div>
   );
 };
