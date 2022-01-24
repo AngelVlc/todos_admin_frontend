@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import { transitions, positions, Provider as AlertProvider } from 'react-alert'
 import AlertTemplate from 'react-alert-template-basic'
-import { App } from './components/App';
+import { App } from './shared/infrastructure/components/App';
 import * as serviceWorker from './serviceWorker';
 
 // optional cofiguration
