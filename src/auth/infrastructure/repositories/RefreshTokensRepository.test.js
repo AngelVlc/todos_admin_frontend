@@ -5,7 +5,7 @@ jest.mock("axios");
 
 describe("RefreshTokensRepository", () => {
   describe("#getAll", () => {
-    it("does a http get request and return its result", async () => {
+    it("does a http get request and return its result with custom parameters", async () => {
       const expectedResult = [
         { id: 1, userId: 1, expirationDate: "2021-01-29T16:46:58Z" },
         { id: 2, userId: 2, expirationDate: "2021-03-29T16:46:58Z" },
@@ -15,8 +15,15 @@ describe("RefreshTokensRepository", () => {
         data: expectedResult,
       });
 
-      const result = await new RefreshTokensRepository().getAll();
-      expect(axios.get.mock.calls[0][0]).toBe("refreshtokens");
+      const result = await new RefreshTokensRepository().getAll({
+        pageNumber: 4,
+        pageSize: 20,
+        sortColumn: "userId",
+        sortOrder: "desc",
+      });
+      expect(axios.get.mock.calls[0][0]).toBe(
+        "refreshtokens?page=4&page_size=20&sort=userId&order=desc"
+      );
       expect(result).toBe(expectedResult);
     });
   });

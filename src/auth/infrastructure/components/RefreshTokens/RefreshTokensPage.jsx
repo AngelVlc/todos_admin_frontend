@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { TableWithSelectors } from "../../../../shared/infrastructure/components/TableWithSelectors/TableWithSelectors";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import {
   GetRefreshTokensUseCase,
@@ -9,13 +10,19 @@ import {
 export const RefreshTokensPage = () => {
   const [tokens, setTokens] = useState([]);
   const { useCaseFactory } = useContext(AppContext);
+  const [pageInfo, setPageInfo] = useState({
+    pageNumber: 1,
+    pageSize: 10,
+    sortColumn: "id",
+    sortOrder: "asc",
+  });
 
   const getRefreshTokens = useCallback(async () => {
     const getRefreshTokensUseCase = useCaseFactory.get(GetRefreshTokensUseCase);
-    const refreshTokens = await getRefreshTokensUseCase.execute();
+    const refreshTokens = await getRefreshTokensUseCase.execute(pageInfo);
 
     setTokens(refreshTokens);
-  }, [useCaseFactory]);
+  }, [useCaseFactory, pageInfo]);
 
   useEffect(() => {
     getRefreshTokens();
@@ -23,6 +30,8 @@ export const RefreshTokensPage = () => {
 
   const onDeleteSelectedTokens = async () => {
     const deleteSelectedRefreshTokensUseCase = useCaseFactory.get(
+      DeleteSelectedRefreshTokensUseCase
+    );
     const ok = await deleteSelectedRefreshTokensUseCase.execute(tokens);
     if (ok) {
       getRefreshTokens();
