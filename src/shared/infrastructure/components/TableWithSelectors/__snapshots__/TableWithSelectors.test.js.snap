@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TableWithSelectors should match the snapshot 1`] = `
+<DocumentFragment>
+  <table
+    class="table"
+  >
+    <thead>
+      <tr>
+        <td>
+          Col 1
+        </td>
+        <td>
+          Col 2
+        </td>
+        <td>
+          Col 3
+        </td>
+        <td>
+          <center>
+            <input
+              data-testid="toggleSelectAll"
+              type="checkbox"
+            />
+          </center>
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          11
+        </td>
+        <td>
+          12
+        </td>
+        <td>
+          13
+        </td>
+        <td>
+          <center>
+            <input
+              data-testid="checkBoxItem11"
+              type="checkbox"
+            />
+          </center>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          21
+        </td>
+        <td>
+          22
+        </td>
+        <td>
+          23
+        </td>
+        <td>
+          <center>
+            <input
+              data-testid="checkBoxItem21"
+              type="checkbox"
+            />
+          </center>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</DocumentFragment>
+`;

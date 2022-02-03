@@ -21,24 +21,8 @@ export const RefreshTokensPage = () => {
     getRefreshTokens();
   }, [getRefreshTokens]);
 
-  const onSelectAll = (newValue) => {
-    const data = [...tokens].map((token) => {
-      token.selected = newValue;
-      return token;
-    });
-
-    setTokens(data);
-  };
-
-  const onChangeItemSelected = (newValue, index) => {
-    const data = [...tokens];
-    data[index].selected = newValue;
-
-    setTokens(data);
-  };
-
   const onDeleteSelectedTokens = async () => {
-    const deleteSelectedRefreshTokensUseCase = useCaseFactory.get(DeleteSelectedRefreshTokensUseCase);
+    const deleteSelectedRefreshTokensUseCase = useCaseFactory.get(
     const ok = await deleteSelectedRefreshTokensUseCase.execute(tokens);
     if (ok) {
       getRefreshTokens();
@@ -69,47 +53,14 @@ export const RefreshTokensPage = () => {
           Delete Selected
         </button>
       </div>
-      <table className="table">
-        <thead>
-          <tr>
-            <td>ID</td>
-            <td>UserID</td>
-            <td>Expiration Date</td>
-            <td>
-              <center>
-                <input
-                  type="checkbox"
-                  data-testid="toggleSelectAll"
-                  defaultChecked={false}
-                  onChange={(e) => onSelectAll(e.target.checked)}
-                ></input>
-              </center>
-            </td>
-          </tr>
-        </thead>
-        <tbody>
-          {tokens.length > 0 &&
-            tokens.map((token, index) => (
-              <tr key={token.id}>
-                <td>{token.id}</td>
-                <td>{token.userId}</td>
-                <td>{token.expirationDate}</td>
-                <td>
-                  <center>
-                    <input
-                      type="checkbox"
-                      data-testid={`checkBoxItem${token.id}`}
-                      checked={token.selected}
-                      onChange={(e) =>
-                        onChangeItemSelected(e.target.checked, index)
-                      }
-                    ></input>
-                  </center>
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
+      <TableWithSelectors
+        columnTitles={["ID", "UserID", "Expiration Date"]}
+        columnNames={["id", "userId", "expirationDate"]}
+        rows={tokens}
+        idColumnName={"id"}
+        selectedColumnName={"selected"}
+        onSelectedChanged={setTokens}
+      />
     </div>
   );
 };
