@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TableColumnHeader Should match the snapshot when the column is not ordered 1`] = `
+<DocumentFragment>
+  <table>
+    <tbody>
+      <tr>
+        <td
+          data-testid="header-name"
+        >
+          <span>
+             Title
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</DocumentFragment>
+`;
+
+exports[`TableColumnHeader Should match the snapshot when the column is ordered asc 1`] = `
+<DocumentFragment>
+  <table>
+    <tbody>
+      <tr>
+        <td
+          data-testid="header-name"
+        >
+          <span
+            class="icon"
+          >
+            Title
+            <i
+              class="fas fa-thin fa-sort-up"
+            />
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</DocumentFragment>
+`;
+
+exports[`TableColumnHeader Should match the snapshot when the column is ordered desc 1`] = `
+<DocumentFragment>
+  <table>
+    <tbody>
+      <tr>
+        <td
+          data-testid="header-name"
+        >
+          <span
+            class="icon"
+          >
+            Title
+            <i
+              class="fas fa-thin fa-sort-down"
+            />
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</DocumentFragment>
+`;

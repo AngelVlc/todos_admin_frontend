@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PageSizeSelector Should match the snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <span>
+      Per page: 
+    </span>
+    <select
+      data-testid="pagesize-select"
+    >
+      <option
+        value="5"
+      >
+        5
+      </option>
+      <option
+        value="10"
+      >
+        10
+      </option>
+      <option
+        value="20"
+      >
+        20
+      </option>
+    </select>
+  </div>
+</DocumentFragment>
+`;

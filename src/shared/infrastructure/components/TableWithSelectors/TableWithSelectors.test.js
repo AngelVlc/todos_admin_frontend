@@ -8,18 +8,27 @@ describe("TableWithSelectors", () => {
     { col1: "21", col2: "22", col3: "23", selected: false },
   ];
 
-  const onSelectedChanged = jest.fn();
+  const changeSelected = jest.fn();
 
   const renderComponent = (rows) => {
     return {
       ...render(
         <TableWithSelectors
-          columnTitles={["Col 1", "Col 2", "Col 3"]}
-          columnNames={["col1", "col2", "col3"]}
+          columns={[
+            { name: "col1", title: "Col 1" },
+            { name: "col2", title: "Col 2" },
+            { name: "col3", title: "Col 3" },
+          ]}
           rows={rows}
           idColumnName={"col1"}
           selectedColumnName={"selected"}
-          onSelectedChanged={onSelectedChanged}
+          paginationInfo={{
+            pageNumner: 1,
+            pageSize: 10,
+            sortColumn: "col1",
+            sortOrder: "asc",
+          }}
+          changeSelected={changeSelected}
         />
       ),
     };
@@ -43,20 +52,20 @@ describe("TableWithSelectors", () => {
       fireEvent.click(container.getByTestId("toggleSelectAll"));
     });
 
-    expect(onSelectedChanged.mock.calls.length).toBe(1);
-    expect(onSelectedChanged.mock.calls[0][0]).toStrictEqual([
+    expect(changeSelected.mock.calls.length).toBe(1);
+    expect(changeSelected.mock.calls[0][0]).toStrictEqual([
       { col1: "11", col2: "12", col3: "13", selected: true },
       { col1: "21", col2: "22", col3: "23", selected: true },
     ]);
 
-    onSelectedChanged.mockClear();
+    changeSelected.mockClear();
 
     await waitFor(() => {
       fireEvent.click(container.getByTestId("toggleSelectAll"));
     });
 
-    expect(onSelectedChanged.mock.calls.length).toBe(1);
-    expect(onSelectedChanged.mock.calls[0][0]).toStrictEqual([
+    expect(changeSelected.mock.calls.length).toBe(1);
+    expect(changeSelected.mock.calls[0][0]).toStrictEqual([
       { col1: "11", col2: "12", col3: "13", selected: false },
       { col1: "21", col2: "22", col3: "23", selected: false },
     ]);
@@ -72,8 +81,8 @@ describe("TableWithSelectors", () => {
       fireEvent.click(container.getByTestId("checkBoxItem11"));
     });
 
-    expect(onSelectedChanged.mock.calls.length).toBe(1);
-    expect(onSelectedChanged.mock.calls[0][0]).toStrictEqual([
+    expect(changeSelected.mock.calls.length).toBe(1);
+    expect(changeSelected.mock.calls[0][0]).toStrictEqual([
       { col1: "11", col2: "12", col3: "13", selected: true },
       { col1: "21", col2: "22", col3: "23", selected: false },
     ]);

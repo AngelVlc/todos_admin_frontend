@@ -63,12 +63,17 @@ export const RefreshTokensPage = () => {
         </button>
       </div>
       <TableWithSelectors
-        columnTitles={["ID", "UserID", "Expiration Date"]}
-        columnNames={["id", "userId", "expirationDate"]}
+        columns={[
+          { name: "id", title: "ID" },
+          { name: "userId", title: "User ID" },
+          { name: "expirationDate", title: "Expiration Date" },
+        ]}
         rows={tokens}
         idColumnName={"id"}
         selectedColumnName={"selected"}
-        onSelectedChanged={setTokens}
+        paginationInfo={pageInfo}
+        changeSelected={setTokens}
+        changePagination={setPageInfo}
       />
     </div>
   );
