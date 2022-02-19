@@ -17,8 +17,8 @@ export class GetRefreshTokensUseCase extends BaseUseCase {
     return new GetRefreshTokensUseCase({ repository });
   }
 
-  async execute() {
-    const result = await this._repository.getAll();
+  async execute({pageNumber, pageSize, sortColumn, sortOrder}) {
+    const result = await this._repository.getAll({pageNumber, pageSize, sortColumn, sortOrder});
 
     return result.map((item) => {
       return new RefreshToken(item);

@@ -67,40 +67,7 @@ it("should match the snapshot", async () => {
   expect(fragment(<RefreshTokensPage />)).toMatchSnapshot();
 });
 
-it("should select all the refresh tokens", async () => {
-  let container;
-  await act(async () => {
-    container = renderWithContextAndRouter(<RefreshTokensPage />);
-  });
-
-  await waitFor(() => {
-    fireEvent.click(container.getByTestId("toggleSelectAll"));
-
-    expect(container.getByTestId("checkBoxItem1")).toBeChecked();
-    expect(container.getByTestId("checkBoxItem2")).toBeChecked();
-    expect(container.getByTestId("checkBoxItem3")).toBeChecked();
-  });
-});
-
-it("should unselect all the refresh tokens", async () => {
-  let container;
-  await act(async () => {
-    container = renderWithContextAndRouter(<RefreshTokensPage />);
-  });
-
-  await waitFor(() => {
-    fireEvent.click(container.getByTestId("toggleSelectAll"));
-    fireEvent.click(container.getByTestId("checkBoxItem1"));
-    fireEvent.click(container.getByTestId("checkBoxItem2"));
-    fireEvent.click(container.getByTestId("checkBoxItem3"));
-
-    expect(container.getByTestId("checkBoxItem1")).not.toBeChecked();
-    expect(container.getByTestId("checkBoxItem2")).not.toBeChecked();
-    expect(container.getByTestId("checkBoxItem3")).not.toBeChecked();
-  });
-});
-
-it("should unselect all the refresh tokens", async () => {
+it("should delete the selected refresh tokens", async () => {
   let container;
   await act(async () => {
     container = renderWithContextAndRouter(<RefreshTokensPage />);
@@ -134,7 +101,8 @@ it("should unselect all the refresh tokens", async () => {
   expect(
     mockedDeleteRefreshTokensByIdUseCase.execute.mock.calls[0][0]
   ).toStrictEqual(refreshTokens);
-  expect(cbItem1).not.toBeInTheDocument();
   expect(container.getByTestId("checkBoxItem2")).toBeInTheDocument();
-  expect(cbItem3).not.toBeInTheDocument();
+
+  expect(container.queryByTestId("checkBoxItem1")).not.toBeInTheDocument();
+  expect(container.queryByTestId("checkBoxItem3")).not.toBeInTheDocument();
 });

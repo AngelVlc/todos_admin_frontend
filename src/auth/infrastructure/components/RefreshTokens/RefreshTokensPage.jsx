@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { TableWithSelectors } from "../../../../shared/infrastructure/components/TableWithSelectors/TableWithSelectors";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import {
   GetRefreshTokensUseCase,
@@ -9,36 +10,28 @@ import {
 export const RefreshTokensPage = () => {
   const [tokens, setTokens] = useState([]);
   const { useCaseFactory } = useContext(AppContext);
+  const [pageInfo, setPageInfo] = useState({
+    pageNumber: 1,
+    pageSize: 10,
+    sortColumn: "id",
+    sortOrder: "desc",
+  });
 
   const getRefreshTokens = useCallback(async () => {
     const getRefreshTokensUseCase = useCaseFactory.get(GetRefreshTokensUseCase);
-    const refreshTokens = await getRefreshTokensUseCase.execute();
+    const refreshTokens = await getRefreshTokensUseCase.execute(pageInfo);
 
     setTokens(refreshTokens);
-  }, [useCaseFactory]);
+  }, [useCaseFactory, pageInfo]);
 
   useEffect(() => {
     getRefreshTokens();
   }, [getRefreshTokens]);
 
-  const onSelectAll = (newValue) => {
-    const data = [...tokens].map((token) => {
-      token.selected = newValue;
-      return token;
-    });
-
-    setTokens(data);
-  };
-
-  const onChangeItemSelected = (newValue, index) => {
-    const data = [...tokens];
-    data[index].selected = newValue;
-
-    setTokens(data);
-  };
-
   const onDeleteSelectedTokens = async () => {
-    const deleteSelectedRefreshTokensUseCase = useCaseFactory.get(DeleteSelectedRefreshTokensUseCase);
+    const deleteSelectedRefreshTokensUseCase = useCaseFactory.get(
+      DeleteSelectedRefreshTokensUseCase
+    );
     const ok = await deleteSelectedRefreshTokensUseCase.execute(tokens);
     if (ok) {
       getRefreshTokens();
@@ -69,47 +62,19 @@ export const RefreshTokensPage = () => {
           Delete Selected
         </button>
       </div>
-      <table className="table">
-        <thead>
-          <tr>
-            <td>ID</td>
-            <td>UserID</td>
-            <td>Expiration Date</td>
-            <td>
-              <center>
-                <input
-                  type="checkbox"
-                  data-testid="toggleSelectAll"
-                  defaultChecked={false}
-                  onChange={(e) => onSelectAll(e.target.checked)}
-                ></input>
-              </center>
-            </td>
-          </tr>
-        </thead>
-        <tbody>
-          {tokens.length > 0 &&
-            tokens.map((token, index) => (
-              <tr key={token.id}>
-                <td>{token.id}</td>
-                <td>{token.userId}</td>
-                <td>{token.expirationDate}</td>
-                <td>
-                  <center>
-                    <input
-                      type="checkbox"
-                      data-testid={`checkBoxItem${token.id}`}
-                      checked={token.selected}
-                      onChange={(e) =>
-                        onChangeItemSelected(e.target.checked, index)
-                      }
-                    ></input>
-                  </center>
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
+      <TableWithSelectors
+        columns={[
+          { name: "id", title: "ID" },
+          { name: "userId", title: "User ID" },
+          { name: "expirationDate", title: "Expiration Date" },
+        ]}
+        rows={tokens}
+        idColumnName={"id"}
+        selectedColumnName={"selected"}
+        paginationInfo={pageInfo}
+        changeSelected={setTokens}
+        changePagination={setPageInfo}
+      />
     </div>
   );
 };
