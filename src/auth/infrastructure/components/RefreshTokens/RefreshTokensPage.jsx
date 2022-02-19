@@ -14,7 +14,7 @@ export const RefreshTokensPage = () => {
     pageNumber: 1,
     pageSize: 10,
     sortColumn: "id",
-    sortOrder: "asc",
+    sortOrder: "desc",
   });
 
   const getRefreshTokens = useCallback(async () => {
