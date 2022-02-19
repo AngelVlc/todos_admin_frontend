@@ -3,17 +3,19 @@
 exports[`TableColumnHeader Should match the snapshot when the column is not ordered 1`] = `
 <DocumentFragment>
   <table>
-    <tbody>
+    <thead>
       <tr>
         <td
           data-testid="header-name"
         >
-          <span>
+          <span
+            class="mx-3"
+          >
              Title
           </span>
         </td>
       </tr>
-    </tbody>
+    </thead>
   </table>
 </DocumentFragment>
 `;
@@ -21,22 +23,22 @@ exports[`TableColumnHeader Should match the snapshot when the column is not orde
 exports[`TableColumnHeader Should match the snapshot when the column is ordered asc 1`] = `
 <DocumentFragment>
   <table>
-    <tbody>
+    <thead>
       <tr>
         <td
           data-testid="header-name"
         >
           <span
-            class="icon"
+            class="icon mx-3"
           >
             Title
             <i
-              class="fas fa-thin fa-sort-up"
+              class="ml-1 fas fa-thin fa-sort-up"
             />
           </span>
         </td>
       </tr>
-    </tbody>
+    </thead>
   </table>
 </DocumentFragment>
 `;
@@ -44,22 +46,22 @@ exports[`TableColumnHeader Should match the snapshot when the column is ordered 
 exports[`TableColumnHeader Should match the snapshot when the column is ordered desc 1`] = `
 <DocumentFragment>
   <table>
-    <tbody>
+    <thead>
       <tr>
         <td
           data-testid="header-name"
         >
           <span
-            class="icon"
+            class="icon mx-3"
           >
             Title
             <i
-              class="fas fa-thin fa-sort-down"
+              class="ml-1 fas fa-thin fa-sort-down"
             />
           </span>
         </td>
       </tr>
-    </tbody>
+    </thead>
   </table>
 </DocumentFragment>
 `;

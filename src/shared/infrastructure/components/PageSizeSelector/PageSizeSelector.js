@@ -4,12 +4,12 @@ export const PageSizeSelector = (props) => {
   const onChange = (event) => {
     props.changePagination({
       ...props.paginationInfo,
-      pageSize: event.target.value,
+      pageSize: parseInt(event.target.value),
     });
   };
 
   return (
-    <div>
+    <div className="ml-3 level-item">
       <span>Per page: </span>
       <select
         onChange={(e) => onChange(e)}

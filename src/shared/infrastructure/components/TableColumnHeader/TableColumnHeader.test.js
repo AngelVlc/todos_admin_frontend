@@ -8,13 +8,15 @@ describe("TableColumnHeader", () => {
     return {
       ...render(
         <table>
-          <tr>
-          <TableColumnHeader
-            column={{ name: "name", title: "Title" }}
-            paginationInfo={paginationInfo}
-            changePagination={mockedChangePagination}
-          />
-          </tr>
+          <thead>
+            <tr>
+              <TableColumnHeader
+                column={{ name: "name", title: "Title" }}
+                paginationInfo={paginationInfo}
+                changePagination={mockedChangePagination}
+              />
+            </tr>
+          </thead>
         </table>
       ),
     };

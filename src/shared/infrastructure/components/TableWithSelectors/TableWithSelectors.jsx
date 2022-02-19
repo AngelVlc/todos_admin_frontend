@@ -1,4 +1,5 @@
 import React from "react";
+import { PageSelector } from "../PageSelector";
 import { PageSizeSelector } from "../PageSizeSelector";
 import { TableColumnHeader } from "../TableColumnHeader";
 
@@ -67,10 +68,18 @@ export const TableWithSelectors = (props) => {
             ))}
         </tbody>
       </table>
-      <PageSizeSelector
-        paginationInfo={props.paginationInfo}
-        changePagination={props.changePagination}
-      />
+      <div className="level">
+        <div className="level-left">
+          <PageSelector
+            paginationInfo={props.paginationInfo}
+            changePagination={props.changePagination}
+          />
+          <PageSizeSelector
+            paginationInfo={props.paginationInfo}
+            changePagination={props.changePagination}
+          />
+        </div>
+      </div>
     </div>
   );
 };

@@ -12,25 +12,29 @@ exports[`TableWithSelectors should match the snapshot 1`] = `
             data-testid="header-col1"
           >
             <span
-              class="icon"
+              class="icon mx-3"
             >
               Col 1
               <i
-                class="fas fa-thin fa-sort-up"
+                class="ml-1 fas fa-thin fa-sort-up"
               />
             </span>
           </td>
           <td
             data-testid="header-col2"
           >
-            <span>
+            <span
+              class="mx-3"
+            >
                Col 2
             </span>
           </td>
           <td
             data-testid="header-col3"
           >
-            <span>
+            <span
+              class="mx-3"
+            >
                Col 3
             </span>
           </td>
@@ -85,29 +89,57 @@ exports[`TableWithSelectors should match the snapshot 1`] = `
         </tr>
       </tbody>
     </table>
-    <div>
-      <span>
-        Per page: 
-      </span>
-      <select
-        data-testid="pagesize-select"
+    <div
+      class="level"
+    >
+      <div
+        class="level-left"
       >
-        <option
-          value="5"
+        <div
+          class="ml-3 level-item"
         >
-          5
-        </option>
-        <option
-          value="10"
+          <input
+            class="pageNumber"
+            data-testid="pagenumber-input"
+            min="1"
+            type="number"
+            value=""
+          />
+          <span
+            class="icon"
+          >
+            <i
+              class="fas fa-thin fa-forward"
+            />
+          </span>
+        </div>
+        <div
+          class="ml-3 level-item"
         >
-          10
-        </option>
-        <option
-          value="20"
-        >
-          20
-        </option>
-      </select>
+          <span>
+            Per page: 
+          </span>
+          <select
+            data-testid="pagesize-select"
+          >
+            <option
+              value="5"
+            >
+              5
+            </option>
+            <option
+              value="10"
+            >
+              10
+            </option>
+            <option
+              value="20"
+            >
+              20
+            </option>
+          </select>
+        </div>
+      </div>
     </div>
   </div>
 </DocumentFragment>

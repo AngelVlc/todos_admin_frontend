@@ -20,20 +20,20 @@ export const TableColumnHeader = (props) => {
   return (
     <td onClick={() => onColumnHeaderClicked(props.column.name)} data-testid={`header-${props.column.name}`}>
       {props.paginationInfo.sortColumn !== props.column.name && (
-        <span> {props.column.title}</span>
+        <span className="mx-3"> {props.column.title}</span>
       )}
       {props.paginationInfo.sortColumn === props.column.name &&
         props.paginationInfo.sortOrder === "asc" && (
-          <span className="icon">
+          <span className="icon mx-3">
             {props.column.title}
-            <i className="fas fa-thin fa-sort-up" />
+            <i className="ml-1 fas fa-thin fa-sort-up" />
           </span>
         )}
       {props.paginationInfo.sortColumn === props.column.name &&
         props.paginationInfo.sortOrder === "desc" && (
-          <span className="icon">
+          <span className="icon mx-3">
             {props.column.title}
-            <i className="fas fa-thin fa-sort-down" />
+            <i className="ml-1 fas fa-thin fa-sort-down" />
           </span>
         )}
     </td>
