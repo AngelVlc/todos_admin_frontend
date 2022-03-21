@@ -20,4 +20,4 @@ console-release:
 	docker run -it --rm -p 5000:5000 todos_release sh
 
 audit:
-	docker run -it --rm --env CI=true todos_base npm audit --production
+	CI=true npm audit --production
