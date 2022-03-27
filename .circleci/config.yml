@@ -71,7 +71,6 @@ jobs:
     steps:
       - checkout
       - install_terraform
-      - run: heroku container:login
       - init_terraform_aws
       - run: cd terraformAws && terraform apply -target=aws_ecr_repository.todos_repository -input=false -auto-approve -var app_name=$APP_NAME -var environment=production -var domain=$DOMAIN -var backend_url=$BACKEND_URL_AWS
       - push_image_to_ecr
