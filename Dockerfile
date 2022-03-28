@@ -14,14 +14,27 @@ COPY . $APP
 
 RUN npm run-script build
 
-FROM node:14.1.0-alpine3.11 as release
+FROM golang:1.17.7-alpine3.15 as golang_base
 
-ENV APP /app
+ENV APP /go/src
 WORKDIR $APP
 
-RUN yarn global add serve
+RUN apk add -u build-base
 
-COPY --from=base /app/build/ /app/
+COPY server/go.mod $APP
+COPY server/go.sum $APP
 
-CMD ["serve", "-s", "."]
+RUN go mod download
 
+COPY server/. $APP
+
+FROM golang_base as golang_build
+
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /go/bin/app .
+
+FROM alpine as release
+
+COPY --from=golang_build /go/bin/app /server/
+COPY --from=base /app/build/ /build/
+
+CMD [ "/server/app" ]
