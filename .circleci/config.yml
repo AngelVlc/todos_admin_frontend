@@ -4,19 +4,8 @@ workflows:
     version: 2
     build_and_test:
       jobs:
-        - test:
-            context:
-              - HEROKU
-              - AWS
+        - test
         - deploy:
-            context: HEROKU
-            requires:
-              - test
-            filters:
-              branches:
-                only: master
-        - deploy_aws:
-            context: AWS
             requires:
               - test
             filters:
@@ -24,6 +13,10 @@ workflows:
                 only: master
 
 commands:
+  configure_gcloud_credentials:
+    steps:
+    - run: echo 'export GOOGLE_APPLICATION_CREDENTIALS="${PWD}/google_credentials.json"' >> $BASH_ENV
+    - run: echo $GCLOUD_SERVICE_KEY > "${GOOGLE_APPLICATION_CREDENTIALS}"
   install_terraform:
     steps:
     - run: curl -sLo /tmp/terraform.zip https://releases.hashicorp.com/terraform/1.1.0/terraform_1.1.0_linux_amd64.zip
@@ -32,19 +25,22 @@ commands:
     - run: export PATH="~/bin:$PATH"
   init_terraform:
     steps:
-    - run: cd terraform && terraform init -input=false -backend-config="conn_str=$TERRAFORM_BACKEND"
-  init_terraform_aws:
+    - run: cd terraformGc && terraform init -input=false
+  plan_or_apply_terraform:
+    parameters:
+      command:
+        description: the terraform command to execute
+        type: string
     steps:
-    - run: cd terraformAws && terraform init -input=false
-  push_image_to_ecr:
+    - run: cd terraformGc && terraform <<parameters.command>> -target=google_project_service.resource_manager -var app_name=$APP_NAME -var gc_project_id=$GCLOUD_PROJECT_ID -var container_image=eu.gcr.io/$GCLOUD_PROJECT_ID/release:latest -var backend_url=$BACKEND_URL
+    - run: cd terraformGc && terraform <<parameters.command>> -target=google_project_service.container_registry -var app_name=$APP_NAME -var gc_project_id=$GCLOUD_PROJECT_ID -var container_image=eu.gcr.io/$GCLOUD_PROJECT_ID/release:latest -var backend_url=$BACKEND_URL
+    - run: cd terraformGc && terraform <<parameters.command>> -var app_name=$APP_NAME -var gc_project_id=$GCLOUD_PROJECT_ID -var container_image=eu.gcr.io/$GCLOUD_PROJECT_ID/release:latest -var backend_url=$BACKEND_URL
+  push_image_to_gcr:
     steps:
-      - run: docker build --target release -t release --build-arg BACKEND_URL=$BACKEND_URL_AWS -f Dockerfile.go .
-      - run: echo 'export AWS_ACCOUNT_ID=`aws sts get-caller-identity --query "Account" --output text`' >> $BASH_ENV
-      - run: aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
-      - run: docker tag release:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/todosfrontend-production:latest
-      - run: docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/todosfrontend-production:latest
-      - run: IMAGES_TO_DELETE=$( aws ecr list-images --repository-name todosfrontend-production --filter "tagStatus=UNTAGGED" --query 'imageIds[*]' --output json ) && aws ecr batch-delete-image --repository-name todosfrontend-production --image-ids "$IMAGES_TO_DELETE" || true
-
+      - run: docker build --target release -t eu.gcr.io/$GCLOUD_PROJECT_ID/release:latest --build-arg BACKEND_URL=$BACKEND_URL .
+      - run: gcloud auth configure-docker
+      - run: gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS --project=$GCLOUD_PROJECT_ID
+      - run: docker push eu.gcr.io/$GCLOUD_PROJECT_ID/release:latest
 jobs:
   test:
     machine:
@@ -54,29 +50,19 @@ jobs:
       - run: make build
       - run: make audit
       - run: make test-ci
+      - configure_gcloud_credentials
       - install_terraform
       - init_terraform
-      - run: cd terraform && terraform plan -var app_name=$APP_NAME
+      - plan_or_apply_terraform:
+          command: plan
   deploy:
     machine:
       image: ubuntu-2004:202111-01
     steps:
       - checkout
+      - configure_gcloud_credentials
       - install_terraform
-      - run: heroku container:login
       - init_terraform
-      - run: cd terraform && terraform apply -input=false -auto-approve -var app_name=$APP_NAME
-      - run: docker build -t todos-release --target release --build-arg BACKEND_URL=$BACKEND_URL .
-      - run: docker tag todos-release registry.heroku.com/$APP_NAME/web
-      - run: docker push registry.heroku.com/$APP_NAME/web
-      - run: heroku container:release --app $APP_NAME web
-  deploy_aws:
-    machine:
-      image: ubuntu-2004:202111-01
-    steps:
-      - checkout
-      - install_terraform
-      - init_terraform_aws
-      - run: cd terraformAws && terraform apply -target=aws_ecr_repository.todos_repository -input=false -auto-approve -var app_name=$APP_NAME -var environment=production -var domain=$DOMAIN -var backend_url=$BACKEND_URL_AWS
-      - push_image_to_ecr
-      - run: cd terraformAws && terraform apply -input=false -auto-approve -var app_name=$APP_NAME -var environment=production -var domain=$DOMAIN -var backend_url=$BACKEND_URL_AWS
+      - push_image_to_gcr
+      - plan_or_apply_terraform:
+          command: apply -input=false -auto-approve
