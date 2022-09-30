@@ -4,10 +4,14 @@ workflows:
     version: 2
     build_and_test:
       jobs:
-        - test
+        - test:
+            context:
+              - GCLOUD_TODOS
         - deploy:
             requires:
               - test
+            context:
+              - GCLOUD_TODOS
             filters:
               branches:
                 only: master
@@ -32,15 +36,15 @@ commands:
         description: the terraform command to execute
         type: string
     steps:
-    - run: cd terraformGc && terraform <<parameters.command>> -target=google_project_service.resource_manager -var app_name=$APP_NAME -var gc_project_id=$GCLOUD_PROJECT_ID -var container_image=eu.gcr.io/$GCLOUD_PROJECT_ID/release:latest -var backend_url=$BACKEND_URL
-    - run: cd terraformGc && terraform <<parameters.command>> -target=google_project_service.container_registry -var app_name=$APP_NAME -var gc_project_id=$GCLOUD_PROJECT_ID -var container_image=eu.gcr.io/$GCLOUD_PROJECT_ID/release:latest -var backend_url=$BACKEND_URL
-    - run: cd terraformGc && terraform <<parameters.command>> -var app_name=$APP_NAME -var gc_project_id=$GCLOUD_PROJECT_ID -var container_image=eu.gcr.io/$GCLOUD_PROJECT_ID/release:latest -var backend_url=$BACKEND_URL
+    - run: cd terraformGc && terraform <<parameters.command>> -target=google_project_service.resource_manager -var app_name=$APP_NAME -var gc_project_id=$GCLOUD_PROJECT_ID -var container_image=eu.gcr.io/$GCLOUD_PROJECT_ID/$APP_NAME/release:latest -var backend_url=$BACKEND_URL
+    - run: cd terraformGc && terraform <<parameters.command>> -target=google_project_service.container_registry -var app_name=$APP_NAME -var gc_project_id=$GCLOUD_PROJECT_ID -var container_image=eu.gcr.io/$GCLOUD_PROJECT_ID/$APP_NAME/release:latest -var backend_url=$BACKEND_URL
+    - run: cd terraformGc && terraform <<parameters.command>> -var app_name=$APP_NAME -var gc_project_id=$GCLOUD_PROJECT_ID -var container_image=eu.gcr.io/$GCLOUD_PROJECT_ID/$APP_NAME/release:latest -var backend_url=$BACKEND_URL
   push_image_to_gcr:
     steps:
-      - run: docker build --target release -t eu.gcr.io/$GCLOUD_PROJECT_ID/release:latest --build-arg BACKEND_URL=$BACKEND_URL .
+      - run: docker build --target release -t eu.gcr.io/$GCLOUD_PROJECT_ID/$APP_NAME/release:latest --build-arg BACKEND_URL=$BACKEND_URL .
       - run: gcloud auth configure-docker
       - run: gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS --project=$GCLOUD_PROJECT_ID
-      - run: docker push eu.gcr.io/$GCLOUD_PROJECT_ID/release:latest
+      - run: docker push eu.gcr.io/$GCLOUD_PROJECT_ID/$APP_NAME/release:latest
 jobs:
   test:
     machine:
