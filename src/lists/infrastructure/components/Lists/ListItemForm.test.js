@@ -64,7 +64,7 @@ const renderWithContextAndRouterForNewItem = () => {
       <AppContext.Provider value={context}>
         <MemoryRouter initialEntries={[`/lists/2/items/new`]}>
           <Route path="/lists/:listId/items/new">
-            <ListItemForm listItem={new ListItem({ listId: 2 })} />
+            <ListItemForm listItem={new ListItem({ listId: 2, title: "", description: "" })} />
           </Route>
         </MemoryRouter>
       </AppContext.Provider>

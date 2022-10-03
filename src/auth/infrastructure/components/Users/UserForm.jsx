@@ -49,7 +49,7 @@ export const UserForm = (props) => {
             Name
           </label>
           <div className="control">
-            <Field name="name" type="text" data-testid="name" />
+            <Field name="name" type="text" data-testid="name" autoFocus/>
           </div>
           <p className="help is-danger" data-testid="userNameErrors">
             <ErrorMessage name="name" />

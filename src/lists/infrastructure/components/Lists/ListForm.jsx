@@ -13,7 +13,7 @@ import {
 
 export const ListForm = (props) => {
   let history = useHistory();
-  // without loaded the items are reset after save
+  // without loaded, the items are reset after save
   const loaded = useRef(false);
   const { useCaseFactory } = useContext(AppContext);
 
@@ -82,6 +82,7 @@ export const ListForm = (props) => {
               as="input"
               className="input"
               data-testid="name"
+              autoFocus
             />
           </div>
           <p className="help is-danger" data-testid="nameErrors">

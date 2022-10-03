@@ -27,7 +27,7 @@ export const NewListItemPage = () => {
           </li>
         </ul>
       </nav>
-      <ListItemForm listItem={new ListItem({ listId })} />
+      <ListItemForm listItem={new ListItem({ listId: listId, title: "", description: "" })} />
     </div>
   );
 };

@@ -55,6 +55,7 @@ export const ListItemForm = (props) => {
               as="input"
               className="input"
               data-testid="title"
+              autoFocus
             />
           </div>
           <p className="help is-danger" data-testid="titleErrors">
