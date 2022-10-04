@@ -1,4 +1,4 @@
-FROM node:14.20.1-alpine3.16 as base
+FROM node:18.10.0-alpine3.16 as base
 
 ARG BACKEND_URL
 ENV REACT_APP_BACKEND_URL=${BACKEND_URL}
@@ -14,7 +14,7 @@ COPY . $APP
 
 RUN npm run-script build
 
-FROM node:14.20.1-alpine3.16 as release
+FROM node:18.10.0-alpine3.16 as release
 
 ENV APP /app
 WORKDIR $APP
