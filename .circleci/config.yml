@@ -36,15 +36,16 @@ commands:
         description: the terraform command to execute
         type: string
     steps:
-    - run: cd terraformGc && terraform <<parameters.command>> -target=google_project_service.resource_manager -var app_name=$APP_NAME -var gc_project_id=$GCLOUD_PROJECT_ID -var container_image=eu.gcr.io/$GCLOUD_PROJECT_ID/$APP_NAME/release:latest -var backend_url=$BACKEND_URL
-    - run: cd terraformGc && terraform <<parameters.command>> -target=google_project_service.container_registry -var app_name=$APP_NAME -var gc_project_id=$GCLOUD_PROJECT_ID -var container_image=eu.gcr.io/$GCLOUD_PROJECT_ID/$APP_NAME/release:latest -var backend_url=$BACKEND_URL
-    - run: cd terraformGc && terraform <<parameters.command>> -var app_name=$APP_NAME -var gc_project_id=$GCLOUD_PROJECT_ID -var container_image=eu.gcr.io/$GCLOUD_PROJECT_ID/$APP_NAME/release:latest -var backend_url=$BACKEND_URL
+    - run: cd terraformGc && terraform <<parameters.command>> -target=google_project_service.resource_manager -var app_name=$APP_NAME -var gc_project_id=$GCLOUD_PROJECT_ID
+    - run: cd terraformGc && terraform <<parameters.command>> -target=google_project_service.container_registry -var app_name=$APP_NAME -var gc_project_id=$GCLOUD_PROJECT_ID 
+    - run: cd terraformGc && terraform <<parameters.command>> -var app_name=$APP_NAME -var gc_project_id=$GCLOUD_PROJECT_ID
   push_image_to_gcr:
     steps:
       - run: docker build --target release -t eu.gcr.io/$GCLOUD_PROJECT_ID/$APP_NAME/release:latest --build-arg BACKEND_URL=$BACKEND_URL .
       - run: gcloud auth configure-docker
       - run: gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS --project=$GCLOUD_PROJECT_ID
       - run: docker push eu.gcr.io/$GCLOUD_PROJECT_ID/$APP_NAME/release:latest
+      - run: echo 'export CONTAINER_IMAGE=`docker images --format "{{.Repository}}@{{.Digest}}" --filter "reference=eu.gcr.io/$GCLOUD_PROJECT_ID/$APP_NAME/release"`' >> $BASH_ENV
 jobs:
   test:
     machine:
@@ -69,4 +70,4 @@ jobs:
       - init_terraform
       - push_image_to_gcr
       - plan_or_apply_terraform:
-          command: apply -input=false -auto-approve
+          command: apply -input=false -auto-approve -var container_image=$CONTAINER_IMAGE -var backend_url=$BACKEND_URL

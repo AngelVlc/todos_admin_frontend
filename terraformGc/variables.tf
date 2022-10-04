@@ -8,8 +8,10 @@ variable "gc_project_id" {
 
 variable "container_image" {
   description = "Container imaged used in the Cloud Run service"
+  default = "image"
 }
 
 variable "backend_url" {
   description = "Backend url"
+  default = "url"
 }
