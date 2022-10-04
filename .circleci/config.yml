@@ -70,4 +70,4 @@ jobs:
       - init_terraform
       - push_image_to_gcr
       - plan_or_apply_terraform:
-          command: apply -input=false -auto-approve -var container_image=$CONTAINER_IMAGE -var backend_url=$BACKEND_URL
+          command: apply -input=false -auto-approve -var container_image=$CONTAINER_IMAGE

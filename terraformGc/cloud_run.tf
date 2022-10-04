@@ -10,10 +10,6 @@ resource "google_cloud_run_service" "run_service" {
           name  = "ENVIRONMENT"
           value = "production"
         }
-        env {
-          name  = "REACT_APP_BACKEND_URL"
-          value = var.backend_url
-        }
       }
       service_account_name = "todos-service-account"
     }
