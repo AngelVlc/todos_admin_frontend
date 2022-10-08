@@ -82,18 +82,10 @@ exports[`should match the snapshot 1`] = `
           <td>
             <center>
               <a
-                class="has-text-black"
+                class="has-text-black delete"
                 data-testid="deleteList1"
                 href="/lists/1/delete"
-              >
-                <span
-                  class="icon is-small"
-                >
-                  <i
-                    class="fas fa-trash-alt fa-xs"
-                  />
-                </span>
-              </a>
+              />
             </center>
           </td>
         </tr>
@@ -117,18 +109,10 @@ exports[`should match the snapshot 1`] = `
           <td>
             <center>
               <a
-                class="has-text-black"
+                class="has-text-black delete"
                 data-testid="deleteList2"
                 href="/lists/2/delete"
-              >
-                <span
-                  class="icon is-small"
-                >
-                  <i
-                    class="fas fa-trash-alt fa-xs"
-                  />
-                </span>
-              </a>
+              />
             </center>
           </td>
         </tr>

@@ -150,13 +150,10 @@ export const ListForm = (props) => {
                                 <div className="is-justify-content-flex-end">
                                   <center>
                                     <Link
-                                      className="has-text-black"
+                                      className="has-text-black delete"
                                       data-testid={`deleteListItem${item.id}`}
                                       to={`/lists/${props.list?.id}/items/${item.id}/delete`}
                                     >
-                                      <span className="icon is-small">
-                                        <i className="fas fa-trash-alt fa-xs"></i>
-                                      </span>
                                     </Link>
                                   </center>
                                 </div>

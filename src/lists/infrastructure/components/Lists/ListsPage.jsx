@@ -77,13 +77,10 @@ export const ListsPage = () => {
                 <td>
                   <center>
                     <Link
-                      className="has-text-black"
+                      className="has-text-black delete"
                       data-testid={`deleteList${list.id}`}
                       to={`/lists/${list.id}/delete`}
                     >
-                      <span className="icon is-small">
-                        <i className="fas fa-trash-alt fa-xs"></i>
-                      </span>
                     </Link>
                   </center>
                 </td>

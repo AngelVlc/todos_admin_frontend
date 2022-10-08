@@ -77,13 +77,10 @@ export const UsersPage = () => {
                 <td>
                   <center>
                     <Link
-                      className="has-text-black"
+                      className="has-text-black delete"
                       data-testid={`deleteUser${user.id}`}
                       to={`/users/${user.id}/delete`}
                     >
-                      <span className="icon is-small">
-                        <i className="fas fa-trash-alt fa-xs"></i>
-                      </span>
                     </Link>
                   </center>
                 </td>

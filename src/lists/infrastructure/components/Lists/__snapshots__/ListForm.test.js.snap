@@ -160,18 +160,10 @@ exports[`should match the snapshot for an existing list 1`] = `
             >
               <center>
                 <a
-                  class="has-text-black"
+                  class="has-text-black delete"
                   data-testid="deleteListItem5"
                   href="/lists/2/items/5/delete"
-                >
-                  <span
-                    class="icon is-small"
-                  >
-                    <i
-                      class="fas fa-trash-alt fa-xs"
-                    />
-                  </span>
-                </a>
+                />
               </center>
             </div>
           </div>
@@ -205,18 +197,10 @@ exports[`should match the snapshot for an existing list 1`] = `
             >
               <center>
                 <a
-                  class="has-text-black"
+                  class="has-text-black delete"
                   data-testid="deleteListItem6"
                   href="/lists/2/items/6/delete"
-                >
-                  <span
-                    class="icon is-small"
-                  >
-                    <i
-                      class="fas fa-trash-alt fa-xs"
-                    />
-                  </span>
-                </a>
+                />
               </center>
             </div>
           </div>
