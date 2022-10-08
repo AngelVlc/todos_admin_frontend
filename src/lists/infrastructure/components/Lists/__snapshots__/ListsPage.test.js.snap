@@ -66,8 +66,8 @@ exports[`should match the snapshot 1`] = `
           <td>
             <a
               class="has-text-black"
-              data-testid="editList1"
-              href="/lists/1/edit"
+              data-testid="viewList1"
+              href="/lists/1"
             >
               list1
             </a>
@@ -93,8 +93,8 @@ exports[`should match the snapshot 1`] = `
           <td>
             <a
               class="has-text-black"
-              data-testid="editList2"
-              href="/lists/2/edit"
+              data-testid="viewList2"
+              href="/lists/2"
             >
               list2
             </a>

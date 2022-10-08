@@ -63,8 +63,8 @@ export const ListsPage = () => {
                 <td>
                   <Link
                     className="has-text-black"
-                    data-testid={`editList${list.id}`}
-                    to={`/lists/${list.id}/edit`}
+                    data-testid={`viewList${list.id}`}
+                    to={`/lists/${list.id}`}
                   >
                     {list.name}
                   </Link>
