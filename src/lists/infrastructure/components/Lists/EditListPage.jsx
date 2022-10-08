@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useContext, useCallback } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { ListForm } from "./ListForm";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { GetListByIdUseCase } from "../../../application/lists";
 import { GetListItemsUseCase } from "../../../application/listItems";
+import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb/Breadcrumb";
 import { List } from "../../../domain";
 
 export const EditListPage = () => {
@@ -27,21 +28,15 @@ export const EditListPage = () => {
 
   return (
     <div className="container">
-      <nav className="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-          <li>
-            <Link to={`/`}>Home</Link>
-          </li>
-          <li>
-            <Link to={`/lists`}>Lists</Link>
-          </li>
-          <li className="is-active">
-            <Link aria-current="page" to={`/lists/${listId}`}>
-              {pageState.name}
-            </Link>
-          </li>
-        </ul>
-      </nav>
+      <Breadcrumb
+        items={[
+          { url: "/lists", text: "Lists" },
+          {
+            url: `/lists/${listId}`,
+            text: pageState.name,
+          },
+        ]}
+      />
       <h3 className="title">{`Edit list '${pageState.name}'`}</h3>
       <ListForm list={pageState} />
     </div>

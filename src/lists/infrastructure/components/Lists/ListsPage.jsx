@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext, useCallback } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { GetListsUseCase } from "../../../application/lists";
+import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb/Breadcrumb";
 
 export const ListsPage = () => {
   const [lists, setLists] = useState([]);
@@ -25,18 +26,11 @@ export const ListsPage = () => {
 
   return (
     <div className="container">
-      <nav className="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-          <li>
-            <Link to={`/`}>Home</Link>
-          </li>
-          <li className="is-active">
-            <Link aria-current="page" to={`/lists`}>
-              Lists
-            </Link>
-          </li>
-        </ul>
-      </nav>
+      <Breadcrumb
+        items={[
+          { url: "/lists", text: "Lists" },
+        ]}
+      />
       <h3 className="title">LISTS</h3>
       <table className="table">
         <thead>

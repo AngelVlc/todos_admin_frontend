@@ -1,5 +1,6 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb/Breadcrumb";
 import { ListItemForm } from "./ListItemForm";
 import { ListItem } from "../../../domain";
 
@@ -8,24 +9,13 @@ export const NewListItemPage = () => {
 
   return (
     <div className="container">
-      <nav className="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-          <li>
-            <Link to={`/`}>Home</Link>
-          </li>
-          <li>
-            <Link to={`/lists`}>Lists</Link>
-          </li>
-          <li>
-            <Link to={`/lists/${listId}/edit`}>List</Link>
-          </li>
-          <li className="is-active">
-            <Link aria-current="page" to={`/lists/${listId}/items/new`}>
-              New
-            </Link>
-          </li>
-        </ul>
-      </nav>
+      <Breadcrumb
+        items={[
+          { url: "/lists", text: "Lists" },
+          { url:`/lists/${listId}/edit`, text: "List" },
+          { url: `/lists/${listId}/items/new`, text: "New" },
+        ]}
+      />
       <h3 className="title">New item</h3>
       <ListItemForm listItem={new ListItem({ listId: listId, title: "", description: "" })} />
     </div>

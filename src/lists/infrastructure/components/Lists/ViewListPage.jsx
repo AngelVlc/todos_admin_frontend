@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useContext, useCallback } from "react";
-import { useHistory, Link, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { GetListByIdUseCase } from "../../../application/lists";
 import { GetListItemsUseCase } from "../../../application/listItems";
 import { List } from "../../../domain";
+import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb/Breadcrumb";
 
 export const ViewListPage = () => {
   let history = useHistory();
@@ -27,21 +28,12 @@ export const ViewListPage = () => {
 
   return (
     <div className="container">
-      <nav className="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-          <li>
-            <Link to={`/`}>Home</Link>
-          </li>
-          <li>
-            <Link to={`/lists`}>Lists</Link>
-          </li>
-          <li className="is-active">
-            <Link aria-current="page" to={`/lists/${listId}`}>
-              {pageState.name}
-            </Link>
-          </li>
-        </ul>
-      </nav>
+      <Breadcrumb
+        items={[
+          { url: "/lists", text: "Lists" },
+          { url: `/lists/${listId}`, text: pageState.name },
+        ]}
+      />
       <h3 className="title">{`List '${pageState.name}'`}</h3>
       <div>
         {pageState.items.map((item) => (
@@ -52,22 +44,26 @@ export const ViewListPage = () => {
         ))}
       </div>
       <div className="field is-grouped mt-4">
-          <p className="control">
-            <button className="button" data-testid="edit" onClick={() => history.push(`/lists/${listId}/edit`)}>
-              EDIT
-            </button>
-          </p>
-          <p className="control">
-            <button
-              className="button"
-              data-testid="cancel"
-              type="button"
-              onClick={() => history.push("/lists")}
-            >
-              BACK
-            </button>
-          </p>
-        </div>
+        <p className="control">
+          <button
+            className="button"
+            data-testid="edit"
+            onClick={() => history.push(`/lists/${listId}/edit`)}
+          >
+            EDIT
+          </button>
+        </p>
+        <p className="control">
+          <button
+            className="button"
+            data-testid="cancel"
+            type="button"
+            onClick={() => history.push("/lists")}
+          >
+            BACK
+          </button>
+        </p>
+      </div>
     </div>
   );
 };

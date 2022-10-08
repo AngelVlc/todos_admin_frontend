@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext, useCallback } from "react";
-import { Link } from "react-router-dom";
+import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb/Breadcrumb";
 import { TableWithSelectors } from "../../../../shared/infrastructure/components/TableWithSelectors/TableWithSelectors";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import {
@@ -40,18 +40,11 @@ export const RefreshTokensPage = () => {
 
   return (
     <div className="container">
-      <nav className="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-          <li>
-            <a href="/">Home</a>
-          </li>
-          <li className="is-active">
-            <Link aria-current="page" to={`/refreshtokens`}>
-              Refresh Tokens
-            </Link>
-          </li>
-        </ul>
-      </nav>
+      <Breadcrumb
+        items={[
+          { url: "/refreshtokens", text: "Refresh Tokens" },
+        ]}
+      />
       <h3 className="title">Refresh Tokens</h3>
       <div className="buttons">
         <button

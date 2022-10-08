@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext, useCallback } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { GetUsersUseCase } from "../../../application/users";
+import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb/Breadcrumb";
 
 export const UsersPage = () => {
   const [users, setUsers] = useState([]);
@@ -21,18 +22,11 @@ export const UsersPage = () => {
 
   return (
     <div className="container">
-      <nav className="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-          <li>
-            <a href="/">Home</a>
-          </li>
-          <li className="is-active">
-            <Link aria-current="page" to={`/users`}>
-              Users
-            </Link>
-          </li>
-        </ul>
-      </nav>
+      <Breadcrumb
+        items={[
+          { url: "/users", text: "Users" },
+        ]}
+      />
       <h3 className="title">USERS</h3>
       <table className="table">
         <thead>

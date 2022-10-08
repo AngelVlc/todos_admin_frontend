@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext, useCallback } from "react";
-import { Link, useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
+import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb/Breadcrumb";
 import {
   GetListByIdUseCase,
   DeleteListByIdUseCase,
@@ -35,25 +36,13 @@ export const DeleteListPage = () => {
     <>
       {list && (
         <div className="container">
-          <nav className="breadcrumb" aria-label="breadcrumbs">
-            <ul>
-              <li>
-                <Link to={`/`}>Home</Link>
-              </li>
-              <li>
-                <Link to={`/lists`}>Lists</Link>
-              </li>
-              <li>
-                <Link to={`/lists/${listId}/edit`}>List</Link>
-              </li>
-              <li className="is-active">
-                <Link
-                  aria-current="page"
-                  to={`/lists/${listId}/delete`}
-                >{`Delete ${list.name}`}</Link>
-              </li>
-            </ul>
-          </nav>
+          <Breadcrumb
+            items={[
+              { url: "/lists", text: "Lists" },
+              { url:`/lists/${listId}/edit`, text: "List" },
+              { url: `/lists/${listId}/delete`, text: `Delete ${list.name}` },
+            ]}
+          />
           <h3 className="title">{`Delete list ${list.name}`}</h3>
           <div className="buttons">
             <button
