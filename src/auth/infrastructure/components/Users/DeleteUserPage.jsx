@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useContext, useCallback } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
+import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb/Breadcrumb";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import {
   GetUserByIdUseCase,
   DeleteUserByIdUseCase,
 } from "../../../application/users";
 
-export const UserDeletePage = () => {
+export const DeleteUserPage = () => {
   const [user, setUser] = useState(null);
   const { useCaseFactory } = useContext(AppContext);
   let { userId } = useParams();
@@ -35,35 +36,18 @@ export const UserDeletePage = () => {
     <>
       {user && (
         <div className="container">
+          <Breadcrumb
+            items={[
+              { url: "/users", text: "Users" },
+              { url: `/users/${userId}/edit`, text: user.name },
+              { url: `/users/${userId}/delete`, text: `Delete ${user.name}` },
+            ]}
+          />
           <h3 className="title">
             {user.isAdmin
               ? `Delete admin user '${user.name}'?`
               : `Delete user ${user.name}?`}
           </h3>
-          <nav className="breadcrumb" aria-label="breadcrumbs">
-            <ul>
-              <li>
-                <Link to={`/`}>Home</Link>
-              </li>
-              <li>
-                <Link to={`/users`}>Users</Link>
-              </li>
-              <li>
-                <Link to={`/users`}>Users</Link>
-              </li>
-              <li>
-                <Link aria-current="page" to={`/users/${userId}/edit`}>
-                  {user.name}
-                </Link>
-              </li>
-              <li className="is-active">
-                <Link
-                  aria-current="page"
-                  to={`/users/${userId}/delete`}
-                >{`Delete ${user.name}`}</Link>
-              </li>
-            </ul>
-          </nav>
           <div className="buttons">
             <button
               className="button is-danger"

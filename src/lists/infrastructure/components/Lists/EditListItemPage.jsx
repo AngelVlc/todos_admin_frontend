@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useContext, useCallback } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { ListItemForm } from "./ListItemForm";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { GetListItemByIdUseCase } from "../../../application/listItems";
+import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb/Breadcrumb";
 
 export const EditListItemPage = () => {
   let { listId, itemId } = useParams();
@@ -22,28 +23,17 @@ export const EditListItemPage = () => {
 
   return (
     <div className="container">
+      <Breadcrumb
+        items={[
+          { url: "/lists", text: "Lists" },
+          { url: `/lists/${listId}/edit`, text: "List" },
+          {
+            url: `/lists/${listId}/items/${itemId}/edit`,
+            text: pageState.title,
+          },
+        ]}
+      />
       <h3 className="title">{`Edit item '${pageState.title}'`}</h3>
-      <nav className="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-          <li>
-            <Link to={`/`}>Home</Link>
-          </li>
-          <li>
-            <Link to={`/lists`}>Lists</Link>
-          </li>
-          <li>
-            <Link to={`/lists/${listId}/edit`}>List</Link>
-          </li>
-          <li className="is-active">
-            <Link
-              aria-current="page"
-              to={`/lists/${listId}/items/${itemId}/edit`}
-            >
-              {pageState.title}
-            </Link>
-          </li>
-        </ul>
-      </nav>
       <ListItemForm listItem={pageState} />
     </div>
   );

@@ -1,26 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { UserForm } from "./UserForm";
+import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb/Breadcrumb";
 
 export const NewUserPage = () => {
   return (
     <div className="container">
+      <Breadcrumb
+        items={[
+          { url: "/users", text: "Users" },
+          { url: "/users/new", text: "New" },
+        ]}
+      />
       <h3 className="title">New user</h3>
-      <nav className="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-          <li>
-            <Link to={`/`}>Home</Link>
-          </li>
-          <li>
-            <Link to={`/users`}>Users</Link>
-          </li>
-          <li className="is-active">
-            <Link aria-current="page" to={"/users/new"}>
-              New
-            </Link>
-          </li>
-        </ul>
-      </nav>
       <UserForm />
     </div>
   );

@@ -5,11 +5,6 @@ exports[`should match the snapshot for an existing list 1`] = `
   <div
     class="container"
   >
-    <h3
-      class="title"
-    >
-      Edit list 'list name'
-    </h3>
     <nav
       aria-label="breadcrumbs"
       class="breadcrumb"
@@ -41,6 +36,11 @@ exports[`should match the snapshot for an existing list 1`] = `
         </li>
       </ul>
     </nav>
+    <h3
+      class="title"
+    >
+      Edit list 'list name'
+    </h3>
     <form
       action="#"
     >

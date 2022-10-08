@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useContext, useCallback } from "react";
-import { Link, useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
+import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb/Breadcrumb";
 import {
   GetListByIdUseCase,
   DeleteListByIdUseCase,
-} from "./../../../application/lists";
+} from "../../../application/lists";
 
-export const ListDeletePage = () => {
+export const DeleteListPage = () => {
   const [list, setList] = useState(null);
   const { useCaseFactory } = useContext(AppContext);
   let { listId } = useParams();
@@ -35,26 +36,14 @@ export const ListDeletePage = () => {
     <>
       {list && (
         <div className="container">
+          <Breadcrumb
+            items={[
+              { url: "/lists", text: "Lists" },
+              { url:`/lists/${listId}/edit`, text: "List" },
+              { url: `/lists/${listId}/delete`, text: `Delete ${list.name}` },
+            ]}
+          />
           <h3 className="title">{`Delete list ${list.name}`}</h3>
-          <nav className="breadcrumb" aria-label="breadcrumbs">
-            <ul>
-              <li>
-                <Link to={`/`}>Home</Link>
-              </li>
-              <li>
-                <Link to={`/lists`}>Lists</Link>
-              </li>
-              <li>
-                <Link to={`/lists/${listId}/edit`}>List</Link>
-              </li>
-              <li className="is-active">
-                <Link
-                  aria-current="page"
-                  to={`/lists/${listId}/delete`}
-                >{`Delete ${list.name}`}</Link>
-              </li>
-            </ul>
-          </nav>
           <div className="buttons">
             <button
               className="button is-danger"

@@ -69,17 +69,17 @@ it("should add a new list", async () => {
   mockHistoryPush.mockClear();
 });
 
-it("should edit the list", async () => {
+it("should view the list", async () => {
   let container;
   await act(async () => {
     container = renderWithContextAndRouter(<ListsPage />);
   });
 
   await waitFor(() => {
-    fireEvent.click(container.getByTestId("editList2"));
+    fireEvent.click(container.getByTestId("viewList2"));
   });
 
-  expect(history.location.pathname).toBe("/lists/2/edit");
+  expect(history.location.pathname).toBe("/lists/2");
 });
 
 it("should delete the list", async () => {

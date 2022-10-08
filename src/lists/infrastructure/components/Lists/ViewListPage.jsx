@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useContext, useCallback } from "react";
-import { useParams } from "react-router-dom";
-import { ListForm } from "./ListForm";
+import { useHistory, useParams } from "react-router-dom";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { GetListByIdUseCase } from "../../../application/lists";
 import { GetListItemsUseCase } from "../../../application/listItems";
-import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb/Breadcrumb";
 import { List } from "../../../domain";
+import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb/Breadcrumb";
 
-export const EditListPage = () => {
+export const ViewListPage = () => {
+  let history = useHistory();
   let { listId } = useParams();
   const { useCaseFactory } = useContext(AppContext);
   const [pageState, setPageState] = useState(new List({ name: "", items: [] }));
@@ -31,14 +31,39 @@ export const EditListPage = () => {
       <Breadcrumb
         items={[
           { url: "/lists", text: "Lists" },
-          {
-            url: `/lists/${listId}`,
-            text: pageState.name,
-          },
+          { url: `/lists/${listId}`, text: pageState.name },
         ]}
       />
-      <h3 className="title">{`Edit list '${pageState.name}'`}</h3>
-      <ListForm list={pageState} />
+      <h3 className="title">{`List '${pageState.name}'`}</h3>
+      <div>
+        {pageState.items.map((item) => (
+          <div className="mb-2" key={item.id}>
+            <p>{item.title}</p>
+            <p className="is-size-7">{item.description}</p>
+          </div>
+        ))}
+      </div>
+      <div className="field is-grouped mt-4">
+        <p className="control">
+          <button
+            className="button"
+            data-testid="edit"
+            onClick={() => history.push(`/lists/${listId}/edit`)}
+          >
+            EDIT
+          </button>
+        </p>
+        <p className="control">
+          <button
+            className="button"
+            data-testid="cancel"
+            type="button"
+            onClick={() => history.push("/lists")}
+          >
+            BACK
+          </button>
+        </p>
+      </div>
     </div>
   );
 };
