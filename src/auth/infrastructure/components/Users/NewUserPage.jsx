@@ -5,7 +5,6 @@ import { UserForm } from "./UserForm";
 export const NewUserPage = () => {
   return (
     <div className="container">
-      <h3 className="title">New user</h3>
       <nav className="breadcrumb" aria-label="breadcrumbs">
         <ul>
           <li>
@@ -21,6 +20,7 @@ export const NewUserPage = () => {
           </li>
         </ul>
       </nav>
+      <h3 className="title">New user</h3>
       <UserForm />
     </div>
   );

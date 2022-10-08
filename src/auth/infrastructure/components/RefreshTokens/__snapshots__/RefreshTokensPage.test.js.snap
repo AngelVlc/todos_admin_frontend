@@ -5,11 +5,6 @@ exports[`should match the snapshot 1`] = `
   <div
     class="container"
   >
-    <h3
-      class="title"
-    >
-      Refresh Tokens
-    </h3>
     <nav
       aria-label="breadcrumbs"
       class="breadcrumb"
@@ -34,6 +29,11 @@ exports[`should match the snapshot 1`] = `
         </li>
       </ul>
     </nav>
+    <h3
+      class="title"
+    >
+      Refresh Tokens
+    </h3>
     <div
       class="buttons"
     >

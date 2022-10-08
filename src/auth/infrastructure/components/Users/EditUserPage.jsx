@@ -22,7 +22,6 @@ export const EditUserPage = () => {
 
   return (
     <div className="container">
-      <h3 className="title">{`Edit user '${pageState.name}'`}</h3>
       <nav className="breadcrumb" aria-label="breadcrumbs">
         <ul>
           <li>
@@ -38,6 +37,7 @@ export const EditUserPage = () => {
           </li>
         </ul>
       </nav>
+      <h3 className="title">{`Edit user '${pageState.name}'`}</h3>
       <UserForm user={pageState}/>
     </div>
   );

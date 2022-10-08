@@ -25,7 +25,6 @@ export const ListsPage = () => {
 
   return (
     <div className="container">
-      <h3 className="title">LISTS</h3>
       <nav className="breadcrumb" aria-label="breadcrumbs">
         <ul>
           <li>
@@ -38,6 +37,7 @@ export const ListsPage = () => {
           </li>
         </ul>
       </nav>
+      <h3 className="title">LISTS</h3>
       <table className="table">
         <thead>
           <tr>

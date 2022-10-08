@@ -22,7 +22,6 @@ export const EditListItemPage = () => {
 
   return (
     <div className="container">
-      <h3 className="title">{`Edit item '${pageState.title}'`}</h3>
       <nav className="breadcrumb" aria-label="breadcrumbs">
         <ul>
           <li>
@@ -44,6 +43,7 @@ export const EditListItemPage = () => {
           </li>
         </ul>
       </nav>
+      <h3 className="title">{`Edit item '${pageState.title}'`}</h3>
       <ListItemForm listItem={pageState} />
     </div>
   );

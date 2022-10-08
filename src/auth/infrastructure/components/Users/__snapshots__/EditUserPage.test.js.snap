@@ -5,11 +5,6 @@ exports[`should match the snapshot for an existing admin user 1`] = `
   <div
     class="container"
   >
-    <h3
-      class="title"
-    >
-      Edit user 'user'
-    </h3>
     <nav
       aria-label="breadcrumbs"
       class="breadcrumb"
@@ -41,6 +36,11 @@ exports[`should match the snapshot for an existing admin user 1`] = `
         </li>
       </ul>
     </nav>
+    <h3
+      class="title"
+    >
+      Edit user 'user'
+    </h3>
     <form
       action="#"
     >
@@ -175,11 +175,6 @@ exports[`should match the snapshot for an existing non admin user 1`] = `
   <div
     class="container"
   >
-    <h3
-      class="title"
-    >
-      Edit user 'user'
-    </h3>
     <nav
       aria-label="breadcrumbs"
       class="breadcrumb"
@@ -211,6 +206,11 @@ exports[`should match the snapshot for an existing non admin user 1`] = `
         </li>
       </ul>
     </nav>
+    <h3
+      class="title"
+    >
+      Edit user 'user'
+    </h3>
     <form
       action="#"
     >

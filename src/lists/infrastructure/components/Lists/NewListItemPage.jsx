@@ -8,7 +8,6 @@ export const NewListItemPage = () => {
 
   return (
     <div className="container">
-      <h3 className="title">New item</h3>
       <nav className="breadcrumb" aria-label="breadcrumbs">
         <ul>
           <li>
@@ -27,6 +26,7 @@ export const NewListItemPage = () => {
           </li>
         </ul>
       </nav>
+      <h3 className="title">New item</h3>
       <ListItemForm listItem={new ListItem({ listId: listId, title: "", description: "" })} />
     </div>
   );

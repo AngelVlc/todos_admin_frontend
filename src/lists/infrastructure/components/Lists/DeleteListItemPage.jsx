@@ -36,7 +36,6 @@ export const DeleteListItemPage = () => {
     <>
       {item && (
         <div className="container">
-          <h3 className="title">{`Delete list item ${item.title}`}</h3>
           <nav className="breadcrumb" aria-label="breadcrumbs">
             <ul>
               <li>
@@ -61,6 +60,7 @@ export const DeleteListItemPage = () => {
               </li>
             </ul>
           </nav>
+          <h3 className="title">{`Delete list item ${item.title}`}</h3>
           <div className="buttons">
             <button
               className="button is-danger"

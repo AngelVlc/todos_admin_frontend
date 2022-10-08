@@ -35,11 +35,6 @@ export const DeleteUserPage = () => {
     <>
       {user && (
         <div className="container">
-          <h3 className="title">
-            {user.isAdmin
-              ? `Delete admin user '${user.name}'?`
-              : `Delete user ${user.name}?`}
-          </h3>
           <nav className="breadcrumb" aria-label="breadcrumbs">
             <ul>
               <li>
@@ -64,6 +59,11 @@ export const DeleteUserPage = () => {
               </li>
             </ul>
           </nav>
+          <h3 className="title">
+            {user.isAdmin
+              ? `Delete admin user '${user.name}'?`
+              : `Delete user ${user.name}?`}
+          </h3>
           <div className="buttons">
             <button
               className="button is-danger"

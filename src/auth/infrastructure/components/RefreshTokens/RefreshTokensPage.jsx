@@ -40,7 +40,6 @@ export const RefreshTokensPage = () => {
 
   return (
     <div className="container">
-      <h3 className="title">Refresh Tokens</h3>
       <nav className="breadcrumb" aria-label="breadcrumbs">
         <ul>
           <li>
@@ -53,6 +52,7 @@ export const RefreshTokensPage = () => {
           </li>
         </ul>
       </nav>
+      <h3 className="title">Refresh Tokens</h3>
       <div className="buttons">
         <button
           className="button is-danger"

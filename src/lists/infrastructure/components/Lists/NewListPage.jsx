@@ -5,7 +5,6 @@ import { ListForm } from './ListForm';
 export const NewListPage = () => {
     return (
         <div className="container">
-            <h3 className="title">New list</h3>
             <nav className="breadcrumb" aria-label="breadcrumbs">
                 <ul>
                     <li><Link to={`/`}>Home</Link></li>
@@ -13,6 +12,7 @@ export const NewListPage = () => {
                     <li className="is-active"><Link aria-current="page" to={'/lists/new'}>New</Link></li>
                 </ul>
             </nav>
+            <h3 className="title">New list</h3>
             <ListForm/>
         </div>
     )

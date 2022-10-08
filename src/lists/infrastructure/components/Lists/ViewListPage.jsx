@@ -27,7 +27,6 @@ export const ViewListPage = () => {
 
   return (
     <div className="container">
-      <h3 className="title">{`List '${pageState.name}'`}</h3>
       <nav className="breadcrumb" aria-label="breadcrumbs">
         <ul>
           <li>
@@ -43,6 +42,7 @@ export const ViewListPage = () => {
           </li>
         </ul>
       </nav>
+      <h3 className="title">{`List '${pageState.name}'`}</h3>
       <div>
         {pageState.items.map((item) => (
           <div className="mb-2" key={item.id}>

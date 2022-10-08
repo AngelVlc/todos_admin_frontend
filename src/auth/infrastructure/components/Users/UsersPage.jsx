@@ -21,7 +21,6 @@ export const UsersPage = () => {
 
   return (
     <div className="container">
-      <h3 className="title">USERS</h3>
       <nav className="breadcrumb" aria-label="breadcrumbs">
         <ul>
           <li>
@@ -34,6 +33,7 @@ export const UsersPage = () => {
           </li>
         </ul>
       </nav>
+      <h3 className="title">USERS</h3>
       <table className="table">
         <thead>
           <tr>
