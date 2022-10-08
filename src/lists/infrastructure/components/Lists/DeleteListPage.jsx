@@ -2,41 +2,40 @@ import React, { useEffect, useState, useContext, useCallback } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import {
-  GetListItemByIdUseCase,
-  DeleteListItemByIdUseCase,
-} from "./../../../application/listItems";
+  GetListByIdUseCase,
+  DeleteListByIdUseCase,
+} from "../../../application/lists";
 
-export const ListItemDeletePage = () => {
-  const [item, setItem] = useState(null);
+export const DeleteListPage = () => {
+  const [list, setList] = useState(null);
   const { useCaseFactory } = useContext(AppContext);
-  let { listId, itemId } = useParams();
+  let { listId } = useParams();
   let history = useHistory();
 
-  const getListItem = useCallback(async () => {
-    const getListItemByIdUseCase = useCaseFactory.get(GetListItemByIdUseCase);
-    const listItem = await getListItemByIdUseCase.execute(listId, itemId);
+  const getList = useCallback(async () => {
+    const getListByIdUseCase = useCaseFactory.get(GetListByIdUseCase);
+    const list = await getListByIdUseCase.execute(listId);
 
-    setItem(listItem);
-  }, [listId, itemId, useCaseFactory]);
+    setList(list);
+  }, [listId, useCaseFactory]);
 
   useEffect(() => {
-    getListItem();
-  }, [listId, getListItem]);
+    getList();
+  }, [listId, getList]);
 
-  const deleteListItem = async () => {
-    const deleteListItemByIdUseCase = useCaseFactory.get(
-      DeleteListItemByIdUseCase
-    );
-    if (await deleteListItemByIdUseCase.execute(listId, itemId)) {
-      history.push(`/lists/${listId}/edit`);
+  const deleteList = async () => {
+    const deleteListByIdUseCase = useCaseFactory.get(DeleteListByIdUseCase);
+
+    if (await deleteListByIdUseCase.execute(listId)) {
+      history.push("/lists");
     }
   };
 
   return (
     <>
-      {item && (
+      {list && (
         <div className="container">
-          <h3 className="title">{`Delete list item ${item.title}`}</h3>
+          <h3 className="title">{`Delete list ${list.name}`}</h3>
           <nav className="breadcrumb" aria-label="breadcrumbs">
             <ul>
               <li>
@@ -48,16 +47,11 @@ export const ListItemDeletePage = () => {
               <li>
                 <Link to={`/lists/${listId}/edit`}>List</Link>
               </li>
-              <li>
-                <Link to={`/lists/${listId}/items/${itemId}/edit`}>
-                  {item.title}
-                </Link>
-              </li>
               <li className="is-active">
                 <Link
                   aria-current="page"
-                  to={`/lists/${listId}/items/${itemId}/delete`}
-                >{`Delete ${item.title}`}</Link>
+                  to={`/lists/${listId}/delete`}
+                >{`Delete ${list.name}`}</Link>
               </li>
             </ul>
           </nav>
@@ -65,7 +59,7 @@ export const ListItemDeletePage = () => {
             <button
               className="button is-danger"
               data-testid="yes"
-              onClick={() => deleteListItem()}
+              onClick={() => deleteList()}
             >
               YES
             </button>

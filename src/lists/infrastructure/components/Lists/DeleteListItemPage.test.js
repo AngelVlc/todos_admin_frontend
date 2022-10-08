@@ -1,10 +1,10 @@
 import { render, cleanup, fireEvent, waitFor } from "@testing-library/react";
-import { ListDeletePage } from "./ListDeletePage";
+import { DeleteListItemPage } from "./DeleteListItemPage";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { MemoryRouter, Route } from "react-router-dom";
 import { act } from "react-dom/test-utils";
-import { GetListByIdUseCase } from "../../../application/lists";
-import { List } from "../../../domain";
+import { GetListItemByIdUseCase } from "../../../application/listItems";
+import { ListItem } from "../../../domain";
 
 const mockHistoryGoBack = jest.fn();
 const mockHistoryPush = jest.fn();
@@ -17,34 +17,35 @@ jest.mock("react-router-dom", () => ({
   }),
 }));
 
-const mockedGetListByIdUseCase = {
+const mockedGetListItemByIdUseCase = {
   execute: jest.fn(),
 };
 
-const mockedDeleteListByIdUseCase = {
+const mockedDeleteListItemByIdUseCase = {
   execute: jest.fn(),
 };
 
 const useCaseFactory = {
   get: (useCase) => {
-    if (useCase == GetListByIdUseCase) {
-      return mockedGetListByIdUseCase;
+    if (useCase == GetListItemByIdUseCase) {
+      return mockedGetListItemByIdUseCase;
     }
 
-    return mockedDeleteListByIdUseCase;
+    return mockedDeleteListItemByIdUseCase;
   },
 };
 
 const renderWithContextAndRouter = (component) => {
-  mockedGetListByIdUseCase.execute.mockResolvedValue(
-    new List({ id: 2, name: "ListName" })
+  mockedGetListItemByIdUseCase.execute.mockResolvedValue(
+    new ListItem({ id: 2, title: "item title", description: "item desc" })
   );
+
   const context = { auth: { info: {} }, useCaseFactory };
   return {
     ...render(
       <AppContext.Provider value={context}>
-        <MemoryRouter initialEntries={[`/lists/2/delete`]}>
-          <Route path="/lists/:listId/delete">{component}</Route>
+        <MemoryRouter initialEntries={[`/lists/2/items/5/delete`]}>
+          <Route path="/lists/:listId/items/:itemId/delete">{component}</Route>
         </MemoryRouter>
       </AppContext.Provider>
     ),
@@ -56,16 +57,16 @@ afterEach(cleanup);
 it("should match the snapshot", async () => {
   let fragment;
   await act(async () => {
-    const { asFragment } = renderWithContextAndRouter(<ListDeletePage />);
+    const { asFragment } = renderWithContextAndRouter(<DeleteListItemPage />);
     fragment = asFragment;
   });
-  expect(fragment(<ListDeletePage />)).toMatchSnapshot();
+  expect(fragment(<DeleteListItemPage />)).toMatchSnapshot();
 });
 
 it("should cancel the deletion", async () => {
   let container;
   await act(async () => {
-    container = renderWithContextAndRouter(<ListDeletePage />);
+    container = renderWithContextAndRouter(<DeleteListItemPage />);
   });
 
   await waitFor(() => {
@@ -79,18 +80,19 @@ it("should cancel the deletion", async () => {
 it("should delete the List", async () => {
   let container;
   await act(async () => {
-    container = renderWithContextAndRouter(<ListDeletePage />);
+    container = renderWithContextAndRouter(<DeleteListItemPage />);
   });
 
-  mockedDeleteListByIdUseCase.execute.mockResolvedValue(true);
+  mockedDeleteListItemByIdUseCase.execute.mockResolvedValue(true);
 
   await waitFor(() => {
     fireEvent.click(container.getByTestId("yes"));
   });
 
-  expect(mockedDeleteListByIdUseCase.execute.mock.calls.length).toBe(1);
-  expect(mockedDeleteListByIdUseCase.execute.mock.calls[0][0]).toBe("2");
+  expect(mockedDeleteListItemByIdUseCase.execute.mock.calls.length).toBe(1);
+  expect(mockedDeleteListItemByIdUseCase.execute.mock.calls[0][0]).toBe("2");
+  expect(mockedDeleteListItemByIdUseCase.execute.mock.calls[0][1]).toBe("5");
   expect(mockHistoryPush.mock.calls.length).toBe(1);
-  expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists");
+  expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/2/edit");
   mockHistoryPush.mockClear();
 });

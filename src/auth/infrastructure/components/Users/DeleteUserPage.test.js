@@ -1,5 +1,5 @@
 import { render, cleanup, fireEvent, waitFor } from "@testing-library/react";
-import { UserDeletePage } from "./UserDeletePage";
+import { DeleteUserPage } from "./DeleteUserPage";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { MemoryRouter, Route } from "react-router-dom";
 import { act } from "react-dom/test-utils";
@@ -58,27 +58,27 @@ it("should match the snapshot when the user is not an admin", async () => {
   let fragment;
   await act(async () => {
     const { asFragment } = renderWithContextAndRouter(
-      <UserDeletePage />,
+      <DeleteUserPage />,
       false
     );
     fragment = asFragment;
   });
-  expect(fragment(<UserDeletePage />)).toMatchSnapshot();
+  expect(fragment(<DeleteUserPage />)).toMatchSnapshot();
 });
 
 it("should match the snapshot when the user is an admin", async () => {
   let fragment;
   await act(async () => {
-    const { asFragment } = renderWithContextAndRouter(<UserDeletePage />, true);
+    const { asFragment } = renderWithContextAndRouter(<DeleteUserPage />, true);
     fragment = asFragment;
   });
-  expect(fragment(<UserDeletePage />)).toMatchSnapshot();
+  expect(fragment(<DeleteUserPage />)).toMatchSnapshot();
 });
 
 it("should cancel the deletion", async () => {
   let container;
   await act(async () => {
-    container = renderWithContextAndRouter(<UserDeletePage />, false);
+    container = renderWithContextAndRouter(<DeleteUserPage />, false);
   });
 
   await waitFor(() => {
@@ -92,7 +92,7 @@ it("should cancel the deletion", async () => {
 it("should delete a user", async () => {
   let container;
   await act(async () => {
-    container = renderWithContextAndRouter(<UserDeletePage />, false);
+    container = renderWithContextAndRouter(<DeleteUserPage />, false);
   });
 
   mockedDeleteUserByIdUseCase.execute.mockResolvedValue(true);

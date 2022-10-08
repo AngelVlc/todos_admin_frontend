@@ -6,7 +6,7 @@ import {
   DeleteUserByIdUseCase,
 } from "../../../application/users";
 
-export const UserDeletePage = () => {
+export const DeleteUserPage = () => {
   const [user, setUser] = useState(null);
   const { useCaseFactory } = useContext(AppContext);
   let { userId } = useParams();

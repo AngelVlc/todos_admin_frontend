@@ -4,8 +4,8 @@ import { AdminRoute, PrivateRoute } from '../../routers';
 import { LoginPage } from '../LoginPage';
 import { HomePage } from '../HomePage';
 import { Header } from '../Header';
-import { ListsPage, NewListPage, EditListPage, ListDeletePage, NewListItemPage, EditListItemPage, ListItemDeletePage } from '../../../../lists/infrastructure/components/Lists';
-import { UserDeletePage, UsersPage, NewUserPage, EditUserPage } from '../../../../auth/infrastructure/components/Users';
+import { ListsPage, NewListPage, EditListPage, DeleteListPage, NewListItemPage, EditListItemPage, DeleteListItemPage } from '../../../../lists/infrastructure/components/Lists';
+import { DeleteUserPage, UsersPage, NewUserPage, EditUserPage } from '../../../../auth/infrastructure/components/Users';
 import { RefreshTokensPage } from '../../../../auth/infrastructure/components/RefreshTokens';
 import { createBrowserHistory } from 'history';
 import { loginReducer, requestsReducer } from '../../reducers';
@@ -54,13 +54,13 @@ const App = () => {
             <PrivateRoute exact path="/" component={HomePage} />
             <PrivateRoute exact path="/lists" component={ListsPage} />
             <PrivateRoute path="/lists/new" component={NewListPage} />
-            <PrivateRoute path="/lists/:listId/delete" component={ListDeletePage} />
+            <PrivateRoute path="/lists/:listId/delete" component={DeleteListPage} />
             <PrivateRoute path="/lists/:listId/edit" component={EditListPage} />
             <PrivateRoute path="/lists/:listId/items/new" component={NewListItemPage} />
-            <PrivateRoute path="/lists/:listId/items/:itemId/delete" component={ListItemDeletePage} />
+            <PrivateRoute path="/lists/:listId/items/:itemId/delete" component={DeleteListItemPage} />
             <PrivateRoute path="/lists/:listId/items/:itemId/edit" component={EditListItemPage} />
             <AdminRoute exact path="/users" component={UsersPage} />
-            <AdminRoute path="/users/:userId/delete" component={UserDeletePage} />
+            <AdminRoute path="/users/:userId/delete" component={DeleteUserPage} />
             <AdminRoute path="/users/:userId/edit" component={EditUserPage} />
             <AdminRoute path="/users/new" component={NewUserPage} />
             <AdminRoute exact path="/refreshtokens" component={RefreshTokensPage} />
