@@ -1,3 +1,7 @@
+html, body, #root, #root>div {
+    height: 100%
+  }
+
 .reactLoader {
     width: 100%;
     height: 100px;
