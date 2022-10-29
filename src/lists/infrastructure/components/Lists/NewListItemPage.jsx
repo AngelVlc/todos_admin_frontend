@@ -12,7 +12,7 @@ export const NewListItemPage = () => {
       <Breadcrumb
         items={[
           { url: "/lists", text: "Lists" },
-          { url:`/lists/${listId}/edit`, text: "List" },
+          { url:`/lists/${listId}`, text: "List" },
           { url: `/lists/${listId}/items/new`, text: "New" },
         ]}
       />

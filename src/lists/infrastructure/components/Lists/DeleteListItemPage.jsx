@@ -29,7 +29,7 @@ export const DeleteListItemPage = () => {
       DeleteListItemByIdUseCase
     );
     if (await deleteListItemByIdUseCase.execute(listId, itemId)) {
-      history.push(`/lists/${listId}/edit`);
+      history.push(`/lists/${listId}`);
     }
   };
 
@@ -40,7 +40,7 @@ export const DeleteListItemPage = () => {
           <Breadcrumb
             items={[
               { url: "/lists", text: "Lists" },
-              { url:`/lists/${listId}/edit`, text: "List" },
+              { url:`/lists/${listId}`, text: "List" },
               { url: `/lists/${listId}/items/${itemId}/edit`, text: item.title },
               { url: `/lists/${listId}/items/${itemId}/delete`, text: `Delete ${item.title}` },
             ]}

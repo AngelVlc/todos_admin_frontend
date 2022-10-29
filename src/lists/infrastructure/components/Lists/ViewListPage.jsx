@@ -44,16 +44,16 @@ export const ViewListPage = () => {
         ))}
       </div>
       <div className="field is-grouped mt-4">
-        <p className="control">
+        <div className="control">
           <button
             className="button"
             data-testid="edit"
-            onClick={() => history.push(`/lists/${listId}/edit`)}
+            onClick={() => history.push(`/lists/${listId}`)}
           >
             EDIT
           </button>
-        </p>
-        <p className="control">
+        </div>
+        <div className="control">
           <button
             className="button"
             data-testid="cancel"
@@ -62,7 +62,7 @@ export const ViewListPage = () => {
           >
             BACK
           </button>
-        </p>
+        </div>
       </div>
     </div>
   );

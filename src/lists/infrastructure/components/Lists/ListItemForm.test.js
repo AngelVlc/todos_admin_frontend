@@ -111,7 +111,7 @@ it("should allow cancel", async () => {
   });
 
   expect(mockHistoryPush.mock.calls.length).toBe(1);
-  expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/2/edit");
+  expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/2");
   mockHistoryPush.mockClear();
 });
 
@@ -156,7 +156,7 @@ it("should update an existing item", async () => {
   );
 
   expect(mockHistoryPush.mock.calls.length).toBe(1);
-  expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/2/edit");
+  expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/2");
   mockHistoryPush.mockClear();
 });
 
@@ -183,7 +183,7 @@ it("should create a new item", async () => {
   );
 
   expect(mockHistoryPush.mock.calls.length).toBe(1);
-  expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/2/edit");
+  expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/2");
   mockHistoryPush.mockClear();
 });
 

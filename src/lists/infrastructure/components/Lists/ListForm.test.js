@@ -177,6 +177,18 @@ it("should update an existing list", async () => {
   expect(mockedUpdateListUseCase.execute.mock.calls[0][0]).toStrictEqual(list);
 });
 
+it("should allow read the list", async () => {
+  const { getByTestId } = renderWithContextAndRouterForExistingList();
+
+  await waitFor(() => {
+    fireEvent.click(getByTestId("read"));
+  });
+
+  expect(mockHistoryPush.mock.calls.length).toBe(1);
+  expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/2/read");
+  mockHistoryPush.mockClear();
+});
+
 it("should create a new list", async () => {
   const { getByTestId } = renderWithContextAndRouterForNewList();
 
@@ -193,7 +205,7 @@ it("should create a new list", async () => {
   expect(mockedCreateListUseCase.execute.mock.calls[0][0]).toStrictEqual(list);
 
   expect(mockHistoryPush.mock.calls.length).toBe(1);
-  expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/55/edit");
+  expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/55");
   mockHistoryPush.mockClear();
 });
 

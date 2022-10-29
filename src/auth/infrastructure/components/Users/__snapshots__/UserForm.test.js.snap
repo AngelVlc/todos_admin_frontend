@@ -92,7 +92,7 @@ exports[`should match the snapshot for a new user 1`] = `
     <div
       class="field is-grouped"
     >
-      <p
+      <div
         class="control"
       >
         <button
@@ -102,8 +102,8 @@ exports[`should match the snapshot for a new user 1`] = `
         >
           CREATE
         </button>
-      </p>
-      <p
+      </div>
+      <div
         class="control"
       >
         <button
@@ -113,7 +113,7 @@ exports[`should match the snapshot for a new user 1`] = `
         >
           CANCEL
         </button>
-      </p>
+      </div>
     </div>
   </form>
 </DocumentFragment>
@@ -211,7 +211,7 @@ exports[`should match the snapshot for an existing admin user 1`] = `
     <div
       class="field is-grouped"
     >
-      <p
+      <div
         class="control"
       >
         <button
@@ -221,8 +221,8 @@ exports[`should match the snapshot for an existing admin user 1`] = `
         >
           UPDATE
         </button>
-      </p>
-      <p
+      </div>
+      <div
         class="control"
       >
         <button
@@ -232,8 +232,8 @@ exports[`should match the snapshot for an existing admin user 1`] = `
         >
           CANCEL
         </button>
-      </p>
-      <p
+      </div>
+      <div
         class="control"
       >
         <button
@@ -243,7 +243,7 @@ exports[`should match the snapshot for an existing admin user 1`] = `
         >
           DELETE
         </button>
-      </p>
+      </div>
     </div>
   </form>
 </DocumentFragment>
@@ -341,7 +341,7 @@ exports[`should match the snapshot for an existing non admin user 1`] = `
     <div
       class="field is-grouped"
     >
-      <p
+      <div
         class="control"
       >
         <button
@@ -351,8 +351,8 @@ exports[`should match the snapshot for an existing non admin user 1`] = `
         >
           UPDATE
         </button>
-      </p>
-      <p
+      </div>
+      <div
         class="control"
       >
         <button
@@ -362,8 +362,8 @@ exports[`should match the snapshot for an existing non admin user 1`] = `
         >
           CANCEL
         </button>
-      </p>
-      <p
+      </div>
+      <div
         class="control"
       >
         <button
@@ -373,7 +373,7 @@ exports[`should match the snapshot for an existing non admin user 1`] = `
         >
           DELETE
         </button>
-      </p>
+      </div>
     </div>
   </form>
 </DocumentFragment>

@@ -26,7 +26,7 @@ export const EditListItemPage = () => {
       <Breadcrumb
         items={[
           { url: "/lists", text: "Lists" },
-          { url: `/lists/${listId}/edit`, text: "List" },
+          { url: `/lists/${listId}`, text: "List" },
           {
             url: `/lists/${listId}/items/${itemId}/edit`,
             text: pageState.title,

@@ -37,7 +37,7 @@ export const ListForm = (props) => {
 
     const result = await useCase.execute(list);
     if (result && props.list?.id === undefined) {
-      history.push(`/lists/${result.id}/edit`);
+      history.push(`/lists/${result.id}`);
     }
   };
 
@@ -171,12 +171,24 @@ export const ListForm = (props) => {
         )}
 
         <div className="field is-grouped">
-          <p className="control">
+          <div className="control">
             <button className="button" data-testid="submit" type="submit">
               {props.list?.id ? "SAVE" : "CREATE"}
             </button>
-          </p>
-          <p className="control">
+          </div>
+          {props.list?.id && (
+            <div className="control">
+              <button
+                className="button"
+                data-testid="read"
+                type="button"
+                onClick={() => history.push(`/lists/${props.list?.id}/read`)}
+              >
+                READ
+              </button>
+            </div>
+          )}
+          <div className="control">
             <button
               className="button"
               data-testid="cancel"
@@ -185,9 +197,9 @@ export const ListForm = (props) => {
             >
               CANCEL
             </button>
-          </p>
+          </div>
           {props.list?.id && (
-            <p className="control">
+            <div className="control">
               <button
                 className="button is-danger"
                 data-testid="delete"
@@ -196,7 +208,7 @@ export const ListForm = (props) => {
               >
                 DELETE
               </button>
-            </p>
+            </div>
           )}
         </div>
       </Form>

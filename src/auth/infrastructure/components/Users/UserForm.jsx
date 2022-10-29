@@ -88,12 +88,12 @@ export const UserForm = (props) => {
         </div>
 
         <div className="field is-grouped">
-          <p className="control">
+          <div className="control">
             <button className="button" data-testid="submit" type="submit">
               {props.user?.id ? "UPDATE" : "CREATE"}
             </button>
-          </p>
-          <p className="control">
+          </div>
+          <div className="control">
             <button
               className="button"
               data-testid="cancel"
@@ -102,9 +102,9 @@ export const UserForm = (props) => {
             >
               CANCEL
             </button>
-          </p>
+          </div>
           {props.user?.id && (
-            <p className="control">
+            <div className="control">
               <button
                 className="button is-danger"
                 data-testid="delete"
@@ -113,7 +113,7 @@ export const UserForm = (props) => {
               >
                 DELETE
               </button>
-            </p>
+            </div>
           )}
         </div>
       </Form>

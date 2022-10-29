@@ -93,6 +93,6 @@ it("should delete the List", async () => {
   expect(mockedDeleteListItemByIdUseCase.execute.mock.calls[0][0]).toBe("2");
   expect(mockedDeleteListItemByIdUseCase.execute.mock.calls[0][1]).toBe("5");
   expect(mockHistoryPush.mock.calls.length).toBe(1);
-  expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/2/edit");
+  expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/2");
   mockHistoryPush.mockClear();
 });
