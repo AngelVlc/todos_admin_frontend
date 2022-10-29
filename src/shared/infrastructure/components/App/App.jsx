@@ -47,8 +47,12 @@ const App = () => {
         <Router history={browserHistory}>
           <Header />
           {request.pending &&
-            <div className="reactLoader">
-              <Loader type="Circles" color="#282c34" height="100" width="100" />
+            <div className="loader-container">
+              <div className="loader-item">
+                <center>
+                  <Loader type="Circles" color="#282c34" height="100" width="100" />
+                </center>
+              </div>
             </div>
           }
           <section className="section is-flex-grow-2">
