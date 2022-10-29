@@ -47,12 +47,12 @@ const useCaseFactory = {
   },
 };
 
-const renderWithContextAndRouter = (component) => {
+const renderWithContextAndRouter = () => {
   const context = { auth: { info: {} }, useCaseFactory };
   return {
     ...render(
       <AppContext.Provider value={context}>
-        <Router history={history}>{component}</Router>
+        <Router history={history}>{<RefreshTokensPage />}</Router>
       </AppContext.Provider>
     ),
   };
@@ -61,16 +61,16 @@ const renderWithContextAndRouter = (component) => {
 it("should match the snapshot", async () => {
   let fragment;
   await act(async () => {
-    const { asFragment } = renderWithContextAndRouter(<RefreshTokensPage />);
+    const { asFragment } = renderWithContextAndRouter();
     fragment = asFragment;
   });
-  expect(fragment(<RefreshTokensPage />)).toMatchSnapshot();
+  expect(fragment()).toMatchSnapshot();
 });
 
 it("should delete the selected refresh tokens", async () => {
   let container;
   await act(async () => {
-    container = renderWithContextAndRouter(<RefreshTokensPage />);
+    container = renderWithContextAndRouter();
   });
 
   await waitFor(() => {

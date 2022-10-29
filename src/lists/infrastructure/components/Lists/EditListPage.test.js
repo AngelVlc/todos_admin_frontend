@@ -50,8 +50,8 @@ const renderWithContextAndRouter = () => {
   return {
     ...render(
       <AppContext.Provider value={context}>
-        <MemoryRouter initialEntries={[`/lists/2/items/5/edit`]}>
-          <Route path="/lists/:listId/items/:itemId/edit">
+        <MemoryRouter initialEntries={[`/lists/2`]}>
+          <Route path="/lists/:listId">
             <EditListPage />
           </Route>
         </MemoryRouter>

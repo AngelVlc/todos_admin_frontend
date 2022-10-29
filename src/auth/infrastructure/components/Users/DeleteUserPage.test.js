@@ -35,7 +35,7 @@ const useCaseFactory = {
   },
 };
 
-const renderWithContextAndRouter = (component, isAdmin) => {
+const renderWithContextAndRouter = (isAdmin) => {
   mockedGetUserByIdUseCase.execute.mockResolvedValue(
     new User({ id: 2, name: "user", isAdmin: isAdmin })
   );
@@ -45,7 +45,7 @@ const renderWithContextAndRouter = (component, isAdmin) => {
     ...render(
       <AppContext.Provider value={context}>
         <MemoryRouter initialEntries={[`/users/2/delete`]}>
-          <Route path="/users/:userId/delete">{component}</Route>
+          <Route path="/users/:userId/delete">{<DeleteUserPage />}</Route>
         </MemoryRouter>
       </AppContext.Provider>
     ),
@@ -54,56 +54,57 @@ const renderWithContextAndRouter = (component, isAdmin) => {
 
 afterEach(cleanup);
 
-it("should match the snapshot when the user is not an admin", async () => {
-  let fragment;
-  await act(async () => {
-    const { asFragment } = renderWithContextAndRouter(
-      <DeleteUserPage />,
-      false
-    );
-    fragment = asFragment;
+describe("when the user is not an admin", () => {
+  it("should match the snapshot when the user is not an admin", async () => {
+    let fragment;
+    await act(async () => {
+      const { asFragment } = renderWithContextAndRouter(false);
+      fragment = asFragment;
+    });
+    expect(fragment()).toMatchSnapshot();
   });
-  expect(fragment(<DeleteUserPage />)).toMatchSnapshot();
+
+  it("should cancel the deletion", async () => {
+    let container;
+    await act(async () => {
+      container = renderWithContextAndRouter(false);
+    });
+
+    await waitFor(() => {
+      fireEvent.click(container.getByTestId("no"));
+    });
+
+    expect(mockHistoryGoBack.mock.calls.length).toBe(1);
+    mockHistoryGoBack.mockClear();
+  });
+
+  it("should delete a user", async () => {
+    let container;
+    await act(async () => {
+      container = renderWithContextAndRouter(false);
+    });
+
+    mockedDeleteUserByIdUseCase.execute.mockResolvedValue(true);
+
+    await waitFor(() => {
+      fireEvent.click(container.getByTestId("yes"));
+    });
+
+    expect(mockedDeleteUserByIdUseCase.execute.mock.calls.length).toBe(1);
+    expect(mockedDeleteUserByIdUseCase.execute.mock.calls[0][0]).toBe("2");
+    expect(mockHistoryPush.mock.calls.length).toBe(1);
+    expect(mockHistoryPush.mock.calls[0][0]).toBe("/users");
+    mockHistoryPush.mockClear();
+  });
 });
 
-it("should match the snapshot when the user is an admin", async () => {
-  let fragment;
-  await act(async () => {
-    const { asFragment } = renderWithContextAndRouter(<DeleteUserPage />, true);
-    fragment = asFragment;
+describe("when the user is an admin", () => {
+  it("should match the snapshot when the user is an admin", async () => {
+    let fragment;
+    await act(async () => {
+      const { asFragment } = renderWithContextAndRouter(true);
+      fragment = asFragment;
+    });
+    expect(fragment()).toMatchSnapshot();
   });
-  expect(fragment(<DeleteUserPage />)).toMatchSnapshot();
-});
-
-it("should cancel the deletion", async () => {
-  let container;
-  await act(async () => {
-    container = renderWithContextAndRouter(<DeleteUserPage />, false);
-  });
-
-  await waitFor(() => {
-    fireEvent.click(container.getByTestId("no"));
-  });
-
-  expect(mockHistoryGoBack.mock.calls.length).toBe(1);
-  mockHistoryGoBack.mockClear();
-});
-
-it("should delete a user", async () => {
-  let container;
-  await act(async () => {
-    container = renderWithContextAndRouter(<DeleteUserPage />, false);
-  });
-
-  mockedDeleteUserByIdUseCase.execute.mockResolvedValue(true);
-
-  await waitFor(() => {
-    fireEvent.click(container.getByTestId("yes"));
-  });
-
-  expect(mockedDeleteUserByIdUseCase.execute.mock.calls.length).toBe(1);
-  expect(mockedDeleteUserByIdUseCase.execute.mock.calls[0][0]).toBe("2");
-  expect(mockHistoryPush.mock.calls.length).toBe(1);
-  expect(mockHistoryPush.mock.calls[0][0]).toBe("/users");
-  mockHistoryPush.mockClear();
 });

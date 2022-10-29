@@ -28,5 +28,5 @@ it("Should match the snapshot", () => {
 
   const { asFragment } = renderComponent();
 
-  expect(asFragment(<Footer />)).toMatchSnapshot();
+  expect(asFragment()).toMatchSnapshot();
 });

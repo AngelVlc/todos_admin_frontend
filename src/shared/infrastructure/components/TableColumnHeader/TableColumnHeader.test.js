@@ -31,7 +31,7 @@ describe("TableColumnHeader", () => {
         sortOrder: "asc",
       });
 
-      expect(asFragment(<TableColumnHeader />)).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
 
     it("when the column is ordered asc", async () => {
@@ -40,7 +40,7 @@ describe("TableColumnHeader", () => {
         sortOrder: "asc",
       });
 
-      expect(asFragment(<TableColumnHeader />)).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
 
     it("when the column is ordered desc", async () => {
@@ -49,7 +49,7 @@ describe("TableColumnHeader", () => {
         sortOrder: "desc",
       });
 
-      expect(asFragment(<TableColumnHeader />)).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
   });
 

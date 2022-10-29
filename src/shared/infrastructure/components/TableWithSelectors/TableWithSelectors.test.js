@@ -39,7 +39,7 @@ describe("TableWithSelectors", () => {
   it("should match the snapshot", async () => {
     const { asFragment } = renderComponent(rows);
 
-    expect(asFragment(<TableWithSelectors />)).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it("should select and unselect all the rows", async () => {

@@ -50,8 +50,8 @@ const renderWithContextAndRouter = () => {
   return {
     ...render(
       <AppContext.Provider value={context}>
-        <MemoryRouter>
-          <Route path="/lists/:listId/items/:itemId">
+        <MemoryRouter initialEntries={[`/lists/2/read`]}>
+          <Route path="/lists/:listId/read">
             <ViewListPage />
           </Route>
         </MemoryRouter>
@@ -62,7 +62,7 @@ const renderWithContextAndRouter = () => {
 
 afterEach(cleanup);
 
-it("should match the snapshot", async () => {
+it("should match the snapshot for an existing list", async () => {
   let fragment;
   await act(async () => {
     const { asFragment } = renderWithContextAndRouter();

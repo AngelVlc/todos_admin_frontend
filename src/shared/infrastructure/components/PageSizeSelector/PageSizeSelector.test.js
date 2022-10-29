@@ -22,7 +22,7 @@ describe("PageSizeSelector", () => {
       pageSize: "10",
     });
 
-    expect(asFragment(<PageSizeSelector />)).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it("Should change the page size", async () => {

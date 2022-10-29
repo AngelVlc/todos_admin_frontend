@@ -35,7 +35,7 @@ const useCaseFactory = {
   },
 };
 
-const renderWithContextAndRouter = (component) => {
+const renderWithContextAndRouter = () => {
   mockedGetListItemByIdUseCase.execute.mockResolvedValue(
     new ListItem({ id: 2, title: "item title", description: "item desc" })
   );
@@ -45,7 +45,7 @@ const renderWithContextAndRouter = (component) => {
     ...render(
       <AppContext.Provider value={context}>
         <MemoryRouter initialEntries={[`/lists/2/items/5/delete`]}>
-          <Route path="/lists/:listId/items/:itemId/delete">{component}</Route>
+          <Route path="/lists/:listId/items/:itemId/delete">{<DeleteListItemPage />}</Route>
         </MemoryRouter>
       </AppContext.Provider>
     ),
@@ -57,16 +57,16 @@ afterEach(cleanup);
 it("should match the snapshot", async () => {
   let fragment;
   await act(async () => {
-    const { asFragment } = renderWithContextAndRouter(<DeleteListItemPage />);
+    const { asFragment } = renderWithContextAndRouter();
     fragment = asFragment;
   });
-  expect(fragment(<DeleteListItemPage />)).toMatchSnapshot();
+  expect(fragment()).toMatchSnapshot();
 });
 
 it("should cancel the deletion", async () => {
   let container;
   await act(async () => {
-    container = renderWithContextAndRouter(<DeleteListItemPage />);
+    container = renderWithContextAndRouter();
   });
 
   await waitFor(() => {
@@ -80,7 +80,7 @@ it("should cancel the deletion", async () => {
 it("should delete the List", async () => {
   let container;
   await act(async () => {
-    container = renderWithContextAndRouter(<DeleteListItemPage />);
+    container = renderWithContextAndRouter();
   });
 
   mockedDeleteListItemByIdUseCase.execute.mockResolvedValue(true);
