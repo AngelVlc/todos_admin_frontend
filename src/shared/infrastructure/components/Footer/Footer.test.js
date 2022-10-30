@@ -23,7 +23,7 @@ afterAll(() => {
 });
 
 it("Should match the snapshot", () => {
-  process.env.REACT_APP_COMMIT_SHA = 'sha'
+  process.env.REACT_APP_COMMIT_SHA = '1234567890sha'
   process.env.REACT_APP_BUILD_DATE = 'date'
 
   const { asFragment } = renderComponent();
