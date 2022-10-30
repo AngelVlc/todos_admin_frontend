@@ -98,7 +98,7 @@ export const ListForm = (props) => {
             </div>
             <DragDropContext onDragEnd={onDragEnd}>
               <div className="dnd-container">
-                <div className="list-button">
+                <div className="list-button mt-2">
                   <button
                     className="button is-small"
                     type="button"
@@ -130,7 +130,7 @@ export const ListForm = (props) => {
                             {(draggableProvided) => (
                               <div
                                 key={item.id}
-                                className="is-flex dnd-item"
+                                className="is-flex dnd-item p-2 my-2"
                                 {...draggableProvided.draggableProps}
                                 {...draggableProvided.dragHandleProps}
                                 ref={draggableProvided.innerRef}
