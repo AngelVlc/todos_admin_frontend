@@ -199,7 +199,7 @@ export const ListForm = (props) => {
             </button>
           </div>
           {props.list?.id && (
-            <div className="control">
+            <div className="control ml-auto is-pulled-right">
               <button
                 className="button is-danger"
                 data-testid="delete"

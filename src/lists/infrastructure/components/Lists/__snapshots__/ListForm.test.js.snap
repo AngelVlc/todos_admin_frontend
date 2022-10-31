@@ -47,7 +47,7 @@ exports[`when the list already exist should match the snapshot 1`] = `
         class="dnd-container"
       >
         <div
-          class="list-button"
+          class="list-button mt-2"
         >
           <button
             class="button is-small"
@@ -73,7 +73,7 @@ exports[`when the list already exist should match the snapshot 1`] = `
         >
           <div
             aria-describedby="rbd-hidden-text-0-hidden-text-0"
-            class="is-flex dnd-item"
+            class="is-flex dnd-item p-2 my-2"
             data-rbd-drag-handle-context-id="0"
             data-rbd-drag-handle-draggable-id="5"
             data-rbd-draggable-context-id="0"
@@ -110,7 +110,7 @@ exports[`when the list already exist should match the snapshot 1`] = `
           </div>
           <div
             aria-describedby="rbd-hidden-text-0-hidden-text-0"
-            class="is-flex dnd-item"
+            class="is-flex dnd-item p-2 my-2"
             data-rbd-drag-handle-context-id="0"
             data-rbd-drag-handle-draggable-id="6"
             data-rbd-draggable-context-id="0"
@@ -185,7 +185,7 @@ exports[`when the list already exist should match the snapshot 1`] = `
         </button>
       </div>
       <div
-        class="control"
+        class="control ml-auto is-pulled-right"
       >
         <button
           class="button is-danger"
