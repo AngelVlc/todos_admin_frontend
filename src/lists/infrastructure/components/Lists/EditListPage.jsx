@@ -26,7 +26,7 @@ export const EditListPage = () => {
   }, [listId, getExistingList]);
 
   return (
-    <div>
+    <>
       {pageState && (
         <div className="container">
           <Breadcrumb
@@ -42,6 +42,6 @@ export const EditListPage = () => {
           <ListForm list={pageState} />
         </div>
       )}
-    </div>
+    </>
   );
 };

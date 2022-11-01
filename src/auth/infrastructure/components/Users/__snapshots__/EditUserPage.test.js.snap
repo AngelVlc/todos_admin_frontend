@@ -2,345 +2,341 @@
 
 exports[`should match the snapshot for an existing admin user 1`] = `
 <DocumentFragment>
-  <div>
-    <div
-      class="container"
+  <div
+    class="container"
+  >
+    <nav
+      aria-label="breadcrumbs"
+      class="breadcrumb"
     >
-      <nav
-        aria-label="breadcrumbs"
-        class="breadcrumb"
-      >
-        <ul>
-          <li>
-            <a
-              href="/"
-            >
-              Home
-            </a>
-          </li>
-          <li>
-            <a
-              href="/users"
-            >
-              Users
-            </a>
-          </li>
-          <li
-            class="is-active"
+      <ul>
+        <li>
+          <a
+            href="/"
           >
-            <a
-              aria-current="page"
-              href="/users/2"
-            >
-              user
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <h3
-        class="title"
-      >
-        Edit user 'user'
-      </h3>
-      <form
-        action="#"
-      >
-        <div
-          class="field"
+            Home
+          </a>
+        </li>
+        <li>
+          <a
+            href="/users"
+          >
+            Users
+          </a>
+        </li>
+        <li
+          class="is-active"
         >
-          <label
-            class="label"
-            for="name"
+          <a
+            aria-current="page"
+            href="/users/2"
           >
-            Name
-          </label>
-          <div
-            class="control"
-          >
-            <input
-              data-testid="name"
-              name="name"
-              type="text"
-              value="user"
-            />
-          </div>
-          <p
-            class="help is-danger"
-            data-testid="userNameErrors"
+            user
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <h3
+      class="title"
+    >
+      Edit user 'user'
+    </h3>
+    <form
+      action="#"
+    >
+      <div
+        class="field"
+      >
+        <label
+          class="label"
+          for="name"
+        >
+          Name
+        </label>
+        <div
+          class="control"
+        >
+          <input
+            data-testid="name"
+            name="name"
+            type="text"
+            value="user"
           />
         </div>
-        <div
-          class="field"
+        <p
+          class="help is-danger"
+          data-testid="userNameErrors"
+        />
+      </div>
+      <div
+        class="field"
+      >
+        <label
+          class="label"
+          for="password"
         >
-          <label
-            class="label"
-            for="password"
+          Password
+        </label>
+        <div
+          class="control"
+        >
+          <input
+            data-testid="password"
+            name="password"
+            type="password"
+            value=""
+          />
+        </div>
+      </div>
+      <div
+        class="field"
+      >
+        <label
+          class="label"
+          for="confirmPassword"
+        >
+          Confirm Password
+        </label>
+        <div
+          class="control"
+        >
+          <input
+            data-testid="confirmPassword"
+            name="confirmPassword"
+            type="password"
+            value=""
+          />
+        </div>
+      </div>
+      <div
+        class="field"
+      >
+        <label
+          class="label"
+          for="isAdmin"
+        >
+          Is Admin
+        </label>
+        <div
+          class="control"
+        >
+          <input
+            checked=""
+            data-testid="isAdmin"
+            name="isAdmin"
+            type="checkbox"
+            value="true"
+          />
+        </div>
+      </div>
+      <div
+        class="field is-grouped"
+      >
+        <div
+          class="control"
+        >
+          <button
+            class="button"
+            data-testid="submit"
+            type="submit"
           >
-            Password
-          </label>
-          <div
-            class="control"
-          >
-            <input
-              data-testid="password"
-              name="password"
-              type="password"
-              value=""
-            />
-          </div>
+            UPDATE
+          </button>
         </div>
         <div
-          class="field"
+          class="control"
         >
-          <label
-            class="label"
-            for="confirmPassword"
+          <button
+            class="button"
+            data-testid="cancel"
+            type="button"
           >
-            Confirm Password
-          </label>
-          <div
-            class="control"
-          >
-            <input
-              data-testid="confirmPassword"
-              name="confirmPassword"
-              type="password"
-              value=""
-            />
-          </div>
+            CANCEL
+          </button>
         </div>
         <div
-          class="field"
+          class="control"
         >
-          <label
-            class="label"
-            for="isAdmin"
+          <button
+            class="button is-danger"
+            data-testid="delete"
+            type="button"
           >
-            Is Admin
-          </label>
-          <div
-            class="control"
-          >
-            <input
-              checked=""
-              data-testid="isAdmin"
-              name="isAdmin"
-              type="checkbox"
-              value="true"
-            />
-          </div>
+            DELETE
+          </button>
         </div>
-        <div
-          class="field is-grouped"
-        >
-          <div
-            class="control"
-          >
-            <button
-              class="button"
-              data-testid="submit"
-              type="submit"
-            >
-              UPDATE
-            </button>
-          </div>
-          <div
-            class="control"
-          >
-            <button
-              class="button"
-              data-testid="cancel"
-              type="button"
-            >
-              CANCEL
-            </button>
-          </div>
-          <div
-            class="control"
-          >
-            <button
-              class="button is-danger"
-              data-testid="delete"
-              type="button"
-            >
-              DELETE
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
+      </div>
+    </form>
   </div>
 </DocumentFragment>
 `;
 
 exports[`should match the snapshot for an existing non admin user 1`] = `
 <DocumentFragment>
-  <div>
-    <div
-      class="container"
+  <div
+    class="container"
+  >
+    <nav
+      aria-label="breadcrumbs"
+      class="breadcrumb"
     >
-      <nav
-        aria-label="breadcrumbs"
-        class="breadcrumb"
-      >
-        <ul>
-          <li>
-            <a
-              href="/"
-            >
-              Home
-            </a>
-          </li>
-          <li>
-            <a
-              href="/users"
-            >
-              Users
-            </a>
-          </li>
-          <li
-            class="is-active"
+      <ul>
+        <li>
+          <a
+            href="/"
           >
-            <a
-              aria-current="page"
-              href="/users/2"
-            >
-              user
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <h3
-        class="title"
-      >
-        Edit user 'user'
-      </h3>
-      <form
-        action="#"
-      >
-        <div
-          class="field"
+            Home
+          </a>
+        </li>
+        <li>
+          <a
+            href="/users"
+          >
+            Users
+          </a>
+        </li>
+        <li
+          class="is-active"
         >
-          <label
-            class="label"
-            for="name"
+          <a
+            aria-current="page"
+            href="/users/2"
           >
-            Name
-          </label>
-          <div
-            class="control"
-          >
-            <input
-              data-testid="name"
-              name="name"
-              type="text"
-              value="user"
-            />
-          </div>
-          <p
-            class="help is-danger"
-            data-testid="userNameErrors"
+            user
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <h3
+      class="title"
+    >
+      Edit user 'user'
+    </h3>
+    <form
+      action="#"
+    >
+      <div
+        class="field"
+      >
+        <label
+          class="label"
+          for="name"
+        >
+          Name
+        </label>
+        <div
+          class="control"
+        >
+          <input
+            data-testid="name"
+            name="name"
+            type="text"
+            value="user"
           />
         </div>
-        <div
-          class="field"
+        <p
+          class="help is-danger"
+          data-testid="userNameErrors"
+        />
+      </div>
+      <div
+        class="field"
+      >
+        <label
+          class="label"
+          for="password"
         >
-          <label
-            class="label"
-            for="password"
+          Password
+        </label>
+        <div
+          class="control"
+        >
+          <input
+            data-testid="password"
+            name="password"
+            type="password"
+            value=""
+          />
+        </div>
+      </div>
+      <div
+        class="field"
+      >
+        <label
+          class="label"
+          for="confirmPassword"
+        >
+          Confirm Password
+        </label>
+        <div
+          class="control"
+        >
+          <input
+            data-testid="confirmPassword"
+            name="confirmPassword"
+            type="password"
+            value=""
+          />
+        </div>
+      </div>
+      <div
+        class="field"
+      >
+        <label
+          class="label"
+          for="isAdmin"
+        >
+          Is Admin
+        </label>
+        <div
+          class="control"
+        >
+          <input
+            data-testid="isAdmin"
+            name="isAdmin"
+            type="checkbox"
+            value="false"
+          />
+        </div>
+      </div>
+      <div
+        class="field is-grouped"
+      >
+        <div
+          class="control"
+        >
+          <button
+            class="button"
+            data-testid="submit"
+            type="submit"
           >
-            Password
-          </label>
-          <div
-            class="control"
-          >
-            <input
-              data-testid="password"
-              name="password"
-              type="password"
-              value=""
-            />
-          </div>
+            UPDATE
+          </button>
         </div>
         <div
-          class="field"
+          class="control"
         >
-          <label
-            class="label"
-            for="confirmPassword"
+          <button
+            class="button"
+            data-testid="cancel"
+            type="button"
           >
-            Confirm Password
-          </label>
-          <div
-            class="control"
-          >
-            <input
-              data-testid="confirmPassword"
-              name="confirmPassword"
-              type="password"
-              value=""
-            />
-          </div>
+            CANCEL
+          </button>
         </div>
         <div
-          class="field"
+          class="control"
         >
-          <label
-            class="label"
-            for="isAdmin"
+          <button
+            class="button is-danger"
+            data-testid="delete"
+            type="button"
           >
-            Is Admin
-          </label>
-          <div
-            class="control"
-          >
-            <input
-              data-testid="isAdmin"
-              name="isAdmin"
-              type="checkbox"
-              value="false"
-            />
-          </div>
+            DELETE
+          </button>
         </div>
-        <div
-          class="field is-grouped"
-        >
-          <div
-            class="control"
-          >
-            <button
-              class="button"
-              data-testid="submit"
-              type="submit"
-            >
-              UPDATE
-            </button>
-          </div>
-          <div
-            class="control"
-          >
-            <button
-              class="button"
-              data-testid="cancel"
-              type="button"
-            >
-              CANCEL
-            </button>
-          </div>
-          <div
-            class="control"
-          >
-            <button
-              class="button is-danger"
-              data-testid="delete"
-              type="button"
-            >
-              DELETE
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
+      </div>
+    </form>
   </div>
 </DocumentFragment>
 `;

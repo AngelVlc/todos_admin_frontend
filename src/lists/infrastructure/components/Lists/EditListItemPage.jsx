@@ -22,7 +22,7 @@ export const EditListItemPage = () => {
   }, [listId, itemId, getExistingItem]);
 
   return (
-    <div>
+    <>
       {pageState && (
         <div className="container">
           <Breadcrumb
@@ -39,6 +39,6 @@ export const EditListItemPage = () => {
           <ListItemForm listItem={pageState} />
         </div>
       )}
-    </div>
+    </>
   );
 };

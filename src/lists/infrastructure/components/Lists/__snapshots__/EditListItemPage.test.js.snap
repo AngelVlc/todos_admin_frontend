@@ -2,144 +2,142 @@
 
 exports[`should match the snapshot for an existing item 1`] = `
 <DocumentFragment>
-  <div>
-    <div
-      class="container"
+  <div
+    class="container"
+  >
+    <nav
+      aria-label="breadcrumbs"
+      class="breadcrumb"
     >
-      <nav
-        aria-label="breadcrumbs"
-        class="breadcrumb"
-      >
-        <ul>
-          <li>
-            <a
-              href="/"
-            >
-              Home
-            </a>
-          </li>
-          <li>
-            <a
-              href="/lists"
-            >
-              Lists
-            </a>
-          </li>
-          <li>
-            <a
-              href="/lists/2"
-            >
-              List
-            </a>
-          </li>
-          <li
-            class="is-active"
+      <ul>
+        <li>
+          <a
+            href="/"
           >
-            <a
-              aria-current="page"
-              href="/lists/2/items/5/edit"
-            >
-              item title
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <h3
-        class="title"
-      >
-        Edit item 'item title'
-      </h3>
-      <form
-        action="#"
-      >
-        <div
-          class="field"
+            Home
+          </a>
+        </li>
+        <li>
+          <a
+            href="/lists"
+          >
+            Lists
+          </a>
+        </li>
+        <li>
+          <a
+            href="/lists/2"
+          >
+            List
+          </a>
+        </li>
+        <li
+          class="is-active"
         >
-          <label
-            class="label"
-            for="title"
+          <a
+            aria-current="page"
+            href="/lists/2/items/5/edit"
           >
-            Title
-          </label>
-          <div
-            class="control"
-          >
-            <input
-              class="input"
-              data-testid="title"
-              name="title"
-              value="item title"
-            />
-          </div>
-          <p
-            class="help is-danger"
-            data-testid="titleErrors"
+            item title
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <h3
+      class="title"
+    >
+      Edit item 'item title'
+    </h3>
+    <form
+      action="#"
+    >
+      <div
+        class="field"
+      >
+        <label
+          class="label"
+          for="title"
+        >
+          Title
+        </label>
+        <div
+          class="control"
+        >
+          <input
+            class="input"
+            data-testid="title"
+            name="title"
+            value="item title"
           />
         </div>
-        <div
-          class="field"
+        <p
+          class="help is-danger"
+          data-testid="titleErrors"
+        />
+      </div>
+      <div
+        class="field"
+      >
+        <label
+          class="label"
+          for="description"
         >
-          <label
-            class="label"
-            for="description"
+          Description
+        </label>
+        <div
+          class="control"
+        >
+          <textarea
+            class="textarea"
+            data-testid="description"
+            name="description"
           >
-            Description
-          </label>
-          <div
-            class="control"
+            item description
+          </textarea>
+        </div>
+        <p
+          class="help is-danger"
+          data-testid="descriptionErrors"
+        />
+      </div>
+      <div
+        class="field is-grouped"
+      >
+        <div
+          class="control"
+        >
+          <button
+            class="button"
+            data-testid="submit"
+            type="submit"
           >
-            <textarea
-              class="textarea"
-              data-testid="description"
-              name="description"
-            >
-              item description
-            </textarea>
-          </div>
-          <p
-            class="help is-danger"
-            data-testid="descriptionErrors"
-          />
+            SAVE
+          </button>
         </div>
         <div
-          class="field is-grouped"
+          class="control"
         >
-          <div
-            class="control"
+          <button
+            class="button"
+            data-testid="cancel"
+            type="button"
           >
-            <button
-              class="button"
-              data-testid="submit"
-              type="submit"
-            >
-              SAVE
-            </button>
-          </div>
-          <div
-            class="control"
-          >
-            <button
-              class="button"
-              data-testid="cancel"
-              type="button"
-            >
-              CANCEL
-            </button>
-          </div>
-          <div
-            class="control"
-          >
-            <button
-              class="button is-danger"
-              data-testid="delete"
-              type="button"
-            >
-              DELETE
-            </button>
-          </div>
+            CANCEL
+          </button>
         </div>
-      </form>
-    </div>
+        <div
+          class="control"
+        >
+          <button
+            class="button is-danger"
+            data-testid="delete"
+            type="button"
+          >
+            DELETE
+          </button>
+        </div>
+      </div>
+    </form>
   </div>
 </DocumentFragment>
 `;

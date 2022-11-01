@@ -22,7 +22,7 @@ export const EditUserPage = () => {
   }, [userId, getUser]);
 
   return (
-    <div>
+    <>
       {pageState && (
         <div className="container">
           <Breadcrumb
@@ -35,6 +35,6 @@ export const EditUserPage = () => {
           <UserForm user={pageState} />
         </div>
       )}
-    </div>
+    </>
   );
 };
