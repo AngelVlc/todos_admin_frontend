@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { useHistory, Link } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
@@ -6,26 +6,13 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import * as Yup from "yup";
 import "./ListForm.css";
 import { List } from "../../../domain";
-import {
-  CreateListUseCase,
-  UpdateListUseCase,
-} from "../../../application/lists";
+import { CreateListUseCase,UpdateListUseCase } from "../../../application/lists";
 
 export const ListForm = (props) => {
   let history = useHistory();
-  // without loaded, the items are reset after save
-  const loaded = useRef(false);
   const { useCaseFactory } = useContext(AppContext);
 
-  const [pageState, setPageState] = useState(new List({ name: "", items: [] }));
-
-  useEffect(() => {
-    if (props.list?.id && !loaded.current) {
-      setPageState(new List(props.list));
-
-      loaded.current = true;
-    }
-  }, [props, loaded]);
+  const [pageState, setPageState] = useState(props.list)
 
   const onSubmit = async (list) => {
     let useCase;
@@ -112,7 +99,7 @@ export const ListForm = (props) => {
                     type="button"
                     data-testid="addNew"
                     onClick={() =>
-                      history.push(`/lists/${props.list?.id}/items/new`)
+                      history.push(`/lists/${props.list.id}/items/new`)
                     }
                   >
                     <span className="icon is-small">
@@ -121,7 +108,7 @@ export const ListForm = (props) => {
                     <span>Add</span>
                   </button>
                 </div>
-                <Droppable droppableId={props.list?.id.toString()}>
+                <Droppable droppableId={props.list.id.toString()}>
                   {(provided) => (
                     <div
                       className="dnd-list"
@@ -147,7 +134,7 @@ export const ListForm = (props) => {
                                 <Link
                                   className="is-flex-grow-4"
                                   data-testid={`editListItem${item.id}`}
-                                  to={`/lists/${props.list?.id}/items/${item.id}/edit`}
+                                  to={`/lists/${props.list.id}/items/${item.id}/edit`}
                                 >
                                   <div>
                                     <span className="has-text-black">
@@ -160,7 +147,7 @@ export const ListForm = (props) => {
                                     <Link
                                       className="has-text-black delete"
                                       data-testid={`deleteListItem${item.id}`}
-                                      to={`/lists/${props.list?.id}/items/${item.id}/delete`}
+                                      to={`/lists/${props.list.id}/items/${item.id}/delete`}
                                     >
                                     </Link>
                                   </center>
@@ -190,7 +177,7 @@ export const ListForm = (props) => {
                 className="button"
                 data-testid="read"
                 type="button"
-                onClick={() => history.push(`/lists/${props.list?.id}/read`)}
+                onClick={() => history.push(`/lists/${props.list.id}/read`)}
               >
                 READ
               </button>
@@ -212,7 +199,7 @@ export const ListForm = (props) => {
                 className="button is-danger"
                 data-testid="delete"
                 type="button"
-                onClick={() => history.push(`/lists/${props.list?.id}/delete`)}
+                onClick={() => history.push(`/lists/${props.list.id}/delete`)}
               >
                 DELETE
               </button>

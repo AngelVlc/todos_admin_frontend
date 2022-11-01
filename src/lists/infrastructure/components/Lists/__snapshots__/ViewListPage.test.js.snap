@@ -2,82 +2,84 @@
 
 exports[`should match the snapshot for an existing list 1`] = `
 <DocumentFragment>
-  <div
-    class="container"
-  >
-    <nav
-      aria-label="breadcrumbs"
-      class="breadcrumb"
-    >
-      <ul>
-        <li>
-          <a
-            href="/"
-          >
-            Home
-          </a>
-        </li>
-        <li>
-          <a
-            href="/lists"
-          >
-            Lists
-          </a>
-        </li>
-        <li
-          class="is-active"
-        >
-          <a
-            aria-current="page"
-            href="/lists/2"
-          >
-            list name
-          </a>
-        </li>
-      </ul>
-    </nav>
-    <h3
-      class="title"
-    >
-      List 'list name'
-    </h3>
-    <div>
-      <div
-        class="mb-2"
-      >
-        <p>
-          item title
-        </p>
-        <p
-          class="is-size-7"
-        >
-          item description
-        </p>
-      </div>
-    </div>
+  <div>
     <div
-      class="field is-grouped mt-4"
+      class="container"
     >
-      <div
-        class="control"
+      <nav
+        aria-label="breadcrumbs"
+        class="breadcrumb"
       >
-        <button
-          class="button"
-          data-testid="edit"
+        <ul>
+          <li>
+            <a
+              href="/"
+            >
+              Home
+            </a>
+          </li>
+          <li>
+            <a
+              href="/lists"
+            >
+              Lists
+            </a>
+          </li>
+          <li
+            class="is-active"
+          >
+            <a
+              aria-current="page"
+              href="/lists/2"
+            >
+              list name
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <h3
+        class="title"
+      >
+        List 'list name'
+      </h3>
+      <div>
+        <div
+          class="mb-2"
         >
-          EDIT
-        </button>
+          <p>
+            item title
+          </p>
+          <p
+            class="is-size-7"
+          >
+            item description
+          </p>
+        </div>
       </div>
       <div
-        class="control"
+        class="field is-grouped mt-4"
       >
-        <button
-          class="button"
-          data-testid="cancel"
-          type="button"
+        <div
+          class="control"
         >
-          BACK
-        </button>
+          <button
+            class="button"
+            data-testid="edit"
+          >
+            EDIT
+          </button>
+        </div>
+        <div
+          class="control"
+        >
+          <button
+            class="button"
+            data-testid="cancel"
+            type="button"
+          >
+            BACK
+          </button>
+        </div>
       </div>
     </div>
   </div>

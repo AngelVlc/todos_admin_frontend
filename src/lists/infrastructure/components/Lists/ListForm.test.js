@@ -47,7 +47,8 @@ afterEach(cleanup);
 
 describe("when the list already exist", () => {
   const renderWithContextAndRouterForExistingList = () => {
-    const items = [
+    const list = new List({ id: 2, name: "list name", isQuickList: true });
+    list.items = [
       new ListItem({
         id: 5,
         title: "item 5 title",
@@ -66,7 +67,7 @@ describe("when the list already exist", () => {
         <AppContext.Provider value={context}>
           <MemoryRouter initialEntries={[`/lists/2/items/5/edit`]}>
             <Route path="/lists/:listId/items/:itemId/edit">
-              <ListForm list={new List({ id: 2, name: "list name", items })} />
+              <ListForm list={list} />
             </Route>
           </MemoryRouter>
         </AppContext.Provider>
@@ -132,7 +133,12 @@ describe("when the list already exist", () => {
         description: "item 5 description",
       }),
     ];
-    const list = new List({ id: 2, name: "updated name", items: items });
+    const list = new List({
+      id: 2,
+      name: "updated name",
+      items: items,
+      isQuickList: true,
+    });
     expect(mockedUpdateListUseCase.execute.mock.calls[0][0]).toStrictEqual(
       list
     );
@@ -196,7 +202,7 @@ describe("when the list is new", () => {
         <AppContext.Provider value={context}>
           <MemoryRouter initialEntries={[`/users/new`]}>
             <Route path="/users/new">
-              <ListForm />
+              <ListForm list={List.createEmpty()} />
             </Route>
           </MemoryRouter>
         </AppContext.Provider>
@@ -243,7 +249,11 @@ describe("when the list is new", () => {
     });
 
     expect(mockedCreateListUseCase.execute.mock.calls.length).toBe(1);
-    const list = new List({ name: "new list", items: [] });
+    const list = new List({
+      name: "new list",
+      itemsCount: 0,
+      isQuickList: false,
+    });
     expect(mockedCreateListUseCase.execute.mock.calls[0][0]).toStrictEqual(
       list
     );

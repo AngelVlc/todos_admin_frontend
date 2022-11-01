@@ -42,10 +42,11 @@ exports[`when the list already exist should match the snapshot 1`] = `
         class="control"
       >
         <input
+          checked=""
           data-testid="isQuickList"
           name="isQuickList"
           type="checkbox"
-          value=""
+          value="true"
         />
       </div>
     </div>
@@ -265,7 +266,7 @@ exports[`when the list is new should match the snapshot 1`] = `
           data-testid="isQuickList"
           name="isQuickList"
           type="checkbox"
-          value=""
+          value="false"
         />
       </div>
     </div>
