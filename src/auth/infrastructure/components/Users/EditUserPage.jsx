@@ -8,7 +8,7 @@ import { GetUserByIdUseCase } from "../../../application/users";
 export const EditUserPage = () => {
   let { userId } = useParams();
   const { useCaseFactory } = useContext(AppContext);
-  const [pageState, setUser] = useState({ name: "" });
+  const [pageState, setUser] = useState();
 
   const getUser = useCallback(async () => {
     const getUserByIdUseCase = useCaseFactory.get(GetUserByIdUseCase);
@@ -22,15 +22,19 @@ export const EditUserPage = () => {
   }, [userId, getUser]);
 
   return (
-    <div className="container">
-      <Breadcrumb
-        items={[
-          { url: "/users", text: "Users" },
-          { url: `/users/${userId}`, text: pageState.name },
-        ]}
-      />
-      <h3 className="title">{`Edit user '${pageState.name}'`}</h3>
-      <UserForm user={pageState}/>
+    <div>
+      {pageState && (
+        <div className="container">
+          <Breadcrumb
+            items={[
+              { url: "/users", text: "Users" },
+              { url: `/users/${userId}`, text: pageState.name },
+            ]}
+          />
+          <h3 className="title">{`Edit user '${pageState.name}'`}</h3>
+          <UserForm user={pageState} />
+        </div>
+      )}
     </div>
   );
 };

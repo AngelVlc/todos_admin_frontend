@@ -55,7 +55,7 @@ const renderWithContextAndRouterForNewUser = () => {
       <AppContext.Provider value={context}>
         <MemoryRouter initialEntries={[`/users/new`]}>
           <Route path="/users/new">
-            <UserForm />
+            <UserForm user={User.createEmpty()}/>
           </Route>
         </MemoryRouter>
       </AppContext.Provider>

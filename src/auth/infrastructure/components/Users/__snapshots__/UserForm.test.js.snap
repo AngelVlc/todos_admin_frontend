@@ -201,6 +201,7 @@ exports[`should match the snapshot for an existing admin user 1`] = `
         class="control"
       >
         <input
+          checked=""
           data-testid="isAdmin"
           name="isAdmin"
           type="checkbox"

@@ -1,9 +1,8 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import * as Yup from "yup";
-import { User } from "../../../domain";
 import { CreateUserUseCase } from "../../../application/users/CreateUserUseCase";
 import { UpdateUserUseCase } from "../../../application/users/UpdateUserUseCase";
 
@@ -11,15 +10,7 @@ export const UserForm = (props) => {
   let history = useHistory();
   const { useCaseFactory } = useContext(AppContext);
 
-  const [pageState, setPageState] = useState(
-    new User({ name: "", isAdmin: false })
-  );
-
-  useEffect(() => {
-    if (props.user?.id) {
-      setPageState(props.user);
-    }
-  }, [props]);
+  const [pageState] = useState(props.user);
 
   const onSubmit = async (user) => {
     let useCase;
