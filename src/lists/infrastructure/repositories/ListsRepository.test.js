@@ -6,7 +6,7 @@ jest.mock("axios");
 describe("ListsRepository", () => {
   describe("#getById", () => {
     it("does a http get request and return its result", async () => {
-      const expectedResult = { id: 1, name: "list1", itemsCount: 2 };
+      const expectedResult = { id: 1 };
 
       axios.get.mockResolvedValue({
         data: expectedResult,
@@ -40,8 +40,8 @@ describe("ListsRepository", () => {
   describe("#getAll", () => {
     it("does a http get request and return its result", async () => {
       const expectedResult = [
-        { id: 1, name: "list1", itemsCount: 3 },
-        { id: 2, name: "list2", itemsCount: 10 },
+        { id: 1 },
+        { id: 2 },
       ];
 
       axios.get.mockResolvedValue({

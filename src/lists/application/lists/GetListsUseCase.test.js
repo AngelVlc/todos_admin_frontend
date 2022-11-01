@@ -12,11 +12,13 @@ describe("GetListsUseCase.#execute", () => {
         id: 1,
         name: "list1",
         itemsCount: 2,
+        isQuickList: true,
       },
       {
         id: 2,
         name: "list2",
         itemsCount: 5,
+        isQuickList: false,
       },
     ]);
 
@@ -29,11 +31,13 @@ describe("GetListsUseCase.#execute", () => {
         id: 1,
         name: "list1",
         itemsCount: 2,
+        isQuickList: true,
       }),
       new List({
         id: 2,
         name: "list2",
         itemsCount: 5,
+        isQuickList: false,
       }),
     ]);
   });

@@ -89,6 +89,14 @@ export const ListForm = (props) => {
             <ErrorMessage name="name" />
           </p>
         </div>
+        <div className="field">
+          <label className="label" htmlFor="isQuickList">
+            Is Quick List
+          </label>
+          <div className="control">
+            <Field name="isQuickList" type="checkbox" data-testid="isQuickList" />
+          </div>
+        </div>
         {props.list?.id && (
           <div>
             <div className="is-flex">

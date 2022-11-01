@@ -68,6 +68,26 @@ exports[`should match the snapshot for an existing list 1`] = `
           data-testid="nameErrors"
         />
       </div>
+      <div
+        class="field"
+      >
+        <label
+          class="label"
+          for="isQuickList"
+        >
+          Is Quick List
+        </label>
+        <div
+          class="control"
+        >
+          <input
+            data-testid="isQuickList"
+            name="isQuickList"
+            type="checkbox"
+            value=""
+          />
+        </div>
+      </div>
       <div>
         <div
           class="is-flex"
