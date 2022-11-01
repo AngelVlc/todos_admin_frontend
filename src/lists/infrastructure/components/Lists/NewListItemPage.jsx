@@ -17,7 +17,7 @@ export const NewListItemPage = () => {
         ]}
       />
       <h3 className="title">New item</h3>
-      <ListItemForm listItem={new ListItem({ listId: listId, title: "", description: "" })} />
+      <ListItemForm listItem={ListItem.createEmpty(listId)} />
     </div>
   );
 };

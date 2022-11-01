@@ -8,7 +8,7 @@ import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcr
 export const EditListItemPage = () => {
   let { listId, itemId } = useParams();
   const { useCaseFactory } = useContext(AppContext);
-  const [pageState, setPageState] = useState({ title: "" });
+  const [pageState, setPageState] = useState();
 
   const getExistingItem = useCallback(async () => {
     const getListItemByIdUseCase = useCaseFactory.get(GetListItemByIdUseCase);
@@ -22,19 +22,23 @@ export const EditListItemPage = () => {
   }, [listId, itemId, getExistingItem]);
 
   return (
-    <div className="container">
-      <Breadcrumb
-        items={[
-          { url: "/lists", text: "Lists" },
-          { url: `/lists/${listId}`, text: "List" },
-          {
-            url: `/lists/${listId}/items/${itemId}/edit`,
-            text: pageState.title,
-          },
-        ]}
-      />
-      <h3 className="title">{`Edit item '${pageState.title}'`}</h3>
-      <ListItemForm listItem={pageState} />
+    <div>
+      {pageState && (
+        <div className="container">
+          <Breadcrumb
+            items={[
+              { url: "/lists", text: "Lists" },
+              { url: `/lists/${listId}`, text: "List" },
+              {
+                url: `/lists/${listId}/items/${itemId}/edit`,
+                text: pageState.title,
+              },
+            ]}
+          />
+          <h3 className="title">{`Edit item '${pageState.title}'`}</h3>
+          <ListItemForm listItem={pageState} />
+        </div>
+      )}
     </div>
   );
 };

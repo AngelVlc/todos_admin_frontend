@@ -1,9 +1,8 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import * as Yup from "yup";
-import { ListItem } from "../../../domain";
 import {
   CreateListItemUseCase,
   UpdateListItemUseCase,
@@ -13,13 +12,7 @@ export const ListItemForm = (props) => {
   let history = useHistory();
   const { useCaseFactory } = useContext(AppContext);
 
-  const [pageState, setPageState] = useState(
-    new ListItem({ title: "", description: "" })
-  );
-
-  useEffect(() => {
-      setPageState(new ListItem(props.listItem));
-  }, [props]);
+  const [pageState] = useState(props.listItem);
 
   const onSubmit = async (listItem) => {
     let useCase;
@@ -91,9 +84,7 @@ export const ListItemForm = (props) => {
               className="button"
               data-testid="cancel"
               type="button"
-              onClick={() =>
-                history.push(`/lists/${props.listItem.listId}`)
-              }
+              onClick={() => history.push(`/lists/${props.listItem.listId}`)}
             >
               CANCEL
             </button>

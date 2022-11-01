@@ -2,142 +2,144 @@
 
 exports[`should match the snapshot for an existing item 1`] = `
 <DocumentFragment>
-  <div
-    class="container"
-  >
-    <nav
-      aria-label="breadcrumbs"
-      class="breadcrumb"
+  <div>
+    <div
+      class="container"
     >
-      <ul>
-        <li>
-          <a
-            href="/"
-          >
-            Home
-          </a>
-        </li>
-        <li>
-          <a
-            href="/lists"
-          >
-            Lists
-          </a>
-        </li>
-        <li>
-          <a
-            href="/lists/2"
-          >
-            List
-          </a>
-        </li>
-        <li
-          class="is-active"
-        >
-          <a
-            aria-current="page"
-            href="/lists/2/items/5/edit"
-          >
-            item title
-          </a>
-        </li>
-      </ul>
-    </nav>
-    <h3
-      class="title"
-    >
-      Edit item 'item title'
-    </h3>
-    <form
-      action="#"
-    >
-      <div
-        class="field"
+      <nav
+        aria-label="breadcrumbs"
+        class="breadcrumb"
       >
-        <label
-          class="label"
-          for="title"
-        >
-          Title
-        </label>
+        <ul>
+          <li>
+            <a
+              href="/"
+            >
+              Home
+            </a>
+          </li>
+          <li>
+            <a
+              href="/lists"
+            >
+              Lists
+            </a>
+          </li>
+          <li>
+            <a
+              href="/lists/2"
+            >
+              List
+            </a>
+          </li>
+          <li
+            class="is-active"
+          >
+            <a
+              aria-current="page"
+              href="/lists/2/items/5/edit"
+            >
+              item title
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <h3
+        class="title"
+      >
+        Edit item 'item title'
+      </h3>
+      <form
+        action="#"
+      >
         <div
-          class="control"
+          class="field"
         >
-          <input
-            class="input"
-            data-testid="title"
-            name="title"
-            value="item title"
+          <label
+            class="label"
+            for="title"
+          >
+            Title
+          </label>
+          <div
+            class="control"
+          >
+            <input
+              class="input"
+              data-testid="title"
+              name="title"
+              value="item title"
+            />
+          </div>
+          <p
+            class="help is-danger"
+            data-testid="titleErrors"
           />
         </div>
-        <p
-          class="help is-danger"
-          data-testid="titleErrors"
-        />
-      </div>
-      <div
-        class="field"
-      >
-        <label
-          class="label"
-          for="description"
-        >
-          Description
-        </label>
         <div
-          class="control"
+          class="field"
         >
-          <textarea
-            class="textarea"
-            data-testid="description"
-            name="description"
+          <label
+            class="label"
+            for="description"
           >
-            item description
-          </textarea>
-        </div>
-        <p
-          class="help is-danger"
-          data-testid="descriptionErrors"
-        />
-      </div>
-      <div
-        class="field is-grouped"
-      >
-        <div
-          class="control"
-        >
-          <button
-            class="button"
-            data-testid="submit"
-            type="submit"
+            Description
+          </label>
+          <div
+            class="control"
           >
-            SAVE
-          </button>
+            <textarea
+              class="textarea"
+              data-testid="description"
+              name="description"
+            >
+              item description
+            </textarea>
+          </div>
+          <p
+            class="help is-danger"
+            data-testid="descriptionErrors"
+          />
         </div>
         <div
-          class="control"
+          class="field is-grouped"
         >
-          <button
-            class="button"
-            data-testid="cancel"
-            type="button"
+          <div
+            class="control"
           >
-            CANCEL
-          </button>
-        </div>
-        <div
-          class="control"
-        >
-          <button
-            class="button is-danger"
-            data-testid="delete"
-            type="button"
+            <button
+              class="button"
+              data-testid="submit"
+              type="submit"
+            >
+              SAVE
+            </button>
+          </div>
+          <div
+            class="control"
           >
-            DELETE
-          </button>
+            <button
+              class="button"
+              data-testid="cancel"
+              type="button"
+            >
+              CANCEL
+            </button>
+          </div>
+          <div
+            class="control"
+          >
+            <button
+              class="button is-danger"
+              data-testid="delete"
+              type="button"
+            >
+              DELETE
+            </button>
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
 </DocumentFragment>
 `;

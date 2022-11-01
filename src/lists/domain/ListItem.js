@@ -5,4 +5,8 @@ export class ListItem {
     this.description = description;
     this.listId = listId;
   }
+
+  static createEmpty(listId) {
+    return new ListItem({ listId: listId, title: "", description: "" });
+  }
 }

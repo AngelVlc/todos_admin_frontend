@@ -6,13 +6,16 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import * as Yup from "yup";
 import "./ListForm.css";
 import { List } from "../../../domain";
-import { CreateListUseCase,UpdateListUseCase } from "../../../application/lists";
+import {
+  CreateListUseCase,
+  UpdateListUseCase,
+} from "../../../application/lists";
 
 export const ListForm = (props) => {
   let history = useHistory();
   const { useCaseFactory } = useContext(AppContext);
 
-  const [pageState, setPageState] = useState(props.list)
+  const [pageState, setPageState] = useState(props.list);
 
   const onSubmit = async (list) => {
     let useCase;
@@ -81,7 +84,11 @@ export const ListForm = (props) => {
             Is Quick List
           </label>
           <div className="control">
-            <Field name="isQuickList" type="checkbox" data-testid="isQuickList" />
+            <Field
+              name="isQuickList"
+              type="checkbox"
+              data-testid="isQuickList"
+            />
           </div>
         </div>
         {props.list?.id && (
@@ -148,8 +155,7 @@ export const ListForm = (props) => {
                                       className="has-text-black delete"
                                       data-testid={`deleteListItem${item.id}`}
                                       to={`/lists/${props.list.id}/items/${item.id}/delete`}
-                                    >
-                                    </Link>
+                                    ></Link>
                                   </center>
                                 </div>
                               </div>
