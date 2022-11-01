@@ -77,7 +77,7 @@ exports[`should match the snapshot for an existing list 1`] = `
             data-testid="cancel"
             type="button"
           >
-            BACK
+            CANCEL
           </button>
         </div>
       </div>

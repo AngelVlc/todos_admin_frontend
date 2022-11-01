@@ -61,7 +61,7 @@ export const ViewListPage = () => {
                 type="button"
                 onClick={() => history.push("/lists")}
               >
-                BACK
+                CANCEL
               </button>
             </div>
           </div>
