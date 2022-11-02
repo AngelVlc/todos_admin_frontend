@@ -3,8 +3,9 @@ import { DeleteListItemPage } from "./DeleteListItemPage";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { MemoryRouter, Route } from "react-router-dom";
 import { act } from "react-dom/test-utils";
+import { GetListByIdUseCase } from "../../../application/lists";
 import { GetListItemByIdUseCase } from "../../../application/listItems";
-import { ListItem } from "../../../domain";
+import { List, ListItem } from "../../../domain";
 
 const mockHistoryGoBack = jest.fn();
 const mockHistoryPush = jest.fn();
@@ -16,6 +17,10 @@ jest.mock("react-router-dom", () => ({
     push: mockHistoryPush,
   }),
 }));
+
+const mockedGetListByIdUseCase = {
+  execute: jest.fn(),
+};
 
 const mockedGetListItemByIdUseCase = {
   execute: jest.fn(),
@@ -29,6 +34,8 @@ const useCaseFactory = {
   get: (useCase) => {
     if (useCase == GetListItemByIdUseCase) {
       return mockedGetListItemByIdUseCase;
+    } else if (useCase == GetListByIdUseCase) {
+      return mockedGetListByIdUseCase;
     }
 
     return mockedDeleteListItemByIdUseCase;
@@ -36,6 +43,10 @@ const useCaseFactory = {
 };
 
 const renderWithContextAndRouter = () => {
+  mockedGetListByIdUseCase.execute.mockResolvedValue(
+    new List({ id: 2, name: "list name" })
+  );
+
   mockedGetListItemByIdUseCase.execute.mockResolvedValue(
     new ListItem({ id: 2, title: "item title", description: "item desc" })
   );

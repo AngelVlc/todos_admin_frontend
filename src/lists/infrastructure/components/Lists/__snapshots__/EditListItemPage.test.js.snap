@@ -28,7 +28,7 @@ exports[`should match the snapshot for an existing item 1`] = `
           <a
             href="/lists/2"
           >
-            List
+            list name
           </a>
         </li>
         <li
