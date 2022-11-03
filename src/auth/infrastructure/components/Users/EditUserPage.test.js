@@ -1,4 +1,4 @@
-import { render, cleanup } from "@testing-library/react";
+import { render, cleanup, fireEvent, waitFor } from "@testing-library/react";
 import { EditUserPage } from "./EditUserPage";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { MemoryRouter, Route } from "react-router-dom";
@@ -59,4 +59,19 @@ it("should match the snapshot for an existing admin user", async () => {
     fragment = asFragment;
   });
   expect(fragment()).toMatchSnapshot();
+});
+
+it("should allow delete an existing user", async () => {
+  let container;
+  await act(async () => {
+    container = renderWithContextAndRouterForExistingUser(false);
+  });
+
+  await waitFor(() => {
+    fireEvent.click(container.getByTestId("delete"));
+  });
+
+  expect(mockHistoryPush.mock.calls.length).toBe(1);
+  expect(mockHistoryPush.mock.calls[0][0]).toBe("/users/2/delete");
+  mockHistoryPush.mockClear();
 });

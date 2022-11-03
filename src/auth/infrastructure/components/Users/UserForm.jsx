@@ -21,7 +21,7 @@ export const UserForm = (props) => {
     }
     const result = await useCase.execute(user);
     if (result) {
-      history.push('/users');
+      history.push("/users");
     }
   };
 
@@ -40,7 +40,7 @@ export const UserForm = (props) => {
             Name
           </label>
           <div className="control">
-            <Field name="name" type="text" data-testid="name" autoFocus/>
+            <Field name="name" type="text" data-testid="name" autoFocus />
           </div>
           <p className="help is-danger" data-testid="userNameErrors">
             <ErrorMessage name="name" />
@@ -94,18 +94,7 @@ export const UserForm = (props) => {
               CANCEL
             </button>
           </div>
-          {props.user?.id && (
-            <div className="control">
-              <button
-                className="button is-danger"
-                data-testid="delete"
-                type="button"
-                onClick={() => history.push(`/users/${props.user?.id}/delete`)}
-              >
-                DELETE
-              </button>
-            </div>
-          )}
+          {props.children}
         </div>
       </Form>
     </Formik>
