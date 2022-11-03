@@ -49,7 +49,10 @@ export const ListForm = (props) => {
     newItems.splice(source.index, 1);
     newItems.splice(destination.index, 0, pageState.items[source.index]);
 
-    setPageState(new List({ ...pageState, items: newItems }));
+    const newList = new List({ ...pageState });
+    newList.items = newItems;
+
+    setPageState(newList);
   };
 
   return (
