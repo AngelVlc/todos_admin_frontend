@@ -89,22 +89,7 @@ export const ListItemForm = (props) => {
               CANCEL
             </button>
           </div>
-          {props.listItem?.id && (
-            <div className="control">
-              <button
-                className="button is-danger"
-                data-testid="delete"
-                type="button"
-                onClick={() =>
-                  history.push(
-                    `/lists/${props.listItem.listId}/items/${props.listItem.id}/delete`
-                  )
-                }
-              >
-                DELETE
-              </button>
-            </div>
-          )}
+          {props.children}
         </div>
       </Form>
     </Formik>

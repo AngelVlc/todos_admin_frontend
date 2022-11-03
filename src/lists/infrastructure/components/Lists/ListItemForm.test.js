@@ -88,21 +88,6 @@ it("should match the snapshot for a new item", async () => {
   expect(asFragment()).toMatchSnapshot();
 });
 
-it("should allow delete an existing item", async () => {
-  let container;
-  await act(async () => {
-    container = renderWithContextAndRouterForExistingItem();
-  });
-
-  await waitFor(() => {
-    fireEvent.click(container.getByTestId("delete"));
-  });
-
-  expect(mockHistoryPush.mock.calls.length).toBe(1);
-  expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/2/items/5/delete");
-  mockHistoryPush.mockClear();
-});
-
 it("should allow cancel", async () => {
   const { getByTestId } = renderWithContextAndRouterForNewItem();
 

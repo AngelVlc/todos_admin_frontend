@@ -161,17 +161,6 @@ exports[`should match the snapshot for an existing item 1`] = `
           CANCEL
         </button>
       </div>
-      <div
-        class="control"
-      >
-        <button
-          class="button is-danger"
-          data-testid="delete"
-          type="button"
-        >
-          DELETE
-        </button>
-      </div>
     </div>
   </form>
 </DocumentFragment>

@@ -1,4 +1,4 @@
-import { render, cleanup } from "@testing-library/react";
+import { render, cleanup, fireEvent, waitFor } from "@testing-library/react";
 import { EditListItemPage } from "./EditListItemPage";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { MemoryRouter, Route } from "react-router-dom";
@@ -70,4 +70,19 @@ it("should match the snapshot for an existing item", async () => {
     fragment = asFragment;
   });
   expect(fragment()).toMatchSnapshot();
+});
+
+it("should allow delete an existing item", async () => {
+  let container;
+  await act(async () => {
+    container = renderWithContextAndRouterForExistingItem();
+  });
+
+  await waitFor(() => {
+    fireEvent.click(container.getByTestId("delete"));
+  });
+
+  expect(mockHistoryPush.mock.calls.length).toBe(1);
+  expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/2/items/5/delete");
+  mockHistoryPush.mockClear();
 });

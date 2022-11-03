@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext, useCallback } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { ListItemForm } from "./ListItemForm";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { GetListByIdUseCase } from "../../../application/lists";
@@ -7,6 +7,7 @@ import { GetListItemByIdUseCase } from "../../../application/listItems";
 import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb/Breadcrumb";
 
 export const EditListItemPage = () => {
+  let history = useHistory();
   let { listId, itemId } = useParams();
   const { useCaseFactory } = useContext(AppContext);
   const [pageState, setPageState] = useState();
@@ -45,7 +46,22 @@ export const EditListItemPage = () => {
             ]}
           />
           <h3 className="title">{`Edit item '${pageState.listItem.title}'`}</h3>
-          <ListItemForm listItem={pageState.listItem} />
+          <ListItemForm listItem={pageState.listItem}>
+            <div className="control">
+              <button
+                className="button is-danger"
+                data-testid="delete"
+                type="button"
+                onClick={() =>
+                  history.push(
+                    `/lists/${listId}/items/${itemId}/delete`
+                  )
+                }
+              >
+                DELETE
+              </button>
+            </div>
+          </ListItemForm>
         </div>
       )}
     </>
