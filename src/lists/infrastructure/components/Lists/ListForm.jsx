@@ -177,18 +177,7 @@ export const ListForm = (props) => {
               {props.list?.id ? "SAVE" : "CREATE"}
             </button>
           </div>
-          {props.list?.id && (
-            <div className="control">
-              <button
-                className="button"
-                data-testid="read"
-                type="button"
-                onClick={() => history.push(`/lists/${props.list.id}/read`)}
-              >
-                READ
-              </button>
-            </div>
-          )}
+          <>{props.preCancel}</>
           <div className="control">
             <button
               className="button"
@@ -199,18 +188,7 @@ export const ListForm = (props) => {
               CANCEL
             </button>
           </div>
-          {props.list?.id && (
-            <div className="control ml-auto is-pulled-right">
-              <button
-                className="button is-danger"
-                data-testid="delete"
-                type="button"
-                onClick={() => history.push(`/lists/${props.list.id}/delete`)}
-              >
-                DELETE
-              </button>
-            </div>
-          )}
+          <>{props.postCancel}</>
         </div>
       </Form>
     </Formik>

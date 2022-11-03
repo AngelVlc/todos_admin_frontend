@@ -188,32 +188,10 @@ exports[`when the list already exist should match the snapshot 1`] = `
       >
         <button
           class="button"
-          data-testid="read"
-          type="button"
-        >
-          READ
-        </button>
-      </div>
-      <div
-        class="control"
-      >
-        <button
-          class="button"
           data-testid="cancel"
           type="button"
         >
           CANCEL
-        </button>
-      </div>
-      <div
-        class="control ml-auto is-pulled-right"
-      >
-        <button
-          class="button is-danger"
-          data-testid="delete"
-          type="button"
-        >
-          DELETE
         </button>
       </div>
     </div>

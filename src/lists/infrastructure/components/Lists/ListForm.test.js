@@ -84,21 +84,6 @@ describe("when the list already exist", () => {
     expect(fragment()).toMatchSnapshot();
   });
 
-  it("should allow to delete the list", async () => {
-    let container;
-    await act(async () => {
-      container = renderWithContextAndRouterForExistingList();
-    });
-
-    await waitFor(() => {
-      fireEvent.click(container.getByTestId("delete"));
-    });
-
-    expect(mockHistoryPush.mock.calls.length).toBe(1);
-    expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/2/delete");
-    mockHistoryPush.mockClear();
-  });
-
   it("should allow to update the list", async () => {
     let container;
     await act(async () => {
@@ -142,18 +127,6 @@ describe("when the list already exist", () => {
     expect(mockedUpdateListUseCase.execute.mock.calls[0][0]).toStrictEqual(
       list
     );
-  });
-
-  it("should allow read the list", async () => {
-    const { getByTestId } = renderWithContextAndRouterForExistingList();
-
-    await waitFor(() => {
-      fireEvent.click(getByTestId("read"));
-    });
-
-    expect(mockHistoryPush.mock.calls.length).toBe(1);
-    expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/2/read");
-    mockHistoryPush.mockClear();
   });
 
   it("should add a new item", async () => {
