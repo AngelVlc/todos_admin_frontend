@@ -11,7 +11,6 @@ describe("GetListByIdUseCase.#execute", () => {
       id: 1,
       name: "name",
       itemsCount: 2,
-      isQuickList: true,
     });
 
     const useCase = new GetListByIdUseCase({ repository });
@@ -23,7 +22,6 @@ describe("GetListByIdUseCase.#execute", () => {
         id: 1,
         name: "name",
         itemsCount: 2,
-        isQuickList: true,
       })
     );
   });

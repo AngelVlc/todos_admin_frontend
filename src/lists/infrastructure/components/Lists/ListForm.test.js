@@ -47,7 +47,7 @@ afterEach(cleanup);
 
 describe("when the list already exist", () => {
   const renderWithContextAndRouterForExistingList = () => {
-    const list = new List({ id: 2, name: "list name", isQuickList: true });
+    const list = new List({ id: 2, name: "list name" });
     list.items = [
       new ListItem({
         id: 5,
@@ -120,10 +120,9 @@ describe("when the list already exist", () => {
     ];
     const list = new List({
       id: 2,
-      name: "updated name",
-      items: items,
-      isQuickList: true,
+      name: "updated name"      
     });
+    list.items = items;
     expect(mockedUpdateListUseCase.execute.mock.calls[0][0]).toStrictEqual(
       list
     );
@@ -225,7 +224,6 @@ describe("when the list is new", () => {
     const list = new List({
       name: "new list",
       itemsCount: 0,
-      isQuickList: false,
     });
     expect(mockedCreateListUseCase.execute.mock.calls[0][0]).toStrictEqual(
       list

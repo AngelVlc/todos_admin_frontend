@@ -1,13 +1,12 @@
 export class List {
-  constructor({ id, name, itemsCount, isQuickList }) {
+  constructor({ id, name, itemsCount }) {
     this.id = id;
     this.name = name;
     this.items = [];
     this.itemsCount = itemsCount;
-    this.isQuickList = isQuickList;
   }
 
   static createEmpty() {
-    return new List({ name: "", itemsCount: 0, isQuickList: false });
+    return new List({ name: "", itemsCount: 0 });
   }
 }
