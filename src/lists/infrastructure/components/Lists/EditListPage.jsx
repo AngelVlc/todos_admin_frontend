@@ -1,25 +1,25 @@
 import React, { useEffect, useState, useContext, useCallback } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { ListForm } from "./ListForm";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { GetListByIdUseCase } from "../../../application/lists";
 import { GetListItemsUseCase } from "../../../application/listItems";
 import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb/Breadcrumb";
-import { List } from "../../../domain";
 
 export const EditListPage = () => {
+  let history = useHistory();
   let { listId } = useParams();
   const { useCaseFactory } = useContext(AppContext);
-  const [pageState, setPageState] = useState(new List({ name: "", items: [] }));
+  const [pageState, setPageState] = useState();
 
   const getExistingList = useCallback(async () => {
     const getListByIdUseCase = useCaseFactory.get(GetListByIdUseCase);
-    const listData = await getListByIdUseCase.execute(listId);
+    const list = await getListByIdUseCase.execute(listId);
 
     const getListItemsUseCase = useCaseFactory.get(GetListItemsUseCase);
-    const itemsData = await getListItemsUseCase.execute(listId);
+    list.items = await getListItemsUseCase.execute(listId);
 
-    setPageState(new List({ ...listData, items: itemsData }));
+    setPageState(list);
   }, [listId, useCaseFactory]);
 
   useEffect(() => {
@@ -27,18 +27,48 @@ export const EditListPage = () => {
   }, [listId, getExistingList]);
 
   return (
-    <div className="container">
-      <Breadcrumb
-        items={[
-          { url: "/lists", text: "Lists" },
-          {
-            url: `/lists/${listId}`,
-            text: pageState.name,
-          },
-        ]}
-      />
-      <h3 className="title">{`Edit list '${pageState.name}'`}</h3>
-      <ListForm list={pageState} />
-    </div>
+    <>
+      {pageState && (
+        <div className="container">
+          <Breadcrumb
+            items={[
+              { url: "/lists", text: "Lists" },
+              {
+                url: `/lists/${listId}`,
+                text: pageState.name,
+              },
+            ]}
+          />
+          <h3 className="title">{`Edit list '${pageState.name}'`}</h3>
+          <ListForm
+            list={pageState}
+            preCancel={
+              <div className="control">
+                <button
+                  className="button"
+                  data-testid="read"
+                  type="button"
+                  onClick={() => history.push(`/lists/${listId}/read`)}
+                >
+                  READ
+                </button>
+              </div>
+            }
+            postCancel={
+              <div className="control ml-auto is-pulled-right">
+                <button
+                  className="button is-danger"
+                  data-testid="delete"
+                  type="button"
+                  onClick={() => history.push(`/lists/${listId}/delete`)}
+                >
+                  DELETE
+                </button>
+              </div>
+            }
+          />
+        </div>
+      )}
+    </>
   );
 };

@@ -11,7 +11,7 @@ exports[`Should match the snapshot 1`] = `
       <span
         class="is-size-7"
       >
-        sha: sha, build: date
+        sha: 1234567, build: date
       </span>
     </div>
   </footer>

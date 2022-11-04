@@ -1,8 +1,12 @@
 export class List {
-  constructor({ id, name, items, itemsCount }) {
+  constructor({ id, name, itemsCount }) {
     this.id = id;
     this.name = name;
+    this.items = [];
     this.itemsCount = itemsCount;
-    this.items = items;
+  }
+
+  static createEmpty() {
+    return new List({ name: "", itemsCount: 0 });
   }
 }

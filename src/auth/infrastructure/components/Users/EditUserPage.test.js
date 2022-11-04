@@ -1,4 +1,4 @@
-import { render, cleanup } from "@testing-library/react";
+import { render, cleanup, fireEvent, waitFor } from "@testing-library/react";
 import { EditUserPage } from "./EditUserPage";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { MemoryRouter, Route } from "react-router-dom";
@@ -14,7 +14,7 @@ jest.mock("react-router-dom", () => ({
   }),
 }));
 
-const renderWithContextAndRouterForExistingUser = (component, isAdmin) => {
+const renderWithContextAndRouterForExistingUser = (isAdmin) => {
   const mockedGetUserByIdUseCase = {
     execute: jest.fn(),
   };
@@ -34,7 +34,7 @@ const renderWithContextAndRouterForExistingUser = (component, isAdmin) => {
     ...render(
       <AppContext.Provider value={context}>
         <MemoryRouter initialEntries={[`/users/2/edit`]}>
-          <Route path="/users/:userId/edit">{component}</Route>
+          <Route path="/users/:userId/edit">{<EditUserPage />}</Route>
         </MemoryRouter>
       </AppContext.Provider>
     ),
@@ -46,23 +46,32 @@ afterEach(cleanup);
 it("should match the snapshot for an existing non admin user", async () => {
   let fragment;
   await act(async () => {
-    const { asFragment } = renderWithContextAndRouterForExistingUser(
-      <EditUserPage />,
-      false
-    );
+    const { asFragment } = renderWithContextAndRouterForExistingUser(false);
     fragment = asFragment;
   });
-  expect(fragment(<EditUserPage />)).toMatchSnapshot();
+  expect(fragment()).toMatchSnapshot();
 });
 
 it("should match the snapshot for an existing admin user", async () => {
   let fragment;
   await act(async () => {
-    const { asFragment } = renderWithContextAndRouterForExistingUser(
-      <EditUserPage />,
-      true
-    );
+    const { asFragment } = renderWithContextAndRouterForExistingUser(true);
     fragment = asFragment;
   });
-  expect(fragment(<EditUserPage />)).toMatchSnapshot();
+  expect(fragment()).toMatchSnapshot();
+});
+
+it("should allow delete an existing user", async () => {
+  let container;
+  await act(async () => {
+    container = renderWithContextAndRouterForExistingUser(false);
+  });
+
+  await waitFor(() => {
+    fireEvent.click(container.getByTestId("delete"));
+  });
+
+  expect(mockHistoryPush.mock.calls.length).toBe(1);
+  expect(mockHistoryPush.mock.calls[0][0]).toBe("/users/2/delete");
+  mockHistoryPush.mockClear();
 });

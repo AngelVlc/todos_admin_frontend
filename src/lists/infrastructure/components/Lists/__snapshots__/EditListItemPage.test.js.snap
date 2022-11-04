@@ -26,9 +26,9 @@ exports[`should match the snapshot for an existing item 1`] = `
         </li>
         <li>
           <a
-            href="/lists/2/edit"
+            href="/lists/2"
           >
-            List
+            list name
           </a>
         </li>
         <li
@@ -103,7 +103,7 @@ exports[`should match the snapshot for an existing item 1`] = `
       <div
         class="field is-grouped"
       >
-        <p
+        <div
           class="control"
         >
           <button
@@ -113,8 +113,8 @@ exports[`should match the snapshot for an existing item 1`] = `
           >
             SAVE
           </button>
-        </p>
-        <p
+        </div>
+        <div
           class="control"
         >
           <button
@@ -124,8 +124,8 @@ exports[`should match the snapshot for an existing item 1`] = `
           >
             CANCEL
           </button>
-        </p>
-        <p
+        </div>
+        <div
           class="control"
         >
           <button
@@ -135,7 +135,7 @@ exports[`should match the snapshot for an existing item 1`] = `
           >
             DELETE
           </button>
-        </p>
+        </div>
       </div>
     </form>
   </div>

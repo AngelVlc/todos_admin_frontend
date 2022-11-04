@@ -55,7 +55,7 @@ const renderWithContextAndRouterForNewUser = () => {
       <AppContext.Provider value={context}>
         <MemoryRouter initialEntries={[`/users/new`]}>
           <Route path="/users/new">
-            <UserForm />
+            <UserForm user={User.createEmpty()}/>
           </Route>
         </MemoryRouter>
       </AppContext.Provider>
@@ -86,21 +86,6 @@ it("should match the snapshot for an existing admin user", async () => {
 it("should match the snapshot for a new user", async () => {
   const { asFragment } = renderWithContextAndRouterForNewUser();
   expect(asFragment()).toMatchSnapshot();
-});
-
-it("should allow delete an existing user", async () => {
-  let container;
-  await act(async () => {
-    container = renderWithContextAndRouterForExistingUser(false);
-  });
-
-  await waitFor(() => {
-    fireEvent.click(container.getByTestId("delete"));
-  });
-
-  expect(mockHistoryPush.mock.calls.length).toBe(1);
-  expect(mockHistoryPush.mock.calls[0][0]).toBe("/users/2/delete");
-  mockHistoryPush.mockClear();
 });
 
 it("should allow cancel", async () => {

@@ -26,9 +26,9 @@ exports[`should match the snapshot 1`] = `
         </li>
         <li>
           <a
-            href="/lists/2/edit"
+            href="/lists/2"
           >
-            List
+            list name
           </a>
         </li>
         <li>
@@ -45,7 +45,7 @@ exports[`should match the snapshot 1`] = `
             aria-current="page"
             href="/lists/2/items/5/delete"
           >
-            Delete item title
+            Delete
           </a>
         </li>
       </ul>

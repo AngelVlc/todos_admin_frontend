@@ -1,91 +1,102 @@
-import { render, cleanup, fireEvent, waitFor } from '@testing-library/react';
-import { Router } from 'react-router-dom';
-import { Header } from './Header';
-import { AppContext } from '../../contexts';
-import { createMemoryHistory } from 'history';
+import { render, cleanup, fireEvent, waitFor } from "@testing-library/react";
+import { Router } from "react-router-dom";
+import { Header } from "./Header";
+import { AppContext } from "../../contexts";
+import { createMemoryHistory } from "history";
 
-const mockAuthDispatch = jest.fn()
+const mockAuthDispatch = jest.fn();
 const mockHistoryPush = jest.fn();
-jest.mock('react-router-dom', () => ({
-    ...jest.requireActual('react-router-dom'),
-    useHistory: () => ({
-        push: mockHistoryPush
-    })
+jest.mock("react-router-dom", () => ({
+  ...jest.requireActual("react-router-dom"),
+  useHistory: () => ({
+    push: mockHistoryPush,
+  }),
 }));
 
-const renderWithRouterAndContext = (component, auth) => {
-    const history = createMemoryHistory();
-    const context = { authDispatch: mockAuthDispatch, auth };
-    return {
-        ...render(
-            <AppContext.Provider value={context}>
-                <Router history={history}>
-                    {component}
-                </Router>
-            </AppContext.Provider>)
-    }
+const renderWithRouterAndContext = (auth) => {
+  const history = createMemoryHistory();
+  const context = { authDispatch: mockAuthDispatch, auth };
+  return {
+    ...render(
+      <AppContext.Provider value={context}>
+        <Router history={history}>{<Header />}</Router>
+      </AppContext.Provider>
+    ),
+  };
 };
 
 afterEach(cleanup);
 
-it('should match the snapshot when the user is not logged in', () => {
-    const { asFragment } = renderWithRouterAndContext(<Header />, { info: null });
+it("should match the snapshot when the user is not logged in", () => {
+  const { asFragment } = renderWithRouterAndContext({ info: null });
 
-    expect(asFragment(<Header />)).toMatchSnapshot();
-})
+  expect(asFragment()).toMatchSnapshot();
+});
 
-it('should match the snapshot when the user is logged in', () => {
-    const { asFragment } = renderWithRouterAndContext(<Header />, { info: { userName: 'user' } });
+it("should match the snapshot when the user is logged in", () => {
+  const { asFragment } = renderWithRouterAndContext({
+    info: { userName: "user" },
+  });
 
-    expect(asFragment(<Header />)).toMatchSnapshot();
-})
+  expect(asFragment()).toMatchSnapshot();
+});
 
-it('should match the snapshot when an admin user is logged in', () => {
-    const { asFragment } = renderWithRouterAndContext(<Header />, { info: { userName: 'admin', isAdmin: true } });
+it("should match the snapshot when an admin user is logged in", () => {
+  const { asFragment } = renderWithRouterAndContext({
+    info: { userName: "admin", isAdmin: true },
+  });
 
-    expect(asFragment(<Header />)).toMatchSnapshot();
-})
+  expect(asFragment()).toMatchSnapshot();
+});
 
-it('should do logout', async () => {
-    const { getByTestId } = renderWithRouterAndContext(<Header />, { info: { userName: 'user' } });
+it("should do logout", async () => {
+  const { getByTestId } = renderWithRouterAndContext({
+    info: { userName: "user" },
+  });
 
-    await waitFor(() => {
-        fireEvent.click(getByTestId('logOut'));
-    })
+  await waitFor(() => {
+    fireEvent.click(getByTestId("logOut"));
+  });
 
-    expect(mockHistoryPush.mock.calls.length).toBe(1);
-    expect(mockHistoryPush.mock.calls[0][0]).toBe('/login');
-})
+  expect(mockHistoryPush.mock.calls.length).toBe(1);
+  expect(mockHistoryPush.mock.calls[0][0]).toBe("/login");
+});
 
-it('should go to root', async () => {
-    const { getByTestId } = renderWithRouterAndContext(<Header />, { info: { userName: 'user' } });
+it("should go to root", async () => {
+  const { getByTestId } = renderWithRouterAndContext({
+    info: { userName: "user" },
+  });
 
-    await waitFor(() => {
-        fireEvent.click(getByTestId('goToRoot'));
-    })
+  await waitFor(() => {
+    fireEvent.click(getByTestId("goToRoot"));
+  });
 
-    expect(mockHistoryPush.mock.calls.length).toBe(1);
-    expect(mockHistoryPush.mock.calls[0][0]).toBe('/');
-})
+  expect(mockHistoryPush.mock.calls.length).toBe(1);
+  expect(mockHistoryPush.mock.calls[0][0]).toBe("/");
+});
 
-it('should go to lists', async () => {
-    const { getByTestId } = renderWithRouterAndContext(<Header />, { info: { userName: 'user' } });
+it("should go to lists", async () => {
+  const { getByTestId } = renderWithRouterAndContext({
+    info: { userName: "user" },
+  });
 
-    await waitFor(() => {
-        fireEvent.click(getByTestId('goToLists'));
-    })
+  await waitFor(() => {
+    fireEvent.click(getByTestId("goToLists"));
+  });
 
-    expect(mockHistoryPush.mock.calls.length).toBe(1);
-    expect(mockHistoryPush.mock.calls[0][0]).toBe('/lists');
-})
+  expect(mockHistoryPush.mock.calls.length).toBe(1);
+  expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists");
+});
 
-it('should go to users', async () => {
-    const { getByTestId } = renderWithRouterAndContext(<Header />, { info: { userName: 'user', isAdmin: true } });
+it("should go to users", async () => {
+  const { getByTestId } = renderWithRouterAndContext({
+    info: { userName: "user", isAdmin: true },
+  });
 
-    await waitFor(() => {
-        fireEvent.click(getByTestId('goToUsers'));
-    })
+  await waitFor(() => {
+    fireEvent.click(getByTestId("goToUsers"));
+  });
 
-    expect(mockHistoryPush.mock.calls.length).toBe(1);
-    expect(mockHistoryPush.mock.calls[0][0]).toBe('/users');
-})
+  expect(mockHistoryPush.mock.calls.length).toBe(1);
+  expect(mockHistoryPush.mock.calls[0][0]).toBe("/users");
+});

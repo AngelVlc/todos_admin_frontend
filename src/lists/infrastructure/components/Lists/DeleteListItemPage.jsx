@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext, useCallback } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
+import { GetListByIdUseCase } from "../../../application/lists";
 import {
   GetListItemByIdUseCase,
   DeleteListItemByIdUseCase,
@@ -8,16 +9,24 @@ import {
 import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb/Breadcrumb";
 
 export const DeleteListItemPage = () => {
-  const [item, setItem] = useState(null);
+  const [pageState, setPageState] = useState(null);
   const { useCaseFactory } = useContext(AppContext);
   let { listId, itemId } = useParams();
   let history = useHistory();
 
   const getListItem = useCallback(async () => {
+    const getListByIdUseCase = useCaseFactory.get(GetListByIdUseCase);
+    const list = await getListByIdUseCase.execute(listId);
+
     const getListItemByIdUseCase = useCaseFactory.get(GetListItemByIdUseCase);
     const listItem = await getListItemByIdUseCase.execute(listId, itemId);
 
-    setItem(listItem);
+    const data = {
+      list: list,
+      listItem: listItem,
+    };
+
+    setPageState(data);
   }, [listId, itemId, useCaseFactory]);
 
   useEffect(() => {
@@ -29,23 +38,23 @@ export const DeleteListItemPage = () => {
       DeleteListItemByIdUseCase
     );
     if (await deleteListItemByIdUseCase.execute(listId, itemId)) {
-      history.push(`/lists/${listId}/edit`);
+      history.push(`/lists/${listId}`);
     }
   };
 
   return (
     <>
-      {item && (
+      {pageState && (
         <div className="container">
           <Breadcrumb
             items={[
               { url: "/lists", text: "Lists" },
-              { url:`/lists/${listId}/edit`, text: "List" },
-              { url: `/lists/${listId}/items/${itemId}/edit`, text: item.title },
-              { url: `/lists/${listId}/items/${itemId}/delete`, text: `Delete ${item.title}` },
+              { url:`/lists/${listId}`, text: pageState.list.name },
+              { url: `/lists/${listId}/items/${itemId}/edit`, text: pageState.listItem.title },
+              { url: `/lists/${listId}/items/${itemId}/delete`, text: 'Delete' },
             ]}
           />
-          <h3 className="title">{`Delete list item ${item.title}`}</h3>
+          <h3 className="title">{`Delete list item ${pageState.listItem.title}`}</h3>
           <div className="buttons">
             <button
               className="button is-danger"

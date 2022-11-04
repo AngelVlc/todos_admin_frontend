@@ -1,4 +1,4 @@
-import { render, cleanup } from "@testing-library/react";
+import { render, cleanup, fireEvent, waitFor } from "@testing-library/react";
 import { EditListPage } from "./EditListPage";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { MemoryRouter, Route } from "react-router-dom";
@@ -50,8 +50,8 @@ const renderWithContextAndRouter = () => {
   return {
     ...render(
       <AppContext.Provider value={context}>
-        <MemoryRouter initialEntries={[`/lists/2/items/5/edit`]}>
-          <Route path="/lists/:listId/items/:itemId/edit">
+        <MemoryRouter initialEntries={[`/lists/2`]}>
+          <Route path="/lists/:listId">
             <EditListPage />
           </Route>
         </MemoryRouter>
@@ -69,4 +69,31 @@ it("should match the snapshot for an existing list", async () => {
     fragment = asFragment;
   });
   expect(fragment()).toMatchSnapshot();
+});
+
+it("should allow to delete the list", async () => {
+  let container;
+  await act(async () => {
+    container = renderWithContextAndRouter();
+  });
+
+  await waitFor(() => {
+    fireEvent.click(container.getByTestId("delete"));
+  });
+
+  expect(mockHistoryPush.mock.calls.length).toBe(1);
+  expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/2/delete");
+  mockHistoryPush.mockClear();
+});
+
+it("should allow read the list", async () => {
+  const { getByTestId } = renderWithContextAndRouter();
+
+  await waitFor(() => {
+    fireEvent.click(getByTestId("read"));
+  });
+
+  expect(mockHistoryPush.mock.calls.length).toBe(1);
+  expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/2/read");
+  mockHistoryPush.mockClear();
 });

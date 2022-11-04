@@ -19,7 +19,7 @@ jest.mock("react-router-dom", () => ({
 
 const history = createMemoryHistory();
 
-const renderWithContextAndRouter = (component) => {
+const renderWithContextAndRouter = () => {
   const mockedGetUsersUseCase = {
     execute: () => {
       return [
@@ -39,7 +39,7 @@ const renderWithContextAndRouter = (component) => {
   return {
     ...render(
       <AppContext.Provider value={context}>
-        <Router history={history}>{component}</Router>
+        <Router history={history}>{<UsersPage />}</Router>
       </AppContext.Provider>
     ),
   };
@@ -48,16 +48,16 @@ const renderWithContextAndRouter = (component) => {
 it("should match the snapshot", async () => {
   let fragment;
   await act(async () => {
-    const { asFragment } = renderWithContextAndRouter(<UsersPage />);
+    const { asFragment } = renderWithContextAndRouter();
     fragment = asFragment;
   });
-  expect(fragment(<UsersPage />)).toMatchSnapshot();
+  expect(fragment()).toMatchSnapshot();
 });
 
 it("should add a new user", async () => {
   let container;
   await act(async () => {
-    container = renderWithContextAndRouter(<UsersPage />);
+    container = renderWithContextAndRouter();
   });
 
   await waitFor(() => {
@@ -72,7 +72,7 @@ it("should add a new user", async () => {
 it("should edit the user", async () => {
   let container;
   await act(async () => {
-    container = renderWithContextAndRouter(<UsersPage />);
+    container = renderWithContextAndRouter();
   });
 
   await waitFor(() => {
@@ -85,7 +85,7 @@ it("should edit the user", async () => {
 it("should delete the user", async () => {
   let container;
   await act(async () => {
-    container = renderWithContextAndRouter(<UsersPage />);
+    container = renderWithContextAndRouter();
   });
 
   await waitFor(() => {

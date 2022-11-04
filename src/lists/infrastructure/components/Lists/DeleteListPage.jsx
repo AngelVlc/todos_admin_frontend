@@ -39,8 +39,8 @@ export const DeleteListPage = () => {
           <Breadcrumb
             items={[
               { url: "/lists", text: "Lists" },
-              { url:`/lists/${listId}/edit`, text: "List" },
-              { url: `/lists/${listId}/delete`, text: `Delete ${list.name}` },
+              { url:`/lists/${listId}/edit`, text: list.name },
+              { url: `/lists/${listId}/delete`, text: 'Delete' },
             ]}
           />
           <h3 className="title">{`Delete list ${list.name}`}</h3>

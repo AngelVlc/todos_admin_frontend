@@ -1,9 +1,8 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import * as Yup from "yup";
-import { ListItem } from "../../../domain";
 import {
   CreateListItemUseCase,
   UpdateListItemUseCase,
@@ -13,13 +12,7 @@ export const ListItemForm = (props) => {
   let history = useHistory();
   const { useCaseFactory } = useContext(AppContext);
 
-  const [pageState, setPageState] = useState(
-    new ListItem({ title: "", description: "" })
-  );
-
-  useEffect(() => {
-      setPageState(new ListItem(props.listItem));
-  }, [props]);
+  const [pageState] = useState(props.listItem);
 
   const onSubmit = async (listItem) => {
     let useCase;
@@ -31,7 +24,7 @@ export const ListItemForm = (props) => {
 
     const result = await useCase.execute(listItem);
     if (result) {
-      history.push(`/lists/${props.listItem.listId}/edit`);
+      history.push(`/lists/${props.listItem.listId}`);
     }
   };
 
@@ -81,39 +74,22 @@ export const ListItemForm = (props) => {
         </div>
 
         <div className="field is-grouped">
-          <p className="control">
+          <div className="control">
             <button className="button" data-testid="submit" type="submit">
               {props.listItem?.id ? "SAVE" : "CREATE"}
             </button>
-          </p>
-          <p className="control">
+          </div>
+          <div className="control">
             <button
               className="button"
               data-testid="cancel"
               type="button"
-              onClick={() =>
-                history.push(`/lists/${props.listItem.listId}/edit`)
-              }
+              onClick={() => history.push(`/lists/${props.listItem.listId}`)}
             >
               CANCEL
             </button>
-          </p>
-          {props.listItem?.id && (
-            <p className="control">
-              <button
-                className="button is-danger"
-                data-testid="delete"
-                type="button"
-                onClick={() =>
-                  history.push(
-                    `/lists/${props.listItem.listId}/items/${props.listItem.id}/delete`
-                  )
-                }
-              >
-                DELETE
-              </button>
-            </p>
-          )}
+          </div>
+          {props.children}
         </div>
       </Form>
     </Formik>

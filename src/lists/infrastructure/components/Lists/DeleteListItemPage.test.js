@@ -3,8 +3,9 @@ import { DeleteListItemPage } from "./DeleteListItemPage";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { MemoryRouter, Route } from "react-router-dom";
 import { act } from "react-dom/test-utils";
+import { GetListByIdUseCase } from "../../../application/lists";
 import { GetListItemByIdUseCase } from "../../../application/listItems";
-import { ListItem } from "../../../domain";
+import { List, ListItem } from "../../../domain";
 
 const mockHistoryGoBack = jest.fn();
 const mockHistoryPush = jest.fn();
@@ -16,6 +17,10 @@ jest.mock("react-router-dom", () => ({
     push: mockHistoryPush,
   }),
 }));
+
+const mockedGetListByIdUseCase = {
+  execute: jest.fn(),
+};
 
 const mockedGetListItemByIdUseCase = {
   execute: jest.fn(),
@@ -29,13 +34,19 @@ const useCaseFactory = {
   get: (useCase) => {
     if (useCase == GetListItemByIdUseCase) {
       return mockedGetListItemByIdUseCase;
+    } else if (useCase == GetListByIdUseCase) {
+      return mockedGetListByIdUseCase;
     }
 
     return mockedDeleteListItemByIdUseCase;
   },
 };
 
-const renderWithContextAndRouter = (component) => {
+const renderWithContextAndRouter = () => {
+  mockedGetListByIdUseCase.execute.mockResolvedValue(
+    new List({ id: 2, name: "list name" })
+  );
+
   mockedGetListItemByIdUseCase.execute.mockResolvedValue(
     new ListItem({ id: 2, title: "item title", description: "item desc" })
   );
@@ -45,7 +56,7 @@ const renderWithContextAndRouter = (component) => {
     ...render(
       <AppContext.Provider value={context}>
         <MemoryRouter initialEntries={[`/lists/2/items/5/delete`]}>
-          <Route path="/lists/:listId/items/:itemId/delete">{component}</Route>
+          <Route path="/lists/:listId/items/:itemId/delete">{<DeleteListItemPage />}</Route>
         </MemoryRouter>
       </AppContext.Provider>
     ),
@@ -57,16 +68,16 @@ afterEach(cleanup);
 it("should match the snapshot", async () => {
   let fragment;
   await act(async () => {
-    const { asFragment } = renderWithContextAndRouter(<DeleteListItemPage />);
+    const { asFragment } = renderWithContextAndRouter();
     fragment = asFragment;
   });
-  expect(fragment(<DeleteListItemPage />)).toMatchSnapshot();
+  expect(fragment()).toMatchSnapshot();
 });
 
 it("should cancel the deletion", async () => {
   let container;
   await act(async () => {
-    container = renderWithContextAndRouter(<DeleteListItemPage />);
+    container = renderWithContextAndRouter();
   });
 
   await waitFor(() => {
@@ -80,7 +91,7 @@ it("should cancel the deletion", async () => {
 it("should delete the List", async () => {
   let container;
   await act(async () => {
-    container = renderWithContextAndRouter(<DeleteListItemPage />);
+    container = renderWithContextAndRouter();
   });
 
   mockedDeleteListItemByIdUseCase.execute.mockResolvedValue(true);
@@ -93,6 +104,6 @@ it("should delete the List", async () => {
   expect(mockedDeleteListItemByIdUseCase.execute.mock.calls[0][0]).toBe("2");
   expect(mockedDeleteListItemByIdUseCase.execute.mock.calls[0][1]).toBe("5");
   expect(mockHistoryPush.mock.calls.length).toBe(1);
-  expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/2/edit");
+  expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/2");
   mockHistoryPush.mockClear();
 });

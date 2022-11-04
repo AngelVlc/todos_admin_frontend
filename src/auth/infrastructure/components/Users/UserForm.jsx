@@ -1,9 +1,8 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import * as Yup from "yup";
-import { User } from "../../../domain";
 import { CreateUserUseCase } from "../../../application/users/CreateUserUseCase";
 import { UpdateUserUseCase } from "../../../application/users/UpdateUserUseCase";
 
@@ -11,15 +10,7 @@ export const UserForm = (props) => {
   let history = useHistory();
   const { useCaseFactory } = useContext(AppContext);
 
-  const [pageState, setPageState] = useState(
-    new User({ name: "", isAdmin: false })
-  );
-
-  useEffect(() => {
-    if (props.user?.id) {
-      setPageState(props.user);
-    }
-  }, [props]);
+  const [pageState] = useState(props.user);
 
   const onSubmit = async (user) => {
     let useCase;
@@ -30,7 +21,7 @@ export const UserForm = (props) => {
     }
     const result = await useCase.execute(user);
     if (result) {
-      history.push('/users');
+      history.push("/users");
     }
   };
 
@@ -49,7 +40,7 @@ export const UserForm = (props) => {
             Name
           </label>
           <div className="control">
-            <Field name="name" type="text" data-testid="name" autoFocus/>
+            <Field name="name" type="text" data-testid="name" autoFocus />
           </div>
           <p className="help is-danger" data-testid="userNameErrors">
             <ErrorMessage name="name" />
@@ -88,12 +79,12 @@ export const UserForm = (props) => {
         </div>
 
         <div className="field is-grouped">
-          <p className="control">
+          <div className="control">
             <button className="button" data-testid="submit" type="submit">
               {props.user?.id ? "UPDATE" : "CREATE"}
             </button>
-          </p>
-          <p className="control">
+          </div>
+          <div className="control">
             <button
               className="button"
               data-testid="cancel"
@@ -102,19 +93,8 @@ export const UserForm = (props) => {
             >
               CANCEL
             </button>
-          </p>
-          {props.user?.id && (
-            <p className="control">
-              <button
-                className="button is-danger"
-                data-testid="delete"
-                type="button"
-                onClick={() => history.push(`/users/${props.user?.id}/delete`)}
-              >
-                DELETE
-              </button>
-            </p>
-          )}
+          </div>
+          {props.children}
         </div>
       </Form>
     </Formik>

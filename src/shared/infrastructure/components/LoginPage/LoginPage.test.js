@@ -16,7 +16,7 @@ jest.mock('react-router-dom', () => ({
     })
 }));
 
-const renderWithContextAndRouter = (component) => {
+const renderWithContextAndRouter = () => {
     const history = createMemoryHistory();
     const context = { authDispatch: mockAuthDispatch };
 
@@ -24,7 +24,7 @@ const renderWithContextAndRouter = (component) => {
         ...render(
             <AppContext.Provider value={context}>
                 <Router history={history}>
-                    {component}
+                    {<LoginPage />}
                 </Router>
             </AppContext.Provider>)
     }
@@ -43,13 +43,13 @@ beforeEach(() => {
 afterEach(cleanup);
 
 it('should match the snapshot', () => {
-    const { asFragment } = renderWithContextAndRouter(<LoginPage />);
+    const { asFragment } = renderWithContextAndRouter();
 
-    expect(asFragment(<LoginPage />)).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
 });
 
 it('should require user name and password for logging in', async () => {
-    const { getByTestId } = renderWithContextAndRouter(<LoginPage />);
+    const { getByTestId } = renderWithContextAndRouter();
 
     await waitFor(() => {
         fireEvent.click(getByTestId('submit'));
@@ -60,7 +60,7 @@ it('should require user name and password for logging in', async () => {
 })
 
 it('should show the error when log in fails', async () => {
-    const { getByTestId } = renderWithContextAndRouter(<LoginPage />);
+    const { getByTestId } = renderWithContextAndRouter();
 
     await changeInput(getByTestId, 'userName', 'user');
     await changeInput(getByTestId, 'password', 'pass');
@@ -79,7 +79,7 @@ it('should show the error when log in fails', async () => {
 })
 
 it('should show the home page after logging in', async () => {
-    const { getByTestId } = renderWithContextAndRouter(<LoginPage />);
+    const { getByTestId } = renderWithContextAndRouter();
 
     await changeInput(getByTestId, 'userName', 'user');
     await changeInput(getByTestId, 'password', 'pass');

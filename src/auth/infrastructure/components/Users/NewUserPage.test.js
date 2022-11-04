@@ -12,13 +12,13 @@ jest.mock("react-router-dom", () => ({
   }),
 }));
 
-const renderWithContextAndRouterForNewUser = (component) => {
+const renderWithContextAndRouterForNewUser = () => {
   const context = { auth: { info: {} } };
   return {
     ...render(
       <AppContext.Provider value={context}>
         <MemoryRouter initialEntries={[`/users/new`]}>
-          <Route path="/users/new">{component}</Route>
+          <Route path="/users/new">{<NewUserPage />}</Route>
         </MemoryRouter>
       </AppContext.Provider>
     ),
@@ -28,6 +28,6 @@ const renderWithContextAndRouterForNewUser = (component) => {
 afterEach(cleanup);
 
 it("should match the snapshot for a new user", async () => {
-  const { asFragment } = renderWithContextAndRouterForNewUser(<NewUserPage />);
-  expect(asFragment(<NewUserPage />)).toMatchSnapshot();
+  const { asFragment } = renderWithContextAndRouterForNewUser();
+  expect(asFragment()).toMatchSnapshot();
 });

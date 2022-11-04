@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should match the snapshot when the user is an admin 1`] = `
+exports[`when the user is an admin should match the snapshot 1`] = `
 <DocumentFragment>
   <div
     class="container"
@@ -58,7 +58,7 @@ exports[`should match the snapshot when the user is an admin 1`] = `
 </DocumentFragment>
 `;
 
-exports[`should match the snapshot when the user is not an admin 1`] = `
+exports[`when the user is not an admin should match the snapshot 1`] = `
 <DocumentFragment>
   <div
     class="container"

@@ -7,13 +7,7 @@ export class User {
     this.confirmPassword = "";
   }
 
-  toJSON() {
-    return {
-      id: this.id,
-      name: this.name,
-      isAdmin: this.isAdmin,
-      password: this.password,
-      confirmPassword: this.confirmPassword,
-    };
+  static createEmpty() {
+    return new User({ name: "", isAdmin: false });
   }
 }

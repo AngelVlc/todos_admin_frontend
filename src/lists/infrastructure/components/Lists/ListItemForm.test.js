@@ -64,7 +64,7 @@ const renderWithContextAndRouterForNewItem = () => {
       <AppContext.Provider value={context}>
         <MemoryRouter initialEntries={[`/lists/2/items/new`]}>
           <Route path="/lists/:listId/items/new">
-            <ListItemForm listItem={new ListItem({ listId: 2, title: "", description: "" })} />
+            <ListItemForm listItem={ListItem.createEmpty(2)} />
           </Route>
         </MemoryRouter>
       </AppContext.Provider>
@@ -88,21 +88,6 @@ it("should match the snapshot for a new item", async () => {
   expect(asFragment()).toMatchSnapshot();
 });
 
-it("should allow delete an existing item", async () => {
-  let container;
-  await act(async () => {
-    container = renderWithContextAndRouterForExistingItem();
-  });
-
-  await waitFor(() => {
-    fireEvent.click(container.getByTestId("delete"));
-  });
-
-  expect(mockHistoryPush.mock.calls.length).toBe(1);
-  expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/2/items/5/delete");
-  mockHistoryPush.mockClear();
-});
-
 it("should allow cancel", async () => {
   const { getByTestId } = renderWithContextAndRouterForNewItem();
 
@@ -111,7 +96,7 @@ it("should allow cancel", async () => {
   });
 
   expect(mockHistoryPush.mock.calls.length).toBe(1);
-  expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/2/edit");
+  expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/2");
   mockHistoryPush.mockClear();
 });
 
@@ -156,7 +141,7 @@ it("should update an existing item", async () => {
   );
 
   expect(mockHistoryPush.mock.calls.length).toBe(1);
-  expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/2/edit");
+  expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/2");
   mockHistoryPush.mockClear();
 });
 
@@ -183,7 +168,7 @@ it("should create a new item", async () => {
   );
 
   expect(mockHistoryPush.mock.calls.length).toBe(1);
-  expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/2/edit");
+  expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/2");
   mockHistoryPush.mockClear();
 });
 

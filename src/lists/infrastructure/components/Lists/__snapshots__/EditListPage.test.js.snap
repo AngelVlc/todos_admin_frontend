@@ -86,7 +86,7 @@ exports[`should match the snapshot for an existing list 1`] = `
           class="dnd-container"
         >
           <div
-            class="list-button"
+            class="list-button mt-2 mb-2"
           >
             <button
               class="button is-small"
@@ -112,7 +112,7 @@ exports[`should match the snapshot for an existing list 1`] = `
           >
             <div
               aria-describedby="rbd-hidden-text-0-hidden-text-0"
-              class="is-flex dnd-item"
+              class="is-flex dnd-item p-2 mb-2"
               data-rbd-drag-handle-context-id="0"
               data-rbd-drag-handle-draggable-id="5"
               data-rbd-draggable-context-id="0"
@@ -153,7 +153,7 @@ exports[`should match the snapshot for an existing list 1`] = `
       <div
         class="field is-grouped"
       >
-        <p
+        <div
           class="control"
         >
           <button
@@ -163,8 +163,19 @@ exports[`should match the snapshot for an existing list 1`] = `
           >
             SAVE
           </button>
-        </p>
-        <p
+        </div>
+        <div
+          class="control"
+        >
+          <button
+            class="button"
+            data-testid="read"
+            type="button"
+          >
+            READ
+          </button>
+        </div>
+        <div
           class="control"
         >
           <button
@@ -174,9 +185,9 @@ exports[`should match the snapshot for an existing list 1`] = `
           >
             CANCEL
           </button>
-        </p>
-        <p
-          class="control"
+        </div>
+        <div
+          class="control ml-auto is-pulled-right"
         >
           <button
             class="button is-danger"
@@ -185,7 +196,7 @@ exports[`should match the snapshot for an existing list 1`] = `
           >
             DELETE
           </button>
-        </p>
+        </div>
       </div>
     </form>
   </div>

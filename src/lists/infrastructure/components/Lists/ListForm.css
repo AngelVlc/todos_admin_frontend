@@ -1,18 +1,4 @@
-.dnd-container {
-  margin: 8px;
-}
-
-.dnd-list {
-  padding: 8px;
-}
-
-.list-button {
-  padding: 8px;
-}
-
 .dnd-item {
   border: 1px solid lightgrey;
   border-radius: 2px;
-  padding: 8px;
-  margin-bottom: 8px;
 }

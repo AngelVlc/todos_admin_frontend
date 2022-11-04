@@ -47,8 +47,12 @@ const App = () => {
         <Router history={browserHistory}>
           <Header />
           {request.pending &&
-            <div className="reactLoader">
-              <Loader type="Circles" color="#282c34" height="100" width="100" />
+            <div className="loader-container">
+              <div className="loader-item">
+                <center>
+                  <Loader type="Circles" color="#282c34" height="100" width="100" />
+                </center>
+              </div>
             </div>
           }
           <section className="section is-flex-grow-2">
@@ -57,11 +61,11 @@ const App = () => {
               <PrivateRoute exact path="/lists" component={ListsPage} />
               <PrivateRoute path="/lists/new" component={NewListPage} />
               <PrivateRoute path="/lists/:listId/delete" component={DeleteListPage} />
-              <PrivateRoute path="/lists/:listId/edit" component={EditListPage} />
+              <PrivateRoute path="/lists/:listId/read" component={ViewListPage} />
               <PrivateRoute path="/lists/:listId/items/new" component={NewListItemPage} />
               <PrivateRoute path="/lists/:listId/items/:itemId/delete" component={DeleteListItemPage} />
               <PrivateRoute path="/lists/:listId/items/:itemId/edit" component={EditListItemPage} />
-              <PrivateRoute path="/lists/:listId" component={ViewListPage} />
+              <PrivateRoute path="/lists/:listId" component={EditListPage} />
               <AdminRoute exact path="/users" component={UsersPage} />
               <AdminRoute path="/users/:userId/delete" component={DeleteUserPage} />
               <AdminRoute path="/users/:userId/edit" component={EditUserPage} />

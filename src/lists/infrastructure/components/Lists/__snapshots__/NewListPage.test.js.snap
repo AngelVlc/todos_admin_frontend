@@ -32,7 +32,7 @@ exports[`should match the snapshot for a new list 1`] = `
     <div
       class="field is-grouped"
     >
-      <p
+      <div
         class="control"
       >
         <button
@@ -42,8 +42,8 @@ exports[`should match the snapshot for a new list 1`] = `
         >
           CREATE
         </button>
-      </p>
-      <p
+      </div>
+      <div
         class="control"
       >
         <button
@@ -53,7 +53,7 @@ exports[`should match the snapshot for a new list 1`] = `
         >
           CANCEL
         </button>
-      </p>
+      </div>
     </div>
   </form>
 </DocumentFragment>

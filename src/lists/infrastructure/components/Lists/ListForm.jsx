@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { useHistory, Link } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
@@ -13,19 +13,9 @@ import {
 
 export const ListForm = (props) => {
   let history = useHistory();
-  // without loaded, the items are reset after save
-  const loaded = useRef(false);
   const { useCaseFactory } = useContext(AppContext);
 
-  const [pageState, setPageState] = useState(new List({ name: "", items: [] }));
-
-  useEffect(() => {
-    if (props.list?.id && !loaded.current) {
-      setPageState(new List(props.list));
-
-      loaded.current = true;
-    }
-  }, [props, loaded]);
+  const [pageState, setPageState] = useState(props.list);
 
   const onSubmit = async (list) => {
     let useCase;
@@ -37,7 +27,7 @@ export const ListForm = (props) => {
 
     const result = await useCase.execute(list);
     if (result && props.list?.id === undefined) {
-      history.push(`/lists/${result.id}/edit`);
+      history.push(`/lists/${result.id}`);
     }
   };
 
@@ -59,7 +49,10 @@ export const ListForm = (props) => {
     newItems.splice(source.index, 1);
     newItems.splice(destination.index, 0, pageState.items[source.index]);
 
-    setPageState(new List({ ...pageState, items: newItems }));
+    const newList = new List({ ...pageState });
+    newList.items = newItems;
+
+    setPageState(newList);
   };
 
   return (
@@ -98,13 +91,13 @@ export const ListForm = (props) => {
             </div>
             <DragDropContext onDragEnd={onDragEnd}>
               <div className="dnd-container">
-                <div className="list-button">
+                <div className="list-button mt-2 mb-2">
                   <button
                     className="button is-small"
                     type="button"
                     data-testid="addNew"
                     onClick={() =>
-                      history.push(`/lists/${props.list?.id}/items/new`)
+                      history.push(`/lists/${props.list.id}/items/new`)
                     }
                   >
                     <span className="icon is-small">
@@ -113,7 +106,7 @@ export const ListForm = (props) => {
                     <span>Add</span>
                   </button>
                 </div>
-                <Droppable droppableId={props.list?.id.toString()}>
+                <Droppable droppableId={props.list.id.toString()}>
                   {(provided) => (
                     <div
                       className="dnd-list"
@@ -130,7 +123,7 @@ export const ListForm = (props) => {
                             {(draggableProvided) => (
                               <div
                                 key={item.id}
-                                className="is-flex dnd-item"
+                                className="is-flex dnd-item p-2 mb-2"
                                 {...draggableProvided.draggableProps}
                                 {...draggableProvided.dragHandleProps}
                                 ref={draggableProvided.innerRef}
@@ -139,7 +132,7 @@ export const ListForm = (props) => {
                                 <Link
                                   className="is-flex-grow-4"
                                   data-testid={`editListItem${item.id}`}
-                                  to={`/lists/${props.list?.id}/items/${item.id}/edit`}
+                                  to={`/lists/${props.list.id}/items/${item.id}/edit`}
                                 >
                                   <div>
                                     <span className="has-text-black">
@@ -152,9 +145,8 @@ export const ListForm = (props) => {
                                     <Link
                                       className="has-text-black delete"
                                       data-testid={`deleteListItem${item.id}`}
-                                      to={`/lists/${props.list?.id}/items/${item.id}/delete`}
-                                    >
-                                    </Link>
+                                      to={`/lists/${props.list.id}/items/${item.id}/delete`}
+                                    ></Link>
                                   </center>
                                 </div>
                               </div>
@@ -171,12 +163,13 @@ export const ListForm = (props) => {
         )}
 
         <div className="field is-grouped">
-          <p className="control">
+          <div className="control">
             <button className="button" data-testid="submit" type="submit">
               {props.list?.id ? "SAVE" : "CREATE"}
             </button>
-          </p>
-          <p className="control">
+          </div>
+          <>{props.preCancel}</>
+          <div className="control">
             <button
               className="button"
               data-testid="cancel"
@@ -185,19 +178,8 @@ export const ListForm = (props) => {
             >
               CANCEL
             </button>
-          </p>
-          {props.list?.id && (
-            <p className="control">
-              <button
-                className="button is-danger"
-                data-testid="delete"
-                type="button"
-                onClick={() => history.push(`/lists/${props.list?.id}/delete`)}
-              >
-                DELETE
-              </button>
-            </p>
-          )}
+          </div>
+          <>{props.postCancel}</>
         </div>
       </Form>
     </Formik>

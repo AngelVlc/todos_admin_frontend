@@ -19,7 +19,7 @@ jest.mock("react-router-dom", () => ({
 
 const history = createMemoryHistory();
 
-const renderWithContextAndRouter = (component) => {
+const renderWithContextAndRouter = () => {
   const mockedGetListsUseCase = {
     execute: () => {
       return [
@@ -39,7 +39,9 @@ const renderWithContextAndRouter = (component) => {
   return {
     ...render(
       <AppContext.Provider value={context}>
-        <Router history={history}>{component}</Router>
+        <Router history={history}>
+          <ListsPage />
+        </Router>
       </AppContext.Provider>
     ),
   };
@@ -48,16 +50,16 @@ const renderWithContextAndRouter = (component) => {
 it("should match the snapshot", async () => {
   let fragment;
   await act(async () => {
-    const { asFragment } = renderWithContextAndRouter(<ListsPage />);
+    const { asFragment } = renderWithContextAndRouter();
     fragment = asFragment;
   });
-  expect(fragment(<ListsPage />)).toMatchSnapshot();
+  expect(fragment()).toMatchSnapshot();
 });
 
 it("should add a new list", async () => {
   let container;
   await act(async () => {
-    container = renderWithContextAndRouter(<ListsPage />);
+    container = renderWithContextAndRouter();
   });
 
   await waitFor(() => {
@@ -72,7 +74,7 @@ it("should add a new list", async () => {
 it("should view the list", async () => {
   let container;
   await act(async () => {
-    container = renderWithContextAndRouter(<ListsPage />);
+    container = renderWithContextAndRouter();
   });
 
   await waitFor(() => {
@@ -85,7 +87,7 @@ it("should view the list", async () => {
 it("should delete the list", async () => {
   let container;
   await act(async () => {
-    container = renderWithContextAndRouter(<ListsPage />);
+    container = renderWithContextAndRouter();
   });
 
   await waitFor(() => {

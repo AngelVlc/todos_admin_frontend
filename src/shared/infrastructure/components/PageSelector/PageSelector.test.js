@@ -22,7 +22,7 @@ describe("PageSelector", () => {
       pageNumber: 5,
     });
 
-    expect(asFragment(<PageSelector />)).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it("Should change the page number", async () => {

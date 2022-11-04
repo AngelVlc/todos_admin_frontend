@@ -55,7 +55,7 @@ exports[`should match the snapshot for a new item 1`] = `
     <div
       class="field is-grouped"
     >
-      <p
+      <div
         class="control"
       >
         <button
@@ -65,8 +65,8 @@ exports[`should match the snapshot for a new item 1`] = `
         >
           CREATE
         </button>
-      </p>
-      <p
+      </div>
+      <div
         class="control"
       >
         <button
@@ -76,7 +76,7 @@ exports[`should match the snapshot for a new item 1`] = `
         >
           CANCEL
         </button>
-      </p>
+      </div>
     </div>
   </form>
 </DocumentFragment>
@@ -139,7 +139,7 @@ exports[`should match the snapshot for an existing item 1`] = `
     <div
       class="field is-grouped"
     >
-      <p
+      <div
         class="control"
       >
         <button
@@ -149,8 +149,8 @@ exports[`should match the snapshot for an existing item 1`] = `
         >
           SAVE
         </button>
-      </p>
-      <p
+      </div>
+      <div
         class="control"
       >
         <button
@@ -160,18 +160,7 @@ exports[`should match the snapshot for an existing item 1`] = `
         >
           CANCEL
         </button>
-      </p>
-      <p
-        class="control"
-      >
-        <button
-          class="button is-danger"
-          data-testid="delete"
-          type="button"
-        >
-          DELETE
-        </button>
-      </p>
+      </div>
     </div>
   </form>
 </DocumentFragment>
