@@ -24,13 +24,10 @@ const mockedUpdateUserUseCase = {
 };
 
 const useCaseFactory = {
-  get: (useCase) => {
-    if (useCase == CreateUserUseCase) {
-      return mockedCreateUserUseCase;
-    }
-
-    return mockedUpdateUserUseCase;
-  },
+  get: (useCase) =>
+    useCase == CreateUserUseCase
+      ? mockedCreateUserUseCase
+      : mockedUpdateUserUseCase,
 };
 
 const renderWithContextAndRouterForExistingUser = (isAdmin) => {
@@ -55,7 +52,7 @@ const renderWithContextAndRouterForNewUser = () => {
       <AppContext.Provider value={context}>
         <MemoryRouter initialEntries={[`/users/new`]}>
           <Route path="/users/new">
-            <UserForm user={User.createEmpty()}/>
+            <UserForm user={User.createEmpty()} />
           </Route>
         </MemoryRouter>
       </AppContext.Provider>

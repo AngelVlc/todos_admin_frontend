@@ -24,13 +24,10 @@ const mockedUpdateListItemUseCase = {
 };
 
 const useCaseFactory = {
-  get: (useCase) => {
-    if (useCase == CreateListItemUseCase) {
-      return mockedCreateListItemUseCase;
-    }
-
-    return mockedUpdateListItemUseCase;
-  },
+  get: (useCase) =>
+    useCase == CreateListItemUseCase
+      ? mockedCreateListItemUseCase
+      : mockedUpdateListItemUseCase,
 };
 
 const renderWithContextAndRouterForExistingItem = () => {

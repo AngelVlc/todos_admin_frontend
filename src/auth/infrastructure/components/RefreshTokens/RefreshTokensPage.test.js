@@ -29,7 +29,7 @@ const refreshTokens = [
   }),
 ];
 
-const mockedGetRefreshTokensUseCase = {
+const fakeGetRefreshTokensUseCase = {
   execute: () => refreshTokens,
 };
 
@@ -38,13 +38,10 @@ const mockedDeleteRefreshTokensByIdUseCase = {
 };
 
 const useCaseFactory = {
-  get: (useCase) => {
-    if (useCase == GetRefreshTokensUseCase) {
-      return mockedGetRefreshTokensUseCase;
-    }
-
-    return mockedDeleteRefreshTokensByIdUseCase;
-  },
+  get: (useCase) =>
+    useCase == GetRefreshTokensUseCase
+      ? fakeGetRefreshTokensUseCase
+      : mockedDeleteRefreshTokensByIdUseCase,
 };
 
 const renderWithContextAndRouter = () => {
@@ -80,7 +77,7 @@ it("should delete the selected refresh tokens", async () => {
 
   mockedDeleteRefreshTokensByIdUseCase.execute.mockResolvedValue(true);
 
-  mockedGetRefreshTokensUseCase.execute = () => [
+  fakeGetRefreshTokensUseCase.execute = () => [
     new RefreshToken({
       id: 2,
       userId: 2,

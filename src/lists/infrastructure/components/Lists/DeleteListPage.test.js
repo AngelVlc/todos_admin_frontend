@@ -26,13 +26,10 @@ const mockedDeleteListByIdUseCase = {
 };
 
 const useCaseFactory = {
-  get: (useCase) => {
-    if (useCase == GetListByIdUseCase) {
-      return mockedGetListByIdUseCase;
-    }
-
-    return mockedDeleteListByIdUseCase;
-  },
+  get: (useCase) =>
+    useCase == GetListByIdUseCase
+      ? mockedGetListByIdUseCase
+      : mockedDeleteListByIdUseCase,
 };
 
 const renderWithContextAndRouter = () => {

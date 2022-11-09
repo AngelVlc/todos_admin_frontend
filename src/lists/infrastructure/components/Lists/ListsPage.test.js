@@ -20,19 +20,15 @@ jest.mock("react-router-dom", () => ({
 const history = createMemoryHistory();
 
 const renderWithContextAndRouter = () => {
-  const mockedGetListsUseCase = {
-    execute: () => {
-      return [
-        new List({ id: 1, name: "list1", itemsCount: 4 }),
-        new List({ id: 2, name: "list2", itemsCount: 6 }),
-      ];
-    },
+  const fakeGetListsUseCase = {
+    execute: () => [
+      new List({ id: 1, name: "list1", itemsCount: 4 }),
+      new List({ id: 2, name: "list2", itemsCount: 6 }),
+    ],
   };
 
   const useCaseFactory = {
-    get: () => {
-      return mockedGetListsUseCase;
-    },
+    get: () => fakeGetListsUseCase,
   };
 
   const context = { auth: { info: {} }, useCaseFactory };

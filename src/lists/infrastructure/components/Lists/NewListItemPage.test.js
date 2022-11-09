@@ -15,19 +15,13 @@ jest.mock("react-router-dom", () => ({
 }));
 
 const renderWithContextAndRouterForNewItem = () => {
-  const mockedGetListByIdUseCase = {
-    execute: jest.fn(),
+  const fakeGetListByIdUseCase = {
+    execute: () => new List({ id: 2, name: "list name" }),
   };
 
   const useCaseFactory = {
-    get: () => {
-      return mockedGetListByIdUseCase;
-    },
+    get: () =>  fakeGetListByIdUseCase,
   };
-
-  mockedGetListByIdUseCase.execute.mockResolvedValue(
-    new List({ id: 2, name: "list name" })
-  );
 
   const context = { auth: { info: {} }, useCaseFactory };
   return {

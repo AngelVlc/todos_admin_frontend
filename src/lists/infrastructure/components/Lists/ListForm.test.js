@@ -30,13 +30,7 @@ const mockedUpdateListUseCase = {
 };
 
 const useCaseFactory = {
-  get: (useCase) => {
-    if (useCase == CreateListUseCase) {
-      return mockedCreateListUseCase;
-    }
-
-    return mockedUpdateListUseCase;
-  },
+  get: (useCase) => useCase == CreateListUseCase ? mockedCreateListUseCase : mockedUpdateListUseCase,
 };
 
 beforeEach(() => {

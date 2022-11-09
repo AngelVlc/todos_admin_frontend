@@ -18,45 +18,44 @@ jest.mock("react-router-dom", () => ({
   }),
 }));
 
-const mockedGetListByIdUseCase = {
-  execute: jest.fn(),
-};
-
-const mockedGetListItemByIdUseCase = {
-  execute: jest.fn(),
-};
-
 const mockedDeleteListItemByIdUseCase = {
   execute: jest.fn(),
 };
 
-const useCaseFactory = {
-  get: (useCase) => {
-    if (useCase == GetListItemByIdUseCase) {
-      return mockedGetListItemByIdUseCase;
-    } else if (useCase == GetListByIdUseCase) {
-      return mockedGetListByIdUseCase;
-    }
-
-    return mockedDeleteListItemByIdUseCase;
-  },
-};
-
 const renderWithContextAndRouter = () => {
-  mockedGetListByIdUseCase.execute.mockResolvedValue(
-    new List({ id: 2, name: "list name" })
-  );
+  const fakeGetListByIdUseCase = {
+    execute: () => new List({ id: 2, name: "list name" }),
+  };
 
-  mockedGetListItemByIdUseCase.execute.mockResolvedValue(
-    new ListItem({ id: 2, title: "item title", description: "item desc" })
-  );
+  const fakeGetListItemByIdUseCase = {
+    execute: () =>
+      new ListItem({
+        id: 2,
+        title: "item title",
+        description: "item desc",
+      }),
+  };
+
+  const useCaseFactory = {
+    get: (useCase) => {
+      if (useCase == GetListItemByIdUseCase) {
+        return fakeGetListItemByIdUseCase;
+      } else if (useCase == GetListByIdUseCase) {
+        return fakeGetListByIdUseCase;
+      }
+
+      return mockedDeleteListItemByIdUseCase;
+    },
+  };
 
   const context = { auth: { info: {} }, useCaseFactory };
   return {
     ...render(
       <AppContext.Provider value={context}>
         <MemoryRouter initialEntries={[`/lists/2/items/5/delete`]}>
-          <Route path="/lists/:listId/items/:itemId/delete">{<DeleteListItemPage />}</Route>
+          <Route path="/lists/:listId/items/:itemId/delete">
+            {<DeleteListItemPage />}
+          </Route>
         </MemoryRouter>
       </AppContext.Provider>
     ),
