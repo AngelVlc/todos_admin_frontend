@@ -4,7 +4,7 @@ import { ListItemForm } from "./ListItemForm";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { GetListByIdUseCase } from "../../../application/lists";
 import { GetListItemByIdUseCase } from "../../../application/listItems";
-import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb/Breadcrumb";
+import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb";
 
 export const EditListItemPage = () => {
   let history = useHistory();

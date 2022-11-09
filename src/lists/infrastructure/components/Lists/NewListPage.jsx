@@ -1,5 +1,5 @@
 import React from "react";
-import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb/Breadcrumb";
+import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb";
 import { List } from "../../../domain";
 import { ListForm } from "./ListForm";
 

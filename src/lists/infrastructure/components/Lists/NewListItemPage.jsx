@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext, useCallback } from "react";
 import { useParams } from "react-router-dom";
-import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb/Breadcrumb";
+import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb";
 import { ListItemForm } from "./ListItemForm";
 import { ListItem } from "../../../domain";
 import { AppContext } from "../../../../shared/infrastructure/contexts";

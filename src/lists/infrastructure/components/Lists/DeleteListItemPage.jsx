@@ -6,7 +6,7 @@ import {
   GetListItemByIdUseCase,
   DeleteListItemByIdUseCase,
 } from "../../../application/listItems";
-import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb/Breadcrumb";
+import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb";
 
 export const DeleteListItemPage = () => {
   const [pageState, setPageState] = useState(null);

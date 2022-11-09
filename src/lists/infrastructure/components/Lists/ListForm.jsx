@@ -55,6 +55,22 @@ export const ListForm = (props) => {
     setPageState(newList);
   };
 
+  const deletedItems = [];
+
+  const onDeleteListItem = (item) => {
+    deletedItems.push(item);
+    console.log(deletedItems);
+
+    const index = pageState.items.indexOf(item);
+    const newItems = Array.from(pageState.items);
+    newItems.splice(index, 1);
+
+    const newList = new List({ ...pageState });
+    newList.items = newItems;
+
+    setPageState(newList);
+  };
+
   return (
     <Formik
       enableReinitialize={true}
@@ -142,6 +158,13 @@ export const ListForm = (props) => {
                                 </Link>
                                 <div className="is-justify-content-flex-end">
                                   <center>
+                                    <button
+                                      type="button"
+                                      className="has-text-black delete"
+                                      onClick={() => onDeleteListItem(item)}
+                                    >
+                                      span
+                                    </button>
                                     <Link
                                       className="has-text-black delete"
                                       data-testid={`deleteListItem${item.id}`}
