@@ -12,7 +12,7 @@ export const Header = () => {
         history.push('/login');
     }
 
-    const onToggleNavBar = (e) => {
+    const onToggleNavBar = () => {
         navBarMenuRef.current.classList.toggle('is-active');
         navBarBurguerRef.current.classList.toggle('is-active');
     }

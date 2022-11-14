@@ -1,34 +1,38 @@
-import React, { useState, useContext } from "react";
-import { useHistory, Link } from "react-router-dom";
+import React, { useState, useContext, useRef } from "react";
+import { useHistory } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import * as Yup from "yup";
 import "./ListForm.css";
-import { List } from "../../../domain";
+import { List, ListItem } from "../../../domain";
 import {
   CreateListUseCase,
   UpdateListUseCase,
 } from "../../../application/lists";
+import { Modal } from "../../../../shared/infrastructure/components/Modal";
+import { ListItemForm } from "./ListItemForm";
 
 export const ListForm = (props) => {
   let history = useHistory();
   const { useCaseFactory } = useContext(AppContext);
+  const itemFormModalRef = useRef();
+  const itemFormRef = useRef();
 
   const [pageState, setPageState] = useState(props.list);
 
   const onSubmit = async (list) => {
     let useCase;
-    if (props.list?.id === undefined) {
-      useCase = useCaseFactory.get(CreateListUseCase);
-    } else {
-      useCase = useCaseFactory.get(UpdateListUseCase);
-    }
+    // if (props.list?.id === undefined) {
+    //   useCase = useCaseFactory.get(CreateListUseCase);
+    // } else {
+    //   useCase = useCaseFactory.get(UpdateListUseCase);
+    // }
 
-    const result = await useCase.execute(list);
-    if (result && props.list?.id === undefined) {
-      history.push(`/lists/${result.id}`);
-    }
+    // const result = await useCase.execute(list);
+    // if (result && props.list?.id === undefined) {
+    //   history.push(`/lists/${result.id}`);
+    // }
   };
 
   const onDragEnd = (dropResult) => {
@@ -55,15 +59,11 @@ export const ListForm = (props) => {
     setPageState(newList);
   };
 
-  const deletedItems = [];
 
   const onDeleteListItem = (item) => {
-    deletedItems.push(item);
-    console.log(deletedItems);
-
     const index = pageState.items.indexOf(item);
     const newItems = Array.from(pageState.items);
-    newItems.splice(index, 1);
+    newItems[index].deleted = true;
 
     const newList = new List({ ...pageState });
     newList.items = newItems;
@@ -71,140 +71,173 @@ export const ListForm = (props) => {
     setPageState(newList);
   };
 
+  const onAddNewItem = () => {
+    showItemModal(ListItem.createEmpty(props.list?.id));
+  };
+
+  const onEditItem = (item) => {
+    showItemModal(item);
+  };
+
+  const showItemModal = (item) => {
+    itemFormRef.current.setValues(item);
+    itemFormModalRef.current.showModal();
+  };
+
+  const onSubmitItemForm = (listItem) => {
+    const newList = new List({ ...pageState });
+    newList.items = pageState.items;
+
+    if (listItem.position === undefined) {
+      newList.addNewItem(listItem);
+    } else {
+      const editedItem = newList.items[listItem.position];
+
+      editedItem.title = listItem.title;
+      editedItem.description = listItem.description;
+      editedItem.modified = true;
+    }
+
+    setPageState(newList);
+
+    itemFormModalRef.current.closeModal();
+  };
+
+  const onItemModalClose = () => {
+    itemFormRef.current.submitForm();
+  };
+
   return (
-    <Formik
-      enableReinitialize={true}
-      initialValues={pageState}
-      validationSchema={Yup.object({
-        name: Yup.string().required("Required"),
-      })}
-      onSubmit={onSubmit}
-    >
-      <Form>
-        <div className="field">
-          <label className="label" htmlFor="name">
-            Name
-          </label>
-          <div className="control">
-            <Field
-              name="name"
-              as="input"
-              className="input"
-              data-testid="name"
-              autoFocus
-            />
-          </div>
-          <p className="help is-danger" data-testid="nameErrors">
-            <ErrorMessage name="name" />
-          </p>
-        </div>
-        {props.list?.id && (
-          <div>
-            <div className="is-flex">
-              <div className="is-flex-grow-4">
-                <span className="label">List Items</span>
-              </div>
+    <>
+      <Modal ref={itemFormModalRef} closeHandler={onItemModalClose}>
+        <ListItemForm
+          ref={itemFormRef}
+          list={pageState}
+          onSubmit={onSubmitItemForm}
+        />
+      </Modal>
+      <Formik
+        enableReinitialize={true}
+        initialValues={pageState}
+        validationSchema={Yup.object({
+          name: Yup.string().required("Required"),
+        })}
+        onSubmit={onSubmit}
+      >
+        <Form>
+          <div className="field">
+            <label className="label" htmlFor="name">
+              Name
+            </label>
+            <div className="control">
+              <Field
+                name="name"
+                as="input"
+                className="input"
+                data-testid="name"
+                autoFocus
+              />
             </div>
-            <DragDropContext onDragEnd={onDragEnd}>
-              <div className="dnd-container">
-                <div className="list-button mt-2 mb-2">
-                  <button
-                    className="button is-small"
-                    type="button"
-                    data-testid="addNew"
-                    onClick={() =>
-                      history.push(`/lists/${props.list.id}/items/new`)
-                    }
-                  >
-                    <span className="icon is-small">
-                      <i className="fas fa-plus"></i>
-                    </span>
-                    <span>Add</span>
-                  </button>
+            <p className="help is-danger" data-testid="nameErrors">
+              <ErrorMessage name="name" />
+            </p>
+          </div>
+          {props.list?.id && (
+            <div>
+              <div className="is-flex">
+                <div className="is-flex-grow-4">
+                  <span className="label">List Items</span>
                 </div>
-                <Droppable droppableId={props.list.id.toString()}>
-                  {(provided) => (
-                    <div
-                      className="dnd-list"
-                      ref={provided.innerRef}
-                      {...provided.droppableProps}
+              </div>
+              <DragDropContext onDragEnd={onDragEnd}>
+                <div className="dnd-container">
+                  <div className="list-button mt-2 mb-2">
+                    <button
+                      className="button is-small"
+                      type="button"
+                      data-testid="addNew"
+                      onClick={() => onAddNewItem()}
                     >
-                      {pageState.items.length > 0 &&
-                        pageState.items.map((item, index) => (
-                          <Draggable
-                            key={item.id}
-                            draggableId={item.id.toString()}
-                            index={index}
-                          >
-                            {(draggableProvided) => (
-                              <div
-                                key={item.id}
-                                className="is-flex dnd-item p-2 mb-2"
-                                {...draggableProvided.draggableProps}
-                                {...draggableProvided.dragHandleProps}
-                                ref={draggableProvided.innerRef}
-                                data-testid={`draggable${item.id}`}
-                              >
-                                <Link
-                                  className="is-flex-grow-4"
-                                  data-testid={`editListItem${item.id}`}
-                                  to={`/lists/${props.list.id}/items/${item.id}/edit`}
+                      <span className="icon is-small">
+                        <i className="fas fa-plus"></i>
+                      </span>
+                      <span>Add</span>
+                    </button>
+                  </div>
+                  <Droppable droppableId={props.list.id.toString()}>
+                    {(provided) => (
+                      <div
+                        className="dnd-list"
+                        ref={provided.innerRef}
+                        {...provided.droppableProps}
+                      >
+                        {pageState.items.length > 0 &&
+                          pageState.items.filter(item => item.deleted === undefined).map((item, index) => (
+                            <Draggable
+                              key={item.id}
+                              draggableId={item.id.toString()}
+                              index={index}
+                            >
+                              {(draggableProvided) => (
+                                <div
+                                  key={item.id}
+                                  className="is-flex dnd-item p-2 mb-2"
+                                  {...draggableProvided.draggableProps}
+                                  {...draggableProvided.dragHandleProps}
+                                  ref={draggableProvided.innerRef}
+                                  data-testid={`draggable${item.id}`}
                                 >
-                                  <div>
+                                  <div
+                                    className="is-flex-grow-4"
+                                    data-testid={`editListItem${item.id}`}
+                                    onClick={() => onEditItem(item)}
+                                  >
                                     <span className="has-text-black">
                                       {item.title}
                                     </span>
                                   </div>
-                                </Link>
-                                <div className="is-justify-content-flex-end">
-                                  <center>
-                                    <button
-                                      type="button"
-                                      className="has-text-black delete"
-                                      onClick={() => onDeleteListItem(item)}
-                                    >
-                                      span
-                                    </button>
-                                    <Link
-                                      className="has-text-black delete"
-                                      data-testid={`deleteListItem${item.id}`}
-                                      to={`/lists/${props.list.id}/items/${item.id}/delete`}
-                                    ></Link>
-                                  </center>
+                                  <div className="is-justify-content-flex-end">
+                                    <center>
+                                      <button
+                                        type="button"
+                                        className="has-text-black delete"
+                                        onClick={() => onDeleteListItem(item)}
+                                      ></button>
+                                    </center>
+                                  </div>
                                 </div>
-                              </div>
-                            )}
-                          </Draggable>
-                        ))}
-                      {provided.placeholder}
-                    </div>
-                  )}
-                </Droppable>
-              </div>
-            </DragDropContext>
-          </div>
-        )}
+                              )}
+                            </Draggable>
+                          ))}
+                        {provided.placeholder}
+                      </div>
+                    )}
+                  </Droppable>
+                </div>
+              </DragDropContext>
+            </div>
+          )}
 
-        <div className="field is-grouped">
-          <div className="control">
-            <button className="button" data-testid="submit" type="submit">
-              {props.list?.id ? "SAVE" : "CREATE"}
-            </button>
+          <div className="field is-grouped">
+            <div className="control">
+              <button className="button" data-testid="submit" type="submit">
+                {props.list?.id ? "SAVE" : "CREATE"}
+              </button>
+            </div>
+            <>{props.preCancel}</>
+            <div className="control ml-auto is-pulled-right">
+              <button
+                className="button"
+                data-testid="cancel"
+                type="button"
+                onClick={() => history.push("/lists")}
+              >
+                CANCEL
+              </button>
+            </div>
           </div>
-          <>{props.preCancel}</>
-          <div className="control">
-            <button
-              className="button"
-              data-testid="cancel"
-              type="button"
-              onClick={() => history.push("/lists")}
-            >
-              CANCEL
-            </button>
-          </div>
-          <>{props.postCancel}</>
-        </div>
-      </Form>
-    </Formik>
+        </Form>
+      </Formik>
+    </>
   );
 };

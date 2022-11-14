@@ -50,18 +50,6 @@ export const EditListPage = () => {
                 </button>
               </div>
             }
-            postCancel={
-              <div className="control ml-auto is-pulled-right">
-                <button
-                  className="button is-danger"
-                  data-testid="delete"
-                  type="button"
-                  onClick={() => history.push(`/lists/${listId}/delete`)}
-                >
-                  DELETE
-                </button>
-              </div>
-            }
           />
         </div>
       )}

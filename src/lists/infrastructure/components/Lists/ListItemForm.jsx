@@ -1,41 +1,28 @@
-import React, { useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useRef, forwardRef, useImperativeHandle } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { AppContext } from "../../../../shared/infrastructure/contexts";
 import * as Yup from "yup";
-import {
-  CreateListItemUseCase,
-  UpdateListItemUseCase,
-} from "../../../application/listItems";
 
-export const ListItemForm = (props) => {
-  let history = useHistory();
-  const { useCaseFactory } = useContext(AppContext);
+export const ListItemForm = forwardRef((props, ref) => {
+  const formRef = useRef();
 
-  const [pageState] = useState(props.listItem);
-
-  const onSubmit = async (listItem) => {
-    let useCase;
-    if (props.listItem?.id === undefined) {
-      useCase = useCaseFactory.get(CreateListItemUseCase);
-    } else {
-      useCase = useCaseFactory.get(UpdateListItemUseCase);
-    }
-
-    const result = await useCase.execute(listItem);
-    if (result) {
-      history.push(`/lists/${props.listItem.listId}`);
-    }
-  };
+  useImperativeHandle(ref, () => ({
+    submitForm: () =>  {
+      formRef.current.submitForm();
+    },
+    setValues: (values) => {
+      formRef.current.setValues(values, false);
+    },
+  }));
 
   return (
     <Formik
+      innerRef={formRef}
       enableReinitialize={true}
-      initialValues={pageState}
+      initialValues={props.list.items[0]}
       validationSchema={Yup.object({
         title: Yup.string().required("Required"),
       })}
-      onSubmit={onSubmit}
+      onSubmit={props.onSubmit}
     >
       <Form>
         <div className="field">
@@ -72,26 +59,7 @@ export const ListItemForm = (props) => {
             <ErrorMessage name="description" />
           </p>
         </div>
-
-        <div className="field is-grouped">
-          <div className="control">
-            <button className="button" data-testid="submit" type="submit">
-              {props.listItem?.id ? "SAVE" : "CREATE"}
-            </button>
-          </div>
-          <div className="control">
-            <button
-              className="button"
-              data-testid="cancel"
-              type="button"
-              onClick={() => history.push(`/lists/${props.listItem.listId}`)}
-            >
-              CANCEL
-            </button>
-          </div>
-          {props.children}
-        </div>
       </Form>
     </Formik>
   );
-};
+});
