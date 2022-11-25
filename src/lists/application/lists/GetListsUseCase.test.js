@@ -23,7 +23,7 @@ describe("GetListsUseCase.#execute", () => {
     const useCase = new GetListsUseCase({ repository });
     const result = await useCase.execute();
 
-    expect(repository.getAll.mock.calls.length).toBe(1);
+    expect(repository.getAll).toHaveBeenCalled();
     expect(result).toStrictEqual([
       new List({
         id: 1,

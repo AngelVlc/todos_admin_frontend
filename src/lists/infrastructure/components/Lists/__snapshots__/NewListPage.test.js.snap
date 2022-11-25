@@ -1,60 +1,244 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should match the snapshot for a new list 1`] = `
+exports[`NewListPage should match the snapshot for a new list 1`] = `
 <DocumentFragment>
-  <form
-    action="#"
+  <div
+    class="container"
   >
-    <div
-      class="field"
+    <nav
+      aria-label="breadcrumbs"
+      class="breadcrumb"
     >
-      <label
-        class="label"
-        for="name"
-      >
-        Name
-      </label>
+      <ul>
+        <li>
+          <a
+            href="/"
+          >
+            Home
+          </a>
+        </li>
+        <li>
+          <a
+            href="/lists"
+          >
+            Lists
+          </a>
+        </li>
+        <li
+          class="is-active"
+        >
+          <a
+            aria-current="page"
+            href="/lists/new"
+          >
+            New
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <h3
+      class="title"
+    >
+      New list
+    </h3>
+    <div
+      class="modal"
+      data-testid="modal"
+    >
       <div
-        class="control"
+        class="modal-background"
+      />
+      <div
+        class="modal-content"
       >
-        <input
-          class="input"
-          data-testid="name"
-          name="name"
-          value=""
-        />
+        <div
+          class="box"
+        >
+          <div
+            class="content"
+          >
+            <form
+              action="#"
+            >
+              <div
+                class="field"
+              >
+                <label
+                  class="label"
+                  for="title"
+                >
+                  Title
+                </label>
+                <div
+                  class="control"
+                >
+                  <input
+                    class="input"
+                    data-testid="title"
+                    name="title"
+                    value=""
+                  />
+                </div>
+                <p
+                  class="help is-danger"
+                  data-testid="titleErrors"
+                />
+              </div>
+              <div
+                class="field"
+              >
+                <label
+                  class="label"
+                  for="description"
+                >
+                  Description
+                </label>
+                <div
+                  class="control"
+                >
+                  <textarea
+                    class="textarea"
+                    data-testid="description"
+                    name="description"
+                  />
+                </div>
+                <p
+                  class="help is-danger"
+                  data-testid="descriptionErrors"
+                />
+              </div>
+            </form>
+          </div>
+          <div
+            class="field is-grouped is-justify-content-center"
+          >
+            <div
+              class="control"
+            >
+              <button
+                class="button"
+                data-testid="modalOk"
+              >
+                OK
+              </button>
+            </div>
+            <div
+              class="control"
+            >
+              <button
+                class="button"
+                data-testid="modalCancel"
+              >
+                CANCEL
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-      <p
-        class="help is-danger"
-        data-testid="nameErrors"
+      <button
+        aria-label="close"
+        class="modal-close is-large"
+        data-testid="modalClose"
       />
     </div>
-    <div
-      class="field is-grouped"
+    <form
+      action="#"
     >
       <div
-        class="control"
+        class="field"
       >
-        <button
-          class="button"
-          data-testid="submit"
-          type="submit"
+        <label
+          class="label"
+          for="name"
         >
-          CREATE
-        </button>
+          Name
+        </label>
+        <div
+          class="control"
+        >
+          <input
+            class="input"
+            data-testid="name"
+            name="name"
+            value=""
+          />
+        </div>
+        <p
+          class="help is-danger"
+          data-testid="nameErrors"
+        />
+      </div>
+      <div>
+        <div
+          class="is-flex"
+        >
+          <div
+            class="is-flex-grow-4"
+          >
+            <span
+              class="label"
+            >
+              List Items
+            </span>
+          </div>
+        </div>
+        <div
+          class="dnd-container"
+        >
+          <div
+            class="list-button mt-2 mb-2"
+          >
+            <button
+              class="button is-small"
+              data-testid="addNew"
+              type="button"
+            >
+              <span
+                class="icon is-small"
+              >
+                <i
+                  class="fas fa-plus"
+                />
+              </span>
+              <span>
+                Add
+              </span>
+            </button>
+          </div>
+          <div
+            class="dnd-list"
+            data-rbd-droppable-context-id="0"
+            data-rbd-droppable-id="-1"
+          />
+        </div>
       </div>
       <div
-        class="control"
+        class="field is-grouped"
       >
-        <button
-          class="button"
-          data-testid="cancel"
-          type="button"
+        <div
+          class="control"
         >
-          CANCEL
-        </button>
+          <button
+            class="button"
+            data-testid="submit"
+            type="submit"
+          >
+            SAVE
+          </button>
+        </div>
+        <div
+          class="control ml-auto is-pulled-right"
+        >
+          <button
+            class="button"
+            data-testid="cancel"
+            type="button"
+          >
+            CANCEL
+          </button>
+        </div>
       </div>
-    </div>
-  </form>
+    </form>
+  </div>
 </DocumentFragment>
 `;

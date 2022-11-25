@@ -1,0 +1,115 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Modal When the modal is hidden should match the snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="modal"
+    data-testid="modal"
+  >
+    <div
+      class="modal-background"
+    />
+    <div
+      class="modal-content"
+    >
+      <div
+        class="box"
+      >
+        <div
+          class="content"
+        >
+          <p>
+            Modal content
+          </p>
+        </div>
+        <div
+          class="field is-grouped is-justify-content-center"
+        >
+          <div
+            class="control"
+          >
+            <button
+              class="button"
+              data-testid="modalOk"
+            >
+              OK
+            </button>
+          </div>
+          <div
+            class="control"
+          >
+            <button
+              class="button"
+              data-testid="modalCancel"
+            >
+              CANCEL
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button
+      aria-label="close"
+      class="modal-close is-large"
+      data-testid="modalClose"
+    />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Modal When the modal is visible should match the snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="modal is-active"
+    data-testid="modal"
+  >
+    <div
+      class="modal-background"
+    />
+    <div
+      class="modal-content"
+    >
+      <div
+        class="box"
+      >
+        <div
+          class="content"
+        >
+          <p>
+            Modal content
+          </p>
+        </div>
+        <div
+          class="field is-grouped is-justify-content-center"
+        >
+          <div
+            class="control"
+          >
+            <button
+              class="button"
+              data-testid="modalOk"
+            >
+              OK
+            </button>
+          </div>
+          <div
+            class="control"
+          >
+            <button
+              class="button"
+              data-testid="modalCancel"
+            >
+              CANCEL
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button
+      aria-label="close"
+      class="modal-close is-large"
+      data-testid="modalClose"
+    />
+  </div>
+</DocumentFragment>
+`;

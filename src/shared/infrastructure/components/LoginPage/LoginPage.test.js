@@ -71,7 +71,7 @@ it('should show the error when log in fails', async () => {
         fireEvent.click(getByTestId('submit'));
     })
 
-    expect(axios.post.mock.calls.length).toBe(1);
+    expect(axios.post).toHaveBeenCalled();
     expect(axios.post.mock.calls[0][0]).toBe('/auth/login');
     expect(axios.post.mock.calls[0][1]).toStrictEqual({userName: 'user', password: 'pass'});
     expect(getByTestId('authError')).toHaveTextContent('some error');
@@ -96,7 +96,7 @@ it('should show the home page after logging in', async () => {
         fireEvent.click(getByTestId('submit'));
     });
 
-    expect(axios.post.mock.calls.length).toBe(1);
+    expect(axios.post).toHaveBeenCalled();
     expect(axios.post.mock.calls[0][0]).toBe('/auth/login');
     expect(axios.post.mock.calls[0][1]).toStrictEqual({ password: "pass", userName: "user" });
     expect(window.localStorage.setItem.mock.calls.length).toBe(2);
@@ -104,7 +104,7 @@ it('should show the home page after logging in', async () => {
     expect(window.localStorage.setItem.mock.calls[0][1]).toBe(null);
     expect(window.localStorage.setItem.mock.calls[1][0]).toBe('userInfo');
     expect(window.localStorage.setItem.mock.calls[1][1]).toBe(JSON.stringify({ userId: 1, userName: 'userName', isAdmin: true}));
-    expect(mockHistoryPush.mock.calls.length).toBe(1);
+    expect(mockHistoryPush).toHaveBeenCalled();
     expect(mockHistoryPush.mock.calls[0][0]).toBe('/');
     axios.post.mockClear();
 })

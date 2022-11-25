@@ -30,7 +30,10 @@ const mockedUpdateListUseCase = {
 };
 
 const useCaseFactory = {
-  get: (useCase) => useCase == CreateListUseCase ? mockedCreateListUseCase : mockedUpdateListUseCase,
+  get: (useCase) =>
+    useCase == CreateListUseCase
+      ? mockedCreateListUseCase
+      : mockedUpdateListUseCase,
 };
 
 beforeEach(() => {
@@ -39,193 +42,264 @@ beforeEach(() => {
 
 afterEach(cleanup);
 
-describe("when the list already exist", () => {
-  const renderWithContextAndRouterForExistingList = () => {
-    const list = new List({ id: 2, name: "list name" });
-    list.items = [
-      new ListItem({
-        id: 5,
-        title: "item 5 title",
-        description: "item 5 description",
-      }),
-      new ListItem({
-        id: 6,
-        title: "item 6 title",
-        description: "item 6 description",
-      }),
-    ];
+describe("ListForm", () => {
+  describe("when the list already exist", () => {
+    const renderWithContextAndRouterForExistingList = () => {
+      const list = new List({ id: 2, name: "list name" });
+      list.items = [
+        new ListItem({
+          id: 5,
+          listId: 2,
+          title: "item 5 title",
+          description: "item 5 description",
+        }),
+        new ListItem({
+          id: 6,
+          listId: 2,
+          title: "item 6 title",
+          description: "item 6 description",
+        }),
+      ];
 
-    const context = { auth: { info: {} }, useCaseFactory };
-    return {
-      ...render(
-        <AppContext.Provider value={context}>
-          <MemoryRouter initialEntries={[`/lists/2/items/5/edit`]}>
-            <Route path="/lists/:listId/items/:itemId/edit">
-              <ListForm list={list} />
-            </Route>
-          </MemoryRouter>
-        </AppContext.Provider>
-      ),
+      const context = { auth: { info: {} }, useCaseFactory };
+      return {
+        ...render(
+          <AppContext.Provider value={context}>
+            <MemoryRouter initialEntries={[`/lists/2/items/5/edit`]}>
+              <Route path="/lists/:listId/items/:itemId/edit">
+                <ListForm list={list} />
+              </Route>
+            </MemoryRouter>
+          </AppContext.Provider>
+        ),
+      };
     };
-  };
 
-  it("should match the snapshot", async () => {
-    let fragment;
-    await act(async () => {
+    it("should match the snapshot", async () => {
       const { asFragment } = renderWithContextAndRouterForExistingList();
-      fragment = asFragment;
+      expect(asFragment()).toMatchSnapshot();
     });
-    expect(fragment()).toMatchSnapshot();
-  });
 
-  it("should allow to update the list", async () => {
-    let container;
-    await act(async () => {
-      container = renderWithContextAndRouterForExistingList();
+    it("should allow to update the list name, delete and update an existing item, and add a new item", async () => {
+      const container = renderWithContextAndRouterForExistingList();
+
       mockDndSpacing(container.container);
+
+      await makeDnd({
+        getDragElement: () => container.getByTestId("draggable5"),
+        direction: DND_DIRECTION_DOWN,
+        positions: 1,
+      });
+
+      await waitFor(() => {
+        fireEvent.click(container.getByTestId("deleteListItem5"));
+      });
+
+      await waitFor(() => {
+        fireEvent.click(container.getByTestId("addNew"));
+      });
+
+      await changeInputValue(container.getByTestId, "title", "the title");
+      await changeInputValue(
+        container.getByTestId,
+        "description",
+        "the description"
+      );
+
+      await waitFor(() => {
+        fireEvent.click(container.getByTestId("modalOk"));
+      });
+
+      await waitFor(() => {
+        fireEvent.click(container.getByTestId("editListItem6"));
+      });
+
+      await changeInputValue(container.getByTestId, "title", "updated title");
+      await changeInputValue(
+        container.getByTestId,
+        "description",
+        "updated description"
+      );
+
+      await waitFor(() => {
+        fireEvent.click(container.getByTestId("modalOk"));
+      });
+
+      await changeInputValue(container.getByTestId, "name", "updated name");
+
+      mockedUpdateListUseCase.execute.mockResolvedValue({ id: 2 });
+
+      await waitFor(() => {
+        fireEvent.click(container.getByTestId("submit"));
+      });
+
+      expect(mockedUpdateListUseCase.execute).toHaveBeenCalled();
+      const items = [
+        new ListItem({
+          id: 6,
+          listId: 2,
+          title: "updated title",
+          description: "updated description",
+          state: "modified",
+        }),
+        new ListItem({
+          id: 5,
+          listId: 2,
+          title: "item 5 title",
+          description: "item 5 description",
+          state: "deleted",
+        }),
+        new ListItem({
+          id: -1,
+          listId: 2,
+          title: "the title",
+          description: "the description",
+          position: 2,
+        }),
+      ];
+      const list = new List({
+        id: 2,
+        name: "updated name",
+      });
+      list.items = items;
+
+      expect(mockedUpdateListUseCase.execute.mock.calls[0][0]).toStrictEqual(
+        list
+      );
     });
 
-    await makeDnd({
-      getDragElement: () => container.getByTestId("draggable5"),
-      direction: DND_DIRECTION_DOWN,
-      positions: 1,
+    it("should allow to delete an existing item", async () => {
+      const { getByTestId } = renderWithContextAndRouterForExistingList();
+
+      await waitFor(() => {
+        fireEvent.click(getByTestId("deleteListItem5"));
+      });
+
+      mockedUpdateListUseCase.execute.mockResolvedValue({ id: 2 });
+
+      await waitFor(() => {
+        fireEvent.click(getByTestId("submit"));
+      });
+
+      expect(mockedUpdateListUseCase.execute).toHaveBeenCalled();
+
+      const items = [
+        new ListItem({
+          id: 5,
+          title: "item 5 title",
+          description: "item 5 description",
+          state: "deleted",
+          listId: 2,
+        }),
+        new ListItem({
+          id: 6,
+          title: "item 6 title",
+          description: "item 6 description",
+          listId: 2,
+        }),
+      ];
+
+      const list = new List({
+        id: 2,
+        name: "list name",
+      });
+      list.items = items;
+
+      expect(mockedUpdateListUseCase.execute.mock.calls[0][0]).toStrictEqual(
+        list
+      );
     });
-
-    await changeInputValue(container.getByTestId, "name", "updated name");
-
-    mockedUpdateListUseCase.execute.mockResolvedValue({ id: 2 });
-
-    await waitFor(() => {
-      fireEvent.click(container.getByTestId("submit"));
-    });
-
-    expect(mockedUpdateListUseCase.execute.mock.calls.length).toBe(1);
-    const items = [
-      new ListItem({
-        id: 6,
-        title: "item 6 title",
-        description: "item 6 description",
-      }),
-      new ListItem({
-        id: 5,
-        title: "item 5 title",
-        description: "item 5 description",
-      }),
-    ];
-    const list = new List({
-      id: 2,
-      name: "updated name"      
-    });
-    list.items = items;
-    expect(mockedUpdateListUseCase.execute.mock.calls[0][0]).toStrictEqual(
-      list
-    );
   });
 
-  it("should add a new item", async () => {
-    let container;
-    await act(async () => {
-      container = renderWithContextAndRouterForExistingList();
-    });
-
-    await waitFor(() => {
-      fireEvent.click(container.getByTestId("addNew"));
-    });
-
-    expect(mockHistoryPush.mock.calls.length).toBe(1);
-    expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/2/items/new");
-    mockHistoryPush.mockClear();
-  });
-
-  it("should update an existing item", async () => {
-    let container;
-    await act(async () => {
-      container = renderWithContextAndRouterForExistingList();
-    });
-
-    expect(container.getByTestId("editListItem5").href).toBe(
-      "http://localhost/lists/2/items/5/edit"
-    );
-  });
-
-  it("should allow delete an existing item", async () => {
-    let container;
-    await act(async () => {
-      container = renderWithContextAndRouterForExistingList();
-    });
-
-    expect(container.getByTestId("deleteListItem5").href).toBe(
-      "http://localhost/lists/2/items/5/delete"
-    );
-  });
-});
-
-describe("when the list is new", () => {
-  const renderWithContextAndRouterForNewList = () => {
-    const context = { auth: { info: {} }, useCaseFactory };
-    return {
-      ...render(
-        <AppContext.Provider value={context}>
-          <MemoryRouter initialEntries={[`/users/new`]}>
-            <Route path="/users/new">
-              <ListForm list={List.createEmpty()} />
-            </Route>
-          </MemoryRouter>
-        </AppContext.Provider>
-      ),
+  describe("when the list is new", () => {
+    const renderWithContextAndRouterForNewList = () => {
+      const context = { auth: { info: {} }, useCaseFactory };
+      return {
+        ...render(
+          <AppContext.Provider value={context}>
+            <MemoryRouter initialEntries={[`/users/new`]}>
+              <Route path="/users/new">
+                <ListForm list={List.createEmpty()} />
+              </Route>
+            </MemoryRouter>
+          </AppContext.Provider>
+        ),
+      };
     };
-  };
 
-  it("should match the snapshot", async () => {
-    const { asFragment } = renderWithContextAndRouterForNewList();
-    expect(asFragment()).toMatchSnapshot();
-  });
-
-  it("should allow to cancel", async () => {
-    const { getByTestId } = renderWithContextAndRouterForNewList();
-
-    await waitFor(() => {
-      fireEvent.click(getByTestId("cancel"));
+    it("should match the snapshot", async () => {
+      const { asFragment } = renderWithContextAndRouterForNewList();
+      expect(asFragment()).toMatchSnapshot();
     });
 
-    expect(mockHistoryPush.mock.calls.length).toBe(1);
-    expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists");
-    mockHistoryPush.mockClear();
-  });
+    it("should allow to cancel", async () => {
+      const { getByTestId } = renderWithContextAndRouterForNewList();
 
-  it("should require the list name", async () => {
-    const { getByTestId } = renderWithContextAndRouterForNewList();
+      await waitFor(() => {
+        fireEvent.click(getByTestId("cancel"));
+      });
 
-    await waitFor(() => {
-      fireEvent.click(getByTestId("submit"));
+      expect(mockHistoryPush).toHaveBeenCalled();
+      expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists");
+      mockHistoryPush.mockClear();
     });
 
-    expect(getByTestId("nameErrors")).toHaveTextContent("Required");
-  });
+    it("should require the list name", async () => {
+      const { getByTestId } = renderWithContextAndRouterForNewList();
 
-  it("should allow to create a new list", async () => {
-    const { getByTestId } = renderWithContextAndRouterForNewList();
+      await waitFor(() => {
+        fireEvent.click(getByTestId("submit"));
+      });
 
-    await changeInputValue(getByTestId, "name", "new list");
-
-    mockedCreateListUseCase.execute.mockResolvedValue({ id: 55 });
-
-    await waitFor(() => {
-      fireEvent.click(getByTestId("submit"));
+      expect(getByTestId("nameErrors")).toHaveTextContent("Required");
     });
 
-    expect(mockedCreateListUseCase.execute.mock.calls.length).toBe(1);
-    const list = new List({
-      name: "new list",
-      itemsCount: 0,
-    });
-    expect(mockedCreateListUseCase.execute.mock.calls[0][0]).toStrictEqual(
-      list
-    );
+    it("should allow to create a new list", async () => {
+      const { getByTestId } = renderWithContextAndRouterForNewList();
 
-    expect(mockHistoryPush.mock.calls.length).toBe(1);
-    expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/55");
-    mockHistoryPush.mockClear();
+      await changeInputValue(getByTestId, "name", "new list");
+
+      await waitFor(() => {
+        fireEvent.click(getByTestId("addNew"));
+      });
+
+      await changeInputValue(getByTestId, "title", "the title");
+      await changeInputValue(getByTestId, "description", "the description");
+
+      await waitFor(() => {
+        fireEvent.click(getByTestId("modalOk"));
+      });
+
+      mockedCreateListUseCase.execute.mockResolvedValue({ id: 55 });
+
+      await waitFor(() => {
+        fireEvent.click(getByTestId("submit"));
+      });
+
+      const list = new List({
+        id: -1,
+        name: "new list",
+        itemsCount: 0,
+      });
+      list.items = [
+        new ListItem({
+          id: -1,
+          listId: -1,
+          title: "the title",
+          description: "the description",
+          position: 0,
+        }),
+      ];
+
+      expect(mockedCreateListUseCase.execute).toHaveBeenCalled();
+      expect(mockedCreateListUseCase.execute.mock.calls[0][0]).toStrictEqual(
+        list
+      );
+
+      expect(mockHistoryPush).toHaveBeenCalled();
+      expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/55");
+      mockHistoryPush.mockClear();
+    });
   });
 });
 

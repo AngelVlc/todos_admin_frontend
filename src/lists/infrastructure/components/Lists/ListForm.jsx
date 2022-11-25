@@ -8,7 +8,8 @@ import "./ListForm.css";
 import { List, ListItem } from "../../../domain";
 import {
   CreateListUseCase,
-  UpdateListUseCase,
+  UpdateListUseCase
+
 } from "../../../application/lists";
 import { Modal } from "../../../../shared/infrastructure/components/Modal";
 import { ListItemForm } from "./ListItemForm";
@@ -23,16 +24,18 @@ export const ListForm = (props) => {
 
   const onSubmit = async (list) => {
     let useCase;
-    // if (props.list?.id === undefined) {
-    //   useCase = useCaseFactory.get(CreateListUseCase);
-    // } else {
-    //   useCase = useCaseFactory.get(UpdateListUseCase);
-    // }
 
-    // const result = await useCase.execute(list);
-    // if (result && props.list?.id === undefined) {
-    //   history.push(`/lists/${result.id}`);
-    // }
+    if (props.list?.id === -1) {
+      useCase = useCaseFactory.get(CreateListUseCase);
+    } else {
+      useCase = useCaseFactory.get(UpdateListUseCase);
+    }
+
+    const result = await useCase.execute(list);
+
+    if (result && props.list?.id === -1) {
+      history.push(`/lists/${result.id}`);
+    }
   };
 
   const onDragEnd = (dropResult) => {
@@ -63,7 +66,7 @@ export const ListForm = (props) => {
   const onDeleteListItem = (item) => {
     const index = pageState.items.indexOf(item);
     const newItems = Array.from(pageState.items);
-    newItems[index].deleted = true;
+    newItems[index].state = 'deleted';
 
     const newList = new List({ ...pageState });
     newList.items = newItems;
@@ -88,14 +91,19 @@ export const ListForm = (props) => {
     const newList = new List({ ...pageState });
     newList.items = pageState.items;
 
-    if (listItem.position === undefined) {
+    if (listItem.id === -1) {
       newList.addNewItem(listItem);
     } else {
-      const editedItem = newList.items[listItem.position];
+      for(const item of newList.items) {
+        if (item.id === listItem.id) {
+          item.title = listItem.title;
+          item.description = listItem.description;
+          item.state = 'modified';
+          item.listId = listItem.listId;
 
-      editedItem.title = listItem.title;
-      editedItem.description = listItem.description;
-      editedItem.modified = true;
+          break;
+        }
+      }
     }
 
     setPageState(newList);
@@ -112,7 +120,6 @@ export const ListForm = (props) => {
       <Modal ref={itemFormModalRef} closeHandler={onItemModalClose}>
         <ListItemForm
           ref={itemFormRef}
-          list={pageState}
           onSubmit={onSubmitItemForm}
         />
       </Modal>
@@ -142,82 +149,80 @@ export const ListForm = (props) => {
               <ErrorMessage name="name" />
             </p>
           </div>
-          {props.list?.id && (
-            <div>
-              <div className="is-flex">
-                <div className="is-flex-grow-4">
-                  <span className="label">List Items</span>
-                </div>
+          <div>
+            <div className="is-flex">
+              <div className="is-flex-grow-4">
+                <span className="label">List Items</span>
               </div>
-              <DragDropContext onDragEnd={onDragEnd}>
-                <div className="dnd-container">
-                  <div className="list-button mt-2 mb-2">
-                    <button
-                      className="button is-small"
-                      type="button"
-                      data-testid="addNew"
-                      onClick={() => onAddNewItem()}
-                    >
-                      <span className="icon is-small">
-                        <i className="fas fa-plus"></i>
-                      </span>
-                      <span>Add</span>
-                    </button>
-                  </div>
-                  <Droppable droppableId={props.list.id.toString()}>
-                    {(provided) => (
-                      <div
-                        className="dnd-list"
-                        ref={provided.innerRef}
-                        {...provided.droppableProps}
-                      >
-                        {pageState.items.length > 0 &&
-                          pageState.items.filter(item => item.deleted === undefined).map((item, index) => (
-                            <Draggable
-                              key={item.id}
-                              draggableId={item.id.toString()}
-                              index={index}
-                            >
-                              {(draggableProvided) => (
-                                <div
-                                  key={item.id}
-                                  className="is-flex dnd-item p-2 mb-2"
-                                  {...draggableProvided.draggableProps}
-                                  {...draggableProvided.dragHandleProps}
-                                  ref={draggableProvided.innerRef}
-                                  data-testid={`draggable${item.id}`}
-                                >
-                                  <div
-                                    className="is-flex-grow-4"
-                                    data-testid={`editListItem${item.id}`}
-                                    onClick={() => onEditItem(item)}
-                                  >
-                                    <span className="has-text-black">
-                                      {item.title}
-                                    </span>
-                                  </div>
-                                  <div className="is-justify-content-flex-end">
-                                    <center>
-                                      <button
-                                        type="button"
-                                        className="has-text-black delete"
-                                        onClick={() => onDeleteListItem(item)}
-                                      ></button>
-                                    </center>
-                                  </div>
-                                </div>
-                              )}
-                            </Draggable>
-                          ))}
-                        {provided.placeholder}
-                      </div>
-                    )}
-                  </Droppable>
-                </div>
-              </DragDropContext>
             </div>
-          )}
-
+            <DragDropContext onDragEnd={onDragEnd}>
+              <div className="dnd-container">
+                <div className="list-button mt-2 mb-2">
+                  <button
+                    className="button is-small"
+                    type="button"
+                    data-testid="addNew"
+                    onClick={() => onAddNewItem()}
+                  >
+                    <span className="icon is-small">
+                      <i className="fas fa-plus"></i>
+                    </span>
+                    <span>Add</span>
+                  </button>
+                </div>
+                <Droppable droppableId={props.list.id.toString()}>
+                  {(provided) => (
+                    <div
+                      className="dnd-list"
+                      ref={provided.innerRef}
+                      {...provided.droppableProps}
+                    >
+                      {pageState.items.length > 0 &&
+                        pageState.items.filter(item => item.state !== 'deleted').map((item, index) => (
+                          <Draggable
+                            key={item.id}
+                            draggableId={item.id.toString()}
+                            index={index}
+                          >
+                            {(draggableProvided) => (
+                              <div
+                                key={item.id}
+                                className="is-flex dnd-item p-2 mb-2"
+                                {...draggableProvided.draggableProps}
+                                {...draggableProvided.dragHandleProps}
+                                ref={draggableProvided.innerRef}
+                                data-testid={`draggable${item.id}`}
+                              >
+                                <div
+                                  className="is-flex-grow-4"
+                                  data-testid={`editListItem${item.id}`}
+                                  onClick={() => onEditItem(item)}
+                                >
+                                  <span className="has-text-black">
+                                    {item.title}
+                                  </span>
+                                </div>
+                                <div className="is-justify-content-flex-end">
+                                  <center>
+                                    <button
+                                      type="button"
+                                      className="has-text-black delete"
+                                      data-testid={`deleteListItem${item.id}`}
+                                      onClick={() => onDeleteListItem(item)}
+                                    ></button>
+                                  </center>
+                                </div>
+                              </div>
+                            )}
+                          </Draggable>
+                        ))}
+                      {provided.placeholder}
+                    </div>
+                  )}
+                </Droppable>
+              </div>
+            </DragDropContext>
+          </div>
           <div className="field is-grouped">
             <div className="control">
               <button className="button" data-testid="submit" type="submit">

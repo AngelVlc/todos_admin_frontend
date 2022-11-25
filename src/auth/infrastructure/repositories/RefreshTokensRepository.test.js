@@ -46,7 +46,7 @@ describe("RefreshTokensRepository", () => {
 
         const result = await new RefreshTokensRepository().deleteByIds(ids);
 
-        expect(axios.delete.mock.calls.length).toBe(1);
+        expect(axios.delete).toHaveBeenCalled();
         expect(axios.delete.mock.calls[0][0]).toBe("refreshtokens");
         expect(axios.delete.mock.calls[0][1]).toStrictEqual({ data: [1, 3] });
         expect(result).toBe(false);

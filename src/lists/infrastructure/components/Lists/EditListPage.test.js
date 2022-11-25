@@ -49,38 +49,25 @@ const renderWithContextAndRouter = () => {
 
 afterEach(cleanup);
 
-it("should match the snapshot for an existing list", async () => {
-  let fragment;
-  await act(async () => {
-    const { asFragment } = renderWithContextAndRouter();
-    fragment = asFragment;
+describe("EditListPage", () => {
+  it("should match the snapshot for an existing list", async () => {
+    let fragment;
+    await act(async () => {
+      const { asFragment } = renderWithContextAndRouter();
+      fragment = asFragment;
+    });
+    expect(fragment()).toMatchSnapshot();
   });
-  expect(fragment()).toMatchSnapshot();
-});
-
-it("should allow to delete the list", async () => {
-  let container;
-  await act(async () => {
-    container = renderWithContextAndRouter();
+ 
+  it("should allow read the list", async () => {
+    const { getByTestId } = renderWithContextAndRouter();
+  
+    await waitFor(() => {
+      fireEvent.click(getByTestId("read"));
+    });
+  
+    expect(mockHistoryPush).toHaveBeenCalled();
+    expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/2/read");
+    mockHistoryPush.mockClear();
   });
-
-  await waitFor(() => {
-    fireEvent.click(container.getByTestId("delete"));
-  });
-
-  expect(mockHistoryPush.mock.calls.length).toBe(1);
-  expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/2/delete");
-  mockHistoryPush.mockClear();
-});
-
-it("should allow read the list", async () => {
-  const { getByTestId } = renderWithContextAndRouter();
-
-  await waitFor(() => {
-    fireEvent.click(getByTestId("read"));
-  });
-
-  expect(mockHistoryPush.mock.calls.length).toBe(1);
-  expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/2/read");
-  mockHistoryPush.mockClear();
-});
+})

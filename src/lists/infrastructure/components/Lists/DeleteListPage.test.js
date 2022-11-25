@@ -69,7 +69,7 @@ it("should cancel the deletion", async () => {
     fireEvent.click(container.getByTestId("no"));
   });
 
-  expect(mockHistoryGoBack.mock.calls.length).toBe(1);
+  expect(mockHistoryGoBack).toHaveBeenCalled();
   mockHistoryGoBack.mockClear();
 });
 
@@ -85,9 +85,9 @@ it("should delete the List", async () => {
     fireEvent.click(container.getByTestId("yes"));
   });
 
-  expect(mockedDeleteListByIdUseCase.execute.mock.calls.length).toBe(1);
+  expect(mockedDeleteListByIdUseCase.execute).toHaveBeenCalled();
   expect(mockedDeleteListByIdUseCase.execute.mock.calls[0][0]).toBe("2");
-  expect(mockHistoryPush.mock.calls.length).toBe(1);
+  expect(mockHistoryPush).toHaveBeenCalled();
   expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists");
   mockHistoryPush.mockClear();
 });

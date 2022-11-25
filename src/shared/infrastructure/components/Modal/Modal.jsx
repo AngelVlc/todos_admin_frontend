@@ -25,18 +25,18 @@ export const Modal = forwardRef((props, ref) => {
   }
 
   return (
-    <div ref={modalRef} className="modal">
+    <div ref={modalRef} className="modal" data-testid="modal">
       <div className="modal-background"></div>
       <div className="modal-content">
         <div className="box">
           <div className="content">{props.children}</div>
           <div className="field is-grouped is-justify-content-center">
           <div className="control">
-            <button className="button" onClick={() => onOk()}>OK</button>
+            <button className="button" onClick={() => onOk()} data-testid="modalOk">OK</button>
             </div>
             <div className="control">
 
-            <button className="button" onClick={() => onCancel()}>CANCEL</button>
+            <button className="button" onClick={() => onCancel()} data-testid="modalCancel">CANCEL</button>
             </div>
           </div>
         </div>
@@ -44,6 +44,7 @@ export const Modal = forwardRef((props, ref) => {
       <button
         className="modal-close is-large"
         aria-label="close"
+        data-testid="modalClose"
         onClick={() => onCancel()}
       ></button>
     </div>

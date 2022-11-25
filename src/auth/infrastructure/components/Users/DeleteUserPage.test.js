@@ -67,7 +67,7 @@ describe("when the user is not an admin", () => {
       fireEvent.click(container.getByTestId("no"));
     });
 
-    expect(mockHistoryGoBack.mock.calls.length).toBe(1);
+    expect(mockHistoryGoBack).toHaveBeenCalled();
     mockHistoryGoBack.mockClear();
   });
 
@@ -83,9 +83,9 @@ describe("when the user is not an admin", () => {
       fireEvent.click(container.getByTestId("yes"));
     });
 
-    expect(mockedDeleteUserByIdUseCase.execute.mock.calls.length).toBe(1);
+    expect(mockedDeleteUserByIdUseCase.execute).toHaveBeenCalled();
     expect(mockedDeleteUserByIdUseCase.execute.mock.calls[0][0]).toBe("2");
-    expect(mockHistoryPush.mock.calls.length).toBe(1);
+    expect(mockHistoryPush).toHaveBeenCalled();
     expect(mockHistoryPush.mock.calls[0][0]).toBe("/users");
     mockHistoryPush.mockClear();
   });

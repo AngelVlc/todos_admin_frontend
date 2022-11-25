@@ -65,7 +65,7 @@ it("should allow delete an existing user", async () => {
     fireEvent.click(container.getByTestId("delete"));
   });
 
-  expect(mockHistoryPush.mock.calls.length).toBe(1);
+  expect(mockHistoryPush).toHaveBeenCalled();
   expect(mockHistoryPush.mock.calls[0][0]).toBe("/users/2/delete");
   mockHistoryPush.mockClear();
 });

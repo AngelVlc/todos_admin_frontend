@@ -60,7 +60,7 @@ it("should add a new user", async () => {
     fireEvent.click(container.getByTestId("addNew"));
   });
 
-  expect(mockHistoryPush.mock.calls.length).toBe(1);
+  expect(mockHistoryPush).toHaveBeenCalled();
   expect(mockHistoryPush.mock.calls[0][0]).toBe("users/new");
   mockHistoryPush.mockClear();
 });

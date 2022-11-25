@@ -1,13 +1,14 @@
 import React, { useRef, forwardRef, useImperativeHandle } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { ListItem } from "../../../domain";
 import * as Yup from "yup";
 
 export const ListItemForm = forwardRef((props, ref) => {
   const formRef = useRef();
 
   useImperativeHandle(ref, () => ({
-    submitForm: () =>  {
-      formRef.current.submitForm();
+    submitForm: async () => {
+      await formRef.current.submitForm();
     },
     setValues: (values) => {
       formRef.current.setValues(values, false);
@@ -17,8 +18,8 @@ export const ListItemForm = forwardRef((props, ref) => {
   return (
     <Formik
       innerRef={formRef}
+      initialValues={ListItem.createEmpty(-1)}
       enableReinitialize={true}
-      initialValues={props.list.items[0]}
       validationSchema={Yup.object({
         title: Yup.string().required("Required"),
       })}
@@ -35,14 +36,13 @@ export const ListItemForm = forwardRef((props, ref) => {
               as="input"
               className="input"
               data-testid="title"
-              autoFocus
+              autoFocus={true}
             />
           </div>
           <p className="help is-danger" data-testid="titleErrors">
             <ErrorMessage name="title" />
           </p>
         </div>
-
         <div className="field">
           <label className="label" htmlFor="description">
             Description

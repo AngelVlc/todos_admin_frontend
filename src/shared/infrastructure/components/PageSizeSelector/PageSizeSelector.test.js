@@ -36,7 +36,7 @@ describe("PageSizeSelector", () => {
       });
     });
 
-    expect(mockedChangePagination.mock.calls.length).toBe(1);
+    expect(mockedChangePagination).toHaveBeenCalled();
     expect(mockedChangePagination.mock.calls[0][0]).toStrictEqual({
       pageSize: 20,
     });
