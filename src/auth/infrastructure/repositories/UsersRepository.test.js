@@ -31,7 +31,7 @@ describe("UsersRepository", () => {
 
       const result = await new UsersRepository().deleteById(1);
 
-      expect(axios.delete.mock.calls.length).toBe(1);
+      expect(axios.delete).toHaveBeenCalled();
       expect(axios.delete.mock.calls[0][0]).toBe("users/1");
       expect(result).toBe(false);
     });
@@ -67,7 +67,7 @@ describe("UsersRepository", () => {
 
       const result = await new UsersRepository().create({ name: 'a' });
 
-      expect(axios.post.mock.calls.length).toBe(1);
+      expect(axios.post).toHaveBeenCalled();
       expect(axios.post.mock.calls[0][0]).toBe("users");
       expect(axios.post.mock.calls[0][1]).toStrictEqual({ name: 'a' });
       expect(result).toBe(undefined);
@@ -87,7 +87,7 @@ describe("UsersRepository", () => {
 
       const result = await new UsersRepository().update({ id: 5, name: 'a' });
 
-      expect(axios.put.mock.calls.length).toBe(1);
+      expect(axios.put).toHaveBeenCalled();
       expect(axios.put.mock.calls[0][0]).toBe("users/5");
       expect(axios.put.mock.calls[0][1]).toStrictEqual({ id: 5, name: 'a' });
       expect(result).toBe(undefined);

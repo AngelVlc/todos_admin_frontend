@@ -1,22 +1,41 @@
 import { BaseUseCase } from "../../../shared/domain/BaseUseCase";
-import { ListsRepository } from "../../infrastructure/repositories";
+import { List, ListItem } from "../../domain";
+import {
+  ListsRepository,
+  ListItemsRepository,
+} from "../../infrastructure/repositories";
 
 export class CreateListUseCase extends BaseUseCase {
-  _repository;
+  _listsRepository;
+  _listItemsRepository;
 
-  constructor({ repository }) {
+  constructor({ listsRepository, listItemsRepository }) {
     super();
 
-    this._repository = repository;
+    this._listsRepository = listsRepository;
+    this._listItemsRepository = listItemsRepository;
   }
 
   static create() {
-    const repository = new ListsRepository();
+    const listsRepository = new ListsRepository();
+    const listItemsRepository = new ListItemsRepository();
 
-    return new CreateListUseCase({ repository });
+    return new CreateListUseCase({ listsRepository, listItemsRepository });
   }
 
   async execute(list) {
-    return await this._repository.create(list);
+    const result = await this._listsRepository.create(list);
+    const savedList = new List(result);
+
+    for(const item of list.items) {
+      const savedListItem = await this._listItemsRepository.create({
+        ...item,
+        listId: savedList.id,
+      });
+
+      savedList.items.push(new ListItem(savedListItem));
+    };
+
+    return savedList;
   }
 }

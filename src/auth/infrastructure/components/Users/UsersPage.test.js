@@ -20,19 +20,15 @@ jest.mock("react-router-dom", () => ({
 const history = createMemoryHistory();
 
 const renderWithContextAndRouter = () => {
-  const mockedGetUsersUseCase = {
-    execute: () => {
-      return [
-        new User({ id: 1, name: "user1", isAdmin: true }),
-        new User({ id: 2, name: "user2", isAdmin: false }),
-      ];
-    },
+  const fakeGetUsersUseCase = {
+    execute: () => [
+      new User({ id: 1, name: "user1", isAdmin: true }),
+      new User({ id: 2, name: "user2", isAdmin: false }),
+    ],
   };
 
   const useCaseFactory = {
-    get: () => {
-      return mockedGetUsersUseCase;
-    },
+    get: () => fakeGetUsersUseCase,
   };
 
   const context = { auth: { info: {} }, useCaseFactory };
@@ -64,7 +60,7 @@ it("should add a new user", async () => {
     fireEvent.click(container.getByTestId("addNew"));
   });
 
-  expect(mockHistoryPush.mock.calls.length).toBe(1);
+  expect(mockHistoryPush).toHaveBeenCalled();
   expect(mockHistoryPush.mock.calls[0][0]).toBe("users/new");
   mockHistoryPush.mockClear();
 });

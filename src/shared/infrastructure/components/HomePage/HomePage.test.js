@@ -44,7 +44,7 @@ describe("when the user is an admin", () => {
       fireEvent.click(getByTestId("users"));
     });
 
-    expect(mockHistoryPush.mock.calls.length).toBe(1);
+    expect(mockHistoryPush).toHaveBeenCalled();
     expect(mockHistoryPush.mock.calls[0][0]).toBe("/users");
   });
 
@@ -57,7 +57,7 @@ describe("when the user is an admin", () => {
       fireEvent.click(getByTestId("refreshTokens"));
     });
 
-    expect(mockHistoryPush.mock.calls.length).toBe(1);
+    expect(mockHistoryPush).toHaveBeenCalled();
     expect(mockHistoryPush.mock.calls[0][0]).toBe("/refreshtokens");
   });
 
@@ -70,7 +70,7 @@ describe("when the user is an admin", () => {
       fireEvent.click(getByTestId("lists"));
     });
 
-    expect(mockHistoryPush.mock.calls.length).toBe(1);
+    expect(mockHistoryPush).toHaveBeenCalled();
     expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists");
   });
 });
@@ -93,7 +93,7 @@ describe("when the user is not an admin", () => {
       fireEvent.click(getByTestId("lists"));
     });
 
-    expect(mockHistoryPush.mock.calls.length).toBe(1);
+    expect(mockHistoryPush).toHaveBeenCalled();
     expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists");
   });
 });

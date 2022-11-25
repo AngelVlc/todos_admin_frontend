@@ -1,32 +1,39 @@
-import React, { useState, useContext } from "react";
-import { useHistory, Link } from "react-router-dom";
+import React, { useState, useContext, useRef } from "react";
+import { useHistory } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import * as Yup from "yup";
 import "./ListForm.css";
-import { List } from "../../../domain";
+import { List, ListItem } from "../../../domain";
 import {
   CreateListUseCase,
-  UpdateListUseCase,
+  UpdateListUseCase
+
 } from "../../../application/lists";
+import { Modal } from "../../../../shared/infrastructure/components/Modal";
+import { ListItemForm } from "./ListItemForm";
 
 export const ListForm = (props) => {
   let history = useHistory();
   const { useCaseFactory } = useContext(AppContext);
+  const itemFormModalRef = useRef();
+  const itemFormRef = useRef();
 
   const [pageState, setPageState] = useState(props.list);
 
   const onSubmit = async (list) => {
     let useCase;
-    if (props.list?.id === undefined) {
+
+    if (props.list?.id === -1) {
       useCase = useCaseFactory.get(CreateListUseCase);
     } else {
       useCase = useCaseFactory.get(UpdateListUseCase);
     }
 
     const result = await useCase.execute(list);
-    if (result && props.list?.id === undefined) {
+
+    if (result && props.list?.id === -1) {
       history.push(`/lists/${result.id}`);
     }
   };
@@ -55,34 +62,93 @@ export const ListForm = (props) => {
     setPageState(newList);
   };
 
+
+  const onDeleteListItem = (item) => {
+    const index = pageState.items.indexOf(item);
+    const newItems = Array.from(pageState.items);
+    newItems[index].state = 'deleted';
+
+    const newList = new List({ ...pageState });
+    newList.items = newItems;
+
+    setPageState(newList);
+  };
+
+  const onAddNewItem = () => {
+    showItemModal(ListItem.createEmpty(props.list?.id));
+  };
+
+  const onEditItem = (item) => {
+    showItemModal(item);
+  };
+
+  const showItemModal = (item) => {
+    itemFormRef.current.setValues(item);
+    itemFormModalRef.current.showModal();
+  };
+
+  const onSubmitItemForm = (listItem) => {
+    const newList = new List({ ...pageState });
+    newList.items = pageState.items;
+
+    if (listItem.id === -1) {
+      newList.addNewItem(listItem);
+    } else {
+      for(const item of newList.items) {
+        if (item.id === listItem.id) {
+          item.title = listItem.title;
+          item.description = listItem.description;
+          item.state = 'modified';
+          item.listId = listItem.listId;
+
+          break;
+        }
+      }
+    }
+
+    setPageState(newList);
+
+    itemFormModalRef.current.closeModal();
+  };
+
+  const onItemModalClose = () => {
+    itemFormRef.current.submitForm();
+  };
+
   return (
-    <Formik
-      enableReinitialize={true}
-      initialValues={pageState}
-      validationSchema={Yup.object({
-        name: Yup.string().required("Required"),
-      })}
-      onSubmit={onSubmit}
-    >
-      <Form>
-        <div className="field">
-          <label className="label" htmlFor="name">
-            Name
-          </label>
-          <div className="control">
-            <Field
-              name="name"
-              as="input"
-              className="input"
-              data-testid="name"
-              autoFocus
-            />
+    <>
+      <Modal ref={itemFormModalRef} closeHandler={onItemModalClose}>
+        <ListItemForm
+          ref={itemFormRef}
+          onSubmit={onSubmitItemForm}
+        />
+      </Modal>
+      <Formik
+        enableReinitialize={true}
+        initialValues={pageState}
+        validationSchema={Yup.object({
+          name: Yup.string().required("Required"),
+        })}
+        onSubmit={onSubmit}
+      >
+        <Form>
+          <div className="field">
+            <label className="label" htmlFor="name">
+              Name
+            </label>
+            <div className="control">
+              <Field
+                name="name"
+                as="input"
+                className="input"
+                data-testid="name"
+                autoFocus
+              />
+            </div>
+            <p className="help is-danger" data-testid="nameErrors">
+              <ErrorMessage name="name" />
+            </p>
           </div>
-          <p className="help is-danger" data-testid="nameErrors">
-            <ErrorMessage name="name" />
-          </p>
-        </div>
-        {props.list?.id && (
           <div>
             <div className="is-flex">
               <div className="is-flex-grow-4">
@@ -96,9 +162,7 @@ export const ListForm = (props) => {
                     className="button is-small"
                     type="button"
                     data-testid="addNew"
-                    onClick={() =>
-                      history.push(`/lists/${props.list.id}/items/new`)
-                    }
+                    onClick={() => onAddNewItem()}
                   >
                     <span className="icon is-small">
                       <i className="fas fa-plus"></i>
@@ -114,7 +178,7 @@ export const ListForm = (props) => {
                       {...provided.droppableProps}
                     >
                       {pageState.items.length > 0 &&
-                        pageState.items.map((item, index) => (
+                        pageState.items.filter(item => item.state !== 'deleted').map((item, index) => (
                           <Draggable
                             key={item.id}
                             draggableId={item.id.toString()}
@@ -129,24 +193,23 @@ export const ListForm = (props) => {
                                 ref={draggableProvided.innerRef}
                                 data-testid={`draggable${item.id}`}
                               >
-                                <Link
+                                <div
                                   className="is-flex-grow-4"
                                   data-testid={`editListItem${item.id}`}
-                                  to={`/lists/${props.list.id}/items/${item.id}/edit`}
+                                  onClick={() => onEditItem(item)}
                                 >
-                                  <div>
-                                    <span className="has-text-black">
-                                      {item.title}
-                                    </span>
-                                  </div>
-                                </Link>
+                                  <span className="has-text-black">
+                                    {item.title}
+                                  </span>
+                                </div>
                                 <div className="is-justify-content-flex-end">
                                   <center>
-                                    <Link
+                                    <button
+                                      type="button"
                                       className="has-text-black delete"
                                       data-testid={`deleteListItem${item.id}`}
-                                      to={`/lists/${props.list.id}/items/${item.id}/delete`}
-                                    ></Link>
+                                      onClick={() => onDeleteListItem(item)}
+                                    ></button>
                                   </center>
                                 </div>
                               </div>
@@ -160,28 +223,26 @@ export const ListForm = (props) => {
               </div>
             </DragDropContext>
           </div>
-        )}
-
-        <div className="field is-grouped">
-          <div className="control">
-            <button className="button" data-testid="submit" type="submit">
-              {props.list?.id ? "SAVE" : "CREATE"}
-            </button>
+          <div className="field is-grouped">
+            <div className="control">
+              <button className="button" data-testid="submit" type="submit">
+                {props.list?.id ? "SAVE" : "CREATE"}
+              </button>
+            </div>
+            <>{props.preCancel}</>
+            <div className="control ml-auto is-pulled-right">
+              <button
+                className="button"
+                data-testid="cancel"
+                type="button"
+                onClick={() => history.push("/lists")}
+              >
+                CANCEL
+              </button>
+            </div>
           </div>
-          <>{props.preCancel}</>
-          <div className="control">
-            <button
-              className="button"
-              data-testid="cancel"
-              type="button"
-              onClick={() => history.push("/lists")}
-            >
-              CANCEL
-            </button>
-          </div>
-          <>{props.postCancel}</>
-        </div>
-      </Form>
-    </Formik>
+        </Form>
+      </Formik>
+    </>
   );
 };

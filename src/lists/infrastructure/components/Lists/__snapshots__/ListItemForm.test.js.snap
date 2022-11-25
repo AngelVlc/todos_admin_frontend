@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should match the snapshot for a new item 1`] = `
+exports[`ListItemForm should match the snapshot for a new item 1`] = `
 <DocumentFragment>
   <form
     action="#"
@@ -52,37 +52,11 @@ exports[`should match the snapshot for a new item 1`] = `
         data-testid="descriptionErrors"
       />
     </div>
-    <div
-      class="field is-grouped"
-    >
-      <div
-        class="control"
-      >
-        <button
-          class="button"
-          data-testid="submit"
-          type="submit"
-        >
-          CREATE
-        </button>
-      </div>
-      <div
-        class="control"
-      >
-        <button
-          class="button"
-          data-testid="cancel"
-          type="button"
-        >
-          CANCEL
-        </button>
-      </div>
-    </div>
   </form>
 </DocumentFragment>
 `;
 
-exports[`should match the snapshot for an existing item 1`] = `
+exports[`ListItemForm should match the snapshot for an existing item 1`] = `
 <DocumentFragment>
   <form
     action="#"
@@ -135,32 +109,6 @@ exports[`should match the snapshot for an existing item 1`] = `
         class="help is-danger"
         data-testid="descriptionErrors"
       />
-    </div>
-    <div
-      class="field is-grouped"
-    >
-      <div
-        class="control"
-      >
-        <button
-          class="button"
-          data-testid="submit"
-          type="submit"
-        >
-          SAVE
-        </button>
-      </div>
-      <div
-        class="control"
-      >
-        <button
-          class="button"
-          data-testid="cancel"
-          type="button"
-        >
-          CANCEL
-        </button>
-      </div>
     </div>
   </form>
 </DocumentFragment>

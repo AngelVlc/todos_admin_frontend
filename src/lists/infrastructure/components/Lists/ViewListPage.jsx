@@ -1,9 +1,8 @@
 import React, { useEffect, useState, useContext, useCallback } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
-import { GetListByIdUseCase } from "../../../application/lists";
-import { GetListItemsUseCase } from "../../../application/listItems";
-import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb/Breadcrumb";
+import { GetListByIdWithItemsUseCase } from "../../../application/lists";
+import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb";
 
 export const ViewListPage = () => {
   let history = useHistory();
@@ -12,11 +11,8 @@ export const ViewListPage = () => {
   const [pageState, setPageState] = useState();
 
   const getExistingList = useCallback(async () => {
-    const getListByIdUseCase = useCaseFactory.get(GetListByIdUseCase);
-    const list = await getListByIdUseCase.execute(listId);
-
-    const getListItemsUseCase = useCaseFactory.get(GetListItemsUseCase);
-    list.items = await getListItemsUseCase.execute(listId);
+    const getListByIdWithItemsUseCase = useCaseFactory.get(GetListByIdWithItemsUseCase);
+    const list = await getListByIdWithItemsUseCase.execute(listId);
 
     setPageState(list);
   }, [listId, useCaseFactory]);

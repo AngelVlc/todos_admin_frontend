@@ -1,17 +1,41 @@
 import { CreateListUseCase } from "./";
+import { List, ListItem } from "../../domain";
 
-describe("CreateListUseCase.#execute", () => {
-  it("creates a list", async () => {
-    const repository = {
-      create: jest.fn(),
-    };
+describe("CreateListUseCase", () => {
+  describe("#execute", () => {
+    it("creates a list with its items", async () => {
+      const fakeListsRepository = {
+        create: () => {
+          return { id: 15, name: "name" };
+        },
+      };
 
-    repository.create.mockResolvedValue({ id: 55 });
+      const fakeListItemsRepository = {
+        create: () => {
+          return {
+            id: 30,
+            title: "title",
+            listId: 15,
+          };
+        },
+      };
 
-    const useCase = new CreateListUseCase({ repository });
-    const result = await useCase.execute({ name: "list" });
+      const useCase = new CreateListUseCase({
+        listsRepository: fakeListsRepository,
+        listItemsRepository: fakeListItemsRepository,
+      });
 
-    expect(result).toStrictEqual({ id: 55 });
-    expect(repository.create.mock.calls[0][0]).toStrictEqual({ name: "list" });
+      const result = await useCase.execute({
+        name: "list",
+        items: [{ title: "title" }],
+      });
+
+      const expextedResult = new List({ id: 15, name: "name" });
+      expextedResult.items.push(
+        new ListItem({ id: 30, title: "title", listId: 15 })
+      );
+
+      expect(result).toStrictEqual(expextedResult);
+    });
   });
 });

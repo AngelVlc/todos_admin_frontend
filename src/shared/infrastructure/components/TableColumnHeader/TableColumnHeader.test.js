@@ -64,7 +64,7 @@ describe("TableColumnHeader", () => {
         fireEvent.click(getByTestId("header-name"));
       });
 
-      expect(mockedChangePagination.mock.calls.length).toBe(1);
+      expect(mockedChangePagination).toHaveBeenCalled();
       expect(mockedChangePagination.mock.calls[0][0]).toStrictEqual({
         sortColumn: "name",
         sortOrder: "asc",
@@ -81,7 +81,7 @@ describe("TableColumnHeader", () => {
         fireEvent.click(getByTestId("header-name"));
       });
 
-      expect(mockedChangePagination.mock.calls.length).toBe(1);
+      expect(mockedChangePagination).toHaveBeenCalled();
       expect(mockedChangePagination.mock.calls[0][0]).toStrictEqual({
         sortColumn: "name",
         sortOrder: "desc",
@@ -98,7 +98,7 @@ describe("TableColumnHeader", () => {
         fireEvent.click(getByTestId("header-name"));
       });
 
-      expect(mockedChangePagination.mock.calls.length).toBe(1);
+      expect(mockedChangePagination).toHaveBeenCalled();
       expect(mockedChangePagination.mock.calls[0][0]).toStrictEqual({
         sortColumn: "name",
         sortOrder: "asc",

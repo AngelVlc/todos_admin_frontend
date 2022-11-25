@@ -1,5 +1,5 @@
 import React from "react";
-import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb/Breadcrumb";
+import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb";
 import { List } from "../../../domain";
 import { ListForm } from "./ListForm";
 
@@ -13,7 +13,7 @@ export const NewListPage = () => {
         ]}
       />
       <h3 className="title">New list</h3>
-      <ListForm list={List.createEmpty()}/>
+      <ListForm list={List.createEmpty()} />
     </div>
   );
 };

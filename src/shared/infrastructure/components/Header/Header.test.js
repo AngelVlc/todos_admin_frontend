@@ -58,7 +58,7 @@ it("should do logout", async () => {
     fireEvent.click(getByTestId("logOut"));
   });
 
-  expect(mockHistoryPush.mock.calls.length).toBe(1);
+  expect(mockHistoryPush).toHaveBeenCalled();
   expect(mockHistoryPush.mock.calls[0][0]).toBe("/login");
 });
 
@@ -71,7 +71,7 @@ it("should go to root", async () => {
     fireEvent.click(getByTestId("goToRoot"));
   });
 
-  expect(mockHistoryPush.mock.calls.length).toBe(1);
+  expect(mockHistoryPush).toHaveBeenCalled();
   expect(mockHistoryPush.mock.calls[0][0]).toBe("/");
 });
 
@@ -84,7 +84,7 @@ it("should go to lists", async () => {
     fireEvent.click(getByTestId("goToLists"));
   });
 
-  expect(mockHistoryPush.mock.calls.length).toBe(1);
+  expect(mockHistoryPush).toHaveBeenCalled();
   expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists");
 });
 
@@ -97,6 +97,6 @@ it("should go to users", async () => {
     fireEvent.click(getByTestId("goToUsers"));
   });
 
-  expect(mockHistoryPush.mock.calls.length).toBe(1);
+  expect(mockHistoryPush).toHaveBeenCalled();
   expect(mockHistoryPush.mock.calls[0][0]).toBe("/users");
 });

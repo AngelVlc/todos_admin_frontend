@@ -32,7 +32,7 @@ describe("PageSelector", () => {
 
     await changeInputValue(getByTestId, "pagenumber-input", 5);
 
-    expect(mockedChangePagination.mock.calls.length).toBe(1);
+    expect(mockedChangePagination).toHaveBeenCalled();
     expect(mockedChangePagination.mock.calls[0][0]).toStrictEqual({
       pageNumber: 5,
     });

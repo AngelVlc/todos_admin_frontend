@@ -34,7 +34,7 @@ describe("DeleteSelectedRefreshTokensUseCase", () => {
     const useCase = new DeleteSelectedRefreshTokensUseCase({ repository });
     const result = await useCase.execute(refreshTokens);
 
-    expect(repository.deleteByIds.mock.calls.length).toBe(1);
+    expect(repository.deleteByIds).toHaveBeenCalled();
     expect(repository.deleteByIds.mock.calls[0][0]).toStrictEqual([3]);
     expect(result).toBe(true);
   });

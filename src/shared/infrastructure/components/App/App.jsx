@@ -5,7 +5,7 @@ import { LoginPage } from '../LoginPage';
 import { HomePage } from '../HomePage';
 import { Header } from '../Header';
 import { Footer } from '../Footer';
-import { ListsPage, NewListPage, ViewListPage, EditListPage, DeleteListPage, NewListItemPage, EditListItemPage, DeleteListItemPage } from '../../../../lists/infrastructure/components/Lists';
+import { ListsPage, NewListPage, ViewListPage, EditListPage, DeleteListPage } from '../../../../lists/infrastructure/components/Lists';
 import { DeleteUserPage, UsersPage, NewUserPage, EditUserPage } from '../../../../auth/infrastructure/components/Users';
 import { RefreshTokensPage } from '../../../../auth/infrastructure/components/RefreshTokens';
 import { createBrowserHistory } from 'history';
@@ -62,9 +62,6 @@ const App = () => {
               <PrivateRoute path="/lists/new" component={NewListPage} />
               <PrivateRoute path="/lists/:listId/delete" component={DeleteListPage} />
               <PrivateRoute path="/lists/:listId/read" component={ViewListPage} />
-              <PrivateRoute path="/lists/:listId/items/new" component={NewListItemPage} />
-              <PrivateRoute path="/lists/:listId/items/:itemId/delete" component={DeleteListItemPage} />
-              <PrivateRoute path="/lists/:listId/items/:itemId/edit" component={EditListItemPage} />
               <PrivateRoute path="/lists/:listId" component={EditListPage} />
               <AdminRoute exact path="/users" component={UsersPage} />
               <AdminRoute path="/users/:userId/delete" component={DeleteUserPage} />

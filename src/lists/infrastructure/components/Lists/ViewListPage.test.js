@@ -4,7 +4,6 @@ import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { MemoryRouter, Route } from "react-router-dom";
 import { act } from "react-dom/test-utils";
 import { List, ListItem } from "../../../domain";
-import { GetListByIdUseCase } from "../../../application/lists";
 
 const mockHistoryPush = jest.fn();
 
@@ -16,35 +15,24 @@ jest.mock("react-router-dom", () => ({
 }));
 
 const renderWithContextAndRouter = () => {
-  const mockedGetListByIdUseCase = {
-    execute: jest.fn(),
-  };
+  const fakemGetListByIdWithItemsUseCase = {
+    execute: () => {
+      const list = new List({ id: 2, name: "list name" });
+      list.items = [
+        new ListItem({
+          id: 5,
+          title: "item title",
+          description: "item description",
+        }),
+      ];
 
-  const mockedGetListItemsUseCase = {
-    execute: jest.fn(),
-  };
-
-  const useCaseFactory = {
-    get: (useCase) => {
-      if (useCase == GetListByIdUseCase) {
-        return mockedGetListByIdUseCase;
-      }
-
-      return mockedGetListItemsUseCase;
+      return list;
     },
   };
 
-  mockedGetListByIdUseCase.execute.mockResolvedValue(
-    new List({ id: 2, name: "list name" })
-  );
-
-  mockedGetListItemsUseCase.execute.mockResolvedValue([
-    new ListItem({
-      id: 5,
-      title: "item title",
-      description: "item description",
-    }),
-  ]);
+  const useCaseFactory = {
+    get: () =>  fakemGetListByIdWithItemsUseCase,
+  };
 
   const context = { auth: { info: {} }, useCaseFactory };
   return {

@@ -52,7 +52,7 @@ describe("TableWithSelectors", () => {
       fireEvent.click(container.getByTestId("toggleSelectAll"));
     });
 
-    expect(changeSelected.mock.calls.length).toBe(1);
+    expect(changeSelected).toHaveBeenCalled();
     expect(changeSelected.mock.calls[0][0]).toStrictEqual([
       { col1: "11", col2: "12", col3: "13", selected: true },
       { col1: "21", col2: "22", col3: "23", selected: true },
@@ -64,7 +64,7 @@ describe("TableWithSelectors", () => {
       fireEvent.click(container.getByTestId("toggleSelectAll"));
     });
 
-    expect(changeSelected.mock.calls.length).toBe(1);
+    expect(changeSelected).toHaveBeenCalled();
     expect(changeSelected.mock.calls[0][0]).toStrictEqual([
       { col1: "11", col2: "12", col3: "13", selected: false },
       { col1: "21", col2: "22", col3: "23", selected: false },
@@ -81,7 +81,7 @@ describe("TableWithSelectors", () => {
       fireEvent.click(container.getByTestId("checkBoxItem11"));
     });
 
-    expect(changeSelected.mock.calls.length).toBe(1);
+    expect(changeSelected).toHaveBeenCalled();
     expect(changeSelected.mock.calls[0][0]).toStrictEqual([
       { col1: "11", col2: "12", col3: "13", selected: true },
       { col1: "21", col2: "22", col3: "23", selected: false },

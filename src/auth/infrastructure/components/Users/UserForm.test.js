@@ -24,13 +24,10 @@ const mockedUpdateUserUseCase = {
 };
 
 const useCaseFactory = {
-  get: (useCase) => {
-    if (useCase == CreateUserUseCase) {
-      return mockedCreateUserUseCase;
-    }
-
-    return mockedUpdateUserUseCase;
-  },
+  get: (useCase) =>
+    useCase == CreateUserUseCase
+      ? mockedCreateUserUseCase
+      : mockedUpdateUserUseCase,
 };
 
 const renderWithContextAndRouterForExistingUser = (isAdmin) => {
@@ -55,7 +52,7 @@ const renderWithContextAndRouterForNewUser = () => {
       <AppContext.Provider value={context}>
         <MemoryRouter initialEntries={[`/users/new`]}>
           <Route path="/users/new">
-            <UserForm user={User.createEmpty()}/>
+            <UserForm user={User.createEmpty()} />
           </Route>
         </MemoryRouter>
       </AppContext.Provider>
@@ -95,7 +92,7 @@ it("should allow cancel", async () => {
     fireEvent.click(getByTestId("cancel"));
   });
 
-  expect(mockHistoryPush.mock.calls.length).toBe(1);
+  expect(mockHistoryPush).toHaveBeenCalled();
   expect(mockHistoryPush.mock.calls[0][0]).toBe("/users");
   mockHistoryPush.mockClear();
 });
@@ -129,14 +126,14 @@ it("should update an existing user", async () => {
     fireEvent.click(container.getByTestId("submit"));
   });
 
-  expect(mockedUpdateUserUseCase.execute.mock.calls.length).toBe(1);
+  expect(mockedUpdateUserUseCase.execute).toHaveBeenCalled();
 
   const user = new User({ id: 2, name: "updated user", isAdmin: true });
   user.password = "pass";
   user.confirmPassword = "pass";
   expect(mockedUpdateUserUseCase.execute.mock.calls[0][0]).toStrictEqual(user);
 
-  expect(mockHistoryPush.mock.calls.length).toBe(1);
+  expect(mockHistoryPush).toHaveBeenCalled();
   expect(mockHistoryPush.mock.calls[0][0]).toBe("/users");
   mockHistoryPush.mockClear();
 });
@@ -154,14 +151,14 @@ it("should create a new user", async () => {
     fireEvent.click(getByTestId("submit"));
   });
 
-  expect(mockedCreateUserUseCase.execute.mock.calls.length).toBe(1);
+  expect(mockedCreateUserUseCase.execute).toHaveBeenCalled();
 
   const user = new User({ name: "new user", isAdmin: false });
   user.password = "pass";
   user.confirmPassword = "pass";
   expect(mockedCreateUserUseCase.execute.mock.calls[0][0]).toStrictEqual(user);
 
-  expect(mockHistoryPush.mock.calls.length).toBe(1);
+  expect(mockHistoryPush).toHaveBeenCalled();
   expect(mockHistoryPush.mock.calls[0][0]).toBe("/users");
   mockHistoryPush.mockClear();
 });

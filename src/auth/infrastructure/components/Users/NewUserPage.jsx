@@ -1,6 +1,6 @@
 import React from "react";
 import { UserForm } from "./UserForm";
-import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb/Breadcrumb";
+import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb";
 import { User } from "../../../domain";
 
 export const NewUserPage = () => {

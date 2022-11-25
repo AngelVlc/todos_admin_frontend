@@ -36,7 +36,7 @@ describe("ListItemsRepository", () => {
 
       const result = await new ListItemsRepository().deleteById(1, 2);
 
-      expect(axios.delete.mock.calls.length).toBe(1);
+      expect(axios.delete).toHaveBeenCalled();
       expect(axios.delete.mock.calls[0][0]).toBe("lists/1/items/2");
       expect(result).toBe(false);
     });
@@ -78,7 +78,7 @@ describe("ListItemsRepository", () => {
         listId: 5,
       });
 
-      expect(axios.post.mock.calls.length).toBe(1);
+      expect(axios.post).toHaveBeenCalled();
       expect(axios.post.mock.calls[0][0]).toBe("lists/5/items");
       expect(axios.post.mock.calls[0][1]).toStrictEqual({
         name: "list",
@@ -109,7 +109,7 @@ describe("ListItemsRepository", () => {
         listId: 5,
       });
 
-      expect(axios.put.mock.calls.length).toBe(1);
+      expect(axios.put).toHaveBeenCalled();
       expect(axios.put.mock.calls[0][0]).toBe("lists/5/items/1");
       expect(axios.put.mock.calls[0][1]).toStrictEqual({
         id: 1,

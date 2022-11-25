@@ -15,19 +15,13 @@ jest.mock("react-router-dom", () => ({
 }));
 
 const renderWithContextAndRouterForExistingUser = (isAdmin) => {
-  const mockedGetUserByIdUseCase = {
-    execute: jest.fn(),
+  const fakeGetUserByIdUseCase = {
+    execute: () =>  new User({ id: 2, name: "user", isAdmin: isAdmin }),
   };
 
   const useCaseFactory = {
-    get: () => {
-      return mockedGetUserByIdUseCase;
-    },
+    get: () =>  fakeGetUserByIdUseCase,
   };
-
-  mockedGetUserByIdUseCase.execute.mockResolvedValue(
-    new User({ id: 2, name: "user", isAdmin: isAdmin })
-  );
 
   const context = { auth: { info: {} }, useCaseFactory };
   return {
@@ -71,7 +65,7 @@ it("should allow delete an existing user", async () => {
     fireEvent.click(container.getByTestId("delete"));
   });
 
-  expect(mockHistoryPush.mock.calls.length).toBe(1);
+  expect(mockHistoryPush).toHaveBeenCalled();
   expect(mockHistoryPush.mock.calls[0][0]).toBe("/users/2/delete");
   mockHistoryPush.mockClear();
 });
