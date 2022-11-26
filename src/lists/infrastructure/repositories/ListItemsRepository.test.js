@@ -90,7 +90,7 @@ describe("ListItemsRepository", () => {
 
   describe("#update", () => {
     it("does a http put request and returns the updated list if the response has a 200 status", async () => {
-      axios.put.mockResolvedValue({ data: { id: 1 }, status: 200 });
+      axios.patch.mockResolvedValue({ data: { id: 1 }, status: 200 });
 
       const result = await new ListItemsRepository().update({
         id: 1,
@@ -101,7 +101,7 @@ describe("ListItemsRepository", () => {
     });
 
     it("does a http put request returns undefined if the response does not have a 200 status", async () => {
-      axios.put.mockResolvedValue({ data: { id: 5 }, status: 500 });
+      axios.patch.mockResolvedValue({ data: { id: 5 }, status: 500 });
 
       const result = await new ListItemsRepository().update({
         id: 1,
@@ -109,9 +109,9 @@ describe("ListItemsRepository", () => {
         listId: 5,
       });
 
-      expect(axios.put).toHaveBeenCalled();
-      expect(axios.put.mock.calls[0][0]).toBe("lists/5/items/1");
-      expect(axios.put.mock.calls[0][1]).toStrictEqual({
+      expect(axios.patch).toHaveBeenCalled();
+      expect(axios.patch.mock.calls[0][0]).toBe("lists/5/items/1");
+      expect(axios.patch.mock.calls[0][1]).toStrictEqual({
         id: 1,
         name: "list",
         listId: 5,

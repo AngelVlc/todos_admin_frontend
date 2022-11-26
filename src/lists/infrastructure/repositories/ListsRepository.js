@@ -28,7 +28,7 @@ export class ListsRepository {
   }
 
   async update(list) {
-    const res = await axios.put(`lists/${list.id}`, list);
+    const res = await axios.patch(`lists/${list.id}`, list);
 
     if (res.status === 200) {
       return res.data;

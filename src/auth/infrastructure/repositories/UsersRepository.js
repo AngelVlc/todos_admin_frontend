@@ -28,7 +28,7 @@ export class UsersRepository {
   }
 
   async update(user) {
-    const res = await axios.put(`users/${user.id}`, user);
+    const res = await axios.patch(`users/${user.id}`, user);
 
     if (res.status === 200) {
       return res.data;
