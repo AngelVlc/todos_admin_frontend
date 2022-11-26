@@ -1,11 +1,9 @@
-import { render, cleanup } from '@testing-library/react';
-import { Footer } from './Footer';
+import { render, cleanup } from "@testing-library/react";
+import { Footer } from "./Footer";
 
 const renderComponent = () => {
   return {
-    ...render(
-      <Footer/>
-    ),
+    ...render(<Footer />),
   };
 };
 
@@ -14,7 +12,7 @@ afterEach(cleanup);
 const originalEnv = process.env;
 
 beforeEach(() => {
-  jest.resetModules()
+  jest.resetModules();
   process.env = { ...originalEnv };
 });
 
@@ -22,11 +20,13 @@ afterAll(() => {
   process.env = originalEnv;
 });
 
-it("Should match the snapshot", () => {
-  process.env.REACT_APP_COMMIT_SHA = '1234567890sha'
-  process.env.REACT_APP_BUILD_DATE = 'date'
+describe("Footer", () => {
+  it("Should match the snapshot", () => {
+    process.env.REACT_APP_COMMIT_SHA = "1234567890sha";
+    process.env.REACT_APP_BUILD_DATE = "date";
 
-  const { asFragment } = renderComponent();
+    const { asFragment } = renderComponent();
 
-  expect(asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
+  });
 });

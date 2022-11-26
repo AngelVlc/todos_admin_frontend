@@ -77,6 +77,7 @@ describe("ListForm", () => {
 
     it("should match the snapshot", async () => {
       const { asFragment } = renderWithContextAndRouterForExistingList();
+
       expect(asFragment()).toMatchSnapshot();
     });
 
@@ -229,6 +230,7 @@ describe("ListForm", () => {
 
     it("should match the snapshot", async () => {
       const { asFragment } = renderWithContextAndRouterForNewList();
+
       expect(asFragment()).toMatchSnapshot();
     });
 

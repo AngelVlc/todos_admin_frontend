@@ -47,57 +47,61 @@ const renderWithContextAndRouter = (isAdmin) => {
 
 afterEach(cleanup);
 
-describe("when the user is not an admin", () => {
-  it("should match the snapshot when the user is not an admin", async () => {
-    let fragment;
-    await act(async () => {
-      const { asFragment } = renderWithContextAndRouter(false);
-      fragment = asFragment;
+describe("DeleteUserPage", () => {
+  describe("when the user is not an admin", () => {
+    it("should match the snapshot when the user is not an admin", async () => {
+      let fragment;
+      await act(async () => {
+        const { asFragment } = renderWithContextAndRouter(false);
+        fragment = asFragment;
+      });
+
+      expect(fragment()).toMatchSnapshot();
     });
-    expect(fragment()).toMatchSnapshot();
+
+    it("should cancel the deletion", async () => {
+      let container;
+      await act(async () => {
+        container = renderWithContextAndRouter(false);
+      });
+
+      await waitFor(() => {
+        fireEvent.click(container.getByTestId("no"));
+      });
+
+      expect(mockHistoryGoBack).toHaveBeenCalled();
+      mockHistoryGoBack.mockClear();
+    });
+
+    it("should delete a user", async () => {
+      let container;
+      await act(async () => {
+        container = renderWithContextAndRouter(false);
+      });
+
+      mockedDeleteUserByIdUseCase.execute.mockResolvedValue(true);
+
+      await waitFor(() => {
+        fireEvent.click(container.getByTestId("yes"));
+      });
+
+      expect(mockedDeleteUserByIdUseCase.execute).toHaveBeenCalled();
+      expect(mockedDeleteUserByIdUseCase.execute.mock.calls[0][0]).toBe("2");
+      expect(mockHistoryPush).toHaveBeenCalled();
+      expect(mockHistoryPush.mock.calls[0][0]).toBe("/users");
+      mockHistoryPush.mockClear();
+    });
   });
 
-  it("should cancel the deletion", async () => {
-    let container;
-    await act(async () => {
-      container = renderWithContextAndRouter(false);
+  describe("when the user is an admin", () => {
+    it("should match the snapshot when the user is an admin", async () => {
+      let fragment;
+      await act(async () => {
+        const { asFragment } = renderWithContextAndRouter(true);
+        fragment = asFragment;
+      });
+
+      expect(fragment()).toMatchSnapshot();
     });
-
-    await waitFor(() => {
-      fireEvent.click(container.getByTestId("no"));
-    });
-
-    expect(mockHistoryGoBack).toHaveBeenCalled();
-    mockHistoryGoBack.mockClear();
-  });
-
-  it("should delete a user", async () => {
-    let container;
-    await act(async () => {
-      container = renderWithContextAndRouter(false);
-    });
-
-    mockedDeleteUserByIdUseCase.execute.mockResolvedValue(true);
-
-    await waitFor(() => {
-      fireEvent.click(container.getByTestId("yes"));
-    });
-
-    expect(mockedDeleteUserByIdUseCase.execute).toHaveBeenCalled();
-    expect(mockedDeleteUserByIdUseCase.execute.mock.calls[0][0]).toBe("2");
-    expect(mockHistoryPush).toHaveBeenCalled();
-    expect(mockHistoryPush.mock.calls[0][0]).toBe("/users");
-    mockHistoryPush.mockClear();
-  });
-});
-
-describe("when the user is an admin", () => {
-  it("should match the snapshot when the user is an admin", async () => {
-    let fragment;
-    await act(async () => {
-      const { asFragment } = renderWithContextAndRouter(true);
-      fragment = asFragment;
-    });
-    expect(fragment()).toMatchSnapshot();
   });
 });

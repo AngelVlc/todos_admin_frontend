@@ -43,52 +43,46 @@ const renderWithContextAndRouter = () => {
   };
 };
 
-it("should match the snapshot", async () => {
-  let fragment;
-  await act(async () => {
-    const { asFragment } = renderWithContextAndRouter();
-    fragment = asFragment;
-  });
-  expect(fragment()).toMatchSnapshot();
-});
+describe("ListPage", () => {
+  it("should match the snapshot", async () => {
+    let fragment;
+    await act(async () => {
+      const { asFragment } = renderWithContextAndRouter();
+      fragment = asFragment;
+    });
 
-it("should add a new list", async () => {
-  let container;
-  await act(async () => {
-    container = renderWithContextAndRouter();
+    expect(fragment()).toMatchSnapshot();
   });
 
-  await waitFor(() => {
-    fireEvent.click(container.getByTestId("addNew"));
+  it("should add a new list", async () => {
+    const container = renderWithContextAndRouter();
+
+    await waitFor(() => {
+      fireEvent.click(container.getByTestId("addNew"));
+    });
+
+    expect(mockHistoryPush).toHaveBeenCalled();
+    expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/new");
+    mockHistoryPush.mockClear();
   });
 
-  expect(mockHistoryPush).toHaveBeenCalled();
-  expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/new");
-  mockHistoryPush.mockClear();
-});
+  it("should view the list", async () => {
+    const container = renderWithContextAndRouter();
 
-it("should view the list", async () => {
-  let container;
-  await act(async () => {
-    container = renderWithContextAndRouter();
+    await waitFor(() => {
+      fireEvent.click(container.getByTestId("viewList2"));
+    });
+
+    expect(history.location.pathname).toBe("/lists/2");
   });
 
-  await waitFor(() => {
-    fireEvent.click(container.getByTestId("viewList2"));
+  it("should delete the list", async () => {
+    const container = renderWithContextAndRouter();
+
+    await waitFor(() => {
+      fireEvent.click(container.getByTestId("deleteList2"));
+    });
+
+    expect(history.location.pathname).toBe("/lists/2/delete");
   });
-
-  expect(history.location.pathname).toBe("/lists/2");
-});
-
-it("should delete the list", async () => {
-  let container;
-  await act(async () => {
-    container = renderWithContextAndRouter();
-  });
-
-  await waitFor(() => {
-    fireEvent.click(container.getByTestId("deleteList2"));
-  });
-
-  expect(history.location.pathname).toBe("/lists/2/delete");
 });

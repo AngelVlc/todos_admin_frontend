@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should match the snapshot for an existing admin user 1`] = `
+exports[`EditUserPage should match the snapshot for an existing admin user 1`] = `
 <DocumentFragment>
   <div
     class="container"
@@ -171,7 +171,7 @@ exports[`should match the snapshot for an existing admin user 1`] = `
 </DocumentFragment>
 `;
 
-exports[`should match the snapshot for an existing non admin user 1`] = `
+exports[`EditUserPage should match the snapshot for an existing non admin user 1`] = `
 <DocumentFragment>
   <div
     class="container"

@@ -17,7 +17,7 @@ describe("PageSelector", () => {
 
   afterEach(cleanup);
 
-  it("Should match the snapshot", () => {
+  it("should match the snapshot", () => {
     const { asFragment } = renderComponent({
       pageNumber: 5,
     });
@@ -25,7 +25,7 @@ describe("PageSelector", () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it("Should change the page number", async () => {
+  it("should change the page number", async () => {
     const { getByTestId } = renderComponent({
       pageNumber: 10,
     });

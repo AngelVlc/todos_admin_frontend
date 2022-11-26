@@ -56,18 +56,19 @@ describe("EditListPage", () => {
       const { asFragment } = renderWithContextAndRouter();
       fragment = asFragment;
     });
+
     expect(fragment()).toMatchSnapshot();
   });
- 
+
   it("should allow read the list", async () => {
     const { getByTestId } = renderWithContextAndRouter();
-  
+
     await waitFor(() => {
       fireEvent.click(getByTestId("read"));
     });
-  
+
     expect(mockHistoryPush).toHaveBeenCalled();
     expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/2/read");
     mockHistoryPush.mockClear();
   });
-})
+});

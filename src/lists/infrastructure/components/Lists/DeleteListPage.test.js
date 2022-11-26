@@ -50,44 +50,41 @@ const renderWithContextAndRouter = () => {
 
 afterEach(cleanup);
 
-it("should match the snapshot", async () => {
-  let fragment;
-  await act(async () => {
-    const { asFragment } = renderWithContextAndRouter();
-    fragment = asFragment;
-  });
-  expect(fragment()).toMatchSnapshot();
-});
+describe("DeleteListPage", () => {
+  it("should match the snapshot", async () => {
+    let fragment;
+    await act(async () => {
+      const { asFragment } = renderWithContextAndRouter();
+      fragment = asFragment;
+    });
 
-it("should cancel the deletion", async () => {
-  let container;
-  await act(async () => {
-    container = renderWithContextAndRouter();
+    expect(fragment()).toMatchSnapshot();
   });
 
-  await waitFor(() => {
-    fireEvent.click(container.getByTestId("no"));
+  it("should cancel the deletion", async () => {
+    const container = renderWithContextAndRouter();
+
+    await waitFor(() => {
+      fireEvent.click(container.getByTestId("no"));
+    });
+
+    expect(mockHistoryGoBack).toHaveBeenCalled();
+    mockHistoryGoBack.mockClear();
   });
 
-  expect(mockHistoryGoBack).toHaveBeenCalled();
-  mockHistoryGoBack.mockClear();
-});
+  it("should delete the List", async () => {
+    const container = renderWithContextAndRouter();
 
-it("should delete the List", async () => {
-  let container;
-  await act(async () => {
-    container = renderWithContextAndRouter();
+    mockedDeleteListByIdUseCase.execute.mockResolvedValue(true);
+
+    await waitFor(() => {
+      fireEvent.click(container.getByTestId("yes"));
+    });
+
+    expect(mockedDeleteListByIdUseCase.execute).toHaveBeenCalled();
+    expect(mockedDeleteListByIdUseCase.execute.mock.calls[0][0]).toBe("2");
+    expect(mockHistoryPush).toHaveBeenCalled();
+    expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists");
+    mockHistoryPush.mockClear();
   });
-
-  mockedDeleteListByIdUseCase.execute.mockResolvedValue(true);
-
-  await waitFor(() => {
-    fireEvent.click(container.getByTestId("yes"));
-  });
-
-  expect(mockedDeleteListByIdUseCase.execute).toHaveBeenCalled();
-  expect(mockedDeleteListByIdUseCase.execute.mock.calls[0][0]).toBe("2");
-  expect(mockHistoryPush).toHaveBeenCalled();
-  expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists");
-  mockHistoryPush.mockClear();
 });

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should match the snapshot when an admin user is logged in 1`] = `
+exports[`Header should match the snapshot when an admin user is logged in 1`] = `
 <DocumentFragment>
   <nav
     class="navbar is-dark"
@@ -84,7 +84,7 @@ exports[`should match the snapshot when an admin user is logged in 1`] = `
 </DocumentFragment>
 `;
 
-exports[`should match the snapshot when the user is logged in 1`] = `
+exports[`Header should match the snapshot when the user is logged in 1`] = `
 <DocumentFragment>
   <nav
     class="navbar is-dark"
@@ -162,7 +162,7 @@ exports[`should match the snapshot when the user is logged in 1`] = `
 </DocumentFragment>
 `;
 
-exports[`should match the snapshot when the user is not logged in 1`] = `
+exports[`Header should match the snapshot when the user is not logged in 1`] = `
 <DocumentFragment>
   <nav
     class="navbar is-dark"

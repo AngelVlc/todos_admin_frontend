@@ -31,7 +31,7 @@ const renderWithContextAndRouter = () => {
   };
 
   const useCaseFactory = {
-    get: () =>  fakemGetListByIdWithItemsUseCase,
+    get: () => fakemGetListByIdWithItemsUseCase,
   };
 
   const context = { auth: { info: {} }, useCaseFactory };
@@ -50,11 +50,14 @@ const renderWithContextAndRouter = () => {
 
 afterEach(cleanup);
 
-it("should match the snapshot for an existing list", async () => {
-  let fragment;
-  await act(async () => {
-    const { asFragment } = renderWithContextAndRouter();
-    fragment = asFragment;
+describe("ViewListPage", () => {
+  it("should match the snapshot for an existing list", async () => {
+    let fragment;
+    await act(async () => {
+      const { asFragment } = renderWithContextAndRouter();
+      fragment = asFragment;
+    });
+
+    expect(fragment()).toMatchSnapshot();
   });
-  expect(fragment()).toMatchSnapshot();
 });

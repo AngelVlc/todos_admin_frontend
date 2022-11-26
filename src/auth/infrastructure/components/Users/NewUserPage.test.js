@@ -27,7 +27,10 @@ const renderWithContextAndRouterForNewUser = () => {
 
 afterEach(cleanup);
 
-it("should match the snapshot for a new user", async () => {
-  const { asFragment } = renderWithContextAndRouterForNewUser();
-  expect(asFragment()).toMatchSnapshot();
+describe("NewUserPage", () => {
+  it("should match the snapshot for a new user", async () => {
+    const { asFragment } = renderWithContextAndRouterForNewUser();
+
+    expect(asFragment()).toMatchSnapshot();
+  });
 });

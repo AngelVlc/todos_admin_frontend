@@ -62,113 +62,114 @@ const renderWithContextAndRouterForNewUser = () => {
 
 afterEach(cleanup);
 
-it("should match the snapshot for an existing non admin user", async () => {
-  let fragment;
-  await act(async () => {
+describe("UserForm", () => {
+  it("should match the snapshot for an existing non admin user", async () => {
     const { asFragment } = renderWithContextAndRouterForExistingUser(false);
-    fragment = asFragment;
-  });
-  expect(fragment()).toMatchSnapshot();
-});
 
-it("should match the snapshot for an existing admin user", async () => {
-  let fragment;
-  await act(async () => {
+    expect(asFragment()).toMatchSnapshot();
+  });
+
+  it("should match the snapshot for an existing admin user", async () => {
     const { asFragment } = renderWithContextAndRouterForExistingUser(true);
-    fragment = asFragment;
-  });
-  expect(fragment()).toMatchSnapshot();
-});
 
-it("should match the snapshot for a new user", async () => {
-  const { asFragment } = renderWithContextAndRouterForNewUser();
-  expect(asFragment()).toMatchSnapshot();
-});
-
-it("should allow cancel", async () => {
-  const { getByTestId } = renderWithContextAndRouterForNewUser();
-
-  await waitFor(() => {
-    fireEvent.click(getByTestId("cancel"));
+    expect(asFragment()).toMatchSnapshot();
   });
 
-  expect(mockHistoryPush).toHaveBeenCalled();
-  expect(mockHistoryPush.mock.calls[0][0]).toBe("/users");
-  mockHistoryPush.mockClear();
-});
-
-it("should require user name", async () => {
-  const { getByTestId } = renderWithContextAndRouterForNewUser();
-
-  await waitFor(() => {
-    fireEvent.click(getByTestId("submit"));
+  it("should match the snapshot for a new user", async () => {
+    const { asFragment } = renderWithContextAndRouterForNewUser();
+    
+    expect(asFragment()).toMatchSnapshot();
   });
 
-  expect(getByTestId("userNameErrors")).toHaveTextContent("Required");
-});
+  it("should allow cancel", async () => {
+    const { getByTestId } = renderWithContextAndRouterForNewUser();
 
-it("should update an existing user", async () => {
-  let container;
-  await act(async () => {
-    container = renderWithContextAndRouterForExistingUser(false);
-  });
-
-  await changeInputValue(container.getByTestId, "name", "updated user");
-  await changeInputValue(container.getByTestId, "password", "pass");
-  await changeInputValue(container.getByTestId, "confirmPassword", "pass");
-  await waitFor(() => {
-    fireEvent.click(container.getByTestId("isAdmin"));
-  });
-
-  mockedUpdateUserUseCase.execute.mockResolvedValue({ id: 2 });
-
-  await waitFor(() => {
-    fireEvent.click(container.getByTestId("submit"));
-  });
-
-  expect(mockedUpdateUserUseCase.execute).toHaveBeenCalled();
-
-  const user = new User({ id: 2, name: "updated user", isAdmin: true });
-  user.password = "pass";
-  user.confirmPassword = "pass";
-  expect(mockedUpdateUserUseCase.execute.mock.calls[0][0]).toStrictEqual(user);
-
-  expect(mockHistoryPush).toHaveBeenCalled();
-  expect(mockHistoryPush.mock.calls[0][0]).toBe("/users");
-  mockHistoryPush.mockClear();
-});
-
-it("should create a new user", async () => {
-  const { getByTestId } = renderWithContextAndRouterForNewUser();
-
-  await changeInputValue(getByTestId, "name", "new user");
-  await changeInputValue(getByTestId, "password", "pass");
-  await changeInputValue(getByTestId, "confirmPassword", "pass");
-
-  mockedCreateUserUseCase.execute.mockResolvedValue({ id: 55 });
-
-  await waitFor(() => {
-    fireEvent.click(getByTestId("submit"));
-  });
-
-  expect(mockedCreateUserUseCase.execute).toHaveBeenCalled();
-
-  const user = new User({ name: "new user", isAdmin: false });
-  user.password = "pass";
-  user.confirmPassword = "pass";
-  expect(mockedCreateUserUseCase.execute.mock.calls[0][0]).toStrictEqual(user);
-
-  expect(mockHistoryPush).toHaveBeenCalled();
-  expect(mockHistoryPush.mock.calls[0][0]).toBe("/users");
-  mockHistoryPush.mockClear();
-});
-
-const changeInputValue = async (getByTestId, name, value) => {
-  await waitFor(() => {
-    fireEvent.change(getByTestId(name), {
-      target: {
-        value: value,
-      },
+    await waitFor(() => {
+      fireEvent.click(getByTestId("cancel"));
     });
+
+    expect(mockHistoryPush).toHaveBeenCalled();
+    expect(mockHistoryPush.mock.calls[0][0]).toBe("/users");
+    mockHistoryPush.mockClear();
   });
-};
+
+  it("should require user name", async () => {
+    const { getByTestId } = renderWithContextAndRouterForNewUser();
+
+    await waitFor(() => {
+      fireEvent.click(getByTestId("submit"));
+    });
+
+    expect(getByTestId("userNameErrors")).toHaveTextContent("Required");
+  });
+
+  it("should update an existing user", async () => {
+    let container;
+    await act(async () => {
+      container = renderWithContextAndRouterForExistingUser(false);
+    });
+
+    await changeInputValue(container.getByTestId, "name", "updated user");
+    await changeInputValue(container.getByTestId, "password", "pass");
+    await changeInputValue(container.getByTestId, "confirmPassword", "pass");
+    await waitFor(() => {
+      fireEvent.click(container.getByTestId("isAdmin"));
+    });
+
+    mockedUpdateUserUseCase.execute.mockResolvedValue({ id: 2 });
+
+    await waitFor(() => {
+      fireEvent.click(container.getByTestId("submit"));
+    });
+
+    expect(mockedUpdateUserUseCase.execute).toHaveBeenCalled();
+
+    const user = new User({ id: 2, name: "updated user", isAdmin: true });
+    user.password = "pass";
+    user.confirmPassword = "pass";
+    expect(mockedUpdateUserUseCase.execute.mock.calls[0][0]).toStrictEqual(
+      user
+    );
+
+    expect(mockHistoryPush).toHaveBeenCalled();
+    expect(mockHistoryPush.mock.calls[0][0]).toBe("/users");
+    mockHistoryPush.mockClear();
+  });
+
+  it("should create a new user", async () => {
+    const { getByTestId } = renderWithContextAndRouterForNewUser();
+
+    await changeInputValue(getByTestId, "name", "new user");
+    await changeInputValue(getByTestId, "password", "pass");
+    await changeInputValue(getByTestId, "confirmPassword", "pass");
+
+    mockedCreateUserUseCase.execute.mockResolvedValue({ id: 55 });
+
+    await waitFor(() => {
+      fireEvent.click(getByTestId("submit"));
+    });
+
+    expect(mockedCreateUserUseCase.execute).toHaveBeenCalled();
+
+    const user = new User({ name: "new user", isAdmin: false });
+    user.password = "pass";
+    user.confirmPassword = "pass";
+    expect(mockedCreateUserUseCase.execute.mock.calls[0][0]).toStrictEqual(
+      user
+    );
+
+    expect(mockHistoryPush).toHaveBeenCalled();
+    expect(mockHistoryPush.mock.calls[0][0]).toBe("/users");
+    mockHistoryPush.mockClear();
+  });
+
+  const changeInputValue = async (getByTestId, name, value) => {
+    await waitFor(() => {
+      fireEvent.change(getByTestId(name), {
+        target: {
+          value: value,
+        },
+      });
+    });
+  };
+});

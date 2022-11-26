@@ -41,52 +41,55 @@ const renderWithContextAndRouter = () => {
   };
 };
 
-it("should match the snapshot", async () => {
-  let fragment;
-  await act(async () => {
-    const { asFragment } = renderWithContextAndRouter();
-    fragment = asFragment;
-  });
-  expect(fragment()).toMatchSnapshot();
-});
+describe("UsersPage", () => {
+  it("should match the snapshot", async () => {
+    let fragment;
+    await act(async () => {
+      const { asFragment } = renderWithContextAndRouter();
+      fragment = asFragment;
+    });
 
-it("should add a new user", async () => {
-  let container;
-  await act(async () => {
-    container = renderWithContextAndRouter();
+    expect(fragment()).toMatchSnapshot();
   });
 
-  await waitFor(() => {
-    fireEvent.click(container.getByTestId("addNew"));
+  it("should add a new user", async () => {
+    let container;
+    await act(async () => {
+      container = renderWithContextAndRouter();
+    });
+
+    await waitFor(() => {
+      fireEvent.click(container.getByTestId("addNew"));
+    });
+
+    expect(mockHistoryPush).toHaveBeenCalled();
+    expect(mockHistoryPush.mock.calls[0][0]).toBe("users/new");
+    mockHistoryPush.mockClear();
   });
 
-  expect(mockHistoryPush).toHaveBeenCalled();
-  expect(mockHistoryPush.mock.calls[0][0]).toBe("users/new");
-  mockHistoryPush.mockClear();
-});
+  it("should edit the user", async () => {
+    let container;
+    await act(async () => {
+      container = renderWithContextAndRouter();
+    });
 
-it("should edit the user", async () => {
-  let container;
-  await act(async () => {
-    container = renderWithContextAndRouter();
+    await waitFor(() => {
+      fireEvent.click(container.getByTestId("editUser2"));
+    });
+
+    expect(history.location.pathname).toBe("/users/2/edit");
   });
 
-  await waitFor(() => {
-    fireEvent.click(container.getByTestId("editUser2"));
+  it("should delete the user", async () => {
+    let container;
+    await act(async () => {
+      container = renderWithContextAndRouter();
+    });
+
+    await waitFor(() => {
+      fireEvent.click(container.getByTestId("deleteUser2"));
+    });
+
+    expect(history.location.pathname).toBe("/users/2/delete");
   });
-
-  expect(history.location.pathname).toBe("/users/2/edit");
-});
-
-it("should delete the user", async () => {
-  let container;
-  await act(async () => {
-    container = renderWithContextAndRouter();
-  });
-
-  await waitFor(() => {
-    fireEvent.click(container.getByTestId("deleteUser2"));
-  });
-
-  expect(history.location.pathname).toBe("/users/2/delete");
 });

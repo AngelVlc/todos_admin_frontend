@@ -27,76 +27,78 @@ const renderWithRouterAndContext = (auth) => {
 
 afterEach(cleanup);
 
-it("should match the snapshot when the user is not logged in", () => {
-  const { asFragment } = renderWithRouterAndContext({ info: null });
+describe("Header", () => {
+  it("should match the snapshot when the user is not logged in", () => {
+    const { asFragment } = renderWithRouterAndContext({ info: null });
 
-  expect(asFragment()).toMatchSnapshot();
-});
-
-it("should match the snapshot when the user is logged in", () => {
-  const { asFragment } = renderWithRouterAndContext({
-    info: { userName: "user" },
+    expect(asFragment()).toMatchSnapshot();
   });
 
-  expect(asFragment()).toMatchSnapshot();
-});
+  it("should match the snapshot when the user is logged in", () => {
+    const { asFragment } = renderWithRouterAndContext({
+      info: { userName: "user" },
+    });
 
-it("should match the snapshot when an admin user is logged in", () => {
-  const { asFragment } = renderWithRouterAndContext({
-    info: { userName: "admin", isAdmin: true },
+    expect(asFragment()).toMatchSnapshot();
   });
 
-  expect(asFragment()).toMatchSnapshot();
-});
+  it("should match the snapshot when an admin user is logged in", () => {
+    const { asFragment } = renderWithRouterAndContext({
+      info: { userName: "admin", isAdmin: true },
+    });
 
-it("should do logout", async () => {
-  const { getByTestId } = renderWithRouterAndContext({
-    info: { userName: "user" },
+    expect(asFragment()).toMatchSnapshot();
   });
 
-  await waitFor(() => {
-    fireEvent.click(getByTestId("logOut"));
+  it("should do logout", async () => {
+    const { getByTestId } = renderWithRouterAndContext({
+      info: { userName: "user" },
+    });
+
+    await waitFor(() => {
+      fireEvent.click(getByTestId("logOut"));
+    });
+
+    expect(mockHistoryPush).toHaveBeenCalled();
+    expect(mockHistoryPush.mock.calls[0][0]).toBe("/login");
   });
 
-  expect(mockHistoryPush).toHaveBeenCalled();
-  expect(mockHistoryPush.mock.calls[0][0]).toBe("/login");
-});
+  it("should go to root", async () => {
+    const { getByTestId } = renderWithRouterAndContext({
+      info: { userName: "user" },
+    });
 
-it("should go to root", async () => {
-  const { getByTestId } = renderWithRouterAndContext({
-    info: { userName: "user" },
+    await waitFor(() => {
+      fireEvent.click(getByTestId("goToRoot"));
+    });
+
+    expect(mockHistoryPush).toHaveBeenCalled();
+    expect(mockHistoryPush.mock.calls[0][0]).toBe("/");
   });
 
-  await waitFor(() => {
-    fireEvent.click(getByTestId("goToRoot"));
+  it("should go to lists", async () => {
+    const { getByTestId } = renderWithRouterAndContext({
+      info: { userName: "user" },
+    });
+
+    await waitFor(() => {
+      fireEvent.click(getByTestId("goToLists"));
+    });
+
+    expect(mockHistoryPush).toHaveBeenCalled();
+    expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists");
   });
 
-  expect(mockHistoryPush).toHaveBeenCalled();
-  expect(mockHistoryPush.mock.calls[0][0]).toBe("/");
-});
+  it("should go to users", async () => {
+    const { getByTestId } = renderWithRouterAndContext({
+      info: { userName: "user", isAdmin: true },
+    });
 
-it("should go to lists", async () => {
-  const { getByTestId } = renderWithRouterAndContext({
-    info: { userName: "user" },
+    await waitFor(() => {
+      fireEvent.click(getByTestId("goToUsers"));
+    });
+
+    expect(mockHistoryPush).toHaveBeenCalled();
+    expect(mockHistoryPush.mock.calls[0][0]).toBe("/users");
   });
-
-  await waitFor(() => {
-    fireEvent.click(getByTestId("goToLists"));
-  });
-
-  expect(mockHistoryPush).toHaveBeenCalled();
-  expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists");
-});
-
-it("should go to users", async () => {
-  const { getByTestId } = renderWithRouterAndContext({
-    info: { userName: "user", isAdmin: true },
-  });
-
-  await waitFor(() => {
-    fireEvent.click(getByTestId("goToUsers"));
-  });
-
-  expect(mockHistoryPush).toHaveBeenCalled();
-  expect(mockHistoryPush.mock.calls[0][0]).toBe("/users");
 });

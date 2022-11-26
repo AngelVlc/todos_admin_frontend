@@ -32,6 +32,7 @@ afterEach(cleanup);
 describe("NewListPage", () => {
   it("should match the snapshot for a new list", async () => {
     const { asFragment } = renderWithContextAndRouterForNewList();
+
     expect(asFragment()).toMatchSnapshot();
   });
 });
