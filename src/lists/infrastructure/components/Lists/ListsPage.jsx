@@ -5,7 +5,7 @@ import { GetListsUseCase } from "../../../application/lists";
 import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb";
 
 export const ListsPage = () => {
-  const [lists, setLists] = useState([]);
+  const [lists, setLists] = useState();
   const { useCaseFactory } = useContext(AppContext);
   let history = useHistory();
 
@@ -25,63 +25,62 @@ export const ListsPage = () => {
   };
 
   return (
-    <div className="container">
-      <Breadcrumb
-        items={[
-          { url: "/lists", text: "Lists" },
-        ]}
-      />
-      <h3 className="title">LISTS</h3>
-      <table className="table">
-        <thead>
-          <tr>
-            <td>Name</td>
-            <td># Items</td>
-            <td>
-              <button
-                className="button is-small"
-                data-testid="addNew"
-                onClick={() => onNewClick()}
-              >
-                <span className="icon is-small">
-                  <i className="fas fa-plus"></i>
-                </span>
-              </button>
-            </td>
-          </tr>
-        </thead>
-        <tbody>
-          {lists.length > 0 &&
-            lists.map((list) => (
-              <tr key={list.id}>
+    <>
+      {lists && (
+        <div className="container">
+          <Breadcrumb items={[{ url: "/lists", text: "Lists" }]} />
+          <h3 className="title">LISTS</h3>
+          <table className="table">
+            <thead>
+              <tr>
+                <td>Name</td>
+                <td># Items</td>
                 <td>
-                  <Link
-                    className="has-text-black"
-                    data-testid={`viewList${list.id}`}
-                    to={`/lists/${list.id}`}
+                  <button
+                    className="button is-small"
+                    data-testid="addNew"
+                    onClick={() => onNewClick()}
                   >
-                    {list.name}
-                  </Link>
-                </td>
-                <td>
-                  <span>
-                    <center>{list.itemsCount}</center>
-                  </span>
-                </td>
-                <td>
-                  <center>
-                    <Link
-                      className="has-text-black delete"
-                      data-testid={`deleteList${list.id}`}
-                      to={`/lists/${list.id}/delete`}
-                    >
-                    </Link>
-                  </center>
+                    <span className="icon is-small">
+                      <i className="fas fa-plus"></i>
+                    </span>
+                  </button>
                 </td>
               </tr>
-            ))}
-        </tbody>
-      </table>
-    </div>
+            </thead>
+            <tbody>
+              {lists.length > 0 &&
+                lists.map((list) => (
+                  <tr key={list.id}>
+                    <td>
+                      <Link
+                        className="has-text-black"
+                        data-testid={`viewList${list.id}`}
+                        to={`/lists/${list.id}`}
+                      >
+                        {list.name}
+                      </Link>
+                    </td>
+                    <td>
+                      <span>
+                        <center>{list.itemsCount}</center>
+                      </span>
+                    </td>
+                    <td>
+                      <center>
+                        <Link
+                          className="has-text-black delete"
+                          data-testid={`deleteList${list.id}`}
+                          to={`/lists/${list.id}/delete`}
+                        ></Link>
+                      </center>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </>
   );
 };

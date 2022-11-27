@@ -8,7 +8,7 @@ import {
 } from "../../../application/users";
 
 export const DeleteUserPage = () => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState();
   const { useCaseFactory } = useContext(AppContext);
   let { userId } = useParams();
   let history = useHistory();

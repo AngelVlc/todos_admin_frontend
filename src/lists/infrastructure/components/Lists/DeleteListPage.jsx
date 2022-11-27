@@ -8,7 +8,7 @@ import {
 } from "../../../application/lists";
 
 export const DeleteListPage = () => {
-  const [list, setList] = useState(null);
+  const [list, setList] = useState();
   const { useCaseFactory } = useContext(AppContext);
   let { listId } = useParams();
   let history = useHistory();

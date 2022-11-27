@@ -8,7 +8,7 @@ import {
 } from "../../../application/refreshTokens";
 
 export const RefreshTokensPage = () => {
-  const [tokens, setTokens] = useState([]);
+  const [tokens, setTokens] = useState();
   const { useCaseFactory } = useContext(AppContext);
   const [pageInfo, setPageInfo] = useState({
     pageNumber: 1,
@@ -39,35 +39,37 @@ export const RefreshTokensPage = () => {
   };
 
   return (
-    <div className="container">
-      <Breadcrumb
-        items={[
-          { url: "/refreshtokens", text: "Refresh Tokens" },
-        ]}
-      />
-      <h3 className="title">Refresh Tokens</h3>
-      <div className="buttons">
-        <button
-          className="button is-danger"
-          data-testid="deleteSelected"
-          onClick={() => onDeleteSelectedTokens()}
-        >
-          Delete Selected
-        </button>
-      </div>
-      <TableWithSelectors
-        columns={[
-          { name: "id", title: "ID" },
-          { name: "userId", title: "User ID" },
-          { name: "expirationDate", title: "Expiration Date" },
-        ]}
-        rows={tokens}
-        idColumnName={"id"}
-        selectedColumnName={"selected"}
-        paginationInfo={pageInfo}
-        changeSelected={setTokens}
-        changePagination={setPageInfo}
-      />
-    </div>
+    <>
+      {tokens && (
+        <div className="container">
+          <Breadcrumb
+            items={[{ url: "/refreshtokens", text: "Refresh Tokens" }]}
+          />
+          <h3 className="title">Refresh Tokens</h3>
+          <div className="buttons">
+            <button
+              className="button is-danger"
+              data-testid="deleteSelected"
+              onClick={() => onDeleteSelectedTokens()}
+            >
+              Delete Selected
+            </button>
+          </div>
+          <TableWithSelectors
+            columns={[
+              { name: "id", title: "ID" },
+              { name: "userId", title: "User ID" },
+              { name: "expirationDate", title: "Expiration Date" },
+            ]}
+            rows={tokens}
+            idColumnName={"id"}
+            selectedColumnName={"selected"}
+            paginationInfo={pageInfo}
+            changeSelected={setTokens}
+            changePagination={setPageInfo}
+          />
+        </div>
+      )}
+    </>
   );
 };

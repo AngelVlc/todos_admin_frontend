@@ -22,7 +22,7 @@ export const ViewListPage = () => {
   }, [listId, getExistingList]);
 
   return (
-    <div>
+    <>
       {pageState && (
         <div className="container">
           <Breadcrumb
@@ -63,6 +63,6 @@ export const ViewListPage = () => {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
