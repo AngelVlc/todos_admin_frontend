@@ -9,7 +9,7 @@ describe("GetListByIdWithItemsUseCase", () => {
       };
 
       const listItemsRepository = {
-        getAll: jest.fn(),
+        getAllByListId: jest.fn(),
       };
 
       listsRepository.getById.mockResolvedValue({
@@ -18,7 +18,7 @@ describe("GetListByIdWithItemsUseCase", () => {
         itemsCount: 2,
       });
 
-      listItemsRepository.getAll.mockResolvedValue([
+      listItemsRepository.getAllByListId.mockResolvedValue([
         {
           id: 1,
           title: "title1",
@@ -60,7 +60,7 @@ describe("GetListByIdWithItemsUseCase", () => {
       });
 
       expect(listsRepository.getById.mock.calls[0][0]).toBe(1);
-      expect(listItemsRepository.getAll.mock.calls[0][0]).toBe(1);
+      expect(listItemsRepository.getAllByListId.mock.calls[0][0]).toBe(1);
       expect(result).toStrictEqual(expected_result);
     });
   });

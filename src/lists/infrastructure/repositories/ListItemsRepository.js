@@ -13,7 +13,7 @@ export class ListItemsRepository {
     return res.status === 204;
   }
 
-  async getAll(listId) {
+  async getAllByListId(listId) {
     const res = await axios.get(`lists/${listId}/items`);
 
     return res.data;
