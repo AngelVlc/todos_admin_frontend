@@ -45,21 +45,24 @@ afterEach(cleanup);
 describe("ListForm", () => {
   describe("when the list already exist", () => {
     const renderWithContextAndRouterForExistingList = () => {
-      const list = new List({ id: 2, name: "list name" });
-      list.items = [
-        new ListItem({
-          id: 5,
-          listId: 2,
-          title: "item 5 title",
-          description: "item 5 description",
-        }),
-        new ListItem({
-          id: 6,
-          listId: 2,
-          title: "item 6 title",
-          description: "item 6 description",
-        }),
-      ];
+      const list = new List({
+        id: 2,
+        name: "list name",
+        items: [
+          new ListItem({
+            id: 5,
+            listId: 2,
+            title: "item 5 title",
+            description: "item 5 description",
+          }),
+          new ListItem({
+            id: 6,
+            listId: 2,
+            title: "item 6 title",
+            description: "item 6 description",
+          }),
+        ],
+      });
 
       const context = { auth: { info: {} }, useCaseFactory };
       return {
@@ -161,8 +164,8 @@ describe("ListForm", () => {
       const list = new List({
         id: 2,
         name: "updated name",
+        items,
       });
-      list.items = items;
 
       expect(mockedUpdateListUseCase.execute.mock.calls[0][0]).toStrictEqual(
         list
@@ -203,8 +206,8 @@ describe("ListForm", () => {
       const list = new List({
         id: 2,
         name: "list name",
+        items,
       });
-      list.items = items;
 
       expect(mockedUpdateListUseCase.execute.mock.calls[0][0]).toStrictEqual(
         list
@@ -282,16 +285,16 @@ describe("ListForm", () => {
         id: -1,
         name: "new list",
         itemsCount: 0,
+        items: [
+          new ListItem({
+            id: -1,
+            listId: -1,
+            title: "the title",
+            description: "the description",
+            position: 0,
+          }),
+        ],
       });
-      list.items = [
-        new ListItem({
-          id: -1,
-          listId: -1,
-          title: "the title",
-          description: "the description",
-          position: 0,
-        }),
-      ];
 
       expect(mockedCreateListUseCase.execute).toHaveBeenCalled();
       expect(mockedCreateListUseCase.execute.mock.calls[0][0]).toStrictEqual(

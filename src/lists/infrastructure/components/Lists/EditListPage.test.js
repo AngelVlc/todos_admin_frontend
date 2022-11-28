@@ -17,14 +17,17 @@ jest.mock("react-router-dom", () => ({
 const renderWithContextAndRouter = () => {
   const fakeGetListByIdWithItemsUseCase = {
     execute: () => {
-      const list = new List({ id: 2, name: "list name" });
-      list.items = [
-        new ListItem({
-          id: 5,
-          title: "item title",
-          description: "item description",
-        }),
-      ];
+      const list = new List({
+        id: 2,
+        name: "list name",
+        items: [
+          new ListItem({
+            id: 5,
+            title: "item title",
+            description: "item description",
+          }),
+        ],
+      });
       return list;
     },
   };

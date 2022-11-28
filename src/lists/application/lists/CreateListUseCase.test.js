@@ -30,10 +30,11 @@ describe("CreateListUseCase", () => {
         items: [{ title: "title" }],
       });
 
-      const expextedResult = new List({ id: 15, name: "name" });
-      expextedResult.items.push(
-        new ListItem({ id: 30, title: "title", listId: 15 })
-      );
+      const expextedResult = new List({
+        id: 15,
+        name: "name",
+        items: [new ListItem({ id: 30, title: "title", listId: 15 })],
+      });
 
       expect(result).toStrictEqual(expextedResult);
     });
