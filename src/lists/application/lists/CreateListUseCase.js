@@ -24,18 +24,19 @@ export class CreateListUseCase extends BaseUseCase {
   }
 
   async execute(list) {
-    const result = await this._listsRepository.create(list);
-    const savedList = new List(result);
+    const createListResult = await this._listsRepository.create(list);
 
-    for(const item of list.items) {
-      const savedListItem = await this._listItemsRepository.create({
+    const items = [];
+
+    for (const item of list.items) {
+      const createListItemResult = await this._listItemsRepository.create({
         ...item,
-        listId: savedList.id,
+        listId: createListResult.id,
       });
 
-      savedList.items.push(new ListItem(savedListItem));
-    };
+      items.push(new ListItem(createListItemResult));
+    }
 
-    return savedList;
+    return new List({ ...createListResult, items });
   }
 }

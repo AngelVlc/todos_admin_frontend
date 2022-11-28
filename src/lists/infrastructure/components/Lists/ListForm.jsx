@@ -8,8 +8,7 @@ import "./ListForm.css";
 import { List, ListItem } from "../../../domain";
 import {
   CreateListUseCase,
-  UpdateListUseCase
-
+  UpdateListUseCase,
 } from "../../../application/lists";
 import { Modal } from "../../../../shared/infrastructure/components/Modal";
 import { ListItemForm } from "./ListItemForm";
@@ -56,20 +55,17 @@ export const ListForm = (props) => {
     newItems.splice(source.index, 1);
     newItems.splice(destination.index, 0, pageState.items[source.index]);
 
-    const newList = new List({ ...pageState });
-    newList.items = newItems;
+    const newList = new List({ ...pageState, items: newItems });
 
     setPageState(newList);
   };
 
-
   const onDeleteListItem = (item) => {
     const index = pageState.items.indexOf(item);
     const newItems = Array.from(pageState.items);
-    newItems[index].state = 'deleted';
+    newItems[index].state = "deleted";
 
-    const newList = new List({ ...pageState });
-    newList.items = newItems;
+    const newList = new List({ ...pageState, items: newItems });
 
     setPageState(newList);
   };
@@ -88,17 +84,16 @@ export const ListForm = (props) => {
   };
 
   const onSubmitItemForm = (listItem) => {
-    const newList = new List({ ...pageState });
-    newList.items = pageState.items;
+    const newList = new List({ ...pageState, items: pageState.items });
 
     if (listItem.id === -1) {
       newList.addNewItem(listItem);
     } else {
-      for(const item of newList.items) {
+      for (const item of newList.items) {
         if (item.id === listItem.id) {
           item.title = listItem.title;
           item.description = listItem.description;
-          item.state = 'modified';
+          item.state = "modified";
           item.listId = listItem.listId;
 
           break;
@@ -118,10 +113,7 @@ export const ListForm = (props) => {
   return (
     <>
       <Modal ref={itemFormModalRef} closeHandler={onItemModalClose}>
-        <ListItemForm
-          ref={itemFormRef}
-          onSubmit={onSubmitItemForm}
-        />
+        <ListItemForm ref={itemFormRef} onSubmit={onSubmitItemForm} />
       </Modal>
       <Formik
         enableReinitialize={true}
@@ -178,44 +170,46 @@ export const ListForm = (props) => {
                       {...provided.droppableProps}
                     >
                       {pageState.items.length > 0 &&
-                        pageState.items.filter(item => item.state !== 'deleted').map((item, index) => (
-                          <Draggable
-                            key={item.id}
-                            draggableId={item.id.toString()}
-                            index={index}
-                          >
-                            {(draggableProvided) => (
-                              <div
-                                key={item.id}
-                                className="is-flex dnd-item p-2 mb-2"
-                                {...draggableProvided.draggableProps}
-                                {...draggableProvided.dragHandleProps}
-                                ref={draggableProvided.innerRef}
-                                data-testid={`draggable${item.id}`}
-                              >
+                        pageState.items
+                          .filter((item) => item.state !== "deleted")
+                          .map((item, index) => (
+                            <Draggable
+                              key={item.id}
+                              draggableId={item.id.toString()}
+                              index={index}
+                            >
+                              {(draggableProvided) => (
                                 <div
-                                  className="is-flex-grow-4"
-                                  data-testid={`editListItem${item.id}`}
-                                  onClick={() => onEditItem(item)}
+                                  key={item.id}
+                                  className="is-flex dnd-item p-2 mb-2"
+                                  {...draggableProvided.draggableProps}
+                                  {...draggableProvided.dragHandleProps}
+                                  ref={draggableProvided.innerRef}
+                                  data-testid={`draggable${item.id}`}
                                 >
-                                  <span className="has-text-black">
-                                    {item.title}
-                                  </span>
+                                  <div
+                                    className="is-flex-grow-4"
+                                    data-testid={`editListItem${item.id}`}
+                                    onClick={() => onEditItem(item)}
+                                  >
+                                    <span className="has-text-black">
+                                      {item.title}
+                                    </span>
+                                  </div>
+                                  <div className="is-justify-content-flex-end">
+                                    <center>
+                                      <button
+                                        type="button"
+                                        className="has-text-black delete"
+                                        data-testid={`deleteListItem${item.id}`}
+                                        onClick={() => onDeleteListItem(item)}
+                                      ></button>
+                                    </center>
+                                  </div>
                                 </div>
-                                <div className="is-justify-content-flex-end">
-                                  <center>
-                                    <button
-                                      type="button"
-                                      className="has-text-black delete"
-                                      data-testid={`deleteListItem${item.id}`}
-                                      onClick={() => onDeleteListItem(item)}
-                                    ></button>
-                                  </center>
-                                </div>
-                              </div>
-                            )}
-                          </Draggable>
-                        ))}
+                              )}
+                            </Draggable>
+                          ))}
                       {provided.placeholder}
                     </div>
                   )}

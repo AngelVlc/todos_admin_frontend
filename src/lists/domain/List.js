@@ -1,8 +1,8 @@
 export class List {
-  constructor({ id, name, itemsCount }) {
+  constructor({ id, name, itemsCount, items = [] }) {
     this.id = id;
     this.name = name;
-    this.items = [];
+    this.items = items;
     this.itemsCount = itemsCount;
   }
 

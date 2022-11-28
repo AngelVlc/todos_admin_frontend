@@ -19,29 +19,36 @@ describe("UpdateListUseCase", () => {
 
       fakeListRepository.update.mockResolvedValue({ id: 44 });
 
-      const listToUpdate = new List({ id: 1, name: "updated name" });
-      listToUpdate.items = [
-        new ListItem({ id: -1, title: "added item", listId: 1 }),
-        new ListItem({
-          id: -2,
-          title: "another added item",
-          state: "modified",
-          listId: 1,
-        }),
-        new ListItem({ id: 11, title: "not updated existing item", listId: 1 }),
-        new ListItem({
-          id: 22,
-          title: "updated existing item",
-          state: "modified",
-          listId: 1,
-        }),
-        new ListItem({
-          id: 33,
-          title: "deleted item",
-          state: "deleted",
-          listId: 1,
-        }),
-      ];
+      const listToUpdate = new List({
+        id: 1,
+        name: "updated name",
+        items: [
+          new ListItem({ id: -1, title: "added item", listId: 1 }),
+          new ListItem({
+            id: -2,
+            title: "another added item",
+            state: "modified",
+            listId: 1,
+          }),
+          new ListItem({
+            id: 11,
+            title: "not updated existing item",
+            listId: 1,
+          }),
+          new ListItem({
+            id: 22,
+            title: "updated existing item",
+            state: "modified",
+            listId: 1,
+          }),
+          new ListItem({
+            id: 33,
+            title: "deleted item",
+            state: "deleted",
+            listId: 1,
+          }),
+        ],
+      });
 
       const useCase = new UpdateListUseCase({
         listsRepository: fakeListRepository,

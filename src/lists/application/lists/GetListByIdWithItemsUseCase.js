@@ -21,10 +21,9 @@ export class GetListByIdWithItemsUseCase extends BaseUseCase {
   }
 
   async execute(id) {
-    const result = await this._listsRepository.getById(id);
-    const list = new List(result);
-    list.items = await this._listItemsRepository.getAll(id);
+    const getListResult = await this._listsRepository.getById(id);
+    const getListItemsResult = await this._listItemsRepository.getAll(id)
 
-    return list;
+    return new List({...getListResult, items: getListItemsResult});
   }
 }

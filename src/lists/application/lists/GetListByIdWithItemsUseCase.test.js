@@ -43,22 +43,21 @@ describe("GetListByIdWithItemsUseCase", () => {
         id: 1,
         name: "name",
         itemsCount: 2,
+        items: [
+          {
+            id: 1,
+            title: "title1",
+            description: "desc1",
+            listId: 1,
+          },
+          {
+            id: 2,
+            title: "title2",
+            description: "desc2",
+            listId: 1,
+          },
+        ],
       });
-
-      expected_result.items = [
-        {
-          id: 1,
-          title: "title1",
-          description: "desc1",
-          listId: 1,
-        },
-        {
-          id: 2,
-          title: "title2",
-          description: "desc2",
-          listId: 1,
-        },
-      ];
 
       expect(listsRepository.getById.mock.calls[0][0]).toBe(1);
       expect(listItemsRepository.getAll.mock.calls[0][0]).toBe(1);
