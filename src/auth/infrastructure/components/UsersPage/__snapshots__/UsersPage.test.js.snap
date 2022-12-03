@@ -65,7 +65,7 @@ exports[`UsersPage should match the snapshot 1`] = `
         <tr>
           <td>
             <a
-              class="has-text-black"
+              class="has-text-black td-content"
               data-testid="editUser1"
               href="/users/1/edit"
             >
@@ -73,15 +73,20 @@ exports[`UsersPage should match the snapshot 1`] = `
             </a>
           </td>
           <td>
-            <center>
-              <span
-                class="icon is-small"
-              >
-                <i
-                  class="fas fa-check fa-xs"
-                />
-              </span>
-            </center>
+            <a
+              class="has-text-black td-content"
+              href="/users/1/edit"
+            >
+              <center>
+                <span
+                  class="icon is-small"
+                >
+                  <i
+                    class="fas fa-check fa-xs"
+                  />
+                </span>
+              </center>
+            </a>
           </td>
           <td>
             <center>
@@ -96,14 +101,19 @@ exports[`UsersPage should match the snapshot 1`] = `
         <tr>
           <td>
             <a
-              class="has-text-black"
+              class="has-text-black td-content"
               data-testid="editUser2"
               href="/users/2/edit"
             >
               user2
             </a>
           </td>
-          <td />
+          <td>
+            <a
+              class="has-text-black td-content"
+              href="/users/2/edit"
+            />
+          </td>
           <td>
             <center>
               <a

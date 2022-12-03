@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { GetUsersUseCase } from "../../../application/users";
 import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb";
+import "./UsersPage.css";
 
 export const UsersPage = () => {
   const [users, setUsers] = useState();
@@ -50,7 +51,7 @@ export const UsersPage = () => {
                   <tr key={user.id}>
                     <td>
                       <Link
-                        className="has-text-black"
+                        className="has-text-black td-content"
                         data-testid={`editUser${user.id}`}
                         to={`/users/${user.id}/edit`}
                       >
@@ -58,13 +59,18 @@ export const UsersPage = () => {
                       </Link>
                     </td>
                     <td>
-                      {user.isAdmin && (
-                        <center>
-                          <span className="icon is-small">
-                            <i className="fas fa-check fa-xs"></i>
-                          </span>
-                        </center>
-                      )}
+                      <Link
+                        className="has-text-black td-content"
+                        to={`/users/${user.id}/edit`}
+                      >
+                        {user.isAdmin && (
+                          <center>
+                            <span className="icon is-small">
+                              <i className="fas fa-check fa-xs"></i>
+                            </span>
+                          </center>
+                        )}
+                      </Link>
                     </td>
                     <td>
                       <center>

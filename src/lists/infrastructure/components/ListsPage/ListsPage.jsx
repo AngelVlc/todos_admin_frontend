@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { GetListsUseCase } from "../../../application/lists";
 import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb";
+import "./ListsPage.css";
 
 export const ListsPage = () => {
   const [lists, setLists] = useState();
@@ -54,7 +55,7 @@ export const ListsPage = () => {
                   <tr key={list.id}>
                     <td>
                       <Link
-                        className="has-text-black"
+                        className="has-text-black td-content"
                         data-testid={`viewList${list.id}`}
                         to={`/lists/${list.id}`}
                       >
@@ -62,9 +63,12 @@ export const ListsPage = () => {
                       </Link>
                     </td>
                     <td>
-                      <span>
-                        <center>{list.itemsCount}</center>
-                      </span>
+                      <Link
+                        className="has-text-black td-content"
+                        to={`/lists/${list.id}`}
+                      >
+                        <center> {list.itemsCount} </center>
+                      </Link>
                     </td>
                     <td>
                       <center>
