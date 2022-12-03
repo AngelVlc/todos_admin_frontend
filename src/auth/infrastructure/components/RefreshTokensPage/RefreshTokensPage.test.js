@@ -55,7 +55,7 @@ const renderWithContextAndRouter = () => {
   };
 };
 
-describe("RefreshTolensPage", () => {
+describe("RefreshTokensPage", () => {
   it("should match the snapshot", async () => {
     let fragment;
     await act(async () => {

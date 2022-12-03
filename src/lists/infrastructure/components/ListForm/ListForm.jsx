@@ -11,7 +11,7 @@ import {
   UpdateListUseCase,
 } from "../../../application/lists";
 import { Modal } from "../../../../shared/infrastructure/components/Modal";
-import { ListItemForm } from "./ListItemForm";
+import { ListItemForm } from "../ListItemForm";
 
 export const ListForm = (props) => {
   let history = useHistory();

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext, useCallback } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { ListForm } from "./ListForm";
+import { ListForm } from "../ListForm";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { GetListByIdWithItemsUseCase } from "../../../application/lists";
 import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb";

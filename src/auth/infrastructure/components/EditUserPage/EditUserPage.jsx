@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext, useCallback } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb";
-import { UserForm } from "./UserForm";
+import { UserForm } from "../UserForm";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { GetUserByIdUseCase } from "../../../application/users";
 
