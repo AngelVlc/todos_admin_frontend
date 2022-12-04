@@ -77,7 +77,9 @@ describe("UsersPage", () => {
       fireEvent.click(container.getByTestId("editUser2"));
     });
 
-    expect(history.location.pathname).toBe("/users/2/edit");
+    expect(mockHistoryPush).toHaveBeenCalled();
+    expect(mockHistoryPush.mock.calls[0][0]).toBe("/users/2/edit");
+    mockHistoryPush.mockClear();
   });
 
   it("should delete the user", async () => {

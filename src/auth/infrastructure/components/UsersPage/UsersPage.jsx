@@ -3,7 +3,6 @@ import { Link, useHistory } from "react-router-dom";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { GetUsersUseCase } from "../../../application/users";
 import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb";
-import "./UsersPage.css";
 
 export const UsersPage = () => {
   const [users, setUsers] = useState();
@@ -48,31 +47,23 @@ export const UsersPage = () => {
             <tbody>
               {users.length > 0 &&
                 users.map((user) => (
-                  <tr key={user.id}>
+                  <tr
+                    className="is-clickable"
+                    key={user.id}
+                    onClick={() => history.push(`/users/${user.id}/edit`)}
+                    data-testid={`editUser${user.id}`}
+                  >
+                    <td>{user.name}</td>
                     <td>
-                      <Link
-                        className="has-text-black td-content"
-                        data-testid={`editUser${user.id}`}
-                        to={`/users/${user.id}/edit`}
-                      >
-                        {user.name}
-                      </Link>
+                      {user.isAdmin && (
+                        <center>
+                          <span className="icon is-small">
+                            <i className="fas fa-check fa-xs"></i>
+                          </span>
+                        </center>
+                      )}
                     </td>
-                    <td>
-                      <Link
-                        className="has-text-black td-content"
-                        to={`/users/${user.id}/edit`}
-                      >
-                        {user.isAdmin && (
-                          <center>
-                            <span className="icon is-small">
-                              <i className="fas fa-check fa-xs"></i>
-                            </span>
-                          </center>
-                        )}
-                      </Link>
-                    </td>
-                    <td>
+                    <td onClick={(e) => e.stopPropagation()}>
                       <center>
                         <Link
                           className="has-text-black delete"

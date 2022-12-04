@@ -62,25 +62,17 @@ exports[`ListPage should match the snapshot 1`] = `
         </tr>
       </thead>
       <tbody>
-        <tr>
+        <tr
+          class="is-clickable"
+          data-testid="viewList1"
+        >
           <td>
-            <a
-              class="has-text-black td-content"
-              data-testid="viewList1"
-              href="/lists/1"
-            >
-              list1
-            </a>
+            list1
           </td>
           <td>
-            <a
-              class="has-text-black td-content"
-              href="/lists/1"
-            >
-              <center>
-                 4 
-              </center>
-            </a>
+            <center>
+              4
+            </center>
           </td>
           <td>
             <center>
@@ -92,25 +84,17 @@ exports[`ListPage should match the snapshot 1`] = `
             </center>
           </td>
         </tr>
-        <tr>
+        <tr
+          class="is-clickable"
+          data-testid="viewList2"
+        >
           <td>
-            <a
-              class="has-text-black td-content"
-              data-testid="viewList2"
-              href="/lists/2"
-            >
-              list2
-            </a>
+            list2
           </td>
           <td>
-            <a
-              class="has-text-black td-content"
-              href="/lists/2"
-            >
-              <center>
-                 6 
-              </center>
-            </a>
+            <center>
+              6
+            </center>
           </td>
           <td>
             <center>

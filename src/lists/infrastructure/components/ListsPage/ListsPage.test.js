@@ -73,7 +73,9 @@ describe("ListPage", () => {
       fireEvent.click(container.getByTestId("viewList2"));
     });
 
-    expect(history.location.pathname).toBe("/lists/2");
+    expect(mockHistoryPush).toHaveBeenCalled();
+    expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/2");
+    mockHistoryPush.mockClear();
   });
 
   it("should delete the list", async () => {

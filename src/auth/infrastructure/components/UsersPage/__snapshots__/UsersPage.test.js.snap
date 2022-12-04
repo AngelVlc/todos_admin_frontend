@@ -62,31 +62,23 @@ exports[`UsersPage should match the snapshot 1`] = `
         </tr>
       </thead>
       <tbody>
-        <tr>
+        <tr
+          class="is-clickable"
+          data-testid="editUser1"
+        >
           <td>
-            <a
-              class="has-text-black td-content"
-              data-testid="editUser1"
-              href="/users/1/edit"
-            >
-              user1
-            </a>
+            user1
           </td>
           <td>
-            <a
-              class="has-text-black td-content"
-              href="/users/1/edit"
-            >
-              <center>
-                <span
-                  class="icon is-small"
-                >
-                  <i
-                    class="fas fa-check fa-xs"
-                  />
-                </span>
-              </center>
-            </a>
+            <center>
+              <span
+                class="icon is-small"
+              >
+                <i
+                  class="fas fa-check fa-xs"
+                />
+              </span>
+            </center>
           </td>
           <td>
             <center>
@@ -98,22 +90,14 @@ exports[`UsersPage should match the snapshot 1`] = `
             </center>
           </td>
         </tr>
-        <tr>
+        <tr
+          class="is-clickable"
+          data-testid="editUser2"
+        >
           <td>
-            <a
-              class="has-text-black td-content"
-              data-testid="editUser2"
-              href="/users/2/edit"
-            >
-              user2
-            </a>
+            user2
           </td>
-          <td>
-            <a
-              class="has-text-black td-content"
-              href="/users/2/edit"
-            />
-          </td>
+          <td />
           <td>
             <center>
               <a

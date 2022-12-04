@@ -3,7 +3,6 @@ import { Link, useHistory } from "react-router-dom";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { GetListsUseCase } from "../../../application/lists";
 import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb";
-import "./ListsPage.css";
 
 export const ListsPage = () => {
   const [lists, setLists] = useState();
@@ -52,25 +51,17 @@ export const ListsPage = () => {
             <tbody>
               {lists.length > 0 &&
                 lists.map((list) => (
-                  <tr key={list.id}>
+                  <tr
+                    className="is-clickable"
+                    key={list.id}
+                    onClick={() => history.push(`/lists/${list.id}`)}
+                    data-testid={`viewList${list.id}`}
+                  >
+                    <td>{list.name}</td>
                     <td>
-                      <Link
-                        className="has-text-black td-content"
-                        data-testid={`viewList${list.id}`}
-                        to={`/lists/${list.id}`}
-                      >
-                        {list.name}
-                      </Link>
+                      <center>{list.itemsCount}</center>
                     </td>
-                    <td>
-                      <Link
-                        className="has-text-black td-content"
-                        to={`/lists/${list.id}`}
-                      >
-                        <center> {list.itemsCount} </center>
-                      </Link>
-                    </td>
-                    <td>
+                    <td onClick={(e) => e.stopPropagation()}>
                       <center>
                         <Link
                           className="has-text-black delete"
