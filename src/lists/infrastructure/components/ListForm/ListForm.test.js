@@ -2,7 +2,6 @@ import { render, cleanup, fireEvent, waitFor } from "@testing-library/react";
 import { ListForm } from "./ListForm";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { MemoryRouter, Route } from "react-router-dom";
-import { act } from "react-dom/test-utils";
 import {
   mockGetComputedStyle,
   mockDndSpacing,

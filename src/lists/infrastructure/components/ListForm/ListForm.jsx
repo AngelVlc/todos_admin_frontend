@@ -32,6 +32,8 @@ export const ListForm = (props) => {
 
     const result = await useCase.execute(list);
 
+    setPageState(list);
+
     if (result && props.list?.id === -1) {
       history.push(`/lists/${result.id}`);
     }
