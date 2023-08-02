@@ -5,38 +5,27 @@ describe("CreateListUseCase", () => {
   describe("#execute", () => {
     it("creates a list with its items", async () => {
       const fakeListsRepository = {
-        create: () => {
-          return { id: 15, name: "name" };
-        },
+        create: jest.fn(),
       };
 
-      const fakeListItemsRepository = {
-        create: () => {
-          return {
-            id: 30,
-            title: "title",
-            listId: 15,
-          };
-        },
-      };
+      fakeListsRepository.create.mockResolvedValue({
+        id: 15,
+      });
 
       const useCase = new CreateListUseCase({
         listsRepository: fakeListsRepository,
-        listItemsRepository: fakeListItemsRepository,
       });
 
-      const result = await useCase.execute({
+      const list = {
+        id: -1,
         name: "list",
         items: [{ title: "title" }],
-      });
+      };
 
-      const expextedResult = new List({
-        id: 15,
-        name: "name",
-        items: [new ListItem({ id: 30, title: "title", listId: 15 })],
-      });
+      const result = await useCase.execute(list);
 
-      expect(result).toStrictEqual(expextedResult);
+      expect(fakeListsRepository.create.mock.calls[0][0]).toStrictEqual(list);
+      expect(result).toStrictEqual({ id: 15 });
     });
   });
 });

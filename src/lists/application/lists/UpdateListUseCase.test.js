@@ -4,20 +4,11 @@ import { UpdateListUseCase } from "./";
 describe("UpdateListUseCase", () => {
   describe("#execute", () => {
     it("updates a list and its items", async () => {
-      const fakeListRepository = {
+      const fakeListsRepository = {
         update: jest.fn(),
       };
 
-      const fakeListItemsRepository = {
-        create: jest.fn(),
-        update: jest.fn(),
-        deleteById: jest.fn(),
-      };
-
-      fakeListItemsRepository.create.mockResolvedValueOnce({ id: 44 });
-      fakeListItemsRepository.create.mockResolvedValueOnce({ id: 45 });
-
-      fakeListRepository.update.mockResolvedValue({ id: 44 });
+      fakeListsRepository.update.mockResolvedValue({ id: 44 });
 
       const listToUpdate = new List({
         id: 1,
@@ -27,7 +18,6 @@ describe("UpdateListUseCase", () => {
           new ListItem({
             id: -2,
             title: "another added item",
-            state: "modified",
             listId: 1,
           }),
           new ListItem({
@@ -38,42 +28,20 @@ describe("UpdateListUseCase", () => {
           new ListItem({
             id: 22,
             title: "updated existing item",
-            state: "modified",
-            listId: 1,
-          }),
-          new ListItem({
-            id: 33,
-            title: "deleted item",
-            state: "deleted",
             listId: 1,
           }),
         ],
       });
 
       const useCase = new UpdateListUseCase({
-        listsRepository: fakeListRepository,
-        listItemsRepository: fakeListItemsRepository,
+        listsRepository: fakeListsRepository,
       });
       const result = await useCase.execute(listToUpdate);
 
-      expect(fakeListItemsRepository.deleteById.mock.calls[0][0]).toBe(1);
-      expect(fakeListItemsRepository.deleteById.mock.calls[0][1]).toBe(33);
-      expect(fakeListItemsRepository.update.mock.calls[0][0].listId).toBe(1);
-      expect(fakeListItemsRepository.update.mock.calls[0][0].id).toBe(22);
-      expect(fakeListItemsRepository.update.mock.calls[0][0].title).toBe(
-        "updated existing item"
+      expect(fakeListsRepository.update.mock.calls[0][0]).toStrictEqual(
+        listToUpdate
       );
-      expect(fakeListItemsRepository.create.mock.calls[0][0].title).toBe(
-        "added item"
-      );
-      expect(fakeListItemsRepository.create.mock.calls[1][0].title).toBe(
-        "another added item"
-      );
-
-      expect(fakeListRepository.update.mock.calls[0][0].id).toBe(1);
-      expect(
-        fakeListRepository.update.mock.calls[0][0].idsByPosition
-      ).toStrictEqual([44, 45, 11, 22]);
+      expect(result).toStrictEqual({ id: 44 });
     });
   });
 });

@@ -1,11 +1,9 @@
 export class ListItem {
-  constructor({ id, title, description, listId, position, state }) {
+  constructor({ id, title, description, listId }) {
     this.id = id;
     this.title = title;
     this.description = description;
     this.listId = listId;
-    this.position = position;
-    this.state = state;
   }
 
   static createEmpty(listId) {

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext, useCallback } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { ListForm } from "../ListForm";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
-import { GetListByIdWithItemsUseCase } from "../../../application/lists";
+import { GetListByIdUseCase } from "../../../application/lists";
 import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb";
 
 export const EditListPage = () => {
@@ -12,8 +12,8 @@ export const EditListPage = () => {
   const [pageState, setPageState] = useState();
 
   const getExistingList = useCallback(async () => {
-    const getListByIdWithItemsUseCase = useCaseFactory.get(GetListByIdWithItemsUseCase);
-    const list = await getListByIdWithItemsUseCase.execute(listId);
+    const getListByIdUseCase = useCaseFactory.get(GetListByIdUseCase);
+    const list = await getListByIdUseCase.execute(listId);
 
     setPageState(list);
   }, [listId, useCaseFactory]);
