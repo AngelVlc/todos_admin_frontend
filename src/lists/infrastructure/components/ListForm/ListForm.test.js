@@ -143,21 +143,12 @@ describe("ListForm", () => {
           listId: 2,
           title: "updated title",
           description: "updated description",
-          state: "modified",
-        }),
-        new ListItem({
-          id: 5,
-          listId: 2,
-          title: "item 5 title",
-          description: "item 5 description",
-          state: "deleted",
         }),
         new ListItem({
           id: -1,
           listId: 2,
           title: "the title",
           description: "the description",
-          position: 2,
         }),
       ];
       const list = new List({
@@ -186,26 +177,17 @@ describe("ListForm", () => {
 
       expect(mockedUpdateListUseCase.execute).toHaveBeenCalled();
 
-      const items = [
-        new ListItem({
-          id: 5,
-          title: "item 5 title",
-          description: "item 5 description",
-          state: "deleted",
-          listId: 2,
-        }),
-        new ListItem({
-          id: 6,
-          title: "item 6 title",
-          description: "item 6 description",
-          listId: 2,
-        }),
-      ];
-
       const list = new List({
         id: 2,
         name: "list name",
-        items,
+        items: [
+          new ListItem({
+            id: 6,
+            title: "item 6 title",
+            description: "item 6 description",
+            listId: 2,
+          }),
+        ]
       });
 
       expect(mockedUpdateListUseCase.execute.mock.calls[0][0]).toStrictEqual(
@@ -290,7 +272,6 @@ describe("ListForm", () => {
             listId: -1,
             title: "the title",
             description: "the description",
-            position: 0,
           }),
         ],
       });

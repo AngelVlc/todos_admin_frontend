@@ -11,7 +11,6 @@ export class List {
   }
 
   addNewItem(newItem) {
-    newItem.position = this.items.length;
     newItem.id = -1;
 
     for (const item of this.items) {

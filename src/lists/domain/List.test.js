@@ -23,7 +23,6 @@ describe("List", () => {
           title: "title",
           description: "desc",
           listId: 1,
-          position: 0,
         });
 
         list.addNewItem(newItem);
@@ -42,7 +41,6 @@ describe("List", () => {
           title: "title",
           description: "desc",
           listId: 1,
-          position: 0,
         });
 
         list.addNewItem(newItem);
@@ -60,7 +58,6 @@ describe("List", () => {
           title: "title",
           description: "desc",
           listId: 1,
-          position: 0,
         });
         const existingItem = new ListItem({ id: 10 });
         list.items = [existingItem];

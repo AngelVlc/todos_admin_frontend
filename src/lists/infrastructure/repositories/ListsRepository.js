@@ -20,7 +20,14 @@ export class ListsRepository {
   }
 
   async create(list) {
-    const res = await axios.post("lists", list);
+    const listToSend = JSON.parse(JSON.stringify(list));
+    for (const item of listToSend.items) {
+      if (item.id < 0) {
+        delete item.id;
+      }
+    }
+
+    const res = await axios.post("lists", listToSend);
 
     if (res.status === 201) {
       return res.data;
@@ -28,7 +35,14 @@ export class ListsRepository {
   }
 
   async update(list) {
-    const res = await axios.patch(`lists/${list.id}`, list);
+    const listToSend = JSON.parse(JSON.stringify(list));
+    for (const item of listToSend.items) {
+      if (item.id < 0) {
+        delete item.id;
+      }
+    }
+
+    const res = await axios.patch(`lists/${list.id}`, listToSend);
 
     if (res.status === 200) {
       return res.data;

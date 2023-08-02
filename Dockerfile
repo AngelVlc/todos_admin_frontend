@@ -1,4 +1,4 @@
-FROM node:18.10.0-alpine3.16 as base
+FROM node:18.17.0-alpine3.17 as base
 
 ARG BACKEND_URL
 ARG COMMIT_SHA

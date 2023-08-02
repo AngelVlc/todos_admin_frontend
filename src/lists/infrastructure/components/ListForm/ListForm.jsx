@@ -65,7 +65,7 @@ export const ListForm = (props) => {
   const onDeleteListItem = (item) => {
     const index = pageState.items.indexOf(item);
     const newItems = Array.from(pageState.items);
-    newItems[index].state = "deleted";
+    newItems.splice(index, 1);
 
     const newList = new List({ ...pageState, items: newItems });
 
@@ -83,6 +83,7 @@ export const ListForm = (props) => {
   const showItemModal = (item) => {
     itemFormRef.current.setValues(item);
     itemFormModalRef.current.showModal();
+    itemFormRef.current.setFocus();
   };
 
   const onSubmitItemForm = (listItem) => {
@@ -95,7 +96,6 @@ export const ListForm = (props) => {
         if (item.id === listItem.id) {
           item.title = listItem.title;
           item.description = listItem.description;
-          item.state = "modified";
           item.listId = listItem.listId;
 
           break;
@@ -173,7 +173,6 @@ export const ListForm = (props) => {
                     >
                       {pageState.items.length > 0 &&
                         pageState.items
-                          .filter((item) => item.state !== "deleted")
                           .map((item, index) => (
                             <Draggable
                               key={item.id}
