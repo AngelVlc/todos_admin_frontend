@@ -5,6 +5,7 @@ import * as Yup from "yup";
 
 export const ListItemForm = forwardRef((props, ref) => {
   const formRef = useRef();
+  const titleField = useRef();
 
   useImperativeHandle(ref, () => ({
     submitForm: async () => {
@@ -13,6 +14,9 @@ export const ListItemForm = forwardRef((props, ref) => {
     setValues: (values) => {
       formRef.current.setValues(values, false);
     },
+    setFocus: () => {
+      titleField.current.focus();
+    }
   }));
 
   return (
@@ -36,7 +40,7 @@ export const ListItemForm = forwardRef((props, ref) => {
               as="input"
               className="input"
               data-testid="title"
-              autoFocus={true}
+              innerRef={titleField}
             />
           </div>
           <p className="help is-danger" data-testid="titleErrors">

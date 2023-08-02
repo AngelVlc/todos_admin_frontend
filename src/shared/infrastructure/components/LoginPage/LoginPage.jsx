@@ -44,7 +44,7 @@ export const LoginPage = () => {
                     <div className="field">
                         <label className="label" htmlFor="userName">Name</label>
                         <div className="control">
-                            <Field name="userName" type="text" data-testid="userName" />
+                            <Field name="userName" type="text" data-testid="userName" autoFocus />
                         </div>
                         <p className="help is-danger" data-testid="userNameErrors">
                             <ErrorMessage name="userName" />

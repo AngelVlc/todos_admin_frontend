@@ -83,6 +83,7 @@ export const ListForm = (props) => {
   const showItemModal = (item) => {
     itemFormRef.current.setValues(item);
     itemFormModalRef.current.showModal();
+    itemFormRef.current.setFocus();
   };
 
   const onSubmitItemForm = (listItem) => {
