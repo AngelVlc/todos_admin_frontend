@@ -65,7 +65,7 @@ exports[`NewUserPage should match the snapshot for a new user 1`] = `
         </div>
         <p
           class="help is-danger"
-          data-testid="userNameErrors"
+          data-testid="nameErrors"
         />
       </div>
       <div

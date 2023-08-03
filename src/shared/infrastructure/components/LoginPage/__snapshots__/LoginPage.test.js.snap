@@ -18,7 +18,7 @@ exports[`LoginPage should match the snapshot 1`] = `
       >
         <label
           class="label"
-          for="userName"
+          for="name"
         >
           Name
         </label>
@@ -26,15 +26,15 @@ exports[`LoginPage should match the snapshot 1`] = `
           class="control"
         >
           <input
-            data-testid="userName"
-            name="userName"
+            data-testid="name"
+            name="name"
             type="text"
             value=""
           />
         </div>
         <p
           class="help is-danger"
-          data-testid="userNameErrors"
+          data-testid="nameErrors"
         />
       </div>
       <div

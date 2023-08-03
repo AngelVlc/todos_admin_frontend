@@ -36,7 +36,7 @@ describe("Header", () => {
 
   it("should match the snapshot when the user is logged in", () => {
     const { asFragment } = renderWithRouterAndContext({
-      info: { userName: "user" },
+      info: { name: "user" },
     });
 
     expect(asFragment()).toMatchSnapshot();
@@ -44,7 +44,7 @@ describe("Header", () => {
 
   it("should match the snapshot when an admin user is logged in", () => {
     const { asFragment } = renderWithRouterAndContext({
-      info: { userName: "admin", isAdmin: true },
+      info: { name: "admin", isAdmin: true },
     });
 
     expect(asFragment()).toMatchSnapshot();
@@ -52,7 +52,7 @@ describe("Header", () => {
 
   it("should do logout", async () => {
     const { getByTestId } = renderWithRouterAndContext({
-      info: { userName: "user" },
+      info: { name: "user" },
     });
 
     await waitFor(() => {
@@ -65,7 +65,7 @@ describe("Header", () => {
 
   it("should go to root", async () => {
     const { getByTestId } = renderWithRouterAndContext({
-      info: { userName: "user" },
+      info: { name: "user" },
     });
 
     await waitFor(() => {
@@ -78,7 +78,7 @@ describe("Header", () => {
 
   it("should go to lists", async () => {
     const { getByTestId } = renderWithRouterAndContext({
-      info: { userName: "user" },
+      info: { name: "user" },
     });
 
     await waitFor(() => {
@@ -91,7 +91,7 @@ describe("Header", () => {
 
   it("should go to users", async () => {
     const { getByTestId } = renderWithRouterAndContext({
-      info: { userName: "user", isAdmin: true },
+      info: { name: "user", isAdmin: true },
     });
 
     await waitFor(() => {
