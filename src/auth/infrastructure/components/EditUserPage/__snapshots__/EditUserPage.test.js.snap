@@ -65,7 +65,7 @@ exports[`EditUserPage should match the snapshot for an existing admin user 1`] =
         </div>
         <p
           class="help is-danger"
-          data-testid="userNameErrors"
+          data-testid="nameErrors"
         />
       </div>
       <div
@@ -236,7 +236,7 @@ exports[`EditUserPage should match the snapshot for an existing non admin user 1
         </div>
         <p
           class="help is-danger"
-          data-testid="userNameErrors"
+          data-testid="nameErrors"
         />
       </div>
       <div

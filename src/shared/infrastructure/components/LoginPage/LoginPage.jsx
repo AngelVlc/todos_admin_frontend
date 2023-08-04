@@ -32,22 +32,22 @@ export const LoginPage = () => {
             <h3 className="title">LOG IN</h3>
             <Formik
                 initialValues={{
-                    userName: '',
+                    name: '',
                     password: ''
                 }}
                 validationSchema={Yup.object({
-                    userName: Yup.string().required('Required'),
+                    name: Yup.string().required('Required'),
                     password: Yup.string().required('Required'),
                 })}
                 onSubmit={onSubmit}>
                 <Form>
                     <div className="field">
-                        <label className="label" htmlFor="userName">Name</label>
+                        <label className="label" htmlFor="name">Name</label>
                         <div className="control">
-                            <Field name="userName" type="text" data-testid="userName" autoFocus />
+                            <Field name="name" type="text" data-testid="name" autoFocus />
                         </div>
-                        <p className="help is-danger" data-testid="userNameErrors">
-                            <ErrorMessage name="userName" />
+                        <p className="help is-danger" data-testid="nameErrors">
+                            <ErrorMessage name="name" />
                         </p>
                     </div>
 

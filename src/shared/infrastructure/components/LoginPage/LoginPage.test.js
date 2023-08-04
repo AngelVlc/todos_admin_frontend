@@ -55,14 +55,14 @@ describe("LoginPage", () => {
       fireEvent.click(getByTestId("submit"));
     });
 
-    expect(getByTestId("userNameErrors")).toHaveTextContent("Required");
+    expect(getByTestId("nameErrors")).toHaveTextContent("Required");
     expect(getByTestId("passwordErrors")).toHaveTextContent("Required");
   });
 
   it("should show the error when log in fails", async () => {
     const { getByTestId } = renderWithContextAndRouter();
 
-    await changeInput(getByTestId, "userName", "user");
+    await changeInput(getByTestId, "name", "user");
     await changeInput(getByTestId, "password", "pass");
 
     axios.post.mockRejectedValue("some error");
@@ -74,7 +74,7 @@ describe("LoginPage", () => {
     expect(axios.post).toHaveBeenCalled();
     expect(axios.post.mock.calls[0][0]).toBe("/auth/login");
     expect(axios.post.mock.calls[0][1]).toStrictEqual({
-      userName: "user",
+      name: "user",
       password: "pass",
     });
     expect(getByTestId("authError")).toHaveTextContent("some error");
@@ -84,13 +84,13 @@ describe("LoginPage", () => {
   it("should show the home page after logging in", async () => {
     const { getByTestId } = renderWithContextAndRouter();
 
-    await changeInput(getByTestId, "userName", "user");
+    await changeInput(getByTestId, "name", "user");
     await changeInput(getByTestId, "password", "pass");
 
     axios.post.mockResolvedValue({
       data: {
-        userId: 1,
-        userName: "userName",
+        id: 1,
+        name: "name",
         isAdmin: true,
       },
     });
@@ -103,14 +103,14 @@ describe("LoginPage", () => {
     expect(axios.post.mock.calls[0][0]).toBe("/auth/login");
     expect(axios.post.mock.calls[0][1]).toStrictEqual({
       password: "pass",
-      userName: "user",
+      name: "user",
     });
     expect(window.localStorage.setItem.mock.calls.length).toBe(2);
     expect(window.localStorage.setItem.mock.calls[0][0]).toBe("userInfo");
     expect(window.localStorage.setItem.mock.calls[0][1]).toBe(null);
     expect(window.localStorage.setItem.mock.calls[1][0]).toBe("userInfo");
     expect(window.localStorage.setItem.mock.calls[1][1]).toBe(
-      JSON.stringify({ userId: 1, userName: "userName", isAdmin: true })
+      JSON.stringify({ id: 1, name: "name", isAdmin: true })
     );
     expect(mockHistoryPush).toHaveBeenCalled();
     expect(mockHistoryPush.mock.calls[0][0]).toBe("/");

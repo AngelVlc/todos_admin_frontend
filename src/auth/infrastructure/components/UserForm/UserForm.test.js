@@ -100,7 +100,7 @@ describe("UserForm", () => {
       fireEvent.click(getByTestId("submit"));
     });
 
-    expect(getByTestId("userNameErrors")).toHaveTextContent("Required");
+    expect(getByTestId("nameErrors")).toHaveTextContent("Required");
   });
 
   it("should update an existing user", async () => {

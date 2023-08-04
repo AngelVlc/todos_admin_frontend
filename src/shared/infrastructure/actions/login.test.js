@@ -3,16 +3,16 @@ import { userLoggedIn, userLoggedOut } from ".";
 describe("#userLoggedIn", () => {
   it("should generate user logged in action", () => {
     const action = userLoggedIn({
-      userName: "name",
-      userId: 11,
+      name: "name",
+      id: 11,
       isAdmin: true,
     });
 
     expect(action).toEqual({
       type: "USER_LOGGED_IN",
       authInfo: {
-        userName: "name",
-        userId: 11,
+        name: "name",
+        id: 11,
         isAdmin: true,
       },
     });

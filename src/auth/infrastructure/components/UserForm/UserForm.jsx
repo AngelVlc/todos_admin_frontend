@@ -42,7 +42,7 @@ export const UserForm = (props) => {
           <div className="control">
             <Field name="name" type="text" data-testid="name" autoFocus />
           </div>
-          <p className="help is-danger" data-testid="userNameErrors">
+          <p className="help is-danger" data-testid="nameErrors">
             <ErrorMessage name="name" />
           </p>
         </div>

@@ -47,7 +47,7 @@ export const Header = () => {
                     <div className="navbar-item">
                         <div className="buttons">
                             <button className="button is-light is-small" data-testid="logOut" onClick={() => onLogoutClick()}>
-                                <span>{auth.info.userName}</span>
+                                <span>{auth.info.name}</span>
                                 <span className="icon is-small">
                                     <i className="fas fa-sign-out-alt"></i>
                                 </span>
