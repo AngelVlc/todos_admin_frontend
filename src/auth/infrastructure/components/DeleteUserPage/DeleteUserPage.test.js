@@ -59,7 +59,7 @@ describe("DeleteUserPage", () => {
       expect(fragment()).toMatchSnapshot();
     });
 
-    it("should cancel the deletion", async () => {
+    it("when click on cancel should cancel the deletion", async () => {
       let container;
       await act(async () => {
         container = renderWithContextAndRouter(false);
@@ -73,7 +73,7 @@ describe("DeleteUserPage", () => {
       mockHistoryGoBack.mockClear();
     });
 
-    it("should delete a user", async () => {
+    it("when click on yes should delete a user", async () => {
       let container;
       await act(async () => {
         container = renderWithContextAndRouter(false);

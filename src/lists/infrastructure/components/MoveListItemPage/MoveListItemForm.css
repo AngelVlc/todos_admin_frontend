@@ -1,0 +1,10 @@
+.radio-list {
+  .radio {
+    display: block;
+
+    & + .radio {
+      margin-left: 0;
+      margin-top: .5em;
+    }
+  }
+}

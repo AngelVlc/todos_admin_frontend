@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MoveListItemPage should match the snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="container"
+  >
+    <nav
+      aria-label="breadcrumbs"
+      class="breadcrumb"
+    >
+      <ul>
+        <li>
+          <a
+            href="/"
+          >
+            Home
+          </a>
+        </li>
+        <li>
+          <a
+            href="/lists"
+          >
+            Lists
+          </a>
+        </li>
+        <li>
+          <a
+            href="/lists/2/edit"
+          >
+            ListName
+          </a>
+        </li>
+        <li
+          class="is-active"
+        >
+          <a
+            aria-current="page"
+            href="/lists/2/moveItem"
+          >
+            Move Item
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <h3
+      class="title"
+    >
+      Move list item title
+    </h3>
+    <div
+      class="control radio-list ml-4 mb-5"
+    >
+      <div
+        class="mb-3"
+      >
+        <label
+          class="radio"
+        >
+          <input
+            class="mr-2"
+            data-testid="radio-20"
+            name="destination"
+            type="radio"
+            value="20"
+          />
+          Another list (2 items)
+        </label>
+      </div>
+      <div
+        class="mb-3"
+      >
+        <label
+          class="radio"
+        >
+          <input
+            class="mr-2"
+            data-testid="radio-30"
+            name="destination"
+            type="radio"
+            value="30"
+          />
+          Another more (3 items)
+        </label>
+      </div>
+    </div>
+    <div
+      class="buttons"
+    >
+      <button
+        class="button is-danger"
+        data-testid="yes"
+      >
+        YES
+      </button>
+      <button
+        class="button"
+        data-testid="no"
+      >
+        NO
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;
