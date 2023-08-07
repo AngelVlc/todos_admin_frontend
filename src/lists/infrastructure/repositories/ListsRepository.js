@@ -48,4 +48,15 @@ export class ListsRepository {
       return res.data;
     }
   }
+
+  async moveListItem(originListId, itemId, destinationListId) {
+    const body = {
+      originListItemId: itemId,
+      destinationListItemId: destinationListId
+    }
+
+    const res = await axios.post(`lists/${originListId}/move-item`, body);
+
+    return res.status === 200;
+  }
 }

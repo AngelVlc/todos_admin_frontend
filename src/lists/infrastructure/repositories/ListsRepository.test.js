@@ -26,7 +26,7 @@ describe("ListsRepository", () => {
       expect(result).toBe(true);
     });
 
-    it("does a http delete request returns false if the response does not have a 204 status", async () => {
+    it("does a http delete request and returns false if the response does not have a 204 status", async () => {
       axios.delete.mockResolvedValue({ status: 500 });
 
       const result = await new ListsRepository().deleteById(1);
@@ -62,7 +62,7 @@ describe("ListsRepository", () => {
       expect(result).toStrictEqual({ id: 1 });
     });
 
-    it("does a http post request returns undefined if the response does not have a 201 status", async () => {
+    it("does a http post request and returns undefined if the response does not have a 201 status", async () => {
       axios.post.mockResolvedValue({ data: { id: 1 }, status: 500 });
 
       const result = await new ListsRepository().create({
@@ -96,7 +96,7 @@ describe("ListsRepository", () => {
       expect(result).toStrictEqual({ id: 1 });
     });
 
-    it("does a http put request returns undefined if the response does not have a 200 status", async () => {
+    it("does a http put request and returns undefined if the response does not have a 200 status", async () => {
       axios.patch.mockResolvedValue({ data: { id: 5 }, status: 500 });
 
       const result = await new ListsRepository().update({
@@ -116,6 +116,25 @@ describe("ListsRepository", () => {
         items: [{ title: "new" }, { id: 2, title: "existing" }],
       });
       expect(result).toBe(undefined);
+    });
+  });
+
+  describe("#moveListItem", () => {
+    it("does a http post request and returns true if the response has a 200 status", async () => {
+      axios.post.mockResolvedValue({ status: 200 });
+
+      const result = await new ListsRepository().moveListItem(1, 11, 2);
+      expect(result).toBe(true);
+    });
+
+    it("does a http post request and returns false if the response does not have a 200 status", async () => {
+      axios.post.mockResolvedValue({ status: 500 });
+
+      const result = await new ListsRepository().moveListItem(1, 11, 2);
+
+      expect(axios.post).toHaveBeenCalled();
+      expect(axios.post.mock.calls[0][0]).toBe("lists/1/move-item");
+      expect(result).toBe(false);
     });
   });
 });

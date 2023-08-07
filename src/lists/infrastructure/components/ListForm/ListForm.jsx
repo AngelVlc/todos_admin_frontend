@@ -199,9 +199,12 @@ export const ListForm = (props) => {
                                   </div>
                                   <div className="is-justify-content-flex-end">
                                     <center>
+                                     <span className="icon has-text-grey-light is-clickable" onClick={() => history.push(`/lists/${props.list.id}/moveItem/${item.id}`)}>
+                                        <i className="fas fa-dolly"></i>
+                                      </span>
                                       <button
                                         type="button"
-                                        className="has-text-black delete"
+                                        className="has-text-black delete ml-2"
                                         data-testid={`deleteListItem${item.id}`}
                                         onClick={() => onDeleteListItem(item)}
                                       ></button>
