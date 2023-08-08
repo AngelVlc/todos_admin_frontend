@@ -199,12 +199,12 @@ export const ListForm = (props) => {
                                   </div>
                                   <div className="is-justify-content-flex-end">
                                     <center>
-                                     <span className="icon has-text-grey-light is-clickable" onClick={() => history.push(`/lists/${props.list.id}/moveItem/${item.id}`)}>
-                                        <i className="fas fa-dolly"></i>
+                                     <span className="icon is-clickable rounded-button" onClick={() => history.push(`/lists/${props.list.id}/moveItem/${item.id}`)}>
+                                        <i className="fas fa-dolly fa-xs"></i>
                                       </span>
                                       <button
                                         type="button"
-                                        className="has-text-black delete ml-2"
+                                        className="delete ml-2"
                                         data-testid={`deleteListItem${item.id}`}
                                         onClick={() => onDeleteListItem(item)}
                                       ></button>

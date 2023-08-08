@@ -101,7 +101,6 @@ describe("MoveListItemPage", () => {
     });
 
     expect(mockedMoveListItemUseCase.execute).toHaveBeenCalled();
-    console.log("#######", mockedMoveListItemUseCase.execute.mock.calls[0])
     expect(mockedMoveListItemUseCase.execute.mock.calls[0][0]).toBe(2);
     expect(mockedMoveListItemUseCase.execute.mock.calls[0][1]).toBe(5);
     expect(mockedMoveListItemUseCase.execute.mock.calls[0][2]).toBe(30);
