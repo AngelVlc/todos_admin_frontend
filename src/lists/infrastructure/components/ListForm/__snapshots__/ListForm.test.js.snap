@@ -198,14 +198,14 @@ exports[`ListForm when the list already exist should match the snapshot 1`] = `
             >
               <center>
                 <span
-                  class="icon has-text-grey-light is-clickable"
+                  class="icon is-clickable rounded-button"
                 >
                   <i
-                    class="fas fa-dolly"
+                    class="fas fa-dolly fa-xs"
                   />
                 </span>
                 <button
-                  class="has-text-black delete ml-2"
+                  class="delete ml-2"
                   data-testid="deleteListItem5"
                   type="button"
                 />
@@ -239,14 +239,14 @@ exports[`ListForm when the list already exist should match the snapshot 1`] = `
             >
               <center>
                 <span
-                  class="icon has-text-grey-light is-clickable"
+                  class="icon is-clickable rounded-button"
                 >
                   <i
-                    class="fas fa-dolly"
+                    class="fas fa-dolly fa-xs"
                   />
                 </span>
                 <button
-                  class="has-text-black delete ml-2"
+                  class="delete ml-2"
                   data-testid="deleteListItem6"
                   type="button"
                 />

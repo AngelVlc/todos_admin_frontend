@@ -2,3 +2,13 @@
   border: 1px solid lightgrey;
   border-radius: 2px;
 }
+
+.rounded-button {
+  background-color: rgba(10, 10, 10, 0.2);
+  border: none;
+  border-radius: 9999px;
+  color: white;
+  height: 20px;
+  width: 20px;
+  vertical-align: top;
+}
