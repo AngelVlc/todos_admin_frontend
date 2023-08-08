@@ -34,50 +34,36 @@ exports[`Header should match the snapshot when an admin user is logged in 1`] = 
         class="navbar-start"
       >
         <span
-          class="navbar-item"
+          class="navbar-item is-clickable"
           data-testid="goToRoot"
         >
           Home
         </span>
         <span
-          class="navbar-item"
+          class="navbar-item is-clickable"
           data-testid="goToLists"
         >
           Lists
         </span>
         <span
-          class="navbar-item"
+          class="navbar-item is-clickable"
           data-testid="goToUsers"
         >
           Users
         </span>
       </div>
-    </div>
-    <div
-      class="navbar-end"
-    >
       <div
-        class="navbar-item"
+        class="navbar-end"
       >
-        <div
-          class="buttons"
+        <hr
+          class="my-0"
+        />
+        <span
+          class="navbar-item is-clickable"
+          data-testid="logOut"
         >
-          <button
-            class="button is-light is-small"
-            data-testid="logOut"
-          >
-            <span>
-              admin
-            </span>
-            <span
-              class="icon is-small"
-            >
-              <i
-                class="fas fa-sign-out-alt"
-              />
-            </span>
-          </button>
-        </div>
+          Log Out admin
+        </span>
       </div>
     </div>
   </nav>
@@ -118,44 +104,30 @@ exports[`Header should match the snapshot when the user is logged in 1`] = `
         class="navbar-start"
       >
         <span
-          class="navbar-item"
+          class="navbar-item is-clickable"
           data-testid="goToRoot"
         >
           Home
         </span>
         <span
-          class="navbar-item"
+          class="navbar-item is-clickable"
           data-testid="goToLists"
         >
           Lists
         </span>
       </div>
-    </div>
-    <div
-      class="navbar-end"
-    >
       <div
-        class="navbar-item"
+        class="navbar-end"
       >
-        <div
-          class="buttons"
+        <hr
+          class="my-0"
+        />
+        <span
+          class="navbar-item is-clickable"
+          data-testid="logOut"
         >
-          <button
-            class="button is-light is-small"
-            data-testid="logOut"
-          >
-            <span>
-              user
-            </span>
-            <span
-              class="icon is-small"
-            >
-              <i
-                class="fas fa-sign-out-alt"
-              />
-            </span>
-          </button>
-        </div>
+          Log Out user
+        </span>
       </div>
     </div>
   </nav>

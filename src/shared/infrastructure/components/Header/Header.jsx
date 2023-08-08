@@ -33,29 +33,21 @@ export const Header = () => {
                 <div className="navbar-start">
                     {auth.info &&
                         <>
-                            <span className="navbar-item" data-testid="goToRoot" onClick={() => history.push('/')}>Home</span>
-                            <span className="navbar-item" data-testid="goToLists" onClick={() => history.push('/lists')}>Lists</span>
+                            <span className="navbar-item is-clickable" data-testid="goToRoot" onClick={() => history.push('/')}>Home</span>
+                            <span className="navbar-item is-clickable" data-testid="goToLists" onClick={() => history.push('/lists')}>Lists</span>
                         </>
                     }
                     {auth.info?.isAdmin &&
-                        <span className="navbar-item" data-testid="goToUsers" onClick={() => history.push('/users')}>Users</span>
+                        <span className="navbar-item is-clickable" data-testid="goToUsers" onClick={() => history.push('/users')}>Users</span>
                     }
                 </div>
-            </div>
-            {auth.info &&
-                <div className="navbar-end">
-                    <div className="navbar-item">
-                        <div className="buttons">
-                            <button className="button is-light is-small" data-testid="logOut" onClick={() => onLogoutClick()}>
-                                <span>{auth.info.name}</span>
-                                <span className="icon is-small">
-                                    <i className="fas fa-sign-out-alt"></i>
-                                </span>
-                            </button>
-                        </div>
+                {auth.info &&
+                    <div className="navbar-end">
+                        <hr className="my-0"></hr>
+                        <span className="navbar-item is-clickable" data-testid="logOut" onClick={() => onLogoutClick()}>Log Out {auth.info.name}</span>
                     </div>
-                </div>
-            }
+                }
+            </div>
         </nav>
     )
 }
