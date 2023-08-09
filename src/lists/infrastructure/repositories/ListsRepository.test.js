@@ -133,7 +133,7 @@ describe("ListsRepository", () => {
       const result = await new ListsRepository().moveListItem(1, 11, 2);
 
       expect(axios.post).toHaveBeenCalled();
-      expect(axios.post.mock.calls[0][0]).toBe("lists/1/move-item");
+      expect(axios.post.mock.calls[0][0]).toBe("lists/1/move_item");
       expect(result).toBe(false);
     });
   });

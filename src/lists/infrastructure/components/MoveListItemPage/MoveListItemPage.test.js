@@ -55,8 +55,8 @@ const renderWithContextAndRouter = () => {
   return {
     ...render(
       <AppContext.Provider value={context}>
-        <MemoryRouter initialEntries={[`/lists/2/move-item/5`]}>
-          <Route path="/lists/:listId/move-item/:listItemId">{<MoveListItemPage />}</Route>
+        <MemoryRouter initialEntries={[`/lists/2/move_item/5`]}>
+          <Route path="/lists/:listId/move_item/:listItemId">{<MoveListItemPage />}</Route>
         </MemoryRouter>
       </AppContext.Provider>
     ),
