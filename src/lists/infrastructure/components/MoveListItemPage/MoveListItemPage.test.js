@@ -6,13 +6,11 @@ import { act } from "react-dom/test-utils";
 import { List } from "../../../domain";
 import { GetListByIdUseCase, GetListsUseCase, MoveListItemUseCase } from "../../../application/lists";
 
-const mockHistoryGoBack = jest.fn();
 const mockHistoryPush = jest.fn();
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
   useHistory: () => ({
-    goBack: mockHistoryGoBack,
     push: mockHistoryPush,
   }),
 }));
@@ -83,8 +81,9 @@ describe("MoveListItemPage", () => {
       fireEvent.click(container.getByTestId("no"));
     });
 
-    expect(mockHistoryGoBack).toHaveBeenCalled();
-    mockHistoryGoBack.mockClear();
+    expect(mockHistoryPush).toHaveBeenCalled();
+    expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/2/edit");
+    mockHistoryPush.mockClear();
   });
 
   it("when click on yes should move the list item", async () => {

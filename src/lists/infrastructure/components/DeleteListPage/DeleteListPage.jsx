@@ -6,6 +6,7 @@ import {
   GetListByIdUseCase,
   DeleteListByIdUseCase,
 } from "../../../application/lists";
+import { YesNoButtons } from "../../../../shared/infrastructure/components/YesNoButtons";
 
 export const DeleteListPage = () => {
   const [list, setList] = useState();
@@ -39,27 +40,11 @@ export const DeleteListPage = () => {
           <Breadcrumb
             items={[
               { url: "/lists", text: "Lists" },
-              { url:`/lists/${listId}/edit`, text: list.name },
               { url: `/lists/${listId}/delete`, text: 'Delete' },
             ]}
           />
           <h3 className="title">{`Delete list ${list.name}`}</h3>
-          <div className="buttons">
-            <button
-              className="button is-danger"
-              data-testid="yes"
-              onClick={() => deleteList()}
-            >
-              YES
-            </button>
-            <button
-              className="button"
-              data-testid="no"
-              onClick={() => history.goBack()}
-            >
-              NO
-            </button>
-          </div>
+          <YesNoButtons onYes={deleteList} onNo={() => history.push('/lists')}/>
         </div>
       )}
     </>

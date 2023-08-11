@@ -6,13 +6,11 @@ import { act } from "react-dom/test-utils";
 import { GetListByIdUseCase } from "../../../application/lists";
 import { List } from "../../../domain";
 
-const mockHistoryGoBack = jest.fn();
 const mockHistoryPush = jest.fn();
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
   useHistory: () => ({
-    goBack: mockHistoryGoBack,
     push: mockHistoryPush,
   }),
 }));
@@ -68,8 +66,9 @@ describe("DeleteListPage", () => {
       fireEvent.click(container.getByTestId("no"));
     });
 
-    expect(mockHistoryGoBack).toHaveBeenCalled();
-    mockHistoryGoBack.mockClear();
+    expect(mockHistoryPush).toHaveBeenCalled();
+    expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists");
+    mockHistoryPush.mockClear();
   });
 
   it("when click on yes should delete the List", async () => {

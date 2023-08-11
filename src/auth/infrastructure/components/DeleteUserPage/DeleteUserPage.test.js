@@ -6,13 +6,11 @@ import { act } from "react-dom/test-utils";
 import { User } from "../../../domain";
 import { GetUserByIdUseCase } from "../../../application/users";
 
-const mockHistoryGoBack = jest.fn();
 const mockHistoryPush = jest.fn();
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
   useHistory: () => ({
-    goBack: mockHistoryGoBack,
     push: mockHistoryPush,
   }),
 }));
@@ -69,8 +67,9 @@ describe("DeleteUserPage", () => {
         fireEvent.click(container.getByTestId("no"));
       });
 
-      expect(mockHistoryGoBack).toHaveBeenCalled();
-      mockHistoryGoBack.mockClear();
+      expect(mockHistoryPush).toHaveBeenCalled();
+      expect(mockHistoryPush.mock.calls[0][0]).toBe("/users");
+      mockHistoryPush.mockClear();
     });
 
     it("when click on yes should delete a user", async () => {
