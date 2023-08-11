@@ -36,7 +36,7 @@ const renderWithContextAndRouter = (isAdmin) => {
     ...render(
       <AppContext.Provider value={context}>
         <MemoryRouter initialEntries={[`/users/2/delete`]}>
-          <Route path="/users/:userId/delete">{<DeleteUserPage />}</Route>
+          <Route path="/users/:userId/delete"><DeleteUserPage /></Route>
         </MemoryRouter>
       </AppContext.Provider>
     ),

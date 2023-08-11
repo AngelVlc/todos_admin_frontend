@@ -1,10 +1,8 @@
 import { render, cleanup, fireEvent, waitFor } from "@testing-library/react";
-import { DeleteListPage } from "./DeleteListPage";
+import { IndexAllListsPage } from "./IndexAllListsPage";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { MemoryRouter, Route } from "react-router-dom";
 import { act } from "react-dom/test-utils";
-import { GetListByIdUseCase } from "../../../application/lists";
-import { List } from "../../../domain";
 
 const mockHistoryPush = jest.fn();
 
@@ -15,31 +13,25 @@ jest.mock("react-router-dom", () => ({
   }),
 }));
 
-const mockedGetListByIdUseCase = {
+const mockedIndexAllUseCase = {
   execute: jest.fn(),
 };
 
-const mockedDeleteListByIdUseCase = {
-  execute: jest.fn(),
-};
-
-const useCaseFactory = {
-  get: (useCase) =>
-    useCase == GetListByIdUseCase
-      ? mockedGetListByIdUseCase
-      : mockedDeleteListByIdUseCase,
-};
 
 const renderWithContextAndRouter = () => {
-  mockedGetListByIdUseCase.execute.mockResolvedValue(
-    new List({ id: 2, name: "ListName" })
-  );
+  const useCaseFactory = {
+    get: () => mockedIndexAllUseCase,
+  };
+
   const context = { auth: { info: {} }, useCaseFactory };
+
   return {
     ...render(
       <AppContext.Provider value={context}>
-        <MemoryRouter initialEntries={[`/lists/2/delete`]}>
-          <Route path="/lists/:listId/delete"><DeleteListPage /></Route>
+        <MemoryRouter initialEntries={['/']}>
+          <Route>
+            <IndexAllListsPage />
+          </Route>
         </MemoryRouter>
       </AppContext.Provider>
     ),
@@ -48,7 +40,7 @@ const renderWithContextAndRouter = () => {
 
 afterEach(cleanup);
 
-describe("DeleteListPage", () => {
+describe("IndexAllListsPage", () => {
   it("should match the snapshot", async () => {
     let fragment;
     await act(async () => {
@@ -59,7 +51,7 @@ describe("DeleteListPage", () => {
     expect(fragment()).toMatchSnapshot();
   });
 
-  it("when click on cancel should cancel the deletion", async () => {
+  it("when click on cancel should cancel the indexing", async () => {
     const container = renderWithContextAndRouter();
 
     await waitFor(() => {
@@ -67,23 +59,23 @@ describe("DeleteListPage", () => {
     });
 
     expect(mockHistoryPush).toHaveBeenCalled();
-    expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists");
+    expect(mockHistoryPush.mock.calls[0][0]).toBe("/");
     mockHistoryPush.mockClear();
   });
 
-  it("when click on yes should delete the List", async () => {
+  it("when click on yes should index all the List", async () => {
     const container = renderWithContextAndRouter();
 
-    mockedDeleteListByIdUseCase.execute.mockResolvedValue(true);
+    mockedIndexAllUseCase.execute.mockResolvedValue(true);
 
     await waitFor(() => {
       fireEvent.click(container.getByTestId("yes"));
     });
 
-    expect(mockedDeleteListByIdUseCase.execute).toHaveBeenCalled();
-    expect(mockedDeleteListByIdUseCase.execute.mock.calls[0][0]).toBe("2");
+    expect(mockedIndexAllUseCase.execute).toHaveBeenCalled();
+    expect(mockedIndexAllUseCase.execute.mock.calls[0][0]).toBe(undefined);
     expect(mockHistoryPush).toHaveBeenCalled();
-    expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists");
+    expect(mockHistoryPush.mock.calls[0][0]).toBe("/");
     mockHistoryPush.mockClear();
   });
 });

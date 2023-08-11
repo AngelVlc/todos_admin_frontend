@@ -59,4 +59,10 @@ export class ListsRepository {
 
     return res.status === 200;
   }
+
+  async indexAllLists() {
+    const res = await axios.post('tools/index-lists');
+
+    return res.status === 204;
+  }
 }

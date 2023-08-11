@@ -57,8 +57,6 @@ export const MoveListItemPage = () => {
     if (result) {
       history.push(`/lists/${listId}`);
     }
-
-    console.log(selectedDestination);
   };
 
   return (

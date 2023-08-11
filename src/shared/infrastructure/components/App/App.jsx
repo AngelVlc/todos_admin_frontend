@@ -16,6 +16,7 @@ import { UsersPage } from '../../../../auth/infrastructure/components/UsersPage'
 import { NewUserPage } from '../../../../auth/infrastructure/components/NewUserPage';
 import { EditUserPage } from '../../../../auth/infrastructure/components/EditUserPage';
 import { RefreshTokensPage } from '../../../../auth/infrastructure/components/RefreshTokensPage';
+import { IndexAllListsPage } from '../../../../lists/infrastructure/components/IndexAllListsPage';
 import { createBrowserHistory } from 'history';
 import { loginReducer, requestsReducer } from '../../reducers';
 import { AppContext } from '../../contexts';
@@ -77,6 +78,7 @@ const App = () => {
               <AdminRoute path="/users/:userId/edit" component={EditUserPage} />
               <AdminRoute path="/users/new" component={NewUserPage} />
               <AdminRoute exact path="/refreshtokens" component={RefreshTokensPage} />
+              <AdminRoute exact path="/index-all-lists" component={IndexAllListsPage} />
               <Route path="/login">
                 <LoginPage />
               </Route>

@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IndexAllListsPage should match the snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="container"
+  >
+    <nav
+      aria-label="breadcrumbs"
+      class="breadcrumb"
+    >
+      <ul>
+        <li>
+          <a
+            href="/"
+          >
+            Home
+          </a>
+        </li>
+        <li
+          class="is-active"
+        >
+          <a
+            aria-current="page"
+            href="/index-all-lists"
+          >
+            Index All Lists
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <h3
+      class="title"
+    >
+      Index All Lists
+    </h3>
+    <div
+      class="buttons"
+    >
+      <button
+        class="button is-danger"
+        data-testid="yes"
+      >
+        YES
+      </button>
+      <button
+        class="button"
+        data-testid="no"
+      >
+        NO
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;

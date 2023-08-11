@@ -49,7 +49,7 @@ const renderWithContextAndRouter = () => {
   return {
     ...render(
       <AppContext.Provider value={context}>
-        <Router history={history}>{<RefreshTokensPage />}</Router>
+        <Router history={history}><RefreshTokensPage /></Router>
       </AppContext.Provider>
     ),
   };

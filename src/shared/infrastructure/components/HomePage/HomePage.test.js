@@ -18,7 +18,7 @@ const renderWithRouterAndContext = (auth) => {
   return {
     ...render(
       <AppContext.Provider value={context}>
-        <Router history={history}>{<HomePage />}</Router>
+        <Router history={history}><HomePage /></Router>
       </AppContext.Provider>
     ),
   };
