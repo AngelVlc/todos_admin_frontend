@@ -74,7 +74,7 @@ describe("LoginPage", () => {
     expect(axios.post).toHaveBeenCalled();
     expect(axios.post.mock.calls[0][0]).toBe("/auth/login");
     expect(axios.post.mock.calls[0][1]).toStrictEqual({
-      name: "user",
+      username: "user",
       password: "pass",
     });
     expect(getByTestId("authError")).toHaveTextContent("some error");
@@ -103,7 +103,7 @@ describe("LoginPage", () => {
     expect(axios.post.mock.calls[0][0]).toBe("/auth/login");
     expect(axios.post.mock.calls[0][1]).toStrictEqual({
       password: "pass",
-      name: "user",
+      username: "user",
     });
     expect(window.localStorage.setItem.mock.calls.length).toBe(2);
     expect(window.localStorage.setItem.mock.calls[0][0]).toBe("userInfo");
