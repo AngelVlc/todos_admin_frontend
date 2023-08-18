@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HitComponent should match the snapshot 1`] = `
+<DocumentFragment>
+  <article>
+    <span
+      class="ais-Highlight"
+    >
+      <mark
+        class="ais-Highlight-highlighted"
+      >
+        list
+      </mark>
+      <span
+        class="ais-Highlight-nonHighlighted"
+      >
+        name
+      </span>
+    </span>
+  </article>
+</DocumentFragment>
+`;

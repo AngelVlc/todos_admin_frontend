@@ -5,6 +5,7 @@ import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
 import { act } from "react-dom/test-utils";
 import { List } from "../../../domain";
+import { GetSearchSecureKeyUseCase } from "../../../application/lists";
 
 afterEach(cleanup);
 
@@ -27,8 +28,15 @@ const renderWithContextAndRouter = () => {
     ],
   };
 
+  const fakeGetSearchSecureKeyUseCase = {
+    execute: () => "",
+  };
+
   const useCaseFactory = {
-    get: () => fakeGetListsUseCase,
+    get: (useCase) =>
+      useCase == GetSearchSecureKeyUseCase
+        ? fakeGetSearchSecureKeyUseCase
+        : fakeGetListsUseCase,
   };
 
   const context = { auth: { info: {} }, useCaseFactory };

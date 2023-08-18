@@ -10,7 +10,7 @@ const mockedOnModalClose = jest.fn();
 const renderModal = () => {
   return {
     ...render(
-      <Modal ref={modalRef} closeHandler={mockedOnModalClose}>
+      <Modal ref={modalRef} closeHandler={mockedOnModalClose} showOk={true}>
         <p>Modal content</p>
       </Modal>
     ),

@@ -5,3 +5,4 @@ export * from "./CreateListUseCase";
 export * from "./UpdateListUseCase";
 export * from "./MoveListItemUseCase";
 export * from "./IndexAllListsUseCase";
+export * from "./GetSearchSecureKeyUseCase";

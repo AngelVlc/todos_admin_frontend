@@ -65,4 +65,10 @@ export class ListsRepository {
 
     return res.status === 204;
   }
+
+  async getSearchSecureKey() {
+    const res = await axios.get('lists/search-key');
+
+    return res.data;
+  }
 }

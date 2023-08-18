@@ -1,13 +1,17 @@
-import React, { useEffect, useState, useContext, useCallback } from "react";
+import React, { useEffect, useState, useContext, useCallback, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
-import { GetListsUseCase } from "../../../application/lists";
+import { GetListsUseCase, GetSearchSecureKeyUseCase } from "../../../application/lists";
 import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb";
+import { Modal } from "../../../../shared/infrastructure/components/Modal";
+import { SearchListsComponent } from "../ListsSearch";
 
 export const ListsPage = () => {
   const [lists, setLists] = useState();
+  const [searchSecureKey, setSearchSecureKey] = useState();
   const { useCaseFactory } = useContext(AppContext);
   let history = useHistory();
+  const searchListRef = useRef();
 
   const getLists = useCallback(async () => {
     const getListsUseCase = useCaseFactory.get(GetListsUseCase);
@@ -16,16 +20,36 @@ export const ListsPage = () => {
     setLists(data);
   }, [useCaseFactory]);
 
+  const getSearchSecureKey = useCallback(async () => {
+    const getSearchSecureKeyUseCase = useCaseFactory.get(
+      GetSearchSecureKeyUseCase
+    );
+    const key = await getSearchSecureKeyUseCase.execute();
+
+    setSearchSecureKey(key);
+  }, [useCaseFactory]);
+
   useEffect(() => {
     getLists();
   }, [getLists]);
+
+  useEffect(() => {
+    getSearchSecureKey();
+  }, [getSearchSecureKey]);
 
   const onNewClick = () => {
     history.push("/lists/new");
   };
 
+  const onSearchClick = () => {
+    searchListRef.current.showModal();
+  }
+
   return (
     <>
+      <Modal ref={searchListRef} showOk={false}>
+        <SearchListsComponent searchSecureKey={searchSecureKey} />
+      </Modal>
       {lists && (
         <div className="container">
           <Breadcrumb items={[{ url: "/lists", text: "Lists" }]} />
@@ -36,6 +60,15 @@ export const ListsPage = () => {
                 <td>Name</td>
                 <td># Items</td>
                 <td>
+                  <button
+                    className="button is-small mr-2"
+                    data-testid="search"
+                    onClick={() => onSearchClick()}
+                  >
+                    <span className="icon is-small">
+                      <i className="fas fa-search"></i>
+                    </span>
+                  </button>
                   <button
                     className="button is-small"
                     data-testid="addNew"

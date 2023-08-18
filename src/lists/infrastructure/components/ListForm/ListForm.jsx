@@ -114,7 +114,7 @@ export const ListForm = (props) => {
 
   return (
     <>
-      <Modal ref={itemFormModalRef} closeHandler={onItemModalClose}>
+      <Modal ref={itemFormModalRef} closeHandler={onItemModalClose} showOk={true}>
         <ListItemForm ref={itemFormRef} onSubmit={onSubmitItemForm} />
       </Modal>
       <Formik

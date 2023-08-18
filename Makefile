@@ -8,7 +8,12 @@ test-ci:
 	docker run -it --rm --env CI=true todos_base npm test
 
 build-release:
-	docker build --target release -t todos_release --build-arg BACKEND_URL=${BACKEND_URL} --build-arg COMMIT_SHA=${COMMIT_SHA} --build-arg BUILD_DATE=${BUILD_DATE}.
+	docker build --target release -t todos_release \
+	--build-arg BACKEND_URL=${BACKEND_URL} \
+	--build-arg COMMIT_SHA=${COMMIT_SHA} \
+	--build-arg BUILD_DATE=${BUILD_DATE} \
+	--build-arg ALGOLIA_APP_ID=${ALGOLIA_APP_ID}
+	.
 
 console:
 	docker run -it --rm todos_base sh
