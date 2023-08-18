@@ -17,8 +17,7 @@ jest.mock("react-router-dom", () => ({
 
 const itemFormRef = React.createRef();
 
-// const onSubmit = jest.fn();
-const onSubmit = () => { console.log("########### on Submit") }
+const onSubmit = jest.fn();
 
 const renderWithContextAndRouterForExistingItem = () => {
   const context = { auth: { info: {} } };

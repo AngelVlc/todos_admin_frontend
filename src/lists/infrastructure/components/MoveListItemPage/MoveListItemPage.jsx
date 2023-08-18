@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext, useCallback } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb";
+import { YesNoButtons } from "../../../../shared/infrastructure/components/YesNoButtons";
 import {
   GetListByIdUseCase,
   GetListsUseCase,
@@ -56,8 +57,6 @@ export const MoveListItemPage = () => {
     if (result) {
       history.push(`/lists/${listId}`);
     }
-
-    console.log(selectedDestination);
   };
 
   return (
@@ -96,22 +95,7 @@ export const MoveListItemPage = () => {
                   ))}
             </>
           </div>
-          <div className="buttons">
-            <button
-              className="button is-danger"
-              data-testid="yes"
-              onClick={() => moveListItem()}
-            >
-              YES
-            </button>
-            <button
-              className="button"
-              data-testid="no"
-              onClick={() => history.goBack()}
-            >
-              NO
-            </button>
-          </div>
+          <YesNoButtons onYes={moveListItem} onNo={() => history.push(`/lists/${listId}/edit`)}/>
         </div>
       )}
     </>

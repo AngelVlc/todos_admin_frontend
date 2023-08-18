@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DeleteListPage should match the snapshot 1`] = `
+exports[`IndexAllListsPage should match the snapshot 1`] = `
 <DocumentFragment>
   <div
     class="container"
@@ -17,21 +17,14 @@ exports[`DeleteListPage should match the snapshot 1`] = `
             Home
           </a>
         </li>
-        <li>
-          <a
-            href="/lists"
-          >
-            Lists
-          </a>
-        </li>
         <li
           class="is-active"
         >
           <a
             aria-current="page"
-            href="/lists/2/delete"
+            href="/index-all-lists"
           >
-            Delete
+            Index All Lists
           </a>
         </li>
       </ul>
@@ -39,7 +32,7 @@ exports[`DeleteListPage should match the snapshot 1`] = `
     <h3
       class="title"
     >
-      Delete list ListName
+      Index All Lists
     </h3>
     <div
       class="buttons"

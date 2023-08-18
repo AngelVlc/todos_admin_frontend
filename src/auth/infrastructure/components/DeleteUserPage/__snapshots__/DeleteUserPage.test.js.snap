@@ -24,13 +24,6 @@ exports[`DeleteUserPage when the user is an admin should match the snapshot when
             Users
           </a>
         </li>
-        <li>
-          <a
-            href="/users/2/edit"
-          >
-            user
-          </a>
-        </li>
         <li
           class="is-active"
         >
@@ -90,13 +83,6 @@ exports[`DeleteUserPage when the user is not an admin should match the snapshot 
             href="/users"
           >
             Users
-          </a>
-        </li>
-        <li>
-          <a
-            href="/users/2/edit"
-          >
-            user
           </a>
         </li>
         <li

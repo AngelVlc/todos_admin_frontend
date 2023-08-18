@@ -33,6 +33,12 @@ exports[`HomePage when the user is an admin should match the snapshot 1`] = `
         >
           Refresh Tokens
         </button>
+        <button
+          class="button is-small"
+          data-testid="indexLists"
+        >
+          Index All Lists
+        </button>
       </div>
     </div>
     <div

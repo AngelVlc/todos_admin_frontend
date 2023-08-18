@@ -133,8 +133,27 @@ describe("ListsRepository", () => {
       const result = await new ListsRepository().moveListItem(1, 11, 2);
 
       expect(axios.post).toHaveBeenCalled();
-      expect(axios.post.mock.calls[0][0]).toBe("lists/1/move-item");
+      expect(axios.post.mock.calls[0][0]).toBe("lists/1/move_item");
       expect(result).toBe(false);
     });
   });
+
+  describe('#indexAllLists', () => {
+    it("does a http post request and returns true if the response has a 204 status", async () => {
+      axios.post.mockResolvedValue({ status: 204 });
+
+      const result = await new ListsRepository().indexAllLists();
+      expect(result).toBe(true);
+    });
+
+    it("does a http post request and returns false if the response does not have a 204 status", async () => {
+      axios.post.mockResolvedValue({ status: 500 });
+
+      const result = await new ListsRepository().indexAllLists();
+
+      expect(axios.post).toHaveBeenCalled();
+      expect(axios.post.mock.calls[0][0]).toBe("tools/index-lists");
+      expect(result).toBe(false);
+    });
+  })
 });

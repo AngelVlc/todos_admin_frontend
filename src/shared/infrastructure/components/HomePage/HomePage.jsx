@@ -15,6 +15,7 @@ export const HomePage = () => {
                     <div className="buttons">
                         <button className="button is-small" onClick={() => history.push('/users')} data-testid="users">Users</button>
                         <button className="button is-small" onClick={() => history.push('/refreshtokens')} data-testid="refreshTokens">Refresh Tokens</button>
+                        <button className="button is-small" onClick={() => history.push('/index-all-lists')} data-testid="indexLists">Index All Lists</button>
                     </div>
                 </div>
             }

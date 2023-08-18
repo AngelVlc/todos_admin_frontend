@@ -55,8 +55,14 @@ export class ListsRepository {
       destinationListItemId: destinationListId
     }
 
-    const res = await axios.post(`lists/${originListId}/move-item`, body);
+    const res = await axios.post(`lists/${originListId}/move_item`, body);
 
     return res.status === 200;
+  }
+
+  async indexAllLists() {
+    const res = await axios.post('tools/index-lists');
+
+    return res.status === 204;
   }
 }
