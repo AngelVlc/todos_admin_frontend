@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext, useCallback, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
-import { GetListsUseCase, GetSearchSecureKeyUseCase } from "../../../application/lists";
+import { GetListsUseCase, GetSearchSecureKeyUseCase } from "../../../application";
 import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb";
 import { Modal } from "../../../../shared/infrastructure/components/Modal";
 import { SearchListsComponent } from "../ListsSearch";

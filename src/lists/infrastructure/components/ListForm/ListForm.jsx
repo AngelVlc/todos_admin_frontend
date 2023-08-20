@@ -9,7 +9,7 @@ import { List, ListItem } from "../../../domain";
 import {
   CreateListUseCase,
   UpdateListUseCase,
-} from "../../../application/lists";
+} from "../../../application";
 import { Modal } from "../../../../shared/infrastructure/components/Modal";
 import { ListItemForm } from "../ListItemForm";
 

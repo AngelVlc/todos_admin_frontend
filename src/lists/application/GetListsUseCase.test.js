@@ -1,4 +1,4 @@
-import { List } from "../../domain";
+import { List } from "../domain";
 import { GetListsUseCase } from ".";
 
 describe("GetListsUseCase", () => {

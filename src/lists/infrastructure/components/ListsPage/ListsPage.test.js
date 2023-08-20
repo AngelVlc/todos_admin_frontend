@@ -5,7 +5,7 @@ import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
 import { act } from "react-dom/test-utils";
 import { List } from "../../../domain";
-import { GetSearchSecureKeyUseCase } from "../../../application/lists";
+import { GetSearchSecureKeyUseCase } from "../../../application";
 
 afterEach(cleanup);
 

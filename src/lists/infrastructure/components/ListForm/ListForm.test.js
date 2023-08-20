@@ -8,7 +8,7 @@ import {
   makeDnd,
   DND_DIRECTION_DOWN,
 } from "react-beautiful-dnd-test-utils";
-import { CreateListUseCase } from "../../../application/lists";
+import { CreateListUseCase } from "../../../application";
 import { List, ListItem } from "../../../domain";
 
 const mockHistoryPush = jest.fn();

@@ -1,5 +1,5 @@
-import { CreateListUseCase } from "./";
-import { List, ListItem } from "../../domain";
+import { CreateListUseCase } from ".";
+import { List, ListItem } from "../domain";
 
 describe("CreateListUseCase", () => {
   describe("#execute", () => {

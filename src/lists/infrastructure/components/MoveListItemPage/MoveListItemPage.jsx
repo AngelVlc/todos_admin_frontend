@@ -7,7 +7,7 @@ import {
   GetListByIdUseCase,
   GetListsUseCase,
   MoveListItemUseCase,
-} from "../../../application/lists";
+} from "../../../application";
 import "./MoveListItemForm.css";
 
 export const MoveListItemPage = () => {

@@ -1,6 +1,6 @@
 
-import { BaseUseCase } from "../../../shared/domain/BaseUseCase";
-import { ListsRepository } from "../../infrastructure/repositories";
+import { BaseUseCase } from "../../shared/domain/BaseUseCase";
+import { ListsRepository } from "../infrastructure/repositories";
 
 export class IndexAllListsUseCase extends BaseUseCase {
   _repository;

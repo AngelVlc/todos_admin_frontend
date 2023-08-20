@@ -4,7 +4,7 @@ import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { MemoryRouter, Route } from "react-router-dom";
 import { act } from "react-dom/test-utils";
 import { List } from "../../../domain";
-import { GetListByIdUseCase, GetListsUseCase, MoveListItemUseCase } from "../../../application/lists";
+import { GetListByIdUseCase, GetListsUseCase, MoveListItemUseCase } from "../../../application";
 
 const mockHistoryPush = jest.fn();
 
