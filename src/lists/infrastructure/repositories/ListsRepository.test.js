@@ -156,4 +156,18 @@ describe("ListsRepository", () => {
       expect(result).toBe(false);
     });
   })
+
+  describe("#getSearchSecureKey", () => {
+    it("does a http get request and return its result", async () => {
+      const expectedResult = "the_search_key";
+
+      axios.get.mockResolvedValue({
+        data: expectedResult,
+      });
+
+      const result = await new ListsRepository().getSearchSecureKey(1);
+      expect(axios.get.mock.calls[0][0]).toBe("lists/search-key");
+      expect(result).toBe(expectedResult);
+    });
+  });
 });

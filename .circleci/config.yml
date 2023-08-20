@@ -12,6 +12,7 @@ workflows:
               - test
             context:
               - GCLOUD_TODOS
+              - ALGOLIA
             filters:
               branches:
                 only: master
@@ -38,10 +39,19 @@ commands:
     steps:
     - run: cd terraformGc && terraform <<parameters.command>> -target=google_project_service.resource_manager -var app_name=$APP_NAME -var gc_project_id=$GCLOUD_PROJECT_ID
     - run: cd terraformGc && terraform <<parameters.command>> -target=google_project_service.container_registry -var app_name=$APP_NAME -var gc_project_id=$GCLOUD_PROJECT_ID 
-    - run: cd terraformGc && terraform <<parameters.command>> -var app_name=$APP_NAME -var gc_project_id=$GCLOUD_PROJECT_ID
+    - run: >
+        cd terraformGc && terraform <<parameters.command>> 
+        -var app_name=$APP_NAME 
+        -var gc_project_id=$GCLOUD_PROJECT_ID 
   push_image_to_gcr:
     steps:
-      - run: docker build --target release -t eu.gcr.io/$GCLOUD_PROJECT_ID/$APP_NAME/release:latest --build-arg BACKEND_URL=$BACKEND_URL --build-arg COMMIT_SHA=$CIRCLE_SHA1 --build-arg BUILD_DATE=$(date '+%Y-%m-%d') .
+      - run: >
+          docker build --target release -t eu.gcr.io/$GCLOUD_PROJECT_ID/$APP_NAME/release:latest 
+          --build-arg BACKEND_URL=$BACKEND_URL 
+          --build-arg COMMIT_SHA=$CIRCLE_SHA1 
+          --build-arg BUILD_DATE=$(date '+%Y-%m-%d') 
+          --build-arg ALGOLIA_APP_ID=$ALGOLIA_APP_ID
+          .
       - run: gcloud auth configure-docker
       - run: gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS --project=$GCLOUD_PROJECT_ID
       - run: docker push eu.gcr.io/$GCLOUD_PROJECT_ID/$APP_NAME/release:latest

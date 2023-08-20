@@ -9,7 +9,7 @@ import { List, ListItem } from "../../../domain";
 import {
   CreateListUseCase,
   UpdateListUseCase,
-} from "../../../application/lists";
+} from "../../../application";
 import { Modal } from "../../../../shared/infrastructure/components/Modal";
 import { ListItemForm } from "../ListItemForm";
 
@@ -114,7 +114,7 @@ export const ListForm = (props) => {
 
   return (
     <>
-      <Modal ref={itemFormModalRef} closeHandler={onItemModalClose}>
+      <Modal ref={itemFormModalRef} closeHandler={onItemModalClose} showOk={true}>
         <ListItemForm ref={itemFormRef} onSubmit={onSubmitItemForm} />
       </Modal>
       <Formik

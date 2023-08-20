@@ -9,7 +9,7 @@ export const Modal = forwardRef((props, ref) => {
     },
     closeModal() {
       toggleIsActive();
-    }
+    },
   }));
 
   const onCancel = () => {
@@ -22,7 +22,7 @@ export const Modal = forwardRef((props, ref) => {
 
   const toggleIsActive = () => {
     modalRef.current.classList.toggle("is-active");
-  }
+  };
 
   return (
     <div ref={modalRef} className="modal" data-testid="modal">
@@ -31,12 +31,25 @@ export const Modal = forwardRef((props, ref) => {
         <div className="box">
           <div className="content">{props.children}</div>
           <div className="field is-grouped is-justify-content-center">
-          <div className="control">
-            <button className="button" onClick={() => onOk()} data-testid="modalOk">OK</button>
-            </div>
+            {props.showOk && (
+              <div className="control">
+                <button
+                  className="button"
+                  onClick={() => onOk()}
+                  data-testid="modalOk"
+                >
+                  OK
+                </button>
+              </div>
+            )}
             <div className="control">
-
-            <button className="button" onClick={() => onCancel()} data-testid="modalCancel">CANCEL</button>
+              <button
+                className="button"
+                onClick={() => onCancel()}
+                data-testid="modalCancel"
+              >
+                CANCEL
+              </button>
             </div>
           </div>
         </div>

@@ -5,7 +5,7 @@ import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcr
 import {
   GetListByIdUseCase,
   DeleteListByIdUseCase,
-} from "../../../application/lists";
+} from "../../../application";
 import { YesNoButtons } from "../../../../shared/infrastructure/components/YesNoButtons";
 
 export const DeleteListPage = () => {

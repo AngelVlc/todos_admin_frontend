@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext, useCallback } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
-import { GetListByIdUseCase } from "../../../application/lists";
+import { GetListByIdUseCase } from "../../../application";
 import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb";
 
 export const ViewListPage = () => {

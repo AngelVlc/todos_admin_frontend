@@ -1,6 +1,6 @@
-import { BaseUseCase } from "../../../shared/domain/BaseUseCase";
-import { List } from "../../domain";
-import { ListsRepository } from "../../infrastructure/repositories";
+import { BaseUseCase } from "../../shared/domain/BaseUseCase";
+import { List } from "../domain";
+import { ListsRepository } from "../infrastructure/repositories";
 
 export class GetListByIdUseCase extends BaseUseCase {
   _repository;

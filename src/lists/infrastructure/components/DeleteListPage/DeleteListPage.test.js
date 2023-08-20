@@ -3,7 +3,7 @@ import { DeleteListPage } from "./DeleteListPage";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { MemoryRouter, Route } from "react-router-dom";
 import { act } from "react-dom/test-utils";
-import { GetListByIdUseCase } from "../../../application/lists";
+import { GetListByIdUseCase } from "../../../application";
 import { List } from "../../../domain";
 
 const mockHistoryPush = jest.fn();

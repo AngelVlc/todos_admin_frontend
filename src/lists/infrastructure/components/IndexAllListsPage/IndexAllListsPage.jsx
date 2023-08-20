@@ -3,7 +3,7 @@ import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb";
 import { YesNoButtons } from "../../../../shared/infrastructure/components/YesNoButtons";
 import { useHistory } from "react-router-dom";
-import { IndexAllListsUseCase } from "../../../application/lists";
+import { IndexAllListsUseCase } from "../../../application";
 
 export const IndexAllListsPage = () => {
   const { useCaseFactory } = useContext(AppContext);

@@ -1,4 +1,4 @@
-import { List, ListItem } from "../../domain";
+import { List, ListItem } from "../domain";
 import { UpdateListUseCase } from "./";
 
 describe("UpdateListUseCase", () => {
