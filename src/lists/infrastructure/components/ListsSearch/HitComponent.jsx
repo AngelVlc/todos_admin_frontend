@@ -5,8 +5,6 @@ import { Highlight } from 'react-instantsearch';
 export const HitComponent = ({hit}) => {
   let history = useHistory();
 
-  console.log(JSON.stringify(hit))
-
   return (
     <article onClick={() => history.push(`/lists/${hit.objectID}`)}>
       <Highlight attribute="name" hit={hit} />

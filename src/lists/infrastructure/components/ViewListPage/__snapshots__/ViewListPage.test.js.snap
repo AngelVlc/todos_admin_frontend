@@ -42,18 +42,18 @@ exports[`ViewListPage should match the snapshot for an existing list 1`] = `
       List 'list name'
     </h3>
     <div>
-      <div
+      <article
         class="mb-2"
       >
-        <p>
+        <h5>
           item title
-        </p>
-        <p
+        </h5>
+        <pre
           class="is-size-7"
         >
           item description
-        </p>
-      </div>
+        </pre>
+      </article>
     </div>
     <div
       class="field is-grouped mt-4"

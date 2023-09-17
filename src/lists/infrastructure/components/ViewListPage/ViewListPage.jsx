@@ -34,10 +34,12 @@ export const ViewListPage = () => {
           <h3 className="title">{`List '${pageState.name}'`}</h3>
           <div>
             {pageState.items.map((item) => (
-              <div className="mb-2" key={item.id}>
-                <p>{item.title}</p>
-                <p className="is-size-7">{item.description}</p>
-              </div>
+              <article className="mb-2" key={item.id}>
+                <h5>{item.title}</h5>
+                {item.description && (
+                  <pre className="is-size-7">{item.description}</pre>
+                )}
+              </article>
             ))}
           </div>
           <div className="field is-grouped mt-4">
