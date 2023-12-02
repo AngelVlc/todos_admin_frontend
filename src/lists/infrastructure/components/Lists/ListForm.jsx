@@ -3,15 +3,12 @@ import { useHistory } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { List, ListItem } from "../../../domain";
+import { CreateListUseCase, UpdateListUseCase } from "../../../application";
+import { Modal } from "../../../../shared/infrastructure/components/Modal";
+import { ListItemForm } from "./ListItemForm";
 import * as Yup from "yup";
 import "./ListForm.css";
-import { List, ListItem } from "../../../domain";
-import {
-  CreateListUseCase,
-  UpdateListUseCase,
-} from "../../../application";
-import { Modal } from "../../../../shared/infrastructure/components/Modal";
-import { ListItemForm } from "../ListItemForm";
 
 export const ListForm = (props) => {
   let history = useHistory();
@@ -46,10 +43,7 @@ export const ListForm = (props) => {
       return;
     }
 
-    if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
-    ) {
+    if (destination.droppableId === source.droppableId && destination.index === source.index) {
       return;
     }
 
@@ -131,13 +125,7 @@ export const ListForm = (props) => {
               Name
             </label>
             <div className="control">
-              <Field
-                name="name"
-                as="input"
-                className="input"
-                data-testid="name"
-                autoFocus
-              />
+              <Field name="name" as="input" className="input" data-testid="name" autoFocus />
             </div>
             <p className="help is-danger" data-testid="nameErrors">
               <ErrorMessage name="name" />
@@ -152,12 +140,7 @@ export const ListForm = (props) => {
             <DragDropContext onDragEnd={onDragEnd}>
               <div className="dnd-container">
                 <div className="list-button mt-2 mb-2">
-                  <button
-                    className="button is-small"
-                    type="button"
-                    data-testid="addNew"
-                    onClick={() => onAddNewItem()}
-                  >
+                  <button className="button is-small" type="button" data-testid="addNew" onClick={() => onAddNewItem()}>
                     <span className="icon is-small">
                       <i className="fas fa-plus"></i>
                     </span>
@@ -166,54 +149,34 @@ export const ListForm = (props) => {
                 </div>
                 <Droppable droppableId={props.list.id.toString()}>
                   {(provided) => (
-                    <div
-                      className="dnd-list"
-                      ref={provided.innerRef}
-                      {...provided.droppableProps}
-                    >
+                    <div className="dnd-list" ref={provided.innerRef} {...provided.droppableProps}>
                       {pageState.items.length > 0 &&
-                        pageState.items
-                          .map((item, index) => (
-                            <Draggable
-                              key={item.id}
-                              draggableId={item.id.toString()}
-                              index={index}
-                            >
-                              {(draggableProvided) => (
-                                <div
-                                  key={item.id}
-                                  className="is-flex dnd-item p-2 mb-2"
-                                  {...draggableProvided.draggableProps}
-                                  {...draggableProvided.dragHandleProps}
-                                  ref={draggableProvided.innerRef}
-                                  data-testid={`draggable${item.id}`}
-                                >
-                                  <div
-                                    className="is-flex-grow-4"
-                                    data-testid={`editListItem${item.id}`}
-                                    onClick={() => onEditItem(item)}
-                                  >
-                                    <span className="has-text-black">
-                                      {item.title}
-                                    </span>
-                                  </div>
-                                  <div className="is-justify-content-flex-end">
-                                    <center>
-                                     <span className="icon is-clickable rounded-button" onClick={() => history.push(`/lists/${props.list.id}/moveItem/${item.id}`)}>
-                                        <i className="fas fa-dolly fa-xs"></i>
-                                      </span>
-                                      <button
-                                        type="button"
-                                        className="delete ml-2"
-                                        data-testid={`deleteListItem${item.id}`}
-                                        onClick={() => onDeleteListItem(item)}
-                                      ></button>
-                                    </center>
-                                  </div>
+                        pageState.items.map((item, index) => (
+                          <Draggable key={item.id} draggableId={item.id.toString()} index={index}>
+                            {(draggableProvided) => (
+                              <div
+                                key={item.id}
+                                className="is-flex dnd-item p-2 mb-2"
+                                {...draggableProvided.draggableProps}
+                                {...draggableProvided.dragHandleProps}
+                                ref={draggableProvided.innerRef}
+                                data-testid={`draggable${item.id}`}
+                              >
+                                <div className="is-flex-grow-4" data-testid={`editListItem${item.id}`} onClick={() => onEditItem(item)}>
+                                  <span className="has-text-black">{item.title}</span>
                                 </div>
-                              )}
-                            </Draggable>
-                          ))}
+                                <div className="is-justify-content-flex-end">
+                                  <center>
+                                    <span className="icon is-clickable rounded-button" onClick={() => history.push(`/lists/${props.list.id}/moveItem/${item.id}`)}>
+                                      <i className="fas fa-dolly fa-xs"></i>
+                                    </span>
+                                    <button type="button" className="delete ml-2" data-testid={`deleteListItem${item.id}`} onClick={() => onDeleteListItem(item)}></button>
+                                  </center>
+                                </div>
+                              </div>
+                            )}
+                          </Draggable>
+                        ))}
                       {provided.placeholder}
                     </div>
                   )}
@@ -229,12 +192,7 @@ export const ListForm = (props) => {
             </div>
             <>{props.preCancel}</>
             <div className="control ml-auto is-pulled-right">
-              <button
-                className="button"
-                data-testid="cancel"
-                type="button"
-                onClick={() => history.push("/lists")}
-              >
+              <button className="button" data-testid="cancel" type="button" onClick={() => history.push("/lists")}>
                 CANCEL
               </button>
             </div>
