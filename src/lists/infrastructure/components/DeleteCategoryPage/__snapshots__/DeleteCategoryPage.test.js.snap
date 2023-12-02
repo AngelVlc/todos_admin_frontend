@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DeleteCategoryPage should match the snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="container"
+  >
+    <nav
+      aria-label="breadcrumbs"
+      class="breadcrumb"
+    >
+      <ul>
+        <li>
+          <a
+            href="/"
+          >
+            Home
+          </a>
+        </li>
+        <li>
+          <a
+            href="/categories"
+          >
+            Categories
+          </a>
+        </li>
+        <li
+          class="is-active"
+        >
+          <a
+            aria-current="page"
+            href="/categories/2/delete"
+          >
+            Delete
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <h3
+      class="title"
+    >
+      Delete category category name
+    </h3>
+    <div
+      class="buttons"
+    >
+      <button
+        class="button is-danger"
+        data-testid="yes"
+      >
+        YES
+      </button>
+      <button
+        class="button"
+        data-testid="no"
+      >
+        NO
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;

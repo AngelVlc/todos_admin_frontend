@@ -470,7 +470,7 @@ exports[`ListForm when the list is new should match the snapshot 1`] = `
           data-testid="submit"
           type="submit"
         >
-          SAVE
+          CREATE
         </button>
       </div>
       <div

@@ -223,7 +223,7 @@ exports[`NewListPage should match the snapshot for a new list 1`] = `
             data-testid="submit"
             type="submit"
           >
-            SAVE
+            CREATE
           </button>
         </div>
         <div

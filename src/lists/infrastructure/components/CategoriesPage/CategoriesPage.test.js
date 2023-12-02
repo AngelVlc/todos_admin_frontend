@@ -1,11 +1,10 @@
 import { render, cleanup, fireEvent, waitFor } from "@testing-library/react";
-import { ListsPage } from "./ListsPage";
+import { CategoriesPage } from "./CategoriesPage";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
 import { act } from "react-dom/test-utils";
-import { List } from "../../../domain";
-import { GetSearchSecureKeyUseCase } from "../../../application";
+import { Category } from "../../../domain";
 
 afterEach(cleanup);
 
@@ -21,22 +20,12 @@ jest.mock("react-router-dom", () => ({
 const history = createMemoryHistory();
 
 const renderWithContextAndRouter = () => {
-  const fakeGetListsUseCase = {
-    execute: () => [
-      new List({ id: 1, name: "list1", itemsCount: 4 }),
-      new List({ id: 2, name: "list2", itemsCount: 6 }),
-    ],
-  };
-
-  const fakeGetSearchSecureKeyUseCase = {
-    execute: () => "",
+  const fakeGetCategoriesUseCase = {
+    execute: () => [new Category({ id: 1, name: "category1", description: "desc1" }), new Category({ id: 2, name: "category2", description: "desc2" })],
   };
 
   const useCaseFactory = {
-    get: (useCase) =>
-      useCase == GetSearchSecureKeyUseCase
-        ? fakeGetSearchSecureKeyUseCase
-        : fakeGetListsUseCase,
+    get: () => fakeGetCategoriesUseCase,
   };
 
   const context = { auth: { info: {} }, useCaseFactory };
@@ -44,14 +33,14 @@ const renderWithContextAndRouter = () => {
     ...render(
       <AppContext.Provider value={context}>
         <Router history={history}>
-          <ListsPage />
+          <CategoriesPage />
         </Router>
       </AppContext.Provider>
     ),
   };
 };
 
-describe("ListsPage", () => {
+describe("CategoriesPage", () => {
   it("should match the snapshot", async () => {
     let fragment;
     await act(async () => {
@@ -62,7 +51,7 @@ describe("ListsPage", () => {
     expect(fragment()).toMatchSnapshot();
   });
 
-  it("should add a new list", async () => {
+  it("should add a new category", async () => {
     const container = renderWithContextAndRouter();
 
     await waitFor(() => {
@@ -70,29 +59,29 @@ describe("ListsPage", () => {
     });
 
     expect(mockHistoryPush).toHaveBeenCalled();
-    expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/new");
+    expect(mockHistoryPush.mock.calls[0][0]).toBe("/categories/new");
     mockHistoryPush.mockClear();
   });
 
-  it("should view the list", async () => {
+  it("should view the category", async () => {
     const container = renderWithContextAndRouter();
 
     await waitFor(() => {
-      fireEvent.click(container.getByTestId("viewList2"));
+      fireEvent.click(container.getByTestId("viewCategory2"));
     });
 
     expect(mockHistoryPush).toHaveBeenCalled();
-    expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists/2");
+    expect(mockHistoryPush.mock.calls[0][0]).toBe("/categories/2");
     mockHistoryPush.mockClear();
   });
 
-  it("should delete the list", async () => {
+  it("should delete the category", async () => {
     const container = renderWithContextAndRouter();
 
     await waitFor(() => {
-      fireEvent.click(container.getByTestId("deleteList2"));
+      fireEvent.click(container.getByTestId("deleteCategory2"));
     });
 
-    expect(history.location.pathname).toBe("/lists/2/delete");
+    expect(history.location.pathname).toBe("/categories/2/delete");
   });
 });

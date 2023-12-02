@@ -17,6 +17,10 @@ import { NewUserPage } from '../../../../auth/infrastructure/components/NewUserP
 import { EditUserPage } from '../../../../auth/infrastructure/components/EditUserPage';
 import { RefreshTokensPage } from '../../../../auth/infrastructure/components/RefreshTokensPage';
 import { IndexAllListsPage } from '../../../../lists/infrastructure/components/IndexAllListsPage';
+import { CategoriesPage } from '../../../../lists/infrastructure/components/CategoriesPage';
+import { NewCategoryPage } from '../../../../lists/infrastructure/components/NewCategoryPage';
+import { EditCategoryPage } from '../../../../lists/infrastructure/components/EditCategoryPage/EditCategoryPage';
+import { DeleteCategoryPage } from '../../../../lists/infrastructure/components/DeleteCategoryPage';
 import { createBrowserHistory } from 'history';
 import { loginReducer, requestsReducer } from '../../reducers';
 import { AppContext } from '../../contexts';
@@ -73,6 +77,10 @@ const App = () => {
               <PrivateRoute path="/lists/:listId/moveItem/:listItemId" component={MoveListItemPage} />
               <PrivateRoute path="/lists/:listId/read" component={ViewListPage} />
               <PrivateRoute path="/lists/:listId" component={EditListPage} />
+              <PrivateRoute exact path="/categories" component={CategoriesPage} />
+              <PrivateRoute path="/categories/new" component={NewCategoryPage} />
+              <PrivateRoute path="/categories/:categoryId/delete" component={DeleteCategoryPage} />
+              <PrivateRoute path="/categories/:categoryId" component={EditCategoryPage} />
               <AdminRoute exact path="/users" component={UsersPage} />
               <AdminRoute path="/users/:userId/delete" component={DeleteUserPage} />
               <AdminRoute path="/users/:userId/edit" component={EditUserPage} />

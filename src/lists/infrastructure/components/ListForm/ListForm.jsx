@@ -224,7 +224,7 @@ export const ListForm = (props) => {
           <div className="field is-grouped">
             <div className="control">
               <button className="button" data-testid="submit" type="submit">
-                {props.list?.id ? "SAVE" : "CREATE"}
+                {props.list?.id > 0 ? "SAVE" : "CREATE"}
               </button>
             </div>
             <>{props.preCancel}</>

@@ -24,6 +24,9 @@ export const HomePage = () => {
                 <div className="buttons">
                     <button className="button is-small" onClick={() => history.push('/lists')} data-testid="lists">Lists</button>
                 </div>
+                <div className="buttons">
+                    <button className="button is-small" onClick={() => history.push('/categories')} data-testid="categories">Categories</button>
+                </div>
             </div>
         </div>
     )

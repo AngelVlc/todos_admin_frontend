@@ -59,37 +59,14 @@ exports[`HomePage when the user is an admin should match the snapshot 1`] = `
           Lists
         </button>
       </div>
-    </div>
-  </div>
-</DocumentFragment>
-`;
-
-exports[`HomePage when the user is not an admin should match the snapshot 1`] = `
-<DocumentFragment>
-  <div
-    class="container"
-  >
-    <h3
-      class="title"
-    >
-      HOME
-    </h3>
-    <div
-      class="box"
-    >
-      <h6
-        class="subtitle is-6"
-      >
-        Lists
-      </h6>
       <div
         class="buttons"
       >
         <button
           class="button is-small"
-          data-testid="lists"
+          data-testid="categories"
         >
-          Lists
+          Categories
         </button>
       </div>
     </div>

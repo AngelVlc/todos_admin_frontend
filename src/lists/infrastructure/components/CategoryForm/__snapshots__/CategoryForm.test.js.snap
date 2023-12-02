@@ -1,0 +1,167 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CategoryForm should match the snapshot for a new category 1`] = `
+<DocumentFragment>
+  <form
+    action="#"
+  >
+    <div
+      class="field"
+    >
+      <label
+        class="label"
+        for="name"
+      >
+        Name
+      </label>
+      <div
+        class="control"
+      >
+        <input
+          data-testid="name"
+          name="name"
+          type="text"
+          value=""
+        />
+      </div>
+      <p
+        class="help is-danger"
+        data-testid="nameErrors"
+      />
+    </div>
+    <div
+      class="field"
+    >
+      <label
+        class="label"
+        for="description"
+      >
+        Description
+      </label>
+      <div
+        class="control"
+      >
+        <input
+          data-testid="description"
+          name="description"
+          type="text"
+          value=""
+        />
+      </div>
+      <p
+        class="help is-danger"
+        data-testid="descriptionErrors"
+      />
+    </div>
+    <div
+      class="field is-grouped"
+    >
+      <div
+        class="control"
+      >
+        <button
+          class="button"
+          data-testid="submit"
+          type="submit"
+        >
+          CREATE
+        </button>
+      </div>
+      <div
+        class="control"
+      >
+        <button
+          class="button"
+          data-testid="cancel"
+          type="button"
+        >
+          CANCEL
+        </button>
+      </div>
+    </div>
+  </form>
+</DocumentFragment>
+`;
+
+exports[`CategoryForm should match the snapshot for an existing category 1`] = `
+<DocumentFragment>
+  <form
+    action="#"
+  >
+    <div
+      class="field"
+    >
+      <label
+        class="label"
+        for="name"
+      >
+        Name
+      </label>
+      <div
+        class="control"
+      >
+        <input
+          data-testid="name"
+          name="name"
+          type="text"
+          value="category"
+        />
+      </div>
+      <p
+        class="help is-danger"
+        data-testid="nameErrors"
+      />
+    </div>
+    <div
+      class="field"
+    >
+      <label
+        class="label"
+        for="description"
+      >
+        Description
+      </label>
+      <div
+        class="control"
+      >
+        <input
+          data-testid="description"
+          name="description"
+          type="text"
+          value="desc"
+        />
+      </div>
+      <p
+        class="help is-danger"
+        data-testid="descriptionErrors"
+      />
+    </div>
+    <div
+      class="field is-grouped"
+    >
+      <div
+        class="control"
+      >
+        <button
+          class="button"
+          data-testid="submit"
+          type="submit"
+        >
+          SAVE
+        </button>
+      </div>
+      <div
+        class="control"
+      >
+        <button
+          class="button"
+          data-testid="cancel"
+          type="button"
+        >
+          CANCEL
+        </button>
+      </div>
+    </div>
+  </form>
+</DocumentFragment>
+`;

@@ -6,3 +6,8 @@ export * from "./UpdateListUseCase";
 export * from "./MoveListItemUseCase";
 export * from "./IndexAllListsUseCase";
 export * from "./GetSearchSecureKeyUseCase";
+export * from "./CreateCategoryUseCase";
+export * from "./DeleteCategoryByIdUseCase";
+export * from "./GetCategoryByIdUseCase";
+export * from "./GetCategoriesUseCase";
+export * from "./UpdateCategoryUseCase";
