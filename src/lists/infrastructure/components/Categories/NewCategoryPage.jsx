@@ -1,7 +1,7 @@
 import React from "react";
 import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb";
 import { Category } from "../../../domain";
-import { CategoryForm } from "../CategoryForm";
+import { CategoryForm } from "./CategoryForm";
 
 export const NewCategoryPage = () => {
   return (

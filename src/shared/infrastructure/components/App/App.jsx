@@ -17,10 +17,7 @@ import { NewUserPage } from '../../../../auth/infrastructure/components/NewUserP
 import { EditUserPage } from '../../../../auth/infrastructure/components/EditUserPage';
 import { RefreshTokensPage } from '../../../../auth/infrastructure/components/RefreshTokensPage';
 import { IndexAllListsPage } from '../../../../lists/infrastructure/components/IndexAllListsPage';
-import { CategoriesPage } from '../../../../lists/infrastructure/components/CategoriesPage';
-import { NewCategoryPage } from '../../../../lists/infrastructure/components/NewCategoryPage';
-import { EditCategoryPage } from '../../../../lists/infrastructure/components/EditCategoryPage/EditCategoryPage';
-import { DeleteCategoryPage } from '../../../../lists/infrastructure/components/DeleteCategoryPage';
+import { CategoriesPage, NewCategoryPage, EditCategoryPage, DeleteCategoryPage } from '../../../../lists/infrastructure/components/Categories';
 import { createBrowserHistory } from 'history';
 import { loginReducer, requestsReducer } from '../../reducers';
 import { AppContext } from '../../contexts';

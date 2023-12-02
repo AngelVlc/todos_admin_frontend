@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext, useCallback } from "react";
 import { useParams } from "react-router-dom";
-import { CategoryForm } from "../CategoryForm";
+import { CategoryForm } from "./CategoryForm";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { GetCategoryByIdUseCase } from "../../../application";
 import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb";
