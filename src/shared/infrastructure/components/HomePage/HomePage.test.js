@@ -18,7 +18,9 @@ const renderWithRouterAndContext = (auth) => {
   return {
     ...render(
       <AppContext.Provider value={context}>
-        <Router history={history}><HomePage /></Router>
+        <Router history={history}>
+          <HomePage />
+        </Router>
       </AppContext.Provider>
     ),
   };
@@ -36,66 +38,49 @@ describe("HomePage", () => {
       expect(asFragment()).toMatchSnapshot();
     });
 
-    it("should allow to go to users", async () => {
-      const { getByTestId } = renderWithRouterAndContext({
-        info: { isAdmin: true },
+    const allowedUrlsForAdmins = [
+      { url: "/users", testId: "users" },
+      { url: "/refreshtokens", testId: "refreshTokens" },
+      { url: "/index-all-lists", testId: "indexLists" },
+      { url: "/lists", testId: "lists" },
+      { url: "/categories", testId: "categories" },
+    ];
+
+    allowedUrlsForAdmins.forEach(({ url, testId }) => {
+      it(`should allow to go to ${url}`, async () => {
+        const { getByTestId } = renderWithRouterAndContext({
+          info: { isAdmin: true },
+        });
+
+        await waitFor(() => {
+          fireEvent.click(getByTestId(testId));
+        });
+
+        expect(mockHistoryPush).toHaveBeenCalled();
+        expect(mockHistoryPush.mock.calls[0][0]).toBe(url);
       });
-
-      await waitFor(() => {
-        fireEvent.click(getByTestId("users"));
-      });
-
-      expect(mockHistoryPush).toHaveBeenCalled();
-      expect(mockHistoryPush.mock.calls[0][0]).toBe("/users");
-    });
-
-    it("should allow to go to refresh tokens", async () => {
-      const { getByTestId } = renderWithRouterAndContext({
-        info: { isAdmin: true },
-      });
-
-      await waitFor(() => {
-        fireEvent.click(getByTestId("refreshTokens"));
-      });
-
-      expect(mockHistoryPush).toHaveBeenCalled();
-      expect(mockHistoryPush.mock.calls[0][0]).toBe("/refreshtokens");
-    });
-
-    it("should allow to go to lists", async () => {
-      const { getByTestId } = renderWithRouterAndContext({
-        info: { isAdmin: true },
-      });
-
-      await waitFor(() => {
-        fireEvent.click(getByTestId("lists"));
-      });
-
-      expect(mockHistoryPush).toHaveBeenCalled();
-      expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists");
     });
   });
 
   describe("when the user is not an admin", () => {
-    it("should match the snapshot", () => {
-      const { asFragment } = renderWithRouterAndContext({
-        info: { isAdmin: false },
+    const allowedUrlsForNonAdmins = [
+      { url: "/lists", testId: "lists" },
+      { url: "/categories", testId: "categories" },
+    ];
+
+    allowedUrlsForNonAdmins.forEach(({ url, testId }) => {
+      it(`should allow to go to ${url}`, async () => {
+        const { getByTestId } = renderWithRouterAndContext({
+          info: { isAdmin: true },
+        });
+
+        await waitFor(() => {
+          fireEvent.click(getByTestId(testId));
+        });
+
+        expect(mockHistoryPush).toHaveBeenCalled();
+        expect(mockHistoryPush.mock.calls[0][0]).toBe(url);
       });
-
-      expect(asFragment()).toMatchSnapshot();
-    });
-
-    it("should allow to go to lists", async () => {
-      const { getByTestId } = renderWithRouterAndContext({
-        info: { isAdmin: false },
-      });
-
-      await waitFor(() => {
-        fireEvent.click(getByTestId("lists"));
-      });
-
-      expect(mockHistoryPush).toHaveBeenCalled();
-      expect(mockHistoryPush.mock.calls[0][0]).toBe("/lists");
     });
   });
 });

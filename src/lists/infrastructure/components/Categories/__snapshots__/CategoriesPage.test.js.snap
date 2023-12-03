@@ -1,0 +1,100 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CategoriesPage should match the snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="container"
+  >
+    <nav
+      aria-label="breadcrumbs"
+      class="breadcrumb"
+    >
+      <ul>
+        <li>
+          <a
+            href="/"
+          >
+            Home
+          </a>
+        </li>
+        <li
+          class="is-active"
+        >
+          <a
+            aria-current="page"
+            href="/categories"
+          >
+            Categories
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <h3
+      class="title"
+    >
+      CATEGORIES
+    </h3>
+    <table
+      class="table"
+    >
+      <thead>
+        <tr>
+          <td>
+            Name
+          </td>
+          <td>
+            <button
+              class="button is-small"
+              data-testid="addNew"
+            >
+              <span
+                class="icon is-small"
+              >
+                <i
+                  class="fas fa-plus"
+                />
+              </span>
+            </button>
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          class="is-clickable"
+          data-testid="viewCategory1"
+        >
+          <td>
+            category1
+          </td>
+          <td>
+            <center>
+              <a
+                class="has-text-black delete"
+                data-testid="deleteCategory1"
+                href="/categories/1/delete"
+              />
+            </center>
+          </td>
+        </tr>
+        <tr
+          class="is-clickable"
+          data-testid="viewCategory2"
+        >
+          <td>
+            category2
+          </td>
+          <td>
+            <center>
+              <a
+                class="has-text-black delete"
+                data-testid="deleteCategory2"
+                href="/categories/2/delete"
+              />
+            </center>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</DocumentFragment>
+`;

@@ -1,0 +1,169 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListsPage should match the snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="modal"
+    data-testid="modal"
+  >
+    <div
+      class="modal-background"
+    />
+    <div
+      class="modal-content"
+    >
+      <div
+        class="box"
+      >
+        <div
+          class="content"
+        >
+          <center>
+            <h5>
+              Algolia not configured
+            </h5>
+          </center>
+        </div>
+        <div
+          class="field is-grouped is-justify-content-center"
+        >
+          <div
+            class="control"
+          >
+            <button
+              class="button"
+              data-testid="modalCancel"
+            >
+              CANCEL
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button
+      aria-label="close"
+      class="modal-close is-large"
+      data-testid="modalClose"
+    />
+  </div>
+  <div
+    class="container"
+  >
+    <nav
+      aria-label="breadcrumbs"
+      class="breadcrumb"
+    >
+      <ul>
+        <li>
+          <a
+            href="/"
+          >
+            Home
+          </a>
+        </li>
+        <li
+          class="is-active"
+        >
+          <a
+            aria-current="page"
+            href="/lists"
+          >
+            Lists
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <h3
+      class="title"
+    >
+      LISTS
+    </h3>
+    <table
+      class="table"
+    >
+      <thead>
+        <tr>
+          <td>
+            Name
+          </td>
+          <td>
+            # Items
+          </td>
+          <td>
+            <button
+              class="button is-small mr-2"
+              data-testid="search"
+            >
+              <span
+                class="icon is-small"
+              >
+                <i
+                  class="fas fa-search"
+                />
+              </span>
+            </button>
+            <button
+              class="button is-small"
+              data-testid="addNew"
+            >
+              <span
+                class="icon is-small"
+              >
+                <i
+                  class="fas fa-plus"
+                />
+              </span>
+            </button>
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          class="is-clickable"
+          data-testid="viewList1"
+        >
+          <td>
+            list1
+          </td>
+          <td>
+            <center>
+              4
+            </center>
+          </td>
+          <td>
+            <center>
+              <a
+                class="has-text-black delete"
+                data-testid="deleteList1"
+                href="/lists/1/delete"
+              />
+            </center>
+          </td>
+        </tr>
+        <tr
+          class="is-clickable"
+          data-testid="viewList2"
+        >
+          <td>
+            list2
+          </td>
+          <td>
+            <center>
+              6
+            </center>
+          </td>
+          <td>
+            <center>
+              <a
+                class="has-text-black delete"
+                data-testid="deleteList2"
+                href="/lists/2/delete"
+              />
+            </center>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</DocumentFragment>
+`;
