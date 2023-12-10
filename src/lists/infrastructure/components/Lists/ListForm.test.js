@@ -8,8 +8,9 @@ import {
   makeDnd,
   DND_DIRECTION_DOWN,
 } from "react-beautiful-dnd-test-utils";
-import { CreateListUseCase } from "../../../application";
+import { CreateListUseCase, UpdateListUseCase, GetCategoriesUseCase } from "../../../application";
 import { List, ListItem } from "../../../domain";
+import { act } from "react-dom/test-utils";
 
 const mockHistoryPush = jest.fn();
 
@@ -28,11 +29,26 @@ const mockedUpdateListUseCase = {
   execute: jest.fn(),
 };
 
+const fakeGetCategoriesUseCase = {
+  execute: () => [
+    { id: 1, name: "category1" },
+    { id: 2, name: "category2" },
+  ],
+};
+
 const useCaseFactory = {
-  get: (useCase) =>
-    useCase == CreateListUseCase
-      ? mockedCreateListUseCase
-      : mockedUpdateListUseCase,
+  get: (useCase) => {
+    switch (useCase) {
+      case GetCategoriesUseCase:
+        return fakeGetCategoriesUseCase;
+      case CreateListUseCase:
+        return mockedCreateListUseCase;
+      case UpdateListUseCase:
+        return mockedUpdateListUseCase;
+      default:
+        throw new Error(`Unknown use case ${useCase}`);
+    }
+  },
 };
 
 beforeEach(() => {
@@ -47,6 +63,7 @@ describe("ListForm", () => {
       const list = new List({
         id: 2,
         name: "list name",
+        categoryId: 1,
         items: [
           new ListItem({
             id: 5,
@@ -78,13 +95,20 @@ describe("ListForm", () => {
     };
 
     it("should match the snapshot", async () => {
-      const { asFragment } = renderWithContextAndRouterForExistingList();
-
-      expect(asFragment()).toMatchSnapshot();
+      let fragment;
+      await act(async () => {
+        const { asFragment } = renderWithContextAndRouterForExistingList();
+        fragment = asFragment;
+      });
+  
+      expect(fragment()).toMatchSnapshot();
     });
 
-    it("should allow to update the list name, delete and update an existing item, and add a new item", async () => {
-      const container = renderWithContextAndRouterForExistingList();
+    it("should allow to update the list name, the category, delete and update an existing item, and add a new item", async () => {
+      let container;
+      await act(async () => {
+        container = renderWithContextAndRouterForExistingList();
+      });
 
       mockDndSpacing(container.container);
 
@@ -108,6 +132,7 @@ describe("ListForm", () => {
         "description",
         "the description"
       );
+      await changeInputValue(container.getByTestId, "categoryId", "2");
 
       await waitFor(() => {
         fireEvent.click(container.getByTestId("modalOk"));
@@ -154,6 +179,7 @@ describe("ListForm", () => {
       const list = new List({
         id: 2,
         name: "updated name",
+        categoryId: 2,
         items,
       });
 
@@ -180,6 +206,7 @@ describe("ListForm", () => {
       const list = new List({
         id: 2,
         name: "list name",
+        categoryId: 1,
         items: [
           new ListItem({
             id: 6,
@@ -213,9 +240,13 @@ describe("ListForm", () => {
     };
 
     it("should match the snapshot", async () => {
-      const { asFragment } = renderWithContextAndRouterForNewList();
-
-      expect(asFragment()).toMatchSnapshot();
+      let fragment;
+      await act(async () => {
+        const { asFragment } = renderWithContextAndRouterForNewList();
+        fragment = asFragment;
+      });
+  
+      expect(fragment()).toMatchSnapshot();
     });
 
     it("should allow to cancel", async () => {
@@ -251,6 +282,7 @@ describe("ListForm", () => {
 
       await changeInputValue(getByTestId, "title", "the title");
       await changeInputValue(getByTestId, "description", "the description");
+      await changeInputValue(getByTestId, "categoryId", "1");
 
       await waitFor(() => {
         fireEvent.click(getByTestId("modalOk"));
@@ -265,6 +297,7 @@ describe("ListForm", () => {
       const list = new List({
         id: -1,
         name: "new list",
+        categoryId: 1,
         itemsCount: 0,
         items: [
           new ListItem({

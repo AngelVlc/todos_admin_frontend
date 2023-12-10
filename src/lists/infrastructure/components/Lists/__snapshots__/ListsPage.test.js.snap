@@ -87,6 +87,9 @@ exports[`ListsPage should match the snapshot 1`] = `
             Name
           </td>
           <td>
+            Category
+          </td>
+          <td>
             # Items
           </td>
           <td>
@@ -126,6 +129,9 @@ exports[`ListsPage should match the snapshot 1`] = `
             list1
           </td>
           <td>
+            category1
+          </td>
+          <td>
             <center>
               4
             </center>
@@ -147,6 +153,7 @@ exports[`ListsPage should match the snapshot 1`] = `
           <td>
             list2
           </td>
+          <td />
           <td>
             <center>
               6

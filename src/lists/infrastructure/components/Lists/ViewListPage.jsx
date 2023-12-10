@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext, useCallback } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
-import { GetListByIdUseCase } from "../../../application";
+import { GetListByIdUseCase, GetCategoriesUseCase } from "../../../application";
 import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb";
 
 export const ViewListPage = () => {
@@ -11,8 +11,17 @@ export const ViewListPage = () => {
   const [pageState, setPageState] = useState();
 
   const getExistingList = useCallback(async () => {
+    const getCategoriesUseCase = useCaseFactory.get(GetCategoriesUseCase);
+    const categories = await getCategoriesUseCase.execute();
+
     const getListByIdUseCase = useCaseFactory.get(GetListByIdUseCase);
     const list = await getListByIdUseCase.execute(listId);
+
+    const category = categories.find((c) => c.id === list.categoryId);
+
+    if (category) {
+      list.categoryName = category.name;
+    }
 
     setPageState(list);
   }, [listId, useCaseFactory]);
@@ -32,6 +41,7 @@ export const ViewListPage = () => {
             ]}
           />
           <h3 className="title">{`List '${pageState.name}'`}</h3>
+          <h5 className="mb-5">{`Category ${pageState.categoryName}`}</h5>
           <div>
             {pageState.items.map((item) => (
               <article className="mb-2" key={item.id}>
