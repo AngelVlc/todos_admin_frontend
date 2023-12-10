@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext, useCallback, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
-import { GetListsUseCase, GetSearchSecureKeyUseCase } from "../../../application";
+import { GetListsUseCase, GetSearchSecureKeyUseCase, GetCategoriesUseCase } from "../../../application";
 import { Breadcrumb } from "../../../../shared/infrastructure/components/Breadcrumb";
 import { Modal } from "../../../../shared/infrastructure/components/Modal";
 import { SearchListsComponent } from "../ListsSearch";
@@ -17,7 +17,20 @@ export const ListsPage = () => {
     const getListsUseCase = useCaseFactory.get(GetListsUseCase);
     const data = await getListsUseCase.execute();
 
-    setLists(data);
+    const getCategoriesUseCase = useCaseFactory.get(GetCategoriesUseCase);
+    const categories = await getCategoriesUseCase.execute();
+
+    const lists = data.map((list) => {
+      const category = categories.find((c) => c.id === list.categoryId);
+
+      if (category) {
+        list.categoryName = category.name;
+      }
+
+      return list;
+    });
+
+    setLists(lists);
   }, [useCaseFactory]);
 
   const getSearchSecureKey = useCallback(async () => {
@@ -58,6 +71,7 @@ export const ListsPage = () => {
             <thead>
               <tr>
                 <td>Name</td>
+                <td>Category</td>
                 <td># Items</td>
                 <td>
                   <button
@@ -91,6 +105,7 @@ export const ListsPage = () => {
                     data-testid={`viewList${list.id}`}
                   >
                     <td>{list.name}</td>
+                    <td>{list.categoryName}</td>
                     <td>
                       <center>{list.itemsCount}</center>
                     </td>

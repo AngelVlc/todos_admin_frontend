@@ -5,7 +5,7 @@ import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
 import { act } from "react-dom/test-utils";
 import { List } from "../../../domain";
-import { GetSearchSecureKeyUseCase } from "../../../application";
+import { GetListsUseCase, GetSearchSecureKeyUseCase, GetCategoriesUseCase } from "../../../application";
 
 afterEach(cleanup);
 
@@ -23,8 +23,8 @@ const history = createMemoryHistory();
 const renderWithContextAndRouter = () => {
   const fakeGetListsUseCase = {
     execute: () => [
-      new List({ id: 1, name: "list1", itemsCount: 4 }),
-      new List({ id: 2, name: "list2", itemsCount: 6 }),
+      new List({ id: 1, name: "list1", categoryId: 1, itemsCount: 4 }),
+      new List({ id: 2, name: "list2", categoryId: null, itemsCount: 6 }),
     ],
   };
 
@@ -32,11 +32,24 @@ const renderWithContextAndRouter = () => {
     execute: () => "",
   };
 
+  const fakeGetCategoriesUseCase = {
+    execute: () => [
+      { id: 1, name: "category1" },
+      { id: 2, name: "category2" },
+    ],
+  };
+
   const useCaseFactory = {
-    get: (useCase) =>
-      useCase == GetSearchSecureKeyUseCase
-        ? fakeGetSearchSecureKeyUseCase
-        : fakeGetListsUseCase,
+    get: (useCase) => {
+      switch(useCase) {
+        case GetListsUseCase:
+          return fakeGetListsUseCase;
+        case GetSearchSecureKeyUseCase:
+          return fakeGetSearchSecureKeyUseCase;
+        case GetCategoriesUseCase:
+          return fakeGetCategoriesUseCase;
+      };
+    },
   };
 
   const context = { auth: { info: {} }, useCaseFactory };
