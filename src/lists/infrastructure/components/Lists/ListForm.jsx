@@ -1,10 +1,10 @@
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useContext, useRef, useEffect, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { List, ListItem } from "../../../domain";
-import { CreateListUseCase, UpdateListUseCase } from "../../../application";
+import { CreateListUseCase, UpdateListUseCase, GetCategoriesUseCase } from "../../../application";
 import { Modal } from "../../../../shared/infrastructure/components/Modal";
 import { ListItemForm } from "./ListItemForm";
 import * as Yup from "yup";
@@ -15,10 +15,28 @@ export const ListForm = (props) => {
   const { useCaseFactory } = useContext(AppContext);
   const itemFormModalRef = useRef();
   const itemFormRef = useRef();
+  const [categories, setCategories] = useState();
 
   const [pageState, setPageState] = useState(props.list);
 
+  const getCategories = useCallback(async () => {
+    const getCategoriesUseCase = useCaseFactory.get(GetCategoriesUseCase);
+    const categories = await getCategoriesUseCase.execute();
+
+    setCategories(categories);
+  }, [useCaseFactory]);
+
+  useEffect(() => {
+    getCategories();
+  }, [getCategories]);
+
   const onSubmit = async (list) => {
+    if (list.categoryId !== undefined || list.categoryId !== null) {
+      list.categoryId = parseInt(list.categoryId);
+    } else {
+      list.categoryId = null;
+    }
+
     let useCase;
 
     if (props.list?.id === -1) {
@@ -129,6 +147,25 @@ export const ListForm = (props) => {
             </div>
             <p className="help is-danger" data-testid="nameErrors">
               <ErrorMessage name="name" />
+            </p>
+          </div>
+          <div className="field">
+            <label className="label" htmlFor="categoryId">
+              Category
+            </label>
+            <div className="control">
+              <Field name="categoryId" as="select" className="input" data-testid="categoryId">
+                <option value=""></option>
+                {categories &&
+                  categories.map((category) => (
+                    <option key={category.id} value={category.id}>
+                      {category.name}
+                    </option>
+                  ))}
+              </Field>
+            </div>
+            <p className="help is-danger" data-testid="categoryIdErrors">
+              <ErrorMessage name="categoryId" />
             </p>
           </div>
           <div>

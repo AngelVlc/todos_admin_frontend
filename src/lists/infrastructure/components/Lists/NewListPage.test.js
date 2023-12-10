@@ -2,6 +2,7 @@ import { render, cleanup } from "@testing-library/react";
 import { NewListPage } from "./NewListPage";
 import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { MemoryRouter, Route } from "react-router-dom";
+import { act } from "react-dom/test-utils";
 
 const mockHistoryPush = jest.fn();
 
@@ -13,7 +14,15 @@ jest.mock("react-router-dom", () => ({
 }));
 
 const renderWithContextAndRouterForNewList = () => {
-  const context = { auth: { info: {} } };
+  const fakeGetCategoriesUseCase = {
+    execute: () => [{ id: 1, name: "category1" }],
+  };
+
+  const useCaseFactory = {
+    get: (useCase) => fakeGetCategoriesUseCase,
+  };
+
+  const context = { auth: { info: {} }, useCaseFactory };
   return {
     ...render(
       <AppContext.Provider value={context}>
@@ -31,8 +40,12 @@ afterEach(cleanup);
 
 describe("NewListPage", () => {
   it("should match the snapshot for a new list", async () => {
-    const { asFragment } = renderWithContextAndRouterForNewList();
+    let fragment;
+    await act(async () => {
+      const { asFragment } = renderWithContextAndRouterForNewList();
+      fragment = asFragment;
+    });
 
-    expect(asFragment()).toMatchSnapshot();
+    expect(fragment()).toMatchSnapshot();
   });
 });

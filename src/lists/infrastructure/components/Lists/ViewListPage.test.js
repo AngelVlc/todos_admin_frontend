@@ -4,6 +4,7 @@ import { AppContext } from "../../../../shared/infrastructure/contexts";
 import { MemoryRouter, Route } from "react-router-dom";
 import { act } from "react-dom/test-utils";
 import { List, ListItem } from "../../../domain";
+import { GetListByIdUseCase, GetCategoriesUseCase } from "../../../application";
 
 const mockHistoryPush = jest.fn();
 
@@ -15,11 +16,12 @@ jest.mock("react-router-dom", () => ({
 }));
 
 const renderWithContextAndRouter = () => {
-  const fakemGetListByIdUseCase = {
+  const fakeGetListByIdUseCase = {
     execute: () => {
       const list = new List({
         id: 2,
         name: "list name",
+        categoryId: 1,
         items: [
           new ListItem({
             id: 5,
@@ -33,8 +35,21 @@ const renderWithContextAndRouter = () => {
     },
   };
 
+  const fakeGetCategoriesUseCase = {
+    execute: () => [
+      { id: 1, name: "category1" },
+    ],
+  };
+
   const useCaseFactory = {
-    get: () => fakemGetListByIdUseCase,
+    get: (useCase) => {
+      switch(useCase) {
+        case GetListByIdUseCase:
+          return fakeGetListByIdUseCase;
+        case GetCategoriesUseCase:
+          return fakeGetCategoriesUseCase;
+      };
+    },
   };
 
   const context = { auth: { info: {} }, useCaseFactory };

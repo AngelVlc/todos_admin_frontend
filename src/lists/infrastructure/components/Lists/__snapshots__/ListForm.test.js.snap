@@ -129,6 +129,43 @@ exports[`ListForm when the list already exist should match the snapshot 1`] = `
         data-testid="nameErrors"
       />
     </div>
+    <div
+      class="field"
+    >
+      <label
+        class="label"
+        for="categoryId"
+      >
+        Category
+      </label>
+      <div
+        class="control"
+      >
+        <select
+          class="input"
+          data-testid="categoryId"
+          name="categoryId"
+        >
+          <option
+            value=""
+          />
+          <option
+            value="1"
+          >
+            category1
+          </option>
+          <option
+            value="2"
+          >
+            category2
+          </option>
+        </select>
+      </div>
+      <p
+        class="help is-danger"
+        data-testid="categoryIdErrors"
+      />
+    </div>
     <div>
       <div
         class="is-flex"
@@ -413,6 +450,43 @@ exports[`ListForm when the list is new should match the snapshot 1`] = `
       <p
         class="help is-danger"
         data-testid="nameErrors"
+      />
+    </div>
+    <div
+      class="field"
+    >
+      <label
+        class="label"
+        for="categoryId"
+      >
+        Category
+      </label>
+      <div
+        class="control"
+      >
+        <select
+          class="input"
+          data-testid="categoryId"
+          name="categoryId"
+        >
+          <option
+            value=""
+          />
+          <option
+            value="1"
+          >
+            category1
+          </option>
+          <option
+            value="2"
+          >
+            category2
+          </option>
+        </select>
+      </div>
+      <p
+        class="help is-danger"
+        data-testid="categoryIdErrors"
       />
     </div>
     <div>
